@@ -25,6 +25,7 @@ using UnityEditor;
 
 namespace UniGame.Proto.Features.Characteristics
 {
+    using UniModules;
 
     [CreateAssetMenu(menuName = "Proto Features/Characteristics/Characteristics Data Asset", fileName = "Characteristics Data Asset")]
     public class CharacteristicsDataAsset : ScriptableObject
