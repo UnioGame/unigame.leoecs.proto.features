@@ -116,11 +116,6 @@ namespace UniGame.Ecs.Proto.AbilityInventory.Aspects
             return entity;
         }
         
-#if ENABLE_IL2CPP
-        [Il2CppSetOption(Option.NullChecks, false)]
-        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-#endif
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ComposeAbilityVisualDescription(ref AbilityVisualComponent visualDescription,
             ProtoEntity abilityEntity)
