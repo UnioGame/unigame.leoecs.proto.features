@@ -389,16 +389,15 @@
 
             ref var abilityMapComponent = ref AbilityMap.Get(entity);
             var abilityMap = abilityMapComponent.AbilitySlots;
-
-            for (var i = 0; i < abilityMap.Count; i++)
+            
+            foreach (var pair in abilityMap)
             {
-                var packedAbility = abilityMap[i];
+                var packedAbility = pair.Value;
                 if (!packedAbility.Unpack(World, out var abilityEntity))
                     continue;
 
                 if (AbilityUsing.Has(abilityEntity)) return true;
             }
-
             return false;
         }
 
