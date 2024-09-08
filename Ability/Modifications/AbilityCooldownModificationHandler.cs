@@ -34,8 +34,8 @@
             if(!abilityMapPool.Has(destinationEntity))
                 return;
 
-            ref var abilityMap = ref abilityMapPool.Get(destinationEntity);
-            var abilitiesCount = abilityMap.Abilities.Count();
+            ref var abilityMap = ref abilityMapPool.Get(destinationEntity); 
+            var abilitiesCount = abilityMap.Abilities.Count;
             if(abilityId < 0 || abilityId >= abilitiesCount)
                 return;
 
@@ -60,7 +60,7 @@
                 return;
 
             ref var abilityMap = ref abilityMapPool.Get(destinationEntity);
-            var abilitiesCount = abilityMap.Abilities.Count();
+            var abilitiesCount = abilityMap.Abilities.Count;
             if(abilityId < 0 || abilityId >= abilitiesCount)
                 return;
             
