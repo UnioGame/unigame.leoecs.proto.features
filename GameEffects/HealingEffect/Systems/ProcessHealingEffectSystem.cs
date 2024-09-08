@@ -47,6 +47,12 @@
                 healthRequest.Source = effect.Source;
                 healthRequest.Target = effect.Destination;
                 healthRequest.Value = healing.Value;
+
+                var madeHealEntity = _world.NewEntity();
+                ref var madeHealEvent = ref _healingEffectAspect.Made.Add(madeHealEntity);
+                madeHealEvent.Source = effect.Source;
+                madeHealEvent.Destination = effect.Destination;
+                madeHealEvent.Value = healing.Value;
             }
         }
     }

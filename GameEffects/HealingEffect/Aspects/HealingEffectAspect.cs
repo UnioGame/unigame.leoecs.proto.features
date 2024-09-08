@@ -2,6 +2,7 @@
 {
     using System;
     using Components;
+    using Events.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
 
@@ -19,5 +20,6 @@
     public class HealingEffectAspect : EcsAspect
     {
         public ProtoPool<HealingEffectComponent> HealingEffect;
+        public ProtoPool<MadeHealEvent> Made;
     }
 }
