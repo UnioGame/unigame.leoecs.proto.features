@@ -19,6 +19,5 @@
 		public ProtoPool<CompletedRestrictUITapAreaComponent> CompletedRestrictUITapArea;
 		public ProtoPool<ActionTriggerRequest> ActionTriggerRequest;
 		public ProtoPool<CompletedRunRestrictActionsComponent> CompletedRunRestrictActions;
-		public ProtoPool<OwnerComponent> Owners;
 	}
 }

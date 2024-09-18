@@ -4,6 +4,7 @@
 	using Abstracts;
 	using Components;
 	using Game.Ecs.Core.Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
 	using Leopotam.EcsProto;
 	using Sirenix.OdinInspector;
 	using UniGame.LeoEcs.Shared.Extensions;
@@ -37,15 +38,11 @@
 		{
 			var startTriggerEntity = world.NewEntity();
 			var finalTriggerEntity = world.NewEntity();
-			
-			ref var startTriggerOwner = ref world.AddComponent<OwnerComponent>(startTriggerEntity);
-			startTriggerOwner.Value = entity.PackEntity(world);
-			
+
+			entity.AddChild(startTriggerEntity, world);
 			ref var startActionsComponent = ref world.AddComponent<TutorialActionsComponent>(startTriggerEntity);
 			
-			ref var finalTriggerOwner = ref world.AddComponent<OwnerComponent>(finalTriggerEntity);
-			finalTriggerOwner.Value = entity.PackEntity(world);
-			
+			entity.AddChild(finalTriggerEntity, world);
 			ref var finalActionsComponent = ref world.AddComponent<TutorialActionsComponent>(finalTriggerEntity);
 
 			StartTrigger ??= new EmptyTrigger();

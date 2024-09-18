@@ -3,6 +3,7 @@
 	using System;
 	using Aspects;
 	using Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
@@ -46,8 +47,8 @@
 				foreach (var action in actionsComponent.Actions)
 				{
 					var actionEntity = _world.NewEntity();
-					ref var actionOwnerComponent = ref _aspect.Owner.Add(actionEntity);
-					actionOwnerComponent.Value = sourceEntity.PackEntity(_world);
+					
+					sourceEntity.AddChild(actionEntity, _world);
 					action.ComposeEntity(_world, actionEntity);
 				}
 			}

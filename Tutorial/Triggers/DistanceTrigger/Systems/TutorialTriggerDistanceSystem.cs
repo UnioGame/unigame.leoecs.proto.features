@@ -4,6 +4,7 @@
 	using Aspects;
 	using Components;
 	using Game.Ecs.Core.Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
@@ -27,7 +28,10 @@
 	public class TutorialTriggerDistanceSystem : IProtoInitSystem, IProtoRunSystem
 	{
 		private ProtoWorld _world;
+		
 		private DistanceTriggerAspect _aspect;
+		private OwnershipAspect _ownershipAspect;
+		
 		private EcsFilter _startLevelFilter;
 		private EcsFilter _championFilter;
 		private EcsFilter _distanceTriggerPointFilter;
@@ -62,8 +66,8 @@
 			
 			foreach (var triggerEntity in _distanceTriggerPointFilter)
 			{
-				ref var triggerOwnerComponent = ref _aspect.Owner.Get(triggerEntity);
-				if (!triggerOwnerComponent.Value.Unpack(_world, out var triggerOwnerEntity))
+				ref var triggerOwnerLinkComponent = ref _ownershipAspect.OwnerLink.Get(triggerEntity);
+				if (!triggerOwnerLinkComponent.Value.Unpack(_world, out var triggerOwnerEntity))
 					continue;
 				
 				ref var triggerTransformComponent = ref _aspect.Position.Get(triggerOwnerEntity);

@@ -5,6 +5,8 @@
     using Component;
     using Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -18,13 +20,15 @@
         private EcsFilter _filter;
         private ProtoWorld _world;
 
+        private OwnershipAspect _ownershipAspect;
+
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _filter = _world.Filter<AbilityInHandComponent>()
                 .Inc<AbilityActiveTimeComponent>()
                 .Inc<RadiusComponent>()
-                .Inc<OwnerComponent>()
+                .Inc<OwnerLinkComponent>()
                 .Inc<RadiusViewComponent>()
                 .End();
         }
@@ -32,7 +36,6 @@
         public void Run()
         {
             var activateTimePool = _world.GetPool<AbilityActiveTimeComponent>();
-            var ownerPool = _world.GetPool<OwnerComponent>();
             var visiblePool = _world.GetPool<VisibleUtilityViewComponent>();
             var radiusViewPool = _world.GetPool<RadiusViewComponent>();
             var radiusPool = _world.GetPool<RadiusComponent>();
@@ -41,8 +44,8 @@
 
             foreach (var entity in _filter)
             {
-                ref var owner = ref ownerPool.Get(entity);
-                if(!owner.Value.Unpack(_world, out var ownerEntity))
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(entity);
+                if(!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
                     continue;
                 
                 if(!visiblePool.Has(ownerEntity))
@@ -57,7 +60,7 @@
                     ref var hideRequest = ref hideRadiusPool.Add(hideRequestEntity);
                 
                     hideRequest.Source = packedEntity;
-                    hideRequest.Destination = owner.Value;
+                    hideRequest.Destination = ownerLinkComponent.Value;
                     
                     continue;
                 }
@@ -68,7 +71,7 @@
                 ref var showRequest = ref showRadiusPool.Add(showRequestEntity);
                 
                 showRequest.Source = packedEntity;
-                showRequest.Destination = owner.Value;
+                showRequest.Destination = ownerLinkComponent.Value;
 
                 ref var radiusView = ref radiusViewPool.Get(entity);
                 

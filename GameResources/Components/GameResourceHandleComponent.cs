@@ -1,8 +1,8 @@
 namespace UniGame.Ecs.Proto.GameResources.Components
 {
     using System;
+    using Core.Runtime;
     using Leopotam.EcsProto.QoL;
-    using UnityEngine.Serialization;
 
     [Serializable]
     public struct GameResourceHandleComponent
@@ -10,17 +10,17 @@ namespace UniGame.Ecs.Proto.GameResources.Components
         /// <summary>
         /// источник реквеста
         /// </summary>
-        [FormerlySerializedAs("RequestOwner")] public ProtoPackedEntity Source;
-        
-        /// <summary>
-        /// Владелец ресурса. Может быть пустым
-        /// </summary>
-        [FormerlySerializedAs("ResourceOwner")] public ProtoPackedEntity Owner;
+        public ProtoPackedEntity Source;
 
         /// <summary>
         /// адрес ресурса
         /// </summary>
         public string Resource;
+
+        /// <summary>
+        /// object lifetime
+        /// </summary>
+        public ILifeTime LifeTime;
     }
     
     

@@ -3,6 +3,8 @@
 	using System;
 	using Aspects;
 	using Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using UniGame.LeoEcs.Shared.Extensions;
@@ -20,7 +22,10 @@
 	public class RunRestrictAreaActionsSystem : IProtoInitSystem, IProtoRunSystem
 	{
 		private ProtoWorld _world;
+		
 		private RestrictUITapAreaActionAspect _aspect;
+		private OwnershipAspect _ownershipAspect;
+		
 		private EcsFilter _actionsFilter;
 
 		public void Init(IProtoSystems systems)
@@ -43,8 +48,8 @@
 				{
 					var actionEntity = _world.NewEntity();
 					tutorialAction.ComposeEntity(_world, actionEntity);
-					ref var ownerComponent = ref _aspect.Owners.Add(actionEntity);
-					ownerComponent.Value = entity.PackEntity(_world);
+					
+					entity.AddChild(actionEntity, _world);
 				}
 				_aspect.CompletedRunRestrictActions.Add(entity);
 			}

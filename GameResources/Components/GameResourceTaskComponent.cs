@@ -13,11 +13,6 @@
         /// источник реквеста
         /// </summary>
         public ProtoPackedEntity RequestOwner;
-        
-        /// <summary>
-        /// Владелец ресурса. Может быть пустым
-        /// </summary>
-        public ProtoPackedEntity ResourceOwner;
 
         /// <summary>
         /// адрес ресурса

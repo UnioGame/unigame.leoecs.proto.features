@@ -2,7 +2,6 @@
 {
     using System;
     using Components;
-    using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
@@ -19,7 +18,6 @@
 
         //optional
         public ProtoPool<GameObjectComponent> GameObject;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<ParentEntityComponent> Parent;
         public ProtoPool<GameResourceSelfTargetComponent> Target;
         

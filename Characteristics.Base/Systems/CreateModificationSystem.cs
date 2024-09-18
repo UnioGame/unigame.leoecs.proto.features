@@ -2,11 +2,9 @@
 {
     using System;
     using Aspects;
-    using Components;
-    using Components.Requests;
-    using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using LeoEcs.Bootstrap.Runtime.Attributes;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -28,6 +26,7 @@
         private ProtoWorld _world;
         private CharacteristicsAspect _characteristicsAspect;
         private ModificationsAspect _modificationsAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _filter = It
             .Chain<CreateModificationRequest>()
@@ -44,7 +43,9 @@
                 //create entity
                 var modificationEntity = _world.NewEntity();
                 
-                ref var ownerComponent = ref _characteristicsAspect.Owner.Add(modificationEntity);
+                
+                characteristicEntity.AddChild(modificationEntity, _world);
+
                 ref var modificationValueComponent = ref _modificationsAspect.Modification.Add(modificationEntity);
                 ref var linkCharacteristicComponent = ref _characteristicsAspect.CharacteristicLink.Add(modificationEntity);
                 ref var sourceLinkComponent = ref _modificationsAspect.SourceLink.Add(modificationEntity);
@@ -54,8 +55,7 @@
                 
                 var modificationValue = requestComponent.Modification;
                 var counter = modificationValue.counter == 0 ? 1 : modificationValue.counter;
-
-                ownerComponent.Value = requestComponent.Target;
+                
                 modificationValueComponent.IsPercent = modificationValue.isPercent;
                 modificationValueComponent.AllowedSummation = modificationValue.allowedSummation;
                 modificationValueComponent.BaseValue = modificationValue.baseValue;

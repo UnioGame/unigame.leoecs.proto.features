@@ -12,6 +12,5 @@
     {
         public ProtoPool<GameViewComponent> View;
         public ProtoPool<GameObjectComponent> GameObject;
-        public ProtoPool<OwnerComponent> Owner;
     }
 }

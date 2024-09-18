@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.GameResources.Components
 {
     using System;
+    using Core.Runtime;
     using Object = UnityEngine.Object;
 
     [Serializable]
@@ -15,5 +16,10 @@
         /// загруженный ресурс
         /// </summary>
         public Object Resource;
+
+        /// <summary>
+        /// ожидаемое время жизни объекта
+        /// </summary>
+        public ILifeTime LifeTime;
     }
 }

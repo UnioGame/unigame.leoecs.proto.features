@@ -40,6 +40,7 @@
 
                 ref var resourceComponent = ref _taskAspect.Result.Get(entity);
                 var resource = resourceComponent.Resource;
+                var lifeTime = resourceComponent.LifeTime;
                 if (!resource) continue;
 
                 ref var handleComponent = ref _taskAspect.Handle.Get(entity);
@@ -54,6 +55,7 @@
                 var targetPosition = positionComponent.Value;
                 var rotation = rotationComponent.Value;
                 var instance = resource.Spawn(targetPosition, rotation, parent);
+                lifeTime.AddCleanUpAction(() => instance.DespawnAsset());
 
                 if (!instance) continue;
 
@@ -64,43 +66,37 @@
                     ? component.gameObject
                     : instance as GameObject;
 
-                var pawnEntity = (ProtoEntity)(-1);
+                var spawnEntity = (ProtoEntity)(-1);
                 if (targetComponent.Value.Unpack(_world, out var target))
-                    pawnEntity = target;
+                    spawnEntity = target;
 
-                pawnEntity = (int)pawnEntity < 0 ? _world.NewEntity() : pawnEntity;
+                spawnEntity = (int)spawnEntity < 0 ? _world.NewEntity() : spawnEntity;
 
-                ref var sourceLinkComponent = ref _resourceAspect.SourceLink.Add(pawnEntity);
+                ref var sourceLinkComponent = ref _resourceAspect.SourceLink.Add(spawnEntity);
                 sourceLinkComponent.Source = handleComponent.Source;
-                sourceLinkComponent.SpawnedEntity = _world.PackEntity(pawnEntity);
-
-                if (handleComponent.Owner.Unpack(_world, out var ownerEntity))
-                {
-                    ref var pawnOwnerComponent = ref _resourceAspect.Owner.Add(pawnEntity);
-                    pawnOwnerComponent.Value = handleComponent.Owner;
-                }
+                sourceLinkComponent.SpawnedEntity = _world.PackEntity(spawnEntity);
 
                 if (parentEntityComponent.Value.Unpack(_world, out var parentEntity))
                 {
-                    ref var pawnParentEntityComponent = ref _resourceAspect.Parent.Add(pawnEntity);
-                    pawnParentEntityComponent.Value = parentEntityComponent.Value;
+                    ref var spawnParentEntityComponent = ref _resourceAspect.Parent.Add(spawnEntity);
+                    spawnParentEntityComponent.Value = parentEntityComponent.Value;
                 }
 
-                if ((int)target > 0) _resourceAspect.Target.Add(pawnEntity);
+                if ((int)target > 0) _resourceAspect.Target.Add(spawnEntity);
 
-                ref var pawnSpawnedComponent = ref _resourceAspect.SpawnedResource.Add(pawnEntity);
-                ref var pawnObjectComponent = ref _resourceAspect.Object.Add(pawnEntity);
-                ref var pawnResourceComponent = ref _resourceAspect.Resource.GetOrAddComponent(pawnEntity);
+                ref var spawnSpawnedComponent = ref _resourceAspect.SpawnedResource.Add(spawnEntity);
+                ref var spawnObjectComponent = ref _resourceAspect.Object.Add(spawnEntity);
+                ref var spawnResourceComponent = ref _resourceAspect.Resource.GetOrAddComponent(spawnEntity);
 
-                pawnResourceComponent.Value = handleComponent.Resource;
-                pawnSpawnedComponent.Source = handleComponent.Source;
-                pawnObjectComponent.Value = instance;
+                spawnResourceComponent.Value = handleComponent.Resource;
+                spawnSpawnedComponent.Source = handleComponent.Source;
+                spawnObjectComponent.Value = instance;
 
                 if (!targetGameObject) continue;
 
                 //targetGameObject.transform.localScale = scaleComponent.Value;
-                ref var pawnGameObjectComponent = ref _resourceAspect.GameObject.Add(pawnEntity);
-                pawnGameObjectComponent.Value = targetGameObject;
+                ref var spawnGameObjectComponent = ref _resourceAspect.GameObject.Add(spawnEntity);
+                spawnGameObjectComponent.Value = targetGameObject;
             }
         }
     }

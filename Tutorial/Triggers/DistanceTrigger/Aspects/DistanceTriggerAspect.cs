@@ -14,7 +14,6 @@
 		public ProtoPool<DistanceTriggerPointComponent> DistanceTriggerPoint;
 		public ProtoPool<CompletedDistanceTriggerPointComponent> CompletedDistanceTriggerPoint;
 		public ProtoPool<TransformPositionComponent> Position;
-		public ProtoPool<OwnerComponent> Owner;
 		public ProtoPool<RunTutorialActionsRequest> RunTutorialActionsRequest;
 	}
 }

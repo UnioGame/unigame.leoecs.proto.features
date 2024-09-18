@@ -3,7 +3,8 @@
     using System;
     using Components;
     using Components.Requests;
-    using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
@@ -28,6 +29,8 @@
     {
         private ProtoWorld _world;
         private EcsFilter _requestFilter;
+
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoPool<CreateCharacteristicRequest<TCharacteristic>> _requestPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _characteristicLinkPool;
@@ -35,7 +38,6 @@
         private ProtoPool<MinValueComponent> _minValuePool;
         private ProtoPool<MaxValueComponent> _maxValuePool;
         private ProtoPool<CharacteristicBaseValueComponent> _baseValuePool;
-        private ProtoPool<OwnerComponent> _ownerPool;
         private ProtoPool<CharacteristicOwnerComponent<TCharacteristic>> _characteristicsOwnerPool;
         private ProtoPool<CharacteristicComponent<TCharacteristic>> _characteristicValuePool;
         private ProtoPool<CharacteristicDefaultValueComponent> _defaultValuePool;
@@ -64,7 +66,6 @@
             _minValuePool = _world.GetPool<MinValueComponent>();
             _maxValuePool = _world.GetPool<MaxValueComponent>();
             _baseValuePool = _world.GetPool<CharacteristicBaseValueComponent>();
-            _ownerPool = _world.GetPool<OwnerComponent>();
             _characteristicValuePool = _world.GetPool<CharacteristicComponent<TCharacteristic>>();
             _changedPool = _world.GetPool<CharacteristicChangedComponent>();
             _defaultValuePool = _world.GetPool<CharacteristicDefaultValueComponent>();
@@ -97,14 +98,15 @@
                 ref var maxComponent = ref _maxValuePool.Add(characteristicEntity);
                 ref var baseValueComponent = ref _baseValuePool.Add(characteristicEntity);
                 ref var characteristicOwnerComponent = ref _characteristicsOwnerPool.Add(characteristicEntity);
-                ref var ownerComponent = ref _ownerPool.Add(characteristicEntity);
                 ref var defaultComponent = ref _defaultValuePool.Add(characteristicEntity);
                 ref var previousValue = ref _previousValuePool.Add(characteristicEntity);
                 ref var changedComponent = ref _changedPool.Add(characteristicEntity);
                 ref var percentModificationsValueComponent = ref _modificationPercentPool.Add(characteristicEntity);
                 ref var maxLimitValueComponent = ref _maxLimitModificationsPool.Add(characteristicEntity);
                 ref var valueModificationsValueComponent = ref _valueModificationsPool.Add(characteristicEntity);
-
+                
+                ownerEntity.AddChild(characteristicEntity, _world);
+                
                 var maxValue = requestComponent.MaxValue;
                 var minValue = requestComponent.MinValue;
                 var value = requestComponent.Value;
@@ -117,7 +119,6 @@
                 maxComponent.Value = maxValue;
                 baseValueComponent.Value = value;
                 characteristicOwnerComponent.Link = requestComponent.Owner;
-                ownerComponent.Value = requestComponent.Owner;
                 
                 defaultComponent.Value =     value;
                 defaultComponent.BaseValue = value;

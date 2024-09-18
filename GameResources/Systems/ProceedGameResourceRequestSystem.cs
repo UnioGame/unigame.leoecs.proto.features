@@ -9,6 +9,7 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
     using Game.Code.DataBase.Runtime;
     using Game.Code.DataBase.Runtime.Abstract;
     using Game.Ecs.Time.Service;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.Core.Runtime;
@@ -28,11 +29,12 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
     public class ProceedGameResourceRequestSystem : IProtoRunSystem, IProtoDestroySystem
     {
         private readonly IGameDatabase _gameDatabase;
-        private readonly ILifeTime _lifeTime;
+        private readonly ILifeTime _defaultLifeTime;
         private readonly CancellationTokenSource _tokenSource = new();
         
         private ProtoWorld _world;
         private GameResourceTaskAspect _taskAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoItExc _filter = It
             .Chain<GameResourceHandleComponent>()
@@ -40,10 +42,10 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
             .Exc<GameResourceTaskComponent>()
             .End();
 
-        public ProceedGameResourceRequestSystem(IGameDatabase gameDatabase,ILifeTime lifeTime)
+        public ProceedGameResourceRequestSystem(IGameDatabase gameDatabase,ILifeTime defaultLifeTime)
         {
             _gameDatabase = gameDatabase;
-            _lifeTime = lifeTime;
+            _defaultLifeTime = defaultLifeTime;
         }
         
         public void Run()
@@ -57,9 +59,12 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
                 taskComponent.Resource = request.Resource;
                 taskComponent.LoadingStartTime = GameTime.Time;
                 taskComponent.RequestOwner = request.Source;
-                taskComponent.ResourceOwner = request.Owner;
+
+                var lifeTime = request.LifeTime == default
+                    ? _defaultLifeTime
+                    : request.LifeTime;
                 
-                LoadGameResource(entity,resourceId).Forget();
+                LoadGameResource(entity, resourceId, lifeTime).Forget();
             }
         }
 
@@ -69,14 +74,15 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
             _tokenSource.Dispose();
         }
         
-        private async UniTask LoadGameResource(ProtoEntity entity, string resourceId)
+        private async UniTask LoadGameResource(ProtoEntity entity, string resourceId, ILifeTime lifeTime)
         {
-            var result = await _gameDatabase.LoadAsync<Object>(resourceId,_lifeTime);
-            CreateResourceResult(entity,ref result,resourceId, _world);
+            var result = await _gameDatabase.LoadAsync<Object>(resourceId, lifeTime);
+            CreateResourceResult(entity, ref result, resourceId, _world, lifeTime);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void CreateResourceResult(ProtoEntity entity,ref GameResourceResult result, string resourceId, ProtoWorld world)
+        public void CreateResourceResult(ProtoEntity entity, ref GameResourceResult result, string resourceId, 
+            ProtoWorld world, ILifeTime lifeTime)
         {
             //is entity still alive?
             var packedEntity = world.PackEntity(entity);
@@ -92,12 +98,12 @@ namespace UniGame.Ecs.Proto.GameResources.Systems
             ref var component = ref _taskAspect.Result.Add(entity);
             component.Resource = result.Result;
             component.ResourceId = resourceId;
+            component.LifeTime = lifeTime;
             
 #if UNITY_EDITOR
             if(result.Result == null)
                 Debug.LogError($"ECS: {nameof(ProceedGameResourceRequestSystem)} not found spawn resource with ID : {resourceId}");
 #endif
         }
-
     }
 }

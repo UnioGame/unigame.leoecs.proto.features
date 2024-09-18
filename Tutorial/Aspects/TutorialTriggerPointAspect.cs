@@ -15,7 +15,6 @@
 		public ProtoPool<TransformComponent> Transform;
 		public ProtoPool<RunTutorialActionsRequest> RunTutorialActionsRequest;
 		public ProtoPool<TutorialActionsComponent> TutorialActions;
-		public ProtoPool<OwnerComponent> Owner;
 		public ProtoPool<DelayedTutorialComponent> DelayedTutorial;
 		public ProtoPool<CompletedDelayedTutorialComponent> CompletedDelayedTutorial;
 	}

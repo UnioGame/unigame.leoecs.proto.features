@@ -4,6 +4,8 @@
     using Aspects;
     using Components.Requests;
     using Data;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -25,6 +27,7 @@
         private AnimationToolSystem _animationTool;
         
         private AnimationTimelineAspect _animationAspect;
+        private OwnershipAspect _ownershipAspect;
 
         public void Init(IProtoSystems systems)
         {
@@ -45,7 +48,6 @@
                 ref var durationComponent = ref _animationAspect.Duration.GetOrAddComponent(animationEntity);
                 ref var animationComponent = ref _animationAspect.Animation.GetOrAddComponent(animationEntity);
                 ref var bindingDataComponent = ref _animationAspect.Binding.GetOrAddComponent(animationEntity);
-                ref var ownerComponent = ref _animationAspect.Owner.GetOrAddComponent(animationEntity);
                 ref var targetComponent = ref _animationAspect.Target.GetOrAddComponent(animationEntity);
                 ref var activeComponent = ref _animationAspect.Ready.GetOrAddComponent(animationEntity);
                 ref var wrapModeComponent = ref _animationAspect.WrapMode.GetOrAddComponent(animationEntity);
@@ -54,11 +56,12 @@
 
                 speedComponent.Value = request.Speed > 0 ? request.Speed : speedComponent.Value;
                 targetComponent.Value = request.Target;
-                ownerComponent.Value = request.Owner;
                 bindingDataComponent.Value = request.BindingData;
                 animationComponent.Value = request.Animation;
                 wrapModeComponent.Value = request.WrapMode;
                 durationComponent.Value = request.Duration;
+                
+                request.Owner.AddChild(animationEntity, _world);
                 
                 var playable = animationComponent.Value;
 

@@ -46,8 +46,6 @@ namespace UniGame.Ecs.Proto.AbilityInventory.Aspects
         public ProtoPool<AbilityBlockedComponent> Blocked;
         public ProtoPool<AbilityVisualComponent> Visual;
         public ProtoPool<AbilitySlotComponent> Slot;
-        public ProtoPool<OwnerComponent> Owner;
-        public ProtoPool<OwnerLinkComponent> OwnerLink;
         public ProtoPool<AbilityActiveAnimationComponent> Animation;
         public ProtoPool<AbilityMetaLinkComponent> MetaLink;
         public ProtoPool<AbilityConfigurationComponent> Configuration;

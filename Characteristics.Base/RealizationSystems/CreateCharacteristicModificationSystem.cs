@@ -4,7 +4,6 @@
     using System.Runtime.CompilerServices;
     using Aspects;
     using Components;
-    using Base;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;

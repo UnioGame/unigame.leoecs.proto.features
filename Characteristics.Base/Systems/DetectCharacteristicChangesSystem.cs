@@ -3,16 +3,11 @@
     using System;
     using Aspects;
     using Components;
-    using Components.Events;
-    using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Shared.Extensions;
-
-
     /// <summary>
     /// detect characteristic changes and create event for it
     /// </summary>
@@ -30,6 +25,7 @@
         private ProtoWorld _world;
         private CharacteristicsAspect _characteristicsAspect;
         private ModificationsAspect _modificationsAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _changeRequestFilter= It
             .Chain<CharacteristicChangedComponent>()
@@ -45,11 +41,11 @@
             {
                 ref var changedComponent = ref _characteristicsAspect.Changed.Get(changesEntity);
                 ref var previousValue = ref _characteristicsAspect.PreviousValue.Get(changesEntity);
-                ref var ownerComponent = ref _characteristicsAspect.Owner.Get(changesEntity);
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(changesEntity);
                 
                 var eventEntity = _world.NewEntity();
                 ref var eventComponent = ref _characteristicsAspect.OnValueChanged.Add(eventEntity);
-                eventComponent.Owner = ownerComponent.Value;
+                eventComponent.Owner = ownerLinkComponent.Value;
                 eventComponent.Value = changedComponent.Value;
                 eventComponent.PreviousValue = previousValue.Value;
                 eventComponent.Characteristic = _world.PackEntity(changesEntity);

@@ -24,7 +24,7 @@
         private ProtoWorld _world;
         private EcsFilter _readyFilter;
         private ProtoPool<KillRequest> _killPool;
-        private ProtoPool<PrepareToDeathComponent> _readyPool;
+
 
         public void Init(IProtoSystems systems)
         {
@@ -36,18 +36,17 @@
                 .End();
             
             _killPool = _world.GetPool<KillRequest>();
-            _readyPool = _world.GetPool<PrepareToDeathComponent>();
         }
 
         public void Run()
         {
             foreach (var readyEntity in _readyFilter)
             {
-                ref var readyComponent = ref _readyPool.Get(readyEntity);
+                /*ref var readyComponent = ref _readyPool.Get(readyEntity);
                 ref var killRequest = ref _killPool.GetOrAddComponent(readyEntity);
                 killRequest.Source = readyComponent.Source;
                 
-                _readyPool.Del(readyEntity);
+                _readyPool.Del(readyEntity);*/
             }
         }
     }

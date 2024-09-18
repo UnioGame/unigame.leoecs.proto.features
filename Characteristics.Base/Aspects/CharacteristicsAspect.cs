@@ -4,7 +4,6 @@
     using Components;
     using Components.Events;
     using Components.Requests;
-    using Game.Ecs.Core.Components;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
@@ -32,7 +31,6 @@
         public ProtoPool<CharacteristicDefaultValueComponent> DefaultValue;
         public ProtoPool<CharacteristicValueComponent> Value;
         public ProtoPool<CharacteristicLinkComponent> CharacteristicLink;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<CharacteristicPreviousValueComponent> PreviousValue;
         public ProtoPool<MinValueComponent> MinValue;
         public ProtoPool<MaxValueComponent> MaxValue;

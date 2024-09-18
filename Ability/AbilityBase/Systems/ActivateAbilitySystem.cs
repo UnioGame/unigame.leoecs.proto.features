@@ -3,6 +3,7 @@
     using System;
     using Aspects;
     using Components.Requests;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -22,6 +23,7 @@
     {
         private ProtoWorld _world;
         private AbilityAspect _abilityAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _requestFilter= It
             .Chain<ActivateAbilityRequest>()
@@ -40,9 +42,9 @@
 
                 foreach (var abilityEntity in _abilityAspect.ActiveAbilityFilter)
                 {
-                    ref var ownerComponent = ref _abilityAspect.Owner.Get(abilityEntity);
-                    if(!ownerComponent.Value.Unpack(_world,out _)) continue;
-                    if (!ownerComponent.Value.Equals(request.Target)) continue;
+                    ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(abilityEntity);
+                    if(!ownerLinkComponent.Value.Unpack(_world,out _)) continue;
+                    if (!ownerLinkComponent.Value.Equals(request.Target)) continue;
                     
                     if (!abilityEntity.Equals(targetAbilityEntity)) continue;
                     

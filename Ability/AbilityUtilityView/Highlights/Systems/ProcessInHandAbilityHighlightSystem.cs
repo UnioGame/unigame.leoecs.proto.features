@@ -5,11 +5,14 @@
     using Common.Components;
     using Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
+    using UniModules.UniCore.Runtime.DataFlow;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -24,9 +27,10 @@
     {
         private EcsFilter _filter;
         private ProtoWorld _world;
+
+        private OwnershipAspect _ownershipAspect;
         
         //private ProtoPool<AbilityTargetsComponent> _abilityTargetPool;
-        private ProtoPool<OwnerComponent> _ownerPool;
         private ProtoPool<VisibleUtilityViewComponent> _visiblePool;
         private ProtoPool<ShowHighlightRequest> _showHighlightPool;
         private ProtoPool<HideHighlightRequest> _hideHighlightPool;
@@ -36,11 +40,10 @@
             _world = systems.GetWorld();
             _filter = _world.Filter<AbilityInHandComponent>()
                 //.Inc<AbilityTargetsComponent>()
-                .Inc<OwnerComponent>()
+                .Inc<OwnerLinkComponent>()
                 .End();
             
             //_abilityTargetPool = _world.GetPool<AbilityTargetsComponent>();
-            _ownerPool = _world.GetPool<OwnerComponent>();
             _visiblePool = _world.GetPool<VisibleUtilityViewComponent>();
             _showHighlightPool = _world.GetPool<ShowHighlightRequest>();
             _hideHighlightPool = _world.GetPool<HideHighlightRequest>();
@@ -50,10 +53,12 @@
         {
             foreach (var entity in _filter)
             {
-                ref var owner = ref _ownerPool.Get(entity);
-                
-                if(!owner.Value.Unpack(_world, out var ownerEntity))
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(entity);
+
+                if (!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
+                {
                     continue;
+                }
                 
                 if(!_visiblePool.Has(ownerEntity))
                     continue;

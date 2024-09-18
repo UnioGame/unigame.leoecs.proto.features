@@ -6,6 +6,7 @@
     using Characteristics.Health.Components;
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -28,7 +29,7 @@
     {
         private ProtoWorld _world;
         private HealthAspect _healthAspect;
-        private LifeTimeAspect _lifeTimeAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoItExc _filter = It
             .Chain<CharacteristicChangedComponent<HealthComponent>>()
@@ -46,12 +47,8 @@
                 
                 if(healthComponent.Value > 0.0f) continue;
 
-                ref var prepareToDeath = ref _lifeTimeAspect.PrepareToDeath.GetOrAddComponent(entity);
+                ref var prepareToDeath = ref _ownershipAspect.PrepareToDeath.GetOrAddComponent(entity);
                 prepareToDeath.Source = entity.PackEntity(_world);
-                
-                var eventEntity = _world.NewEntity();
-                ref var prepareToDeathEvent = ref _lifeTimeAspect.PrepareToDeathEvent.GetOrAddComponent(eventEntity);
-                prepareToDeathEvent.Source = entity.PackEntity(_world);
             }
         }
     }

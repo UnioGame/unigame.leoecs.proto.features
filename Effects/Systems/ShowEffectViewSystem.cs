@@ -4,6 +4,8 @@
     using Aspects;
     using Components;
     using Cysharp.Threading.Tasks;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -36,8 +38,9 @@
         
         private EffectAspect _effectAspect;
         private EffectViewAspect _effectViewAspect;
-        private EffectViewResult[] _effectViewResults =
-            new EffectViewResult[EcsEffectsConfiguration.MAX_EFFECTS_COUNT];
+        private OwnershipAspect _ownershipAspect;
+        
+        private EffectViewResult[] _effectViewResults = new EffectViewResult[EcsEffectsConfiguration.MAX_EFFECTS_COUNT];
         private int _counter = 0;
         private ILifeTime _lifeTime;
         
@@ -106,13 +109,11 @@
                 
                 var effectEntity = _world.NewEntity();
                 _effectAspect.Parent.Copy(entity,effectEntity);
-                ref var owner = ref _effectViewAspect.Owner.Add(effectEntity);
-                
                 var targetPackEntity =  viewDataComponent.AttachToSource 
                     ? effect.Source 
                     : effect.Destination;
                 
-                owner.Value = targetPackEntity;
+                targetPackEntity.AddChild(effectEntity, _world);
                 
                 var size = effectViewResult.Size <= 0 ? 1 : effectViewResult.Size;
                 var deathTime = Time.time + effectViewResult.Duration;

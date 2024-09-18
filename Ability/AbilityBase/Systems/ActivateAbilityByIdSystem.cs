@@ -5,6 +5,8 @@
     using Common.Components;
     using Components.Requests;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -25,13 +27,14 @@
     public class ActivateAbilityByIdSystem : IProtoRunSystem
     {
         private AbilityAspect _abilityAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoWorld _world;
 
         private ProtoIt _abilityFilter= It
             .Chain<ActiveAbilityComponent>()
             .Inc<AbilityIdComponent>()
-            .Inc<OwnerComponent>()
+            .Inc<OwnerLinkComponent>()
             .End();
         
         private ProtoIt _requestFilter= It
@@ -47,8 +50,11 @@
 
                 foreach (var abilityEntity in _abilityFilter)
                 {
-                    ref var ownerComponent = ref _abilityAspect.Owner.Get(abilityEntity);
-                    if (!ownerComponent.Value.Equals(request.Target)) continue;
+                    ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(abilityEntity);
+                    if (!ownerLinkComponent.Value.Equals(request.Target))
+                    {
+                        continue;
+                    }
                     
                     ref var abilityId = ref _abilityAspect.AbilityId.Get(abilityEntity);
                     if (abilityId.AbilityId != request.AbilityId) continue;

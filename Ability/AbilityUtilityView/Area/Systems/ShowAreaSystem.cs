@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Area.Systems
+﻿/*namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Area.Systems
 {
     using Components;
     using Leopotam.EcsLite;
@@ -43,4 +43,4 @@
             }
         }
     }
-}
+}*/

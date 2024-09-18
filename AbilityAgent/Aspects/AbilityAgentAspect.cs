@@ -30,7 +30,6 @@
         public ProtoPool<AbilityInHandLinkComponent> AbilityInHandLinkComponent;
         public ProtoPool<EntityAvatarComponent> EntityAvatarComponent;
         public ProtoPool<EffectRootComponent> EffectRootComponent;
-        public ProtoPool<OwnerComponent> OwnerComponent;
         public ProtoPool<AbilityAgentConfigurationComponent> AbilityAgentConfigurationComponent;
         public ProtoPool<AbilityAgentUnitOwnerComponent> AbilityAgentUnitOwnerComponent;
 

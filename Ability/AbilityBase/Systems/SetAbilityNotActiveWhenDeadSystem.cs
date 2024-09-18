@@ -3,12 +3,13 @@
     using Aspects;
     using Components;
     using Game.Ecs.Core.Components;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
-
+    [ECSDI]
     public sealed class SetAbilityNotActiveWhenDeadSystem : IProtoRunSystem,IProtoInitSystem
     {
         private EcsFilter _filter;

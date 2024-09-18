@@ -30,7 +30,6 @@
         public ProtoPool<StepMovementComponent> StepMovement;
         public ProtoPool<ComePointComponent> ComePoint;
         public ProtoPool<InstantRotateComponent> InstantRotate;
-        public ProtoPool<PrepareToDeathComponent> PrepareToDeath;
         public ProtoPool<DisabledComponent> Disabled;
 
         //requests

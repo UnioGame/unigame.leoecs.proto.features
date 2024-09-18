@@ -1,11 +1,12 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Systems
 {
 	using System;
+	using Aspects;
 	using Components;
 	using Game.Ecs.Core.Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
-	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
@@ -24,18 +25,17 @@
 	public class ProcessEffectViewPrepareToDeathSystem : IProtoInitSystem, IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _eventFilter;
+		private EcsFilter _prepareDeathFilter;
 		private EcsFilter _viewFilter;
 
-		private ProtoPool<PrepareToDeathEvent> _prepareToDeathPool;
-		private ProtoPool<OwnerComponent> _ownerPool;
-		private ProtoPool<DestroyEffectViewSelfRequest> _destroyRequestPool;
+		private OwnershipAspect _ownershipAspect;
+		private EffectAspect _effectAspect;
 
 		public void Init(IProtoSystems systems)
 		{
 			_world = systems.GetWorld();
-			_eventFilter = _world
-				.Filter<PrepareToDeathEvent>()
+			_prepareDeathFilter = _world
+				.Filter<PrepareToDeathComponent>()
 				.End();
 			_viewFilter = _world
 				.Filter<EffectViewComponent>()
@@ -44,17 +44,17 @@
 
 		public void Run()
 		{
-			foreach (var eventEntity in _eventFilter)
+			foreach (var eventEntity in _prepareDeathFilter)
 			{
-				ref var prepareToDeathEvent = ref _prepareToDeathPool.Get(eventEntity);
+				ref var prepareToDeathEvent = ref _ownershipAspect.PrepareToDeath.Get(eventEntity);
 				
 				foreach (var viewEntity in _viewFilter)
 				{
-					ref var ownerComponent = ref _ownerPool.Get(viewEntity);
-					if (!ownerComponent.Value.Equals(prepareToDeathEvent.Source))
+					ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(viewEntity);
+					if (!ownerLinkComponent.Value.Equals(prepareToDeathEvent.Source))
 						continue;
 					
-					_destroyRequestPool.TryAdd(viewEntity);
+					_effectAspect.DestroyEffectViewSelfRequest.TryAdd(viewEntity);
 				}
 			}
 		}
