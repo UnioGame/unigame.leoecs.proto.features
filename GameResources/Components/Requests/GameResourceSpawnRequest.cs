@@ -1,13 +1,13 @@
 namespace UniGame.Ecs.Proto.GameResources.Components
 {
     using System;
+    using Core.Runtime;
     using Data;
     using Game.Code.DataBase.Runtime;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Abstract;
     using UnityEngine;
-    using UnityEngine.Serialization;
 
     /// <summary>
     /// Spawn Request for some game world entity
@@ -26,19 +26,11 @@ namespace UniGame.Ecs.Proto.GameResources.Components
         /// <summary>
         /// link to source entity
         /// </summary>
-        [FormerlySerializedAs("RequestOwner")] 
         public ProtoPackedEntity Source;
-
-        /// <summary>
-        /// spawned entity Owner
-        /// </summary>
-        [FormerlySerializedAs("OwnerEntity")] 
-        public ProtoPackedEntity Owner;
 
         /// <summary>
         /// entity target for spawn
         /// </summary>
-        [FormerlySerializedAs("TargetEntity")] 
         public ProtoPackedEntity Target;
         
         /// <summary>
@@ -56,15 +48,20 @@ namespace UniGame.Ecs.Proto.GameResources.Components
         /// </summary>
         public Transform Parent;
 
+        /// <summary>
+        /// entity lifeTime
+        /// </summary>
+        public ILifeTime LifeTime;
+
         public void Apply(ref GameResourceSpawnRequest data)
         {
             data.ResourceId = ResourceId;
             data.Source = Source;
-            data.Owner = Owner;
             data.LocationData = LocationData;
             data.Parent = Parent;
             data.Target = Target;
             data.ParentEntity = ParentEntity;
+            data.LifeTime = LifeTime;
         }
 
         public void AutoReset(ref GameResourceSpawnRequest c)
@@ -72,10 +69,10 @@ namespace UniGame.Ecs.Proto.GameResources.Components
             c.ResourceId = (GameResourceRecordId)string.Empty;
             c.Parent = default;
             c.LocationData = GamePoint.Zero;
-            c.Owner = default;
             c.Source = default;
             c.Target = default;
             c.ParentEntity = default;
+            c.LifeTime = default;
         }
     }
 }

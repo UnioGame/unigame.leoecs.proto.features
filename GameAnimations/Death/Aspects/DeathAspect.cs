@@ -11,7 +11,6 @@
     [Serializable]
     public class DeathAspect : EcsAspect
     {
-        public ProtoPool<PrepareToDeathComponent> PrepareToDeath;
         public ProtoPool<PlayableDirectorComponent> Director;
         public ProtoPool<DeadAnimationEvaluateComponent> Evaluate;
         public ProtoPool<DeathAnimationComponent> Animation;

@@ -3,6 +3,7 @@
     using System;
     using Aspects;
     using Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -20,6 +21,7 @@
     {
         private ProtoWorld _world;
         private GameResourceTaskAspect _taskAspect;
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _filter = It
             .Chain<GameResourceSpawnRequest>()
@@ -38,7 +40,8 @@
                     
                 gameResourceComponent.Resource = spawnRequest.ResourceId;
                 gameResourceComponent.Source = spawnRequest.Source;
-                gameResourceComponent.Owner = spawnRequest.Owner;
+                gameResourceComponent.LifeTime = spawnRequest.LifeTime;
+                
                 parentEntity.Value = spawnRequest.ParentEntity;
                 targetComponent.Value = spawnRequest.Target;
                 

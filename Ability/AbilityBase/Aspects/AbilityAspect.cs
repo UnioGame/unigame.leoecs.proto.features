@@ -17,22 +17,29 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Input.Components.Evetns;
     using Game.Ecs.Time.Service;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using GameLayers.Category.Components;
     using GameLayers.Relationship.Components;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Rx.Runtime.Extensions;
     using SubFeatures.AbilityAnimation.Components;
     using Tools;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Timer.Components;
     using Unity.IL2CPP.CompilerServices;
+    using UnityEngine.Serialization;
 
     [Serializable]
     public class AbilityAspect : EcsAspect
     {
         public AbilityOwnerAspect AbilityOwnerAspect;
+        [FormerlySerializedAs("LifeTimeAspect")]
+        public OwnershipAspect ownershipAspect;
         
         public ProtoWorld World;
         
@@ -64,7 +71,6 @@
         public ProtoPool<PassiveAbilityComponent> PassiveAbilityComponent;
         
         public ProtoPool<AbilityUnlockComponent> Unlock;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<ActiveAbilityComponent> Active;
         public ProtoPool<DefaultAbilityComponent> Default;
         public ProtoPool<AbilitySlotComponent> Slot;
@@ -72,7 +78,6 @@
         public ProtoPool<NameComponent> Name;
         public ProtoPool<IconComponent> Icon;
         public ProtoPool<CategoryIdComponent> Category;
-        public ProtoPool<OwnerLinkComponent> OwnerLink;
         public ProtoPool<DurationComponent> Duration;
         public ProtoPool<AnimationDataLinkComponent> AnimationLink;
         public ProtoPool<AbilityInHandLinkComponent> AbilityInHandLink;
@@ -157,20 +162,20 @@
         public ProtoIt AbilityFilter = It
             .Chain<AbilityIdComponent>()
             .Inc<ActiveAbilityComponent>()
-            .Inc<OwnerComponent>()
+            .Inc<OwnerLinkComponent>()
             .End();
 
         public ProtoIt ActiveAbilityFilter = It
             .Chain<ActiveAbilityComponent>()
             .Inc<AbilityIdComponent>()
-            .Inc<OwnerComponent>()
+            .Inc<OwnerLinkComponent>()
             .End();
         
         public ProtoIt AbilityInUseFilter = It
             .Chain<AbilityIdComponent>()
             .Inc<AbilityUsingComponent>()
             .Inc<ActiveAbilityComponent>()
-            .Inc<OwnerComponent>()
+            .Inc<OwnerLinkComponent>()
             .End();
 
         public ProtoIt ExistsAbilityFilter = It
@@ -188,14 +193,12 @@
             var packedAbility = World.PackEntity(abilityEntity);
             ref var slotComponent = ref Slot.GetOrAddComponent(abilityEntity);
             ref var abilityIdComponent = ref AbilityId.GetOrAddComponent(abilityEntity);
-            ref var ownerComponent = ref Owner.GetOrAddComponent(abilityEntity);
-            ref var ownerLinkComponent = ref OwnerLink.GetOrAddComponent(abilityEntity);
             ref var cooldownComponent = ref Cooldown.GetOrAddComponent(abilityEntity);
             ref var cooldownStateComponent = ref CooldownState.GetOrAddComponent(abilityEntity);
             ref var durationComponent = ref world.GetOrAddComponent<DurationComponent>(abilityEntity);
 
-            ownerLinkComponent.Value = ownerEntity;
-            ownerComponent.Value = ownerEntity;
+            ownerEntity.AddChild(abilityEntity, world);
+            
             slotComponent.SlotType = buildData.Slot;
             abilityIdComponent.AbilityId = buildData.AbilityId;
 
@@ -236,8 +239,8 @@
         {
             foreach (var abilityEntity in AbilityFilter)
             {
-                ref var ownerComponent = ref Owner.Get(abilityEntity);
-                if (!ownerEntity.Equals(ownerComponent.Value)) continue;
+                ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
+                if (!ownerEntity.Equals(ownerLinkComponent.Value)) continue;
 
                 ref var abilityIdComponent = ref AbilityId.Get(abilityEntity);
                 if (abilityId != abilityIdComponent.AbilityId) continue;
@@ -261,10 +264,13 @@
             foreach (var abilityEntity in ExistsAbilityFilter)
             {
                 ref var abilityIdComponent = ref AbilityId.Get(abilityEntity);
-                ref var ownerComponent = ref Owner.Get(abilityEntity);
+                ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
 
                 if (abilityIdComponent.AbilityId != abilityId ||
-                    !ownerComponent.Value.Equals(targetEntity)) continue;
+                    !ownerLinkComponent.Value.Equals(targetEntity))
+                {
+                    continue;
+                }
 
                 return (int)abilityEntity;
             }
@@ -485,8 +491,11 @@
         {
             foreach (var abilityEntity in AbilityFilter)
             {
-                ref var ownerComponent = ref Owner.Get(abilityEntity);
-                if (!owner.Equals(ownerComponent.Value)) continue;
+                ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
+                if (!owner.Equals(ownerLinkComponent.Value))
+                {
+                    continue;
+                }
 
                 ref var abilityIdComponent = ref AbilityId.Get(abilityEntity);
                 if (abilityId != abilityIdComponent.AbilityId) continue;
@@ -507,10 +516,17 @@
         {
             foreach (var abilityEntity in AbilityFilter)
             {
-                ref var ownerComponent = ref Owner.Get(abilityEntity);
-                if (!owner.Equals(ownerComponent.Value)) continue;
+                ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
+                if (!owner.Equals(ownerLinkComponent.Value))
+                {
+                    continue;
+                }
 
-                if (!targetAbility.Equals(abilityEntity)) continue;
+                if (!targetAbility.Equals(abilityEntity))
+                {
+                    continue;
+                }
+                
                 return (int)abilityEntity;
             }
 
@@ -667,8 +683,11 @@
         {
             if (!World.HasComponent<OwnerComponent>(abilityEntity)) return;
 
-            ref var ownerComponent = ref World.GetComponent<OwnerComponent>(abilityEntity);
-            if (!ownerComponent.Value.Unpack(World, out var ownerEntity)) return;
+            ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
+            if (!ownerLinkComponent.Value.Unpack(World, out var ownerEntity))
+            {
+                return;
+            }
 
             ActivateAbility(ownerEntity, abilityEntity);
         }

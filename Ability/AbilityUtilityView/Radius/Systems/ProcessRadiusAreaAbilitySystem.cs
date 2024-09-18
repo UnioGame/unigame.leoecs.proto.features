@@ -1,7 +1,9 @@
-﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Radius.Systems
+﻿/*namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Radius.Systems
 {
     using Component;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -13,26 +15,29 @@
         private EcsFilter _filter;
         private ProtoWorld _world;
 
+        private LifeTimeAspect _lifeTimeAspect;
+
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _filter = _world.Filter<AreableAbilityComponent>()
-                .Inc<OwnerComponent>()
+                .Inc<OwnerLinkComponent>()
                 .End();
         }
         
         public void Run()
         {
-            var ownerPool = _world.GetPool<OwnerComponent>();
             var radiusViewDataPool = _world.GetPool<RadiusViewDataComponent>();
             var avatarPool = _world.GetPool<EntityAvatarComponent>();
             var radiusViewPool = _world.GetPool<RadiusViewComponent>();
             
             foreach (var entity in _filter)
             {
-                ref var owner = ref ownerPool.Get(entity);
-                if (!owner.Value.Unpack(_world, out var ownerEntity))
+                ref var ownerLinkComponent = ref _lifeTimeAspect.OwnerLink.Get(entity);
+                if (!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
+                {
                     continue;
+                }
 
                 if (!radiusViewDataPool.Has(ownerEntity) || !avatarPool.Has(ownerEntity))
                     continue;
@@ -46,4 +51,4 @@
             }
         }
     }
-}
+}*/

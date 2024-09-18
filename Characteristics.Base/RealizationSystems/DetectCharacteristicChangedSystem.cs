@@ -3,7 +3,9 @@
     using System;
     using Components;
     using Components.Events;
-    using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
@@ -21,11 +23,14 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class DetectCharacteristicChangedSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
         private EcsFilter _filter;
+
+        private OwnershipAspect _ownershipAspect;
         
         private ProtoPool<CharacteristicValueChangedEvent<TCharacteristic>> _resultEventPool;
         private ProtoPool<CharacteristicComponent<TCharacteristic>> _characteristicValuePool;
@@ -34,7 +39,6 @@
         private ProtoPool<CharacteristicBaseValueComponent> _baseValuePool;
         private ProtoPool<CharacteristicValueComponent> _valuePool;
         private ProtoPool<MaxValueComponent> _maxPool;
-        private ProtoPool<OwnerComponent> _ownerPool;
         private ProtoPool<CharacteristicChangedComponent<TCharacteristic>> _changedPool;
         private ProtoPool<CharacteristicChangedComponent> _changedCharacteristicPool;
 
@@ -46,7 +50,7 @@
                 .Filter<CharacteristicChangedComponent>()
                 .Inc<CharacteristicOwnerComponent<TCharacteristic>>()
                 .Inc<CharacteristicValueComponent>()
-                .Inc<OwnerComponent>()
+                .Inc<OwnerLinkComponent>()
                 .End();
             
             _resultEventPool = _world.GetPool<CharacteristicValueChangedEvent<TCharacteristic>>();
@@ -56,7 +60,6 @@
             _minPool = _world.GetPool<MinValueComponent>();
             _baseValuePool = _world.GetPool<CharacteristicBaseValueComponent>();
             _maxPool = _world.GetPool<MaxValueComponent>();
-            _ownerPool = _world.GetPool<OwnerComponent>();
             _changedCharacteristicPool = _world.GetPool<CharacteristicChangedComponent>();
             _valuePool = _world.GetPool<CharacteristicValueComponent>();
         }
@@ -65,8 +68,8 @@
         {
             foreach (var characteristicEntity in _filter)
             {
-                ref var ownerComponent = ref _ownerPool.Get(characteristicEntity);
-                if(!ownerComponent.Value.Unpack(_world,out var ownerEntity))
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(characteristicEntity);
+                if(!ownerLinkComponent.Value.Unpack(_world,out var ownerEntity))
                     continue;
                 
                 ref var characteristicChangedComponent = ref _changedPool.GetOrAddComponent(ownerEntity);
@@ -89,7 +92,7 @@
                 var newEventEntity = _world.NewEntity();
                 ref var newEventComponent = ref _resultEventPool.Add(newEventEntity);
                 
-                newEventComponent.Owner = ownerComponent.Value;
+                newEventComponent.Owner = ownerLinkComponent.Value;
                 newEventComponent.Characteristic = _world.PackEntity(characteristicEntity);
                 newEventComponent.Value = characteristicValueComponent.Value;
                 newEventComponent.PreviousValue = changedComponent.PreviousValue;

@@ -5,6 +5,7 @@
     using Components;
     using Game.Code.Configuration.Runtime.Ability;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Components;
@@ -41,8 +42,8 @@
                 var entityAgent = world.NewEntity();
                 ref var abilityAgentComponent = ref world.AddComponent<AbilityAgentComponent>(entityAgent);
                 abilityAgentComponent.Value = abilityId;
-                ref var ownerComponent = ref world.AddComponent<OwnerComponent>(entityAgent);
-                ownerComponent.Value = packedEntity;
+                ref var ownerLinkComponent = ref world.AddComponent<OwnerLinkComponent>(entityAgent);
+                ownerLinkComponent.Value = packedEntity;
                 
                 //workaround for simultaneous work of ability agent and ability initiator
                 ref var agentUnitOwnerComponent = ref world.AddComponent<AbilityAgentUnitOwnerComponent>(entityAgent);

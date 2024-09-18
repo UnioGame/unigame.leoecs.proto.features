@@ -5,7 +5,6 @@
     using Components;
     using Components.Requests;
     using LeoEcs.Bootstrap.Runtime.Attributes;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;

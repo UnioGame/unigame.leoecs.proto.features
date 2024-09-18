@@ -59,7 +59,7 @@
                 var viewPacked = viewEntity.PackEntity(_world);
                 
                 gameResourceRequest.Source = activateRequest.Source;
-                gameResourceRequest.Owner = activateRequest.Source;
+                //gameResourceRequest.Owner = activateRequest.Source;
                 gameResourceRequest.ParentEntity = activateRequest.Source;
 
                 gameResourceRequest.Target = viewPacked;

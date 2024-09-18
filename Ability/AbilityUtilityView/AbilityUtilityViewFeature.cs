@@ -45,8 +45,8 @@
         private IProtoSystems GetRadiusSystems(IProtoSystems systems)
         {
             systems.AddSystem(new ProcessInHandAbilityRadiusSystem());
-            systems.AddSystem(new ProcessRadiusAreaAbilitySystem());
-            systems.AddSystem(new ProcessRadiusForTargetAbilitySystem());
+            //systems.AddSystem(new ProcessRadiusAreaAbilitySystem());
+            //systems.AddSystem(new ProcessRadiusForTargetAbilitySystem());
             systems.AddSystem(new ProcessNotInHandAbilityRadiusSystem());
             
             systems.AddSystem(new ProcessAggressiveAbilityRadiusSystem());
@@ -65,10 +65,10 @@
 
         private IProtoSystems GetAreaSystems(IProtoSystems systems)
         {
-            systems.AddSystem(new ShowAreaSystem());
-            systems.AddSystem(new UpdateAreaPositionSystem());
+            //systems.AddSystem(new ShowAreaSystem());
+            //systems.AddSystem(new UpdateAreaPositionSystem());
             systems.AddSystem(new DestroyAreaByOwnerSystem());
-            systems.AddSystem(new DestroyAreaSystem());
+            //systems.AddSystem(new DestroyAreaSystem());
 
             return systems;
         }

@@ -1,8 +1,10 @@
-﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Area.Systems
+﻿/*namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Area.Systems
 {
     using System;
     using Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -24,10 +26,11 @@
     {
         private EcsFilter _filter;
         private ProtoWorld _world;
+
+        private LifeTimeAspect _lifeTimeAspect;
         
         private ProtoPool<AreaInstanceComponent> _areaInstancePool;
         private ProtoPool<AreaLocalPositionComponent> _areaPositionPool;
-        private ProtoPool<OwnerComponent> _ownerPool;
         private ProtoPool<TransformPositionComponent> _transformPool;
 
         public void Init(IProtoSystems systems)
@@ -37,7 +40,7 @@
             _filter = _world
                 .Filter<AreaInstanceComponent>()
                 .Inc<AreaLocalPositionComponent>()
-                .Inc<OwnerComponent>()
+                .Inc<OwnerLinkComponent>()
                 .End();
         }
         
@@ -45,8 +48,8 @@
         {
             foreach (var entity in _filter)
             {
-                ref var owner = ref _ownerPool.Get(entity);
-                ref var ownerPackedEntity = ref owner.Value;
+                ref var ownerLinkComponent = ref _lifeTimeAspect.OwnerLink.Get(entity);
+                ref var ownerPackedEntity = ref ownerLinkComponent.Value;
                 if(!ownerPackedEntity.Unpack(_world, out var ownerEntity) || 
                    !_transformPool.Has(ownerEntity))
                     continue;
@@ -62,4 +65,4 @@
             }
         }
     }
-}
+}*/

@@ -6,6 +6,8 @@
 	using Ability.Tools;
 	using Aspects;
 	using Components;
+	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+	using Game.Modules.leoecs.proto.tools.Ownership.Components;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
@@ -29,14 +31,16 @@
 		private AbilityInventoryAspect _inventoryAspect;
 		private AbilityAspect _abilityAspect;
 		private AbilityOwnerAspect _abilityOwnerAspect;
+		private OwnershipAspect _ownershipAspect;
 		
 		private ProtoWorld _world;
 		private List<ProtoEntity> _removedEntities = new List<ProtoEntity>();
 
-		private ProtoIt _filter= It
+		private ProtoIt _filter = It
 			.Chain<AbilityInventoryCompleteComponent>()
 			.Inc<EquipAbilitySelfRequest>()
 			.Inc<AbilityBuildingComponent>()
+			.Inc<OwnerLinkComponent>()
 			.End();
 
 		public void Run()
@@ -46,7 +50,7 @@
 			foreach (var abilityEntity in _filter)
 			{
 				ref var requestComponent = ref _inventoryAspect.Equip.Get(abilityEntity);
-				ref var ownerComponent = ref _inventoryAspect.Owner.Get(abilityEntity);
+				ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(abilityEntity);
 
 				var isUserInput  = requestComponent.IsUserInput;
 				ref var slotId = ref requestComponent.AbilitySlot;
@@ -54,7 +58,7 @@
 				ref var abilityId = ref requestComponent.AbilityId;
 				var packedAbility =  _world.PackEntity(abilityEntity);
 
-				if (!ownerComponent.Value.Unpack(_world, out var ownerAbilityEntity))
+				if (!ownerLinkComponent.Value.Unpack(_world, out var ownerAbilityEntity))
 					continue;
 				
 				ref var abilityMapComponent = ref _abilityOwnerAspect.AbilityMap.Get(ownerAbilityEntity);
@@ -82,7 +86,7 @@
 				ref var abilityEquipChangedEvent = ref _inventoryAspect.EquipChanged.Add(eventEntity);
 				abilityEquipChangedEvent.AbilityId = abilityId;
 				abilityEquipChangedEvent.AbilitySlot = slotId;
-				abilityEquipChangedEvent.Owner = ownerComponent.Value;
+				abilityEquipChangedEvent.Owner = ownerLinkComponent.Value;
 				abilityEquipChangedEvent.AbilityEntity = packedAbility;
 				
 				_inventoryAspect.Building.Del(abilityEntity);

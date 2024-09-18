@@ -7,6 +7,7 @@
     using Aspects;
     using Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -34,7 +35,7 @@
         private ProtoItExc _filterRequest= It
             .Chain<EquipAbilitySelfRequest>()
             .Inc<AbilityIdComponent>()
-            .Inc<OwnerComponent>()
+            .Inc<OwnerLinkComponent>()
             .Exc<AbilityValidationFailedComponent>()
             .End();
 

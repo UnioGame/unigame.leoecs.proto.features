@@ -3,6 +3,7 @@
     using System;
     using Aspects;
     using Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -25,6 +26,7 @@
 
         private AbilityAspect _abilityAspect;
         private AbilityOwnerAspect _ownerAspect;
+        private OwnershipAspect _ownershipAspect;
 
         public void Init(IProtoSystems systems)
         {
@@ -45,11 +47,14 @@
                 var abilityEntity = request.Value;
                 if(!abilityEntity.Unpack(_world,out var abilityValueEntity))
                     continue;
+
+                if (!_ownershipAspect.OwnerLink.Has(abilityValueEntity))
+                {
+                    continue;
+                }
                 
-                if(!_abilityAspect.Owner.Has(abilityValueEntity)) continue;
-                
-                ref var ownerComponent = ref _abilityAspect.Owner.Get(abilityValueEntity);
-                if(!ownerComponent.Value.Unpack(_world,out var ownerEntity))
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(abilityValueEntity);
+                if(!ownerLinkComponent.Value.Unpack(_world,out var ownerEntity))
                     continue;
                 
                 if(!ownerEntity.Equals(entity)) continue;

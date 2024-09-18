@@ -24,7 +24,6 @@
         public ProtoPool<TransformPositionComponent> Position;
         public ProtoPool<EntityAvatarComponent> Avatar;
         public ProtoPool<KDTreeDataComponent> KDData;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<DisabledComponent> Disabled;
         
         public ProtoPool<RadiusComponent> Radius;

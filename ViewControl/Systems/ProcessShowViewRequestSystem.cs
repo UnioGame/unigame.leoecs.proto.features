@@ -2,9 +2,11 @@
 {
     using Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
@@ -24,7 +26,6 @@
             var requestPool = _world.GetPool<ShowViewRequest>();
             var viewDataPool = _world.GetPool<ViewDataComponent>();
             var viewInstancePool = _world.GetPool<ViewInstanceComponent>();
-            var ownerPool = _world.GetPool<OwnerComponent>();
 
             foreach (var entity in _filter)
             {
@@ -56,8 +57,13 @@
                 
                 viewData.Views.Add(request.View, _world.PackEntity(newViewEntity));
 
-                ref var owner = ref ownerPool.Add(newViewEntity);
-                owner.Value = request.Destination;
+                if (!request.Destination.Unpack(_world, out var unpackedDestination))
+                {
+                    GameLog.LogError("Cannot unpack destination entity");
+                    continue;
+                }
+                
+                unpackedDestination.AddChild(newViewEntity, _world);
             }
         }
     }

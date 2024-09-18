@@ -27,7 +27,6 @@
         private ProtoWorld _world;
         
         private ProtoPool<ActivateAbilityActionComponent> _activateAbilityPool;
-        private ProtoPool<OwnerComponent> _ownerPool;
 
         private ProtoIt _filter= It
             .Chain<AiAgentComponent>()

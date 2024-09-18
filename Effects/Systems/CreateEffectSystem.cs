@@ -3,9 +3,12 @@
     using System;
     using Aspects;
     using Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -26,6 +29,7 @@
         private ProtoWorld _world;
 
         private EffectAspect _effectAspect;
+        private OwnershipAspect _ownershipAspect;
 
         public void Init(IProtoSystems systems)
         {
@@ -55,8 +59,13 @@
                 
                 request.Effect.ComposeEntity(_world, effectEntity);
 
-                ref var owner = ref _effectAspect.Owner.Add(effectEntity);
-                owner.Value = request.Destination;
+                if (!request.Destination.Unpack(_world, out var unpackedDestination))
+                {
+                    GameLog.LogError("Cannot unpack destination entity");
+                    continue;
+                }
+                
+                unpackedDestination.AddChild(effectEntity, _world);
 
                 ref var list = ref _effectAspect.List.GetOrAddComponent(destinationEntity);
                 list.Effects.Add(_world.PackEntity(effectEntity));

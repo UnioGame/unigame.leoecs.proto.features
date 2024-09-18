@@ -14,7 +14,6 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
         public ProtoPool<EffectComponent> Effect;
         public ProtoPool<SelfEffectsComponent> SelfEffects;
         public ProtoPool<EffectsListComponent> List;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<AbilityPowerComponent> Power;
         public ProtoPool<EffectViewDataComponent> ViewData;
         public ProtoPool<EffectDurationComponent> Duration;
@@ -22,6 +21,7 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
         public ProtoPool<EffectPeriodicityComponent> Periodicity;
         public ProtoPool<DelayedEffectComponent> Delayed;
         public ProtoPool<CompletedDelayedEffectComponent> CompletedDelayed;
+        public ProtoPool<ViewInstanceTypeComponent> ViewInstanceType;
         
         // Components
         //---Generated Begin---

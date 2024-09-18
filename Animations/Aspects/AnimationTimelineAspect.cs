@@ -6,6 +6,7 @@
     using Components.Requests;
     using Core.Components;
     using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Timer.Components;
@@ -15,7 +16,6 @@
     {
         //animation duration
         public ProtoPool<DurationComponent> Duration;
-        public ProtoPool<OwnerComponent> Owner;
         //playable director source entity
         public ProtoPool<AnimationTargetComponent> Target;
         //playable data

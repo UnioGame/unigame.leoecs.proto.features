@@ -3,6 +3,8 @@
     using System;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using tools.Ownership.Aspects;
+    using tools.Ownership.Components;
     using UniCore.Runtime.ProfilerTools;
     using UniGame.Ecs.Proto.Ability.Aspects;
     using UniGame.Ecs.Proto.Ability.Common.Components;
@@ -25,8 +27,10 @@
     public class ApplyAbilityEffectsSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
+        
         private AbilityAspect _abilityAspect;
         private EffectAspect _effectAspect;
+        private OwnershipAspect _ownershipAspect;
 
         private ProtoIt _applyEffectsFilter = It
             .Chain<AbilityStartUsingSelfEvent>()
@@ -43,8 +47,8 @@
         {
             foreach (var applyEffectsRequest in _applyEffectsFilter)
             {
-                ref var ownerComponent = ref _abilityAspect.Owner.Get(applyEffectsRequest);
-                if (!ownerComponent.Value.Unpack(_world, out var ownerEntity))
+                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(applyEffectsRequest);
+                if (!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
                 {
                     continue;
                 }

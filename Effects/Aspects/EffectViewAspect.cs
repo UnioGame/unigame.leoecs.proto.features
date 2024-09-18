@@ -2,7 +2,6 @@
 {
     using System;
     using Components;
-    using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
 
@@ -10,7 +9,6 @@
     public class EffectViewAspect : EcsAspect
     {
         public ProtoPool<EffectViewComponent> View;
-        public ProtoPool<OwnerComponent> Owner;
         public ProtoPool<EffectParentComponent> Parent;
     }
 }

@@ -2,11 +2,8 @@
 {
     using System;
     using Aspects;
-    using Components;
     using Components.Requests;
     using LeoEcs.Bootstrap.Runtime.Attributes;
-    using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;

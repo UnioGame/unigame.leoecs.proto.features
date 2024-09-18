@@ -44,7 +44,7 @@
             //create spawn object by GameResourceResultComponent
             ecsSystems.Add(new CreateSpawnObjectSystem());
             //handle non gameobject assets
-            ecsSystems.Add(new ApplyPawnGameObjectSystem());
+            ecsSystems.Add(new ApplySpawnGameObjectSystem());
             
             //mark resource as loaded
             ecsSystems.Add(new CompleteGameResourceObjectSystem());
