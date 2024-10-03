@@ -4,10 +4,11 @@
     using Ability.Aspects;
     using AbilityInventory.Aspects;
     using Aspects;
-    using Common.Components;
     using Components;
     using Effects;
     using Effects.Aspects;
+    using FakeTimeline.Aspects;
+    using FakeTimeline.Components.Requests;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using GameResources.Systems;
     using LeoEcs.Bootstrap.Runtime.Abstract;
@@ -39,10 +40,11 @@
         private AbilityInventoryAspect _abilityInventoryAspect;
         private OwnershipAspect _ownershipAspect;
         private EffectAspect _effectAspect;
+        private TimelineAspect _timelineAspect;
         
         private ProtoIt _projectileAbilityFilter = It
-            .Chain<AbilityStartUsingSelfEvent>()
-            .Inc<ProjectileAbilityComponent>()
+            .Chain<ProjectileAbilityComponent>()
+            .Inc<ExecuteTimelinePlayableRequest>()
             .End();
 
         public void Init(IProtoSystems systems)
@@ -53,28 +55,30 @@
 
         public void Run()
         {
-            foreach (var abilityEntity in _projectileAbilityFilter)
+            foreach (var playableEntity in _projectileAbilityFilter)
             {
-                ref var projectileAbilityComponent = ref _projectileAbilityAspect.ProjectileAbility.Get(abilityEntity);
-                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(abilityEntity);
-                if (!ownerLinkComponent.Value.Unpack(_world, out var unpackedOwnerEntity))
+                ref var projectileAbilityComponent = ref _projectileAbilityAspect.ProjectileAbility.Get(playableEntity);
+                ref var executeComponent = ref _timelineAspect.TimelineExecute.Get(playableEntity);
+                if (!executeComponent.TimelineContextEntity.Unpack(_world, out var contextEntity))
                 {
                     continue;
                 }
-                
-                ref var targetsComponent = ref _abilityAspect.Targets.Get(unpackedOwnerEntity);
-                var target = targetsComponent.Entities[0];
-                if (!target.Unpack(_world, out var unpackedTarget))
+
+                ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Get(contextEntity);
+                var packedSource = abilityContextComponent.abilityOwner;
+                var packedTarget = abilityContextComponent.FirstTarget();
+                if (!(packedTarget.Unpack(_world, out var targetEntity) && 
+                      packedSource.Unpack(_world, out var sourceEntity)))
                 {
                     continue;
                 }
 
                 var targetPositionType = projectileAbilityComponent.targetPositionType;
-                var targetTransform = unpackedTarget.GetViewInstance(_world, targetPositionType);
+                var targetTransform = targetEntity.GetViewInstance(_world, targetPositionType);
                 var targetPosition = (float3)targetTransform.position;
                 
                 var spawnPositionType = projectileAbilityComponent.spawnPositionType;
-                var projectileSpawnTransform = unpackedOwnerEntity.GetViewInstance(_world, spawnPositionType);
+                var projectileSpawnTransform = sourceEntity.GetViewInstance(_world, spawnPositionType);
                 var projectileSpawnPosition = (float3)projectileSpawnTransform.position;
                 
                 var projectileAssetGuid = projectileAbilityComponent.assetGuid;

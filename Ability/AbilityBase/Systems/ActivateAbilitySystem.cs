@@ -25,7 +25,7 @@
         private AbilityAspect _abilityAspect;
         private OwnershipAspect _ownershipAspect;
         
-        private ProtoIt _requestFilter= It
+        private ProtoIt _requestFilter = It
             .Chain<ActivateAbilityRequest>()
             .End();
 

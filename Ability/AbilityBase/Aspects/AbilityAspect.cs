@@ -17,6 +17,7 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Input.Components.Evetns;
     using Game.Ecs.Time.Service;
+    using Game.Modules.leoecs.proto.features.Ability.AbilityBase.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
@@ -25,8 +26,6 @@
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Rx.Runtime.Extensions;
-    using SubFeatures.AbilityAnimation.Components;
     using Tools;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
@@ -45,9 +44,7 @@
         
         // Components
         //---Generated Begin---
-        public ProtoPool<AbilityActiveAnimationComponent> AbilityActiveAnimationComponent;
         public ProtoPool<AbilityActiveTimeComponent> AbilityActiveTimeComponent;
-        public ProtoPool<AbilityAnimationComponent> AbilityAnimationComponent;
         public ProtoPool<AbilityBlockedComponent> AbilityBlockedComponent;
         public ProtoPool<AbilityCategoryComponent> AbilityCategoryComponent;
         public ProtoPool<AbilityConfigurationComponent> AbilityConfigurationComponent;
@@ -69,6 +66,7 @@
         public ProtoPool<DefaultAbilityComponent> DefaultAbilityComponent;
         public ProtoPool<DefaultAbilityTargetSlotComponent> DefaultAbilityTargetSlotComponent;
         public ProtoPool<PassiveAbilityComponent> PassiveAbilityComponent;
+        public ProtoPool<AbilityContextComponent> AbilityContext;
         
         public ProtoPool<AbilityUnlockComponent> Unlock;
         public ProtoPool<ActiveAbilityComponent> Active;
@@ -112,7 +110,6 @@
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityBySlotSelfRequest;
         public ProtoPool<ApplyAbilityEffectsSelfRequest> ApplyAbilityEffectsSelfRequest;
         public ProtoPool<ApplyAbilitySelfRequest> ApplyAbilitySelfRequest;
-        public ProtoPool<CompleteAbilitySelfRequest> CompleteAbilitySelfRequest;
         public ProtoPool<CreateAbilityRequest> CreateAbilityRequest;
         public ProtoPool<EquipAbilityIdSelfRequest> EquipAbilityIdSelfRequest;
         public ProtoPool<EquipAbilityIdToChampionRequest> EquipAbilityIdToChampionRequest;
@@ -554,72 +551,6 @@
             relationship.Value = specification.RelationshipId;
             category.Value = specification.CategoryId;
         }
-
-
-// #if ENABLE_IL2CPP
-//         [Il2CppSetOption(Option.NullChecks, false)]
-//         [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-//         [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-// #endif
-//         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//         public async UniTask ComposeAbilityAnimationAsync(ProtoPackedEntity animationTarget,
-//             ProtoPackedEntity abilityEntity,
-//             AssetReferenceT<AnimationLink> animationLinkReference)
-//         {
-//             var lifetime = world.GetWorldLifeTime();
-//             var animationLink = await animationLinkReference.LoadAssetTaskAsync(lifetime);
-//             ComposeAbilityAnimation( ref animationTarget, ref abilityEntity, animationLink);
-//         }
-
-// #if ENABLE_IL2CPP
-//         [Il2CppSetOption(Option.NullChecks, false)]
-//         [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-//         [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-// #endif
-//         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-//         public void ComposeAbilityAnimation(ref ProtoPackedEntity animationTarget,
-//             ref ProtoPackedEntity ability,
-//             AnimationLink animationLink)
-//         {
-//             if (!ability.Unpack(world, out var abilityEntity)) return;
-//
-//             ref var activeAnimationComponent = ref _animation.GetOrAddComponent(abilityEntity);
-//             ref var durationComponent = ref Duration.GetOrAddComponent(abilityEntity);
-//
-//             if (animationLink == null)
-//             {
-//                 ComposeEffectMilestones(null, 0.0f, abilityEntity);
-//                 return;
-//             }
-//
-//             var animation = animationLink.animation;
-//             var duration = animationLink.duration;
-//             duration = duration <= 0 && animation != null ? (float)animation.duration : duration;
-//
-//             durationComponent.Value = duration;
-//
-//             ref var animationComponent = ref world.GetOrAddComponent<AnimationDataLinkComponent>(abilityEntity);
-//             ref var wrapModeComponent = ref world.GetOrAddComponent<AnimationWrapModeComponent>(abilityEntity);
-//             ref var linkToAnimationComponent = ref world.GetOrAddComponent<LinkToAnimationComponent>(abilityEntity);
-//
-//             var animationEntity = World.NewEntity();
-//             ref var createAnimationRequest = ref World
-//                 .GetOrAddComponent<CreateAnimationLinkSelfRequest>(animationEntity);
-//
-//             var packedAnimation = world.PackEntity(animationEntity);
-//
-//             createAnimationRequest.Data = animationLink;
-//             createAnimationRequest.Owner = world.PackEntity(abilityEntity);
-//             createAnimationRequest.Target = animationTarget;
-//
-//             linkToAnimationComponent.Value = packedAnimation;
-//             activeAnimationComponent.Value = packedAnimation;
-//
-//             animationComponent.AnimationLink = animationLink;
-//             wrapModeComponent.Value = animationLink.wrapMode;
-//
-//             ComposeEffectMilestones(animationLink.milestones, animationLink.Duration, abilityEntity);
-//         }
 
 #if ENABLE_IL2CPP
         [Il2CppSetOption(Option.NullChecks, false)]

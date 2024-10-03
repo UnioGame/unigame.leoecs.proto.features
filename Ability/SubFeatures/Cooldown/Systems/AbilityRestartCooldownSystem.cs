@@ -1,10 +1,11 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.Cooldown.Systems
 {
     using System;
-    using Aspects;
-    using Common.Components;
+    using Ability.Aspects;
+    using Components;
+    using FakeTimeline.Aspects;
+    using FakeTimeline.Components.Requests;
     using LeoEcs.Bootstrap.Runtime.Abstract;
-    using LeoEcs.Timer.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniCore.Runtime.ProfilerTools;
@@ -26,10 +27,11 @@
         
         private TimerAspect _timerAspect;
         private AbilityAspect _abilityAspect;
+        private TimelineAspect _timelineAspect;
 
-        private ProtoIt _abilityFilter = It
-            .Chain<AbilityStartUsingSelfEvent>()
-            .Inc<CooldownComponent>()
+        private ProtoIt _playableFilter = It
+            .Chain<CooldownRestartPlayableComponent>()
+            .Inc<ExecuteTimelinePlayableRequest>()
             .End();
 
         public void Init(IProtoSystems systems)
@@ -39,11 +41,22 @@
 
         public void Run()
         {
-            foreach (var abilityEntity in _abilityFilter)
+            foreach (var playableEntity in _playableFilter)
             {
+                ref var executeComponent = ref _timelineAspect.TimelineExecute.Get(playableEntity);
+                if (!executeComponent.TimelineContextEntity.Unpack(_world, out var contextEntity))
+                {
+                    continue;
+                }
+
+                ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Get(contextEntity);
+                if (!abilityContextComponent.abilityEntity.Unpack(_world, out var abilityEntity))
+                {
+                    continue;
+                }
+                
                 _timerAspect.Restart.GetOrAddComponent(abilityEntity);
-                _abilityAspect.Active.Del(abilityEntity);
-                GameLog.Log($"Ability {abilityEntity}: cooldown restarted");
+                GameLog.Log("Ability cooldown restarted.");
             }
         }
     }

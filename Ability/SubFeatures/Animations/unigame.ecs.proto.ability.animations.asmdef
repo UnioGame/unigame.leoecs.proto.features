@@ -1,0 +1,46 @@
+{
+    "name": "unigame.ecs.proto.ability.animations",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b10aac27e5bc3d74f9892b100a74487f",
+        "GUID:966f01aff3301cb449a4595679577a3a",
+        "GUID:c1d53fc1b1b71c647b00626be502b7b1",
+        "GUID:8e4577c9194c10845984cf27eb974fd1",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:9e24947de15b9834991c9d8411ea37cf",
+        "GUID:94b76ab488496fe4ba2e594d6c583770",
+        "GUID:84651a3751eca9349aac36a66bba901b",
+        "GUID:b9e4029c2cdc84f7d82433cf8a1d0e69",
+        "GUID:f43f3242c2488874b8910aeb16cf4e03",
+        "GUID:209749b816e76d241a52eb0770dbdcb5",
+        "GUID:867b562916dfc1f4b9cd6f936056c406",
+        "GUID:bd4ea46f2fdce47f0a34f0df46c013f5",
+        "GUID:ec0c665a6ac11684fbe00f6257dd7226",
+        "GUID:f0c31c869a8d58749ababd17736a58be",
+        "GUID:2504b8388af31dd45813b69c15ddf4a5",
+        "GUID:be22077deba4c13448e497d030e626a0",
+        "GUID:312ddd7ebe69456291005522064cd84c",
+        "GUID:d23fe35d1ee1434e92a531f68b441131",
+        "GUID:b850c1e47c6449b79041b4a49f52cac4",
+        "GUID:a92f80b0834947ec808730d6e7628e18",
+        "GUID:93f2e943f32d47a5bcd23a3f1468bdab",
+        "GUID:136799f266b746bebd4c6d30e213c02f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "LEO_ECS_PROTO_ENABLED"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.leopotam.proto",
+            "expression": "2023.0.0",
+            "define": "LEO_ECS_PROTO_ENABLED"
+        }
+    ],
+    "noEngineReferences": false
+}

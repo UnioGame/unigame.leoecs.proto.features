@@ -4,7 +4,6 @@
     using Aspects;
     using Common.Components;
     using Components.Requests;
-    using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;

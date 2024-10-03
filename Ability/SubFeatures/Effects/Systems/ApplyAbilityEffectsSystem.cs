@@ -8,6 +8,9 @@
     using UniCore.Runtime.ProfilerTools;
     using UniGame.Ecs.Proto.Ability.Aspects;
     using UniGame.Ecs.Proto.Ability.Common.Components;
+    using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Aspects;
+    using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components;
+    using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components.Requests;
     using UniGame.Ecs.Proto.Effects;
     using UniGame.Ecs.Proto.Effects.Aspects;
     using UniGame.Ecs.Proto.Effects.Components;
@@ -30,12 +33,11 @@
         
         private AbilityAspect _abilityAspect;
         private EffectAspect _effectAspect;
-        private OwnershipAspect _ownershipAspect;
+        private TimelineAspect _timelineAspect;
 
         private ProtoIt _applyEffectsFilter = It
-            .Chain<AbilityStartUsingSelfEvent>()
-            .Inc<EffectsComponent>()
-            .Inc<OwnerLinkComponent>()
+            .Chain<EffectsComponent>()
+            .Inc<ExecuteTimelinePlayableRequest>()
             .End();
 
         public void Init(IProtoSystems systems)
@@ -47,23 +49,17 @@
         {
             foreach (var applyEffectsRequest in _applyEffectsFilter)
             {
-                ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(applyEffectsRequest);
-                if (!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
-                {
-                    continue;
-                }
-                
-                ref var targetsComponent = ref _abilityAspect.Targets.Get(ownerEntity);
-                if (targetsComponent.Count < 1)
+                ref var executeComponent = ref _timelineAspect.TimelineExecute.Get(applyEffectsRequest);
+                if (!executeComponent.TimelineContextEntity.Unpack(_world, out var contextEntity))
                 {
                     continue;
                 }
 
-                var target = targetsComponent.Entities[0];
+                ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Get(contextEntity);
+                var target = abilityContextComponent.FirstTarget();
                 var source = _world.PackEntity(applyEffectsRequest);
                 
                 ref var effectsComponent = ref _effectAspect.EffectsComponent.Get(applyEffectsRequest);
-                GameLog.Log($"Ability {applyEffectsRequest}: effects applied");
                 effectsComponent.Effects.CreateRequests(_world, source, target);
             }
         }

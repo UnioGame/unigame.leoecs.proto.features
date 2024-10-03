@@ -19,7 +19,6 @@
         public override UniTask<IProtoSystems> OnActivateSystems(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new CreateAbilityVisualsSystem());
-            ecsSystems.Add(new DelayVisualsSpawnSystem());
 
             return base.OnActivateSystems(ecsSystems);
         }

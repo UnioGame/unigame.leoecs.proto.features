@@ -10,12 +10,10 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct AbilityVisualsComponent
+    public struct AbilityVisualsPlayableComponent
     {
         public string assetIdentification;
-        public float spawnDelay;
         public int spawnPosition;
-        public bool targetSource;
         public bool boneBound;
     }
 }

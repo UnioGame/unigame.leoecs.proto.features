@@ -1,17 +1,16 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.Visuals.Systems
 {
     using System;
-    using System.Runtime.CompilerServices;
     using Ability.Aspects;
     using Aspects;
     using Components;
     using Effects;
-    using Game.Ecs.Core.Components;
+    using FakeTimeline.Aspects;
+    using FakeTimeline.Components.Requests;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using GameResources.Systems;
     using LeoEcs.Bootstrap.Runtime.Abstract;
-    using LeoEcs.Timer.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -36,11 +35,11 @@
         private OwnershipAspect _ownershipAspect;
         private AbilityAspect _abilityAspect;
         private UnityAspect _unityAspect;
+        private TimelineAspect _timelineAspect;
         
-        private ProtoItExc _delayedSpawnFilter = It
-            .Chain<DelayedVisualsSpawnComponent>()
-            .Inc<CooldownCompleteComponent>()
-            .Exc<PrepareToDeathComponent>()
+        private ProtoIt _playableFilter = It
+            .Chain<AbilityVisualsPlayableComponent>()
+            .Inc<ExecuteTimelinePlayableRequest>()
             .End();
 
         public void Init(IProtoSystems systems)
@@ -51,25 +50,30 @@
 
         public void Run()
         {
-            foreach (var delayedSpawnEntity in _delayedSpawnFilter)
+            foreach (var playableEntity in _playableFilter)
             {
-                ref var delayedVisualsSpawnComponent = ref _abilityVisualsAspects.DelayedSpawn.Get(delayedSpawnEntity);
-                var resourceId = delayedVisualsSpawnComponent.assetIdentification;
-                var spawnPositionType = delayedVisualsSpawnComponent.spawnPosition;
-                var isBoneBound = delayedVisualsSpawnComponent.boneBound;
-                var targetEntity = delayedVisualsSpawnComponent.target;
-
-                if (!targetEntity.Unpack(_world, out var unpackedTargetEntity))
+                ref var executeComponent = ref _timelineAspect.TimelineExecute.Get(playableEntity);
+                if (!executeComponent.TimelineContextEntity.Unpack(_world, out var contextEntity))
                 {
-                    delayedSpawnEntity.Kill(_world);
+                    continue;
+                }
+
+                ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Get(contextEntity);
+                
+                ref var visualPlayableComponent = ref _abilityVisualsAspects.AbilityVisuals.Get(playableEntity);
+                var resourceId = visualPlayableComponent.assetIdentification;
+                var spawnPositionType = visualPlayableComponent.spawnPosition;
+                var isBoneBound = visualPlayableComponent.boneBound;
+                var packedTargetEntity = abilityContextComponent.FirstTarget();
+
+                if (!packedTargetEntity.Unpack(_world, out var targetEntity))
+                {
                     continue;
                 }
                 
-                var spawnPositionTransform = unpackedTargetEntity.GetViewInstance(_world, spawnPositionType);
+                var spawnPositionTransform = targetEntity.GetViewInstance(_world, spawnPositionType);
                 var targetTransform = isBoneBound ? spawnPositionTransform : null;
                 _gameSpawnTools.Spawn(resourceId, spawnPositionTransform.position/*, targetTransform*/);
-                
-                delayedSpawnEntity.Kill(_world);
             }
         }
     }

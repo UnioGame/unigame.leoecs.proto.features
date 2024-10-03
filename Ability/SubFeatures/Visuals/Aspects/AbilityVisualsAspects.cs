@@ -15,7 +15,6 @@
     [Serializable]
     public class AbilityVisualsAspects : EcsAspect
     {
-        public ProtoPool<AbilityVisualsComponent> AbilityVisuals;
-        public ProtoPool<DelayedVisualsSpawnComponent> DelayedSpawn;
+        public ProtoPool<AbilityVisualsPlayableComponent> AbilityVisuals;
     }
 }
