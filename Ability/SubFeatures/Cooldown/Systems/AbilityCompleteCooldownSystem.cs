@@ -1,9 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.Cooldown.Systems
 {
     using System;
-    using Aspects;
+    using Ability.Aspects;
     using Common.Components;
-    using LeoEcs.Timer.Components;
+    using LeoEcs.Timer.Components.Events;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniCore.Runtime.ProfilerTools;
@@ -27,8 +27,7 @@
 
         private ProtoItExc _abilityFilter = It
             .Chain<AbilityIdComponent>()
-            .Inc<CooldownComponent>()
-            .Inc<CooldownCompleteComponent>()
+            .Inc<CooldownFinishedSelfEvent>()
             .Exc<ActiveAbilityComponent>()
             .End();
 
@@ -42,7 +41,7 @@
             foreach (var abilityEntity in _abilityFilter)
             {
                 _abilityAspect.Active.Add(abilityEntity);
-                GameLog.Log($"Ability {abilityEntity}: cooldown complete");
+                GameLog.Log("Ability cooldown complete.");
             }
         }
     }

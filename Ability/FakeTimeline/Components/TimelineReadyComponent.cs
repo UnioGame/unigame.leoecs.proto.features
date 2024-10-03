@@ -1,12 +1,7 @@
-﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.AbilityAnimation.Components
+﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components
 {
     using System;
-    using Leopotam.EcsProto.QoL;
 
-
-    /// <summary>
-    /// Value is target animation link
-    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -15,8 +10,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct AbilityActiveAnimationComponent
+    public struct TimelineReadyComponent
     {
-        public ProtoPackedEntity Value;
     }
 }

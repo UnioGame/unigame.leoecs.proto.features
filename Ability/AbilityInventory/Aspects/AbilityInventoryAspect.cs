@@ -4,7 +4,6 @@ namespace UniGame.Ecs.Proto.AbilityInventory.Aspects
     using System.Runtime.CompilerServices;
     using Ability.Common.Components;
     using Ability.Components;
-    using Ability.SubFeatures.AbilityAnimation.Components;
     using Components;
     using Equip.Components;
     using Game.Code.Configuration.Runtime.Ability.Description;
@@ -46,7 +45,6 @@ namespace UniGame.Ecs.Proto.AbilityInventory.Aspects
         public ProtoPool<AbilityBlockedComponent> Blocked;
         public ProtoPool<AbilityVisualComponent> Visual;
         public ProtoPool<AbilitySlotComponent> Slot;
-        public ProtoPool<AbilityActiveAnimationComponent> Animation;
         public ProtoPool<AbilityMetaLinkComponent> MetaLink;
         public ProtoPool<AbilityConfigurationComponent> Configuration;
         public ProtoPool<AbilityBuildingProcessingComponent> Processing;

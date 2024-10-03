@@ -4,7 +4,6 @@
     using Aspects;
     using Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -21,7 +20,11 @@
     [ECSDI]
     public sealed class ApplyAbilityRequestSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter = It
+            .Chain<ApplyAbilitySelfRequest>()
+            .Inc<AbilityInHandLinkComponent>()
+            .End();
+        
         private ProtoWorld _world;
 
         private AbilityAspect _abilityAspect;
@@ -31,11 +34,6 @@
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            
-            _filter = _world
-                .Filter<ApplyAbilitySelfRequest>()
-                .Inc<AbilityInHandLinkComponent>()
-                .End();
         }
         
         public void Run()

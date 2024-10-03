@@ -36,8 +36,8 @@
                     if(!packedEntity.Unpack(_world, out var abilityEntity))
                         continue;
                     
-                    if(_abilityAspect.Active.Has(abilityEntity))
-                        _abilityAspect.Active.Del(abilityEntity);
+                    /*if(_abilityAspect.Active.Has(abilityEntity))
+                        _abilityAspect.Active.Del(abilityEntity);*/
                 }
             }
         }

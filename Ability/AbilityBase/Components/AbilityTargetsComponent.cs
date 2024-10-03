@@ -15,6 +15,7 @@
         
         public ProtoPackedEntity[] PreviousEntities;
         public int PreviousCount;
+        
         public void AutoReset(ref AbilityTargetsComponent c)
         {
             c.Entities = new ProtoPackedEntity[12];

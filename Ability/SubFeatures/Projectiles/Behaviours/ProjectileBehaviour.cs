@@ -2,16 +2,15 @@
 {
     using System;
     using Components;
-    using Game.Code.Configuration.Runtime.Ability.Description;
+    using FakeTimeline.Data;
     using Game.Code.Configuration.Runtime.Effects;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
-    using UnityEngine.Serialization;
 
     [Serializable]
-    public sealed class ProjectileBehaviour : IAbilityBehaviour
+    public sealed class ProjectileBehaviour : TimelineAbilityBehaviour
     {
         public ViewInstanceType spawnViewInstance;
         public ViewInstanceType targetViewInstance;
@@ -20,9 +19,9 @@
         public float duration;
         public int trajectoryType;
         
-        public void Compose(ProtoWorld world, ProtoEntity abilityEntity)
+        public override void ComposeBehaviour(ProtoWorld world, ProtoEntity abilityEntity, ProtoEntity playableEntity)
         {
-            ref var projectileAbilityComponent = ref world.AddComponent<ProjectileAbilityComponent>(abilityEntity);
+            ref var projectileAbilityComponent = ref world.AddComponent<ProjectileAbilityComponent>(playableEntity);
             projectileAbilityComponent.spawnPositionType = (int)spawnViewInstance;
             projectileAbilityComponent.targetPositionType = (int)targetViewInstance;
             projectileAbilityComponent.assetGuid = projectilePrefab.AssetGUID;

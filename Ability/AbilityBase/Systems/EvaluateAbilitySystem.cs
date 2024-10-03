@@ -57,7 +57,7 @@
                     continue;
                 }
                 
-                _abilityAspect.CompleteAbilitySelfRequest.Add(entity);
+                _abilityAspect.CompleteAbility.Add(entity);
             }
         }
     }

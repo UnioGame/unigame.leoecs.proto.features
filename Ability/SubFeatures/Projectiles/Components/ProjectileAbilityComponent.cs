@@ -17,7 +17,6 @@
         public int targetPositionType;
         
         public string assetGuid;
-        [FormerlySerializedAs("lifetime")]
         public float duration;
         
         public int trajectoryType;

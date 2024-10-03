@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.Visuals.Components
+﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.Animations.Components
 {
     using System;
     using Leopotam.EcsProto.QoL;
@@ -11,11 +11,11 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct DelayedVisualsSpawnComponent
+    public struct AbilityAnimationComponent
     {
-        public string assetIdentification;
-        public int spawnPosition;
-        public bool boneBound;
-        public ProtoPackedEntity target;
+        public int playAnimationId;
+        public int nextPlayAnimationId;
+        public float timeScale;
+        public ProtoPackedEntity targetEntity;
     }
 }
