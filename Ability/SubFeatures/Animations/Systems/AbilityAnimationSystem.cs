@@ -5,12 +5,17 @@
     using Components;
     using FakeTimeline.Components.Requests;
     using Game.Ecs.Core.Components;
-    using Game.Ecs.SpineAnimation.Aspects;
+    
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
+    
+#if SPINE_ENABLE
+    using Game.Ecs.SpineAnimation.Aspects;
+    using Game.Ecs.SpineAnimation.Data.AnimationType;
+#endif
     
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -27,8 +32,11 @@
 
         private AbilityAnimationsAspect _abilityAnimationsAspect;
         private OwnershipAspect _ownershipAspect;
+        
+#if SPINE_ENABLE
         private SpineAnimationAspect _spineAnimationAspect;
-
+#endif
+        
         private ProtoItExc _behaviourFilter = It
             .Chain<AbilityAnimationComponent>()
             .Inc<ExecuteTimelinePlayableRequest>()
@@ -53,10 +61,12 @@
                     continue;
                 }
 
+#if SPINE_ENABLE
                 ref var playAnimationSelfRequest = ref _spineAnimationAspect.Play.GetOrAdd(unpackedTargetEntity);
-                playAnimationSelfRequest.animationTypeId = playAnimId;
-                playAnimationSelfRequest.nextAnimationTypeId = nextPlayAnimId;
-                playAnimationSelfRequest.timeScale = timeScale;
+                playAnimationSelfRequest.AnimationTypeId = (AnimationTypeId)playAnimId;
+                playAnimationSelfRequest.NextAnimationTypeId = (AnimationTypeId)nextPlayAnimId;
+                playAnimationSelfRequest.TimeScale = timeScale;
+#endif
             }
         }
     }

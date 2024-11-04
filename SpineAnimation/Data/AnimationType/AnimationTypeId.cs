@@ -12,7 +12,7 @@
     
     [Serializable]
     [ValueDropdown("@Game.Ecs.SpineAnimation.Data.AnimationType.AnimationTypeId.GetAnimationTypes()", IsUniqueList = true, DropdownTitle = "AnimationType")]
-    public partial struct AnimationTypeId
+    public partial struct AnimationTypeId : IEquatable<int>
     {
         [SerializeField]
         public int value;
@@ -87,6 +87,11 @@
             value = data;
 
             return this;
+        }
+
+        public bool Equals(int other)
+        {
+            return value == other;
         }
 
         public override bool Equals(object obj)

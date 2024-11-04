@@ -6,6 +6,7 @@
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Modules.leoecs.proto.tools.Ownership.Aspects;
     using Spine;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -28,7 +29,7 @@
     {
         private ProtoWorld _world;
         private SpineAnimationAspect _spineAnimationAspect;
-        private LifeTimeAspect _lifeTimeAspect;
+        private OwnershipAspect _lifeTimeAspect;
 
         private ProtoItExc _filter = It
             .Chain<SkeletonAnimationComponent>()

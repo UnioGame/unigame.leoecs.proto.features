@@ -39,8 +39,7 @@
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity Spawn(
-            string resourceId, 
+        public ProtoEntity Spawn(string resourceId, 
             float3 spawnPosition,
             Transform parent = null)
         {
@@ -58,7 +57,7 @@
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ProtoEntity Spawn(
+        public ProtoEntity Spawn(
             ref ProtoPackedEntity owner,
             ref ProtoPackedEntity source,
             string resourceId, 
@@ -92,7 +91,8 @@
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Spawn(ref ProtoPackedEntity source,
+        public void Spawn(
+            ref ProtoPackedEntity source,
             ref ProtoPackedEntity target,
             ref ProtoPackedEntity parent,
             string resourceId, 
