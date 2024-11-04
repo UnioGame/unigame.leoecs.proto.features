@@ -1,0 +1,34 @@
+{
+    "name": "game.ecs.spineAnimation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e59bf9fc7d5a44b18a819a92edd46163",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b10aac27e5bc3d74f9892b100a74487f",
+        "GUID:c1d53fc1b1b71c647b00626be502b7b1",
+        "GUID:8e4577c9194c10845984cf27eb974fd1",
+        "GUID:2796129a6c23eb84a8181f62bf7332f1",
+        "GUID:72d1fea872bd7a449bf3818f2b0a6708",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:e06a58708b83247ca9dc984644f5b40b",
+        "GUID:68765d262e2128e4ab49c983f3411946",
+        "GUID:4185675af2c91ce438157b41079cd107",
+        "GUID:b235fd5fa3fc81048b5e704144248b58",
+        "GUID:9d28768d9625438da0cdae5348765344",
+        "GUID:209749b816e76d241a52eb0770dbdcb5",
+        "GUID:bd4ea46f2fdce47f0a34f0df46c013f5",
+        "GUID:0b7f3532c915c1a4da89f5b7d0b0e472",
+        "GUID:b9e4029c2cdc84f7d82433cf8a1d0e69"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "SPINE_ENABLE"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
