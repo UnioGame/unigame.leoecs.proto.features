@@ -1,9 +1,13 @@
 ﻿namespace Game.Code.Services.AbilityLoadout.Data
 {
+	using System;
 	using System.Collections.Generic;
+	using System.Linq;
+	using Cysharp.Threading.Tasks;
 	using DataBase.Runtime;
 	using DataBase.Runtime.Abstract;
 	using Sirenix.OdinInspector;
+	using UniGame.Core.Runtime;
 
 #if UNITY_EDITOR
 	using UniModules.Editor;
@@ -15,7 +19,7 @@
 	/// <summary>
 	/// Ability category
 	/// </summary>
-	[CreateAssetMenu(menuName = "Game/Ability/Ability Database")]
+	[CreateAssetMenu(menuName = "Game/Ability/Ability Database",fileName = "AbilityDatabase")]
 	public sealed class AbilityDataBase : GameDataCategory
 	{
 		public string id = "Ability";
@@ -23,9 +27,49 @@
 		[Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
 		[PropertyOrder(2)]
 		[ListDrawerSettings(ListElementLabelName = "@Label")]
-		public List<AbilityRecord> abilities = new List<AbilityRecord>();
+		public AbilityRecord[] abilities = Array.Empty<AbilityRecord>();
 
-		public override IReadOnlyList<IGameDatabaseRecord> Records => abilities;
+		private Dictionary<string, IGameResourceRecord> _map = new();
+
+		public override IGameResourceRecord[] Records => abilities;
+
+		public override async UniTask<CategoryInitializeResult> InitializeAsync(ILifeTime lifeTime)
+		{
+			_map.Clear();
+			foreach (var ability in abilities)
+			{
+				_map[ability.name] = ability;
+			}
+
+			return new CategoryInitializeResult()
+			{
+				category = this,
+				complete = true,
+				error = string.Empty,
+				categoryName = id,
+			};
+		}
+
+		public override IGameResourceRecord Find(string filter)
+		{
+			foreach (var ability in abilities)
+			{
+				if (ability.CheckRecord(filter))
+					return ability;
+			}
+
+			return default;
+		}
+
+		public override IGameResourceRecord[] FindResources(string filter)
+		{
+			return abilities
+				.Where(x => x.name.Contains(filter, StringComparison.OrdinalIgnoreCase))
+				.Select(x => x as IGameResourceRecord)
+				.ToArray();
+		}
+
+		public override Dictionary<string, IGameResourceRecord> Map => _map;
 
 		public AbilityRecord Find(int recordId)
 		{
@@ -38,10 +82,10 @@
 		}
 		
 		[Button(ButtonSizes.Large,Icon = SdfIconType.ArchiveFill)]
-		public override void FillCategory()
+		public override IReadOnlyList<IGameResourceRecord> FillCategory()
 		{
 #if UNITY_EDITOR
-			abilities.Clear();
+			var abilityItems = new List<AbilityRecord>();
             
 			var abilityItemAssets = AssetEditorTools.GetAssets<AbilityItemAsset>();
 			abilityItemAssets.Sort((x,y) => Comparer<int>.Default.Compare(x.Id,y.Id));
@@ -62,11 +106,15 @@
 					reference = new AssetReferenceT<AbilityItemAsset>(item.GetGUID())
 				};
                 
-				abilities.Add(record);
+				abilityItems.Add(record);
 			}
 
+			abilities = abilityItems.ToArray();
+			
 			this.MarkDirty();
 #endif
+
+			return abilityItems;
 		}
 		
 #if UNITY_EDITOR

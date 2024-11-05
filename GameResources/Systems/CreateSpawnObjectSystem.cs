@@ -9,6 +9,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using Runtime.ObjectPool.Extensions;
     using UnityEngine;
+    using Object = UnityEngine.Object;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -39,7 +40,7 @@
                 _taskAspect.Complete.Add(entity);
 
                 ref var resourceComponent = ref _taskAspect.Result.Get(entity);
-                var resource = resourceComponent.Resource;
+                var resource = resourceComponent.Resource as Object;
                 var lifeTime = resourceComponent.LifeTime;
                 if (!resource) continue;
 

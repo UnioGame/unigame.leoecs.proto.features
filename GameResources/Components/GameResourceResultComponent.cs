@@ -15,7 +15,7 @@
         /// <summary>
         /// загруженный ресурс
         /// </summary>
-        public Object Resource;
+        public object Resource;
 
         /// <summary>
         /// ожидаемое время жизни объекта
