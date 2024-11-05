@@ -30,7 +30,6 @@
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Timer.Components;
-    using Unity.IL2CPP.CompilerServices;
     using UnityEngine.Serialization;
 
     [Serializable]

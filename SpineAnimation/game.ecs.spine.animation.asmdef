@@ -1,5 +1,5 @@
 {
-    "name": "game.ecs.spineAnimation",
+    "name": "game.ecs.spine.animation",
     "rootNamespace": "",
     "references": [
         "GUID:e59bf9fc7d5a44b18a819a92edd46163",
@@ -30,6 +30,12 @@
     "defineConstraints": [
         "SPINE_ENABLE"
     ],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.esotericsoftware.spine.spine-csharp",
+            "expression": "",
+            "define": "SPINE_ENABLE"
+        }
+    ],
     "noEngineReferences": false
 }
