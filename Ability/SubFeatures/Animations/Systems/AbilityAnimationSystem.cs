@@ -12,7 +12,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     
-#if SPINE_ENABLE
+#if SPINE_ENABLED
     using Game.Ecs.SpineAnimation.Aspects;
     using Game.Ecs.SpineAnimation.Data.AnimationType;
 #endif
@@ -33,7 +33,7 @@
         private AbilityAnimationsAspect _abilityAnimationsAspect;
         private OwnershipAspect _ownershipAspect;
         
-#if SPINE_ENABLE
+#if SPINE_ENABLED
         private SpineAnimationAspect _spineAnimationAspect;
 #endif
         
@@ -61,7 +61,7 @@
                     continue;
                 }
 
-#if SPINE_ENABLE
+#if SPINE_ENABLED
                 ref var playAnimationSelfRequest = ref _spineAnimationAspect.Play.GetOrAdd(unpackedTargetEntity);
                 playAnimationSelfRequest.AnimationTypeId = (AnimationTypeId)playAnimId;
                 playAnimationSelfRequest.NextAnimationTypeId = (AnimationTypeId)nextPlayAnimId;

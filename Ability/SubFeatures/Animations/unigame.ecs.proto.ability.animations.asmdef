@@ -41,6 +41,11 @@
             "name": "com.leopotam.proto",
             "expression": "2023.0.0",
             "define": "LEO_ECS_PROTO_ENABLED"
+        },
+        {
+            "name": "com.esotericsoftware.spine.spine-csharp",
+            "expression": "",
+            "define": "SPINE_ENABLED"
         }
     ],
     "noEngineReferences": false

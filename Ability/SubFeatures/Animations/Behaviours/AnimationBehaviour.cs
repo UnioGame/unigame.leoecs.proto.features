@@ -7,14 +7,14 @@
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
 
-#if SPINE_ENABLE
+#if SPINE_ENABLED
     using Game.Ecs.SpineAnimation.Data.AnimationType;
 #endif
     
     [Serializable]
     public class AnimationBehaviour : TimelineAbilityBehaviour
     {
-#if SPINE_ENABLE
+#if SPINE_ENABLED
         public AnimationTypeId animationId;
         public AnimationTypeId nextAnimationId;
 #endif
@@ -29,7 +29,7 @@
                 return;
             }
             
-#if SPINE_ENABLE
+#if SPINE_ENABLED
             ref var abilityAnimationComponent = ref world.AddComponent<AbilityAnimationComponent>(playableEntity);
             abilityAnimationComponent.playAnimationId = animationId;
             abilityAnimationComponent.nextPlayAnimationId = nextAnimationId;
