@@ -84,9 +84,9 @@
 		[Button(ButtonSizes.Large,Icon = SdfIconType.ArchiveFill)]
 		public override IReadOnlyList<IGameResourceRecord> FillCategory()
 		{
-#if UNITY_EDITOR
 			var abilityItems = new List<AbilityRecord>();
-            
+			
+#if UNITY_EDITOR
 			var abilityItemAssets = AssetEditorTools.GetAssets<AbilityItemAsset>();
 			abilityItemAssets.Sort((x,y) => Comparer<int>.Default.Compare(x.Id,y.Id));
 			

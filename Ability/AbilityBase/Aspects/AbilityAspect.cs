@@ -30,6 +30,7 @@
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Timer.Components;
+    using Unity.IL2CPP.CompilerServices;
     using UnityEngine.Serialization;
 
     [Serializable]
@@ -224,6 +225,7 @@
                 abilityBehaviour.Compose(World, abilityEntity);
         }
 
+        
 #if ENABLE_IL2CPP
         [Il2CppSetOption(Option.NullChecks, false)]
         [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
