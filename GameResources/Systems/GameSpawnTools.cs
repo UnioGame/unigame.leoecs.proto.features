@@ -68,7 +68,7 @@
 
             if (owner != EmptyEntity)
             {
-                _ownershipAspect.AddChild(ref owner, ref spawnEntity);
+                _ownershipAspect.AddChild(owner, spawnEntity);
             }
 
             var spawnPacked = _world.PackEntity(spawnEntity);
