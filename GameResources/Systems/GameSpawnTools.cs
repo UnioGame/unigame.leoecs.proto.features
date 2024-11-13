@@ -41,9 +41,10 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ProtoEntity Spawn(string resourceId, 
             float3 spawnPosition,
-            Transform parent = null)
+            Transform parent = null,
+            ILifeTime lifeTime = null)
         {
-            return Spawn(ref EmptyEntity, resourceId, spawnPosition, parent);
+            return Spawn(ref EmptyEntity, resourceId, spawnPosition, parent, lifeTime);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -51,9 +52,10 @@
             ref ProtoPackedEntity owner,
             string resourceId, 
             float3 spawnPosition,
-            Transform parent = null)
+            Transform parent = null,
+            ILifeTime lifeTime = null)
         {
-            return Spawn(ref owner,ref EmptyEntity, resourceId, spawnPosition, parent);
+            return Spawn(ref owner,ref EmptyEntity, resourceId, spawnPosition, parent, lifeTime);
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -62,7 +64,8 @@
             ref ProtoPackedEntity source,
             string resourceId, 
             float3 spawnPosition,
-            Transform parent = null)
+            Transform parent = null,
+            ILifeTime lifeTime = null)
         {
             var spawnEntity = _world.NewEntity();
 
@@ -75,8 +78,12 @@
             ref var resourceIdComponent = ref _resourceAspect.Resource.Add(spawnEntity);
             resourceIdComponent.Value = resourceId;
 
-            ref var lifetimeComponent = ref _ownershipAspect.LifeTime.Add(spawnEntity);
-            
+            if (lifeTime == null)
+            {
+                ref var lifetimeComponent = ref _ownershipAspect.LifeTime.Add(spawnEntity);
+                lifeTime = lifetimeComponent;
+            }
+
             Spawn(ref source,
                 ref spawnPacked,
                 ref EmptyEntity,
@@ -85,7 +92,7 @@
                 quaternion.identity,
                 One,
                 parent,
-                lifetimeComponent);
+                lifeTime);
 
             return spawnEntity;
         }
