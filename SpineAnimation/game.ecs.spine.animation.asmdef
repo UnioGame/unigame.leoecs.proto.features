@@ -28,7 +28,8 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "SPINE_ENABLED"
+        "SPINE_ENABLED",
+        "LEO_ECS_PROTO_ENABLED"
     ],
     "versionDefines": [
         {
