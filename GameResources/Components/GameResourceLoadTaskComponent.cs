@@ -1,10 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.GameResources.Components
 {
     using System;
+    using Cysharp.Threading.Tasks;
+    using Game.Code.DataBase.Runtime;
 
-    /// <summary>
-    /// source id of game resource
-    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -12,9 +11,10 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+
     [Serializable]
-    public struct GameResourceIdComponent
+    public struct GameResourceLoadTaskComponent
     {
-        public string Value;
+        public UniTask<GameResourceResult> Value;
     }
 }

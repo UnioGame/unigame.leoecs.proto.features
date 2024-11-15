@@ -84,7 +84,7 @@
                 var projectileAssetGuid = projectileAbilityComponent.assetGuid;
                 var lifetime = projectileAbilityComponent.duration;
 
-                var projectileEntity = _gameSpawnTools.Spawn(projectileAssetGuid, projectileSpawnPosition);
+                var projectileEntity = _gameSpawnTools.Spawn(default, projectileAssetGuid, projectileSpawnPosition);
                 _projectileAbilityAspect.Projectile.Add(projectileEntity);
 
                 ref var cooldownComponent = ref _timerAspect.Cooldown.Add(projectileEntity);

@@ -3,8 +3,15 @@
     using System;
     using Aspects;
     using Components;
+    using Cysharp.Threading.Tasks;
+    using Game.Ecs.Core.Components;
+    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Converter.Runtime;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Runtime.ObjectPool;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using Runtime.ObjectPool.Extensions;
@@ -24,80 +31,48 @@
     public class CreateSpawnObjectSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private GameResourceTaskAspect _taskAspect;
-        private GameResourceAspect _resourceAspect;
 
-        private ProtoItExc _filter = It
-            .Chain<GameResourceResultComponent>()
-            .Inc<GameResourceTaskComponent>()
-            .Exc<GameResourceTaskCompleteComponent>()
+        private GameResourceAspect _resourceAspect;
+        private OwnershipAspect _ownershipAspect;
+        private UnityAspect _unityAspect;
+
+        private ProtoIt _spawnRequestFilter = It
+            .Chain<GameResourceSpawnComponent>()
+            .Inc<ResourceInstanceSpawnRequest>()
             .End();
 
         public void Run()
         {
-            foreach (var entity in _filter)
+            foreach (var requestEntity in _spawnRequestFilter)
             {
-                _taskAspect.Complete.Add(entity);
+                ref var requestComponent = ref _resourceAspect.InstanceSpawnRequest.Get(requestEntity);
+                ref var resourceSpawnComponent = ref _resourceAspect.Spawn.Get(requestEntity);
 
-                ref var resourceComponent = ref _taskAspect.Result.Get(entity);
-                var resource = resourceComponent.Resource as Object;
-                var lifeTime = resourceComponent.LifeTime;
-                if (!resource) continue;
+                var resourceInstance = requestComponent.Value.Spawn();
+                ref var entityLifeTimeComponent = ref _ownershipAspect.LifeTime.Get(requestEntity);
+                entityLifeTimeComponent.AddCleanUpAction(() => resourceInstance.Despawn());
 
-                ref var handleComponent = ref _taskAspect.Handle.Get(entity);
-                ref var positionComponent = ref _taskAspect.Position.Get(entity);
-                ref var parentComponent = ref _taskAspect.Parent.Get(entity);
-                ref var rotationComponent = ref _taskAspect.Rotation.Get(entity);
-                ref var targetComponent = ref _taskAspect.Target.Get(entity);
-                ref var scaleComponent = ref _taskAspect.Scale.Get(entity);
-                ref var parentEntityComponent = ref _taskAspect.ParentEntity.Get(entity);
-
-                var parent = parentComponent.Value;
-                var targetPosition = positionComponent.Value;
-                var rotation = rotationComponent.Value;
-                var instance = resource.Spawn(targetPosition, rotation, parent);
-                lifeTime.AddCleanUpAction(() => instance.DespawnAsset());
-
-                if (!instance) continue;
-
-                //non gameobject case
-                if (instance is not GameObject && instance is not Component) continue;
-
-                var targetGameObject = instance is Component component
-                    ? component.gameObject
-                    : instance as GameObject;
-
-                var spawnEntity = (ProtoEntity)(-1);
-                if (targetComponent.Value.Unpack(_world, out var target))
-                    spawnEntity = target;
-
-                spawnEntity = (int)spawnEntity < 0 ? _world.NewEntity() : spawnEntity;
-
-                ref var sourceLinkComponent = ref _resourceAspect.SourceLink.Add(spawnEntity);
-                sourceLinkComponent.Source = handleComponent.Source;
-                sourceLinkComponent.SpawnedEntity = _world.PackEntity(spawnEntity);
-
-                if (parentEntityComponent.Value.Unpack(_world, out var parentEntity))
+                var instanceGameObject = (GameObject)resourceInstance;
+                if (resourceSpawnComponent.Parent)
                 {
-                    ref var spawnParentEntityComponent = ref _resourceAspect.Parent.Add(spawnEntity);
-                    spawnParentEntityComponent.Value = parentEntityComponent.Value;
+                    instanceGameObject.transform.SetParent(resourceSpawnComponent.Parent);
                 }
 
-                if ((int)target > 0) _resourceAspect.Target.Add(spawnEntity);
-
-                ref var spawnSpawnedComponent = ref _resourceAspect.SpawnedResource.Add(spawnEntity);
-                ref var spawnObjectComponent = ref _resourceAspect.Object.Add(spawnEntity);
-                ref var spawnResourceComponent = ref _resourceAspect.Resource.GetOrAddComponent(spawnEntity);
-
-                spawnResourceComponent.Value = handleComponent.Resource;
-                spawnSpawnedComponent.Source = handleComponent.Source;
-                spawnObjectComponent.Value = instance;
-
-                if (!targetGameObject) continue;
-
-                //targetGameObject.transform.localScale = scaleComponent.Value;
-                ref var spawnGameObjectComponent = ref _resourceAspect.GameObject.Add(spawnEntity);
-                spawnGameObjectComponent.Value = targetGameObject;
+                instanceGameObject.transform.position = resourceSpawnComponent.LocationData.Position;
+                instanceGameObject.transform.rotation = resourceSpawnComponent.LocationData.Rotation;
+                instanceGameObject.transform.localScale = resourceSpawnComponent.LocationData.Scale;
+                
+                ref var gameObjectComponent = ref _unityAspect.GameObject.Add(requestEntity);
+                gameObjectComponent.Value = instanceGameObject;
+                ref var transformComponent = ref _unityAspect.Transform.Add(requestEntity);
+                transformComponent.Value = instanceGameObject.transform;
+                
+                if (instanceGameObject.TryGetComponent<ILeoEcsMonoConverter>(out var converter))
+                {
+                    converter.Convert(_world, (int)requestEntity);
+                }
+                
+                _resourceAspect.Spawn.Del(requestEntity);
             }
         }
     }

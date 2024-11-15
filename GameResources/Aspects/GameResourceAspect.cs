@@ -10,21 +10,11 @@
     [Serializable]
     public class GameResourceAspect : EcsAspect
     {
-        public ProtoPool<GameSpawnedResourceComponent> SpawnedResource;
-        public ProtoPool<GameResourceIdComponent> Resource;
-        public ProtoPool<UnityObjectComponent> Object;
-        public ProtoPool<GameSpawnCompleteComponent> Complete;
-        public ProtoPool<GameResourceSourceLinkComponent> SourceLink;
-
-        //optional
-        public ProtoPool<GameObjectComponent> GameObject;
-        public ProtoPool<ParentEntityComponent> Parent;
-        public ProtoPool<GameResourceSelfTargetComponent> Target;
+        public ProtoPool<GameResourceSpawnComponent> Spawn;
+        public ProtoPool<GameResourceLoadTaskComponent> LoadTask;
         
         //requests
-        public ProtoPool<GameResourceSpawnRequest> Spawn;
-        
-        //events
-        public ProtoPool<GameResourceSpawnCompleteEvent> SpawnComplete;
+        public ProtoPool<GameResourceSpawnRequest> SpawnRequest;
+        public ProtoPool<ResourceInstanceSpawnRequest> InstanceSpawnRequest;
     }
 }

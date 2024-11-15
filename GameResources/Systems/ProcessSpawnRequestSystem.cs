@@ -1,8 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.GameResources.Systems
 {
     using System;
+    using AddressableTools.Runtime;
     using Aspects;
     using Components;
+    using Game.Code.DataBase.Runtime.Abstract;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -19,41 +21,40 @@
     [ECSDI]
     public class ProcessSpawnRequestSystem : IProtoRunSystem
     {
+        private readonly IGameDatabase _gameDatabase;
+        
         private ProtoWorld _world;
-        private GameResourceTaskAspect _taskAspect;
+
+        private GameResourceAspect _gameResourceAspect;
+
         private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _filter = It
             .Chain<GameResourceSpawnRequest>()
             .End();
+
+        public ProcessSpawnRequestSystem(IGameDatabase gameDatabase)
+        {
+            _gameDatabase = gameDatabase;
+        }
         
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var spawnRequest = ref _taskAspect.SpawnRequest.Get(entity);
-                var taskEntity = _world.NewEntity();
+                ref var spawnRequest = ref _gameResourceAspect.SpawnRequest.Get(entity);
                 
-                ref var gameResourceComponent = ref _taskAspect.Handle.Add(taskEntity);
-                ref var targetComponent = ref _taskAspect.Target.Add(taskEntity);
-                ref var parentEntity = ref _taskAspect.ParentEntity.Add(taskEntity);
-                    
-                gameResourceComponent.Resource = spawnRequest.ResourceId;
-                gameResourceComponent.Source = spawnRequest.Source;
-                gameResourceComponent.LifeTime = spawnRequest.LifeTime;
+                var entityLifeTime = _ownershipAspect.LifeTime.Add(entity);
+                var resourceLifeTime = spawnRequest.LifeTime == default ? entityLifeTime : spawnRequest.LifeTime;
+                var loadResourceTask = _gameDatabase.LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);
                 
-                parentEntity.Value = spawnRequest.ParentEntity;
-                targetComponent.Value = spawnRequest.Target;
-                
-                ref var positionComponent = ref _taskAspect.Position.Add(taskEntity);
-                ref var rotationComponent = ref _taskAspect.Rotation.Add(taskEntity);
-                ref var scaleComponent = ref _taskAspect.Scale.Add(taskEntity);
-                ref var parentComponent = ref _taskAspect.Parent.Add(taskEntity);
-            
-                parentComponent.Value = spawnRequest.Parent;
-                positionComponent.Value = spawnRequest.LocationData.Position;
-                rotationComponent.Value = spawnRequest.LocationData.Rotation;
-                scaleComponent.Value = spawnRequest.LocationData.Scale;
+                ref var resourceSpawnComponent = ref _gameResourceAspect.Spawn.Add(entity);
+                resourceSpawnComponent.LocationData = spawnRequest.LocationData;
+                resourceSpawnComponent.ResourceLifeTime = resourceLifeTime;
+                resourceSpawnComponent.Parent = spawnRequest.Parent;
+
+                ref var loadTaskComponent = ref _gameResourceAspect.LoadTask.Add(entity);
+                loadTaskComponent.Value = loadResourceTask;
             }
         }
     }

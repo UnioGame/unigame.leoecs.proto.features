@@ -58,11 +58,10 @@
                 ref var viewComponent = ref _viewAspect.View.Add(viewEntity);
                 var viewPacked = viewEntity.PackEntity(_world);
                 
-                gameResourceRequest.Source = activateRequest.Source;
+                /*gameResourceRequest.Source = activateRequest.Source;
                 //gameResourceRequest.Owner = activateRequest.Source;
-                gameResourceRequest.ParentEntity = activateRequest.Source;
-
-                gameResourceRequest.Target = viewPacked;
+                gameResourceRequest.ParentEntity = activateRequest.Source;*/
+                //gameResourceRequest.Target = viewPacked;
                 
                 gameResourceRequest.ResourceId = activateRequest.View;
                 gameResourceRequest.Parent = viewParentComponent.Parent;

@@ -73,7 +73,7 @@
                 
                 var spawnPositionTransform = targetEntity.GetViewInstance(_world, spawnPositionType);
                 var targetTransform = isBoneBound ? spawnPositionTransform : null;
-                _gameSpawnTools.Spawn(resourceId, spawnPositionTransform.position/*, targetTransform*/);
+                _gameSpawnTools.Spawn(default, resourceId, spawnPositionTransform.position);
             }
         }
     }

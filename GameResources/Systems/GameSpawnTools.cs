@@ -25,99 +25,57 @@
     public class GameSpawnTools : IProtoInitSystem
     {
         public static readonly float3 One = new(1, 1, 1);
-        public static ProtoPackedEntity EmptyEntity = default;
         
         private ProtoWorld _world;
         
         private GameResourceAspect _resourceAspect;
-        private GameResourceTaskAspect _taskAspect;
         private OwnershipAspect _ownershipAspect;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity Spawn(string resourceId, 
-            float3 spawnPosition,
-            Transform parent = null,
-            ILifeTime lifeTime = null)
-        {
-            return Spawn(ref EmptyEntity, resourceId, spawnPosition, parent, lifeTime);
-        }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ProtoEntity Spawn(
-            ref ProtoPackedEntity owner,
-            string resourceId, 
+            ProtoPackedEntity owner,
+            string resourceId,
             float3 spawnPosition,
             Transform parent = null,
-            ILifeTime lifeTime = null)
-        {
-            return Spawn(ref owner,ref EmptyEntity, resourceId, spawnPosition, parent, lifeTime);
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity Spawn(
-            ref ProtoPackedEntity owner,
-            ref ProtoPackedEntity source,
-            string resourceId, 
-            float3 spawnPosition,
-            Transform parent = null,
-            ILifeTime lifeTime = null)
+            ILifeTime resourceLifeTime = null)
         {
             var spawnEntity = _world.NewEntity();
-
-            if (owner != EmptyEntity)
+            if (owner.Unpack(_world, out var ownerEntity))
             {
-                _ownershipAspect.AddChild(owner, spawnEntity);
+                _ownershipAspect.AddChild(ownerEntity, spawnEntity);
             }
-
-            var spawnPacked = _world.PackEntity(spawnEntity);
-            ref var resourceIdComponent = ref _resourceAspect.Resource.Add(spawnEntity);
-            resourceIdComponent.Value = resourceId;
-
-            if (lifeTime == null)
-            {
-                ref var lifetimeComponent = ref _ownershipAspect.LifeTime.Add(spawnEntity);
-                lifeTime = lifetimeComponent;
-            }
-
-            Spawn(ref source,
-                ref spawnPacked,
-                ref EmptyEntity,
+            
+            Spawn(
+                spawnEntity,
                 resourceId,
                 spawnPosition,
                 quaternion.identity,
                 One,
                 parent,
-                lifeTime);
+                resourceLifeTime);
 
             return spawnEntity;
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Spawn(
-            ref ProtoPackedEntity source,
-            ref ProtoPackedEntity target,
-            ref ProtoPackedEntity parent,
+            ProtoEntity entity,
             string resourceId, 
             float3 spawnPosition,
             quaternion rotation,
             float3 scale,
             Transform parentTransform = null,
-            ILifeTime lifeTime = null)
+            ILifeTime resourceLifeTime = null)
         {
-            var spawnEntity = _world.NewEntity();
-            ref var spawnRequest = ref _resourceAspect.Spawn.Add(spawnEntity);
-            
-            spawnRequest.Source = source;
-            spawnRequest.Target = target;
+            ref var spawnRequest = ref _resourceAspect.SpawnRequest.Add(entity);
             spawnRequest.Parent = parentTransform;
-            spawnRequest.ParentEntity = parent;
             spawnRequest.ResourceId = resourceId;
-            spawnRequest.LifeTime = lifeTime;
+            spawnRequest.LifeTime = resourceLifeTime;
             spawnRequest.LocationData = new GamePoint()
             {
                 Position = spawnPosition,
