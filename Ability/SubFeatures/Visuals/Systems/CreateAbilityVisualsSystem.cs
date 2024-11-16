@@ -9,6 +9,7 @@
     using FakeTimeline.Components.Requests;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using GameResources.Aspects;
     using GameResources.Systems;
     using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
@@ -25,12 +26,11 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CreateAbilityVisualsSystem : IProtoInitSystem, IProtoRunSystem
+    public class CreateAbilityVisualsSystem : IProtoRunSystem
     {
-        private GameSpawnTools _gameSpawnTools;
-        
         private ProtoWorld _world;
         
+        private GameResourceAspect _gameResourceAspect;
         private AbilityVisualsAspects _abilityVisualsAspects;
         private OwnershipAspect _ownershipAspect;
         private AbilityAspect _abilityAspect;
@@ -41,12 +41,6 @@
             .Chain<AbilityVisualsPlayableComponent>()
             .Inc<ExecuteTimelinePlayableRequest>()
             .End();
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _gameSpawnTools = _world.GetGlobal<GameSpawnTools>();
-        }
 
         public void Run()
         {
@@ -73,7 +67,7 @@
                 
                 var spawnPositionTransform = targetEntity.GetViewInstance(_world, spawnPositionType);
                 var targetTransform = isBoneBound ? spawnPositionTransform : null;
-                _gameSpawnTools.Spawn(default, resourceId, spawnPositionTransform.position);
+                _gameResourceAspect.Spawn(default, resourceId, spawnPositionTransform.position);
             }
         }
     }

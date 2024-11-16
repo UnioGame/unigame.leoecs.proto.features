@@ -8,7 +8,6 @@
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Runtime.ObjectPool;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 

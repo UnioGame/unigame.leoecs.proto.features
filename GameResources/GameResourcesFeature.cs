@@ -13,19 +13,18 @@
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    [CreateAssetMenu(menuName = "Proto Features/Resources/Game Resources Feature", fileName = "Game Resources Feature")]
+    [CreateAssetMenu(menuName = "Proto Features/Resources/Game Resources Feature", 
+        fileName = "Game Resources Feature")]
     public class GameResourcesFeature : BaseLeoEcsFeature
     {
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             var context = ecsSystems.GetShared<IContext>();
             var dataBase = await context.ReceiveFirstAsync<IGameDatabase>();
-            var world = ecsSystems.GetWorld();
+            
+            ecsSystems.SetGlobal(dataBase);
 
-            var spawnTools = new GameSpawnTools();
-            world.SetGlobal(spawnTools);
-            ecsSystems.Add(spawnTools);
-
+            //get new request to spawn game resource
             ecsSystems.Add(new ProcessSpawnRequestSystem(dataBase));
             ecsSystems.DelHere<GameResourceSpawnRequest>();
 

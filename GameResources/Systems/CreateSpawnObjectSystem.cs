@@ -3,20 +3,14 @@
     using System;
     using Aspects;
     using Components;
-    using Cysharp.Threading.Tasks;
-    using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using LeoEcs.Bootstrap.Runtime.Abstract;
     using LeoEcs.Converter.Runtime;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Runtime.ObjectPool;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
     using Runtime.ObjectPool.Extensions;
     using UnityEngine;
-    using Object = UnityEngine.Object;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -46,11 +40,9 @@
             foreach (var requestEntity in _spawnRequestFilter)
             {
                 ref var requestComponent = ref _resourceAspect.InstanceSpawnRequest.Get(requestEntity);
-                ref var resourceSpawnComponent = ref _resourceAspect.Spawn.Get(requestEntity);
+                ref var resourceSpawnComponent = ref _resourceAspect.SpawnResource.Get(requestEntity);
 
                 var resourceInstance = requestComponent.Value.Spawn();
-                ref var entityLifeTimeComponent = ref _ownershipAspect.LifeTime.Get(requestEntity);
-                entityLifeTimeComponent.AddCleanUpAction(() => resourceInstance.Despawn());
 
                 var instanceGameObject = (GameObject)resourceInstance;
                 if (resourceSpawnComponent.Parent)
@@ -72,7 +64,7 @@
                     converter.Convert(_world, (int)requestEntity);
                 }
                 
-                _resourceAspect.Spawn.Del(requestEntity);
+                _resourceAspect.SpawnResource.Del(requestEntity);
             }
         }
     }

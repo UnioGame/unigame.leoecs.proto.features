@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.GameResources.Systems
 {
     using System;
-    using AddressableTools.Runtime;
     using Aspects;
     using Components;
     using Game.Code.DataBase.Runtime.Abstract;
@@ -21,12 +20,9 @@
     [ECSDI]
     public class ProcessSpawnRequestSystem : IProtoRunSystem
     {
-        private readonly IGameDatabase _gameDatabase;
-        
+        private IGameDatabase _gameDatabase;
         private ProtoWorld _world;
-
         private GameResourceAspect _gameResourceAspect;
-
         private OwnershipAspect _ownershipAspect;
         
         private ProtoIt _filter = It
@@ -45,10 +41,14 @@
                 ref var spawnRequest = ref _gameResourceAspect.SpawnRequest.Get(entity);
                 
                 var entityLifeTime = _ownershipAspect.LifeTime.Add(entity);
-                var resourceLifeTime = spawnRequest.LifeTime == default ? entityLifeTime : spawnRequest.LifeTime;
-                var loadResourceTask = _gameDatabase.LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);
+                var resourceLifeTime = spawnRequest.LifeTime == default 
+                    ? entityLifeTime 
+                    : spawnRequest.LifeTime;
                 
-                ref var resourceSpawnComponent = ref _gameResourceAspect.Spawn.Add(entity);
+                var loadResourceTask = _gameDatabase
+                    .LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);
+                
+                ref var resourceSpawnComponent = ref _gameResourceAspect.SpawnResource.Add(entity);
                 resourceSpawnComponent.LocationData = spawnRequest.LocationData;
                 resourceSpawnComponent.ResourceLifeTime = resourceLifeTime;
                 resourceSpawnComponent.Parent = spawnRequest.Parent;

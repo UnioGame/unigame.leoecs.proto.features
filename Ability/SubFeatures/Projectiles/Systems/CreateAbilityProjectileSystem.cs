@@ -10,6 +10,7 @@
     using FakeTimeline.Aspects;
     using FakeTimeline.Components.Requests;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using GameResources.Aspects;
     using GameResources.Systems;
     using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
@@ -27,12 +28,9 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CreateAbilityProjectileSystem : IProtoInitSystem, IProtoRunSystem
+    public class CreateAbilityProjectileSystem : IProtoRunSystem
     {
-        private GameSpawnTools _gameSpawnTools;
-        
-        private ProtoWorld _world;
-        
+        private GameResourceAspect _gameSpawnAspect;
         private ProjectileAbilityAspect _projectileAbilityAspect;
         private UnityAspect _unityAspect;
         private TimerAspect _timerAspect;
@@ -42,17 +40,13 @@
         private EffectAspect _effectAspect;
         private TimelineAspect _timelineAspect;
         
+        private ProtoWorld _world;
+        
         private ProtoIt _projectileAbilityFilter = It
             .Chain<ProjectileAbilityComponent>()
             .Inc<ExecuteTimelinePlayableRequest>()
             .End();
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _gameSpawnTools = _world.GetGlobal<GameSpawnTools>();
-        }
-
+        
         public void Run()
         {
             foreach (var playableEntity in _projectileAbilityFilter)
@@ -84,7 +78,7 @@
                 var projectileAssetGuid = projectileAbilityComponent.assetGuid;
                 var lifetime = projectileAbilityComponent.duration;
 
-                var projectileEntity = _gameSpawnTools.Spawn(default, projectileAssetGuid, projectileSpawnPosition);
+                var projectileEntity = _gameSpawnAspect.Spawn(default, projectileAssetGuid, projectileSpawnPosition);
                 _projectileAbilityAspect.Projectile.Add(projectileEntity);
 
                 ref var cooldownComponent = ref _timerAspect.Cooldown.Add(projectileEntity);
