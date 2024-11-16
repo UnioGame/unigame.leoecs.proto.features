@@ -61,7 +61,7 @@
                 
                 if (instanceGameObject.TryGetComponent<ILeoEcsMonoConverter>(out var converter))
                 {
-                    converter.Convert(_world, (int)requestEntity);
+                    converter.Convert(_world, requestEntity);
                 }
                 
                 _resourceAspect.SpawnResource.Del(requestEntity);
