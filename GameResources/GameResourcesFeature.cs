@@ -32,6 +32,8 @@
 
             ecsSystems.Add(new CreateSpawnObjectSystem());
             ecsSystems.DelHere<ResourceInstanceSpawnRequest>();
+
+            ecsSystems.Add(new PoolObjectSystem());
         }
     }
 }

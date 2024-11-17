@@ -63,7 +63,8 @@
                 {
                     converter.Convert(_world, requestEntity);
                 }
-                
+
+                _resourceAspect.Poolable.Add(requestEntity);
                 _resourceAspect.SpawnResource.Del(requestEntity);
             }
         }
