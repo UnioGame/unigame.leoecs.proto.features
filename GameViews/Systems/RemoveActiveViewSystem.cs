@@ -3,7 +3,6 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -21,29 +20,23 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class RemoveActiveViewSystem : IProtoInitSystem, IProtoRunSystem
+    public class RemoveActiveViewSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private ParentGameViewAspect _parentViewAspect;
-        private EcsFilter _disableViewFilter;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _disableViewFilter = _world
-                .Filter<DisableActiveGameViewRequest>()
-                .End();
-        }
+        private ProtoIt _disableViewFilter = It
+            .Chain<DisableActiveGameViewRequest>()
+            .End();
 
         public void Run()
         {
             foreach (var entity in _disableViewFilter)
             {
                 ref var disableRequest = ref _parentViewAspect.Disable.Get(entity);
-                if(!disableRequest.Value.Unpack(_world,out var targetEntity))
+                if (!disableRequest.Value.Unpack(_world, out var targetEntity))
                     continue;
-                
+
                 _parentViewAspect.ActiveView.TryRemove(targetEntity);
             }
         }

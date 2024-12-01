@@ -3,12 +3,10 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.Runtime.ObjectPool.Extensions;
+    using Runtime.ObjectPool.Extensions;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// disable current active view
@@ -22,30 +20,24 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class DisableActiveGameViewSystem : IProtoInitSystem, IProtoRunSystem
+    public class DisableActiveGameViewSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private ParentGameViewAspect _parentViewAspect;
-        private EcsFilter _disableViewFilter;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _disableViewFilter = _world
-                .Filter<DisableActiveGameViewRequest>()
-                .End();
-        }
+        private ProtoIt _disableViewFilter = It
+            .Chain<DisableActiveGameViewRequest>()
+            .End();
 
         public void Run()
         {
             foreach (var entity in _disableViewFilter)
             {
                 ref var disableRequest = ref _parentViewAspect.Disable.Get(entity);
-                if(!disableRequest.Value.Unpack(_world,out var targetEntity))
+                if (!disableRequest.Value.Unpack(_world, out var targetEntity))
                     continue;
-                
-                if(!_parentViewAspect.ActiveView.Has(targetEntity)) continue;
+
+                if (!_parentViewAspect.ActiveView.Has(targetEntity)) continue;
 
                 ref var activeViewComponent = ref _parentViewAspect.ActiveView.Get(targetEntity);
                 if (!activeViewComponent.Value.Unpack(_world, out var activeEntity))

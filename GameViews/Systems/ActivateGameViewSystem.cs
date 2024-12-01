@@ -3,8 +3,7 @@
     using System;
     using Aspects;
     using Components;
-    using GameResources.Components;
-    using Leopotam.EcsLite;
+    using GameResources.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -22,23 +21,17 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class ActivateGameViewSystem : IProtoInitSystem, IProtoRunSystem
+    public class ActivateGameViewSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _activateFilter;
         
         private ParentGameViewAspect _parentViewAspect;
         private GameViewAspect _viewAspect;
-        
-        private ProtoPool<GameResourceSpawnRequest> _gameResourcePool;
+        private GameResourceAspect _gameResourceAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _activateFilter = _world
-                .Filter<ActivateGameViewRequest>()
-                .End();
-        }
+        private ProtoIt _activateFilter = It
+            .Chain<ActivateGameViewRequest>()
+            .End();
 
         public void Run()
         {
@@ -52,16 +45,11 @@
                 ref var viewParentComponent = ref _parentViewAspect.Parent.Get(target);
                     
                 var gameResourceEntity = _world.NewEntity();
-                ref var gameResourceRequest = ref _gameResourcePool.Add(gameResourceEntity);
+                ref var gameResourceRequest = ref _gameResourceAspect.SpawnRequest.Add(gameResourceEntity);
 
                 var viewEntity = _world.NewEntity();
-                ref var viewComponent = ref _viewAspect.View.Add(viewEntity);
+                _viewAspect.View.Add(viewEntity);
                 var viewPacked = viewEntity.PackEntity(_world);
-                
-                /*gameResourceRequest.Source = activateRequest.Source;
-                //gameResourceRequest.Owner = activateRequest.Source;
-                gameResourceRequest.ParentEntity = activateRequest.Source;*/
-                //gameResourceRequest.Target = viewPacked;
                 
                 gameResourceRequest.ResourceId = activateRequest.View;
                 gameResourceRequest.Parent = viewParentComponent.Parent;

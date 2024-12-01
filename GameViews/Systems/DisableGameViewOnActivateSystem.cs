@@ -3,12 +3,10 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-
-
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -18,19 +16,14 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class DisableGameViewOnActivateSystem : IProtoInitSystem, IProtoRunSystem
+    public class DisableGameViewOnActivateSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _activateFilter;
         private ParentGameViewAspect _viewAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _activateFilter = _world
-                .Filter<ActivateGameViewRequest>()
-                .End();
-        }
+        private ProtoIt _activateFilter = It
+            .Chain<ActivateGameViewRequest>()
+            .End();
 
         public void Run()
         {

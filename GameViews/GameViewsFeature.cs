@@ -9,7 +9,7 @@ namespace UniGame.Ecs.Proto.Gameplay.LevelProgress
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ECS Proto/Features/GameViews Feature",fileName = "GameViews Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/GameViews Feature")]
     public class GameViewsFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)
