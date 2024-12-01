@@ -8,7 +8,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Target/Target Selection", fileName = "Target Selection Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Target/Target Selection")]
     public class TargetSelectionFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)
@@ -20,8 +20,8 @@
             
             ecsSystems.Add(targetSelectionSystem);
             //collect all valida target into targets component
-            ecsSystems.Add(new InitKDTreeTargetsSystem());
-            ecsSystems.Add(new CollectKDTreeTargetsSystem());
+            ecsSystems.Add(new InitKdTreeTargetsSystem());
+            ecsSystems.Add(new CollectKdTreeTargetsSystem());
             ecsSystems.Add(new SelectAreaTargetsSystem());
             return UniTask.CompletedTask;
         }

@@ -7,13 +7,11 @@
     using DataStructures.ViliWonka.KDTree;
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Selection;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
 #if ENABLE_IL2CPP
@@ -25,38 +23,30 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CollectKDTreeTargetsSystem : IProtoInitSystem, IProtoRunSystem
+    public class CollectKdTreeTargetsSystem : IProtoRunSystem
     {
-        private static float3 MaxPosition = new float3(float.MaxValue,float.MaxValue,float.MaxValue);
+        private static float3 MaxPosition = new(float.MaxValue,float.MaxValue,float.MaxValue);
         private static ProtoPackedEntity EmptyEntity = default;
         private static int EmptyInt = default;
         
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
-        private EcsFilter _kdDataFilter;
         private TargetSelectionSystem _targetSelection;
         
         private TargetAspect _targetAspect;
-        
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _targetSelection = _world.GetGlobal<TargetSelectionSystem>();
-            
-            _targetFilter = _world
-                .Filter<TransformPositionComponent>()
-                .Inc<HealthComponent>()
-                .Exc<DestroyComponent>()
-                .Exc<DisabledComponent>()
-                .Exc<PrepareToDeathComponent>()
-                .End();
 
-            _kdDataFilter = _world
-                .Filter<KDTreeDataComponent>()
-                .Inc<KDTreeComponent>()
-                .Inc<KDTreeQueryComponent>()
-                .End();
-        }
+        private ProtoItExc _targetFilter = It
+            .Chain<TransformPositionComponent>()
+            .Inc<HealthComponent>()
+            .Exc<DestroyComponent>()
+            .Exc<DisabledComponent>()
+            .Exc<PrepareToDeathComponent>()
+            .End();
+        
+        private ProtoIt _kdDataFilter = It
+            .Chain<KDTreeDataComponent>()
+            .Inc<KDTreeComponent>()
+            .Inc<KDTreeQueryComponent>()
+            .End();
         
         public void Run()
         {

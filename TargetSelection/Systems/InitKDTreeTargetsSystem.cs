@@ -1,13 +1,12 @@
-using DataStructures.ViliWonka.KDTree;
-using UniGame.Ecs.Proto.TargetSelection.Components;
-using Unity.Mathematics;
-
 namespace UniGame.Ecs.Proto.TargetSelection.Systems
 {
+    using DataStructures.ViliWonka.KDTree;
+    using Components;
+    using Unity.Mathematics;
     using System;
-    using Leopotam.EcsLite;
+    using Aspects;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 
@@ -20,40 +19,33 @@ namespace UniGame.Ecs.Proto.TargetSelection.Systems
 #endif
     [Serializable]
     [ECSDI]
-    public class InitKDTreeTargetsSystem : IProtoInitSystem, IProtoRunSystem
+    public class InitKdTreeTargetsSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _kdDataFilter;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _kdDataFilter = _world
-                .Filter<KDTreeDataComponent>()
-                .Inc<KDTreeComponent>()
-                .Inc<KDTreeQueryComponent>()
-                .End();
-            
-            InitKDTreeTargets();
-        }
+        private TargetAspect _targetAspect;
+        
+        private ProtoIt _kdDataFilter = It
+            .Chain<KDTreeDataComponent>()
+            .Inc<KDTreeComponent>()
+            .Inc<KDTreeQueryComponent>()
+            .End();
 
         public void Run()
         {
-            if (_kdDataFilter.First() < 0) 
+            if (_kdDataFilter.IsEmpty())
                 InitKDTreeTargets();
         }
-        
+
         private void InitKDTreeTargets()
         {
             var treeEntity = _world.NewEntity();
 
-            ref var treeDataComponent = ref _world.AddComponent<KDTreeDataComponent>(treeEntity);
-            ref var treeComponent = ref _world.AddComponent<KDTreeComponent>(treeEntity);
-            ref var radiusQueryComponent = ref _world.AddComponent<KDTreeQueryComponent>(treeEntity);
+            _targetAspect.Data.Add(treeEntity);
+            ref var treeComponent = ref _targetAspect.Tree.Add(treeEntity);
+            ref var radiusQueryComponent = ref _targetAspect.Query.Add(treeEntity);
 
             var treeData = new float3[TargetSelectionData.MaxAgents];
-            var tree = new KDTree(treeData, TargetSelectionData.MaxTargets);
+            var tree = new KDTree(treeData);
             tree.Build(treeData, TargetSelectionData.MaxAgents, TargetSelectionData.MaxTargets);
 
             treeComponent.Value = tree;

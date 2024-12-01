@@ -3,7 +3,6 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Selection;
@@ -22,26 +21,19 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class SelectAreaTargetsSystem : IProtoInitSystem, IProtoRunSystem
+    public class SelectAreaTargetsSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
 
         private TargetSelectionAspect _targetAspect;
         private TargetSelectionSystem _targetSelection;
-        
+
         private ProtoPackedEntity[] _resultSelection = new ProtoPackedEntity[TargetSelectionData.MaxTargets];
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _targetSelection = _world.GetGlobal<TargetSelectionSystem>();
-            
-            _targetFilter = _world
-                .Filter<SqrRangeFilterTargetComponent>()
-                .Inc<SqrRangeTargetSelectionComponent>()
-                .End();
-        }
+        private ProtoIt _targetFilter = It
+            .Chain<SqrRangeFilterTargetComponent>()
+            .Inc<SqrRangeTargetSelectionComponent>()
+            .End();
 
         public void Run()
         {
@@ -49,17 +41,17 @@
             {
                 ref var targetComponent = ref _targetAspect.Data.Get(entity);
                 ref var resultComponent = ref _targetAspect.Result.GetOrAddComponent(entity);
-                
+
                 var target = targetComponent.Target;
-                if(!target.Unpack(_world,out var targetEntity)) continue;
-                
+                if (!target.Unpack(_world, out var targetEntity)) continue;
+
                 ref var transformComponent = ref _targetAspect.Position.Get(targetEntity);
 
                 var position = transformComponent.Position;
                 var radius = targetComponent.Radius;
                 var category = targetComponent.Category;
                 var layer = targetComponent.Layer;
-                
+
                 var amount = _targetSelection.SelectEntitiesInArea(
                     _resultSelection,
                     radius,
@@ -68,7 +60,7 @@
                     ref category);
 
                 resultComponent.Count = amount;
-                
+
                 for (var i = 0; i < amount; i++)
                 {
                     ref var resultValue = ref _resultSelection[i];
@@ -77,6 +69,4 @@
             }
         }
     }
-    
-
 }
