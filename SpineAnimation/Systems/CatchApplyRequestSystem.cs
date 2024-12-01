@@ -4,7 +4,6 @@
     using Aspects;
     using Components.Events;
     using Components.Requests;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -21,7 +20,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CatchApplyRequestSystem : IEcsRunSystem
+    public class CatchApplyRequestSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private SpineAnimationAspect _spineAnimationAspect;

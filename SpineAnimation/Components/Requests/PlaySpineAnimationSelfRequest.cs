@@ -2,7 +2,7 @@ namespace Game.Ecs.SpineAnimation.Components.Requests
 {
     using System;
     using Data.AnimationType;
-    using Leopotam.EcsLite;
+    using Leopotam.EcsProto;
 
     /// <summary>
     /// Request to play a spine animation on the entity itself.
@@ -15,7 +15,7 @@ namespace Game.Ecs.SpineAnimation.Components.Requests
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct PlaySpineAnimationSelfRequest : IEcsAutoReset<PlaySpineAnimationSelfRequest>
+    public struct PlaySpineAnimationSelfRequest : IProtoAutoReset<PlaySpineAnimationSelfRequest>
     {
         public AnimationTypeId AnimationTypeId;
         public AnimationTypeId NextAnimationTypeId;

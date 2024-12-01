@@ -3,12 +3,10 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Modules.leoecs.proto.tools.Ownership.Aspects;
     using Spine;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniRx;
@@ -25,7 +23,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class InitSkeletonAnimationSystem : IEcsRunSystem
+    public class InitSkeletonAnimationSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private SpineAnimationAspect _spineAnimationAspect;

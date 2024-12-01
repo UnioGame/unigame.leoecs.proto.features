@@ -9,10 +9,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-
-    /// <summary>
-    /// Spine Animation Feature in the game.
-    /// </summary>
+    
     [CreateAssetMenu(menuName = "ECS Proto/Features/Spine Animation Feature")]
     public class SpineAnimationFeature : BaseLeoEcsFeature
     {

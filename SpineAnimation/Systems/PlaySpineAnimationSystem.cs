@@ -5,7 +5,6 @@
     using Aspects;
     using Components;
     using Components.Requests;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -22,7 +21,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class PlaySpineAnimationSystem : IEcsRunSystem
+    public class PlaySpineAnimationSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private SpineAnimationAspect _spineAnimationAspect;

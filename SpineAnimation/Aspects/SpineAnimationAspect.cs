@@ -6,10 +6,7 @@
     using Components.Requests;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
-
-    /// <summary>
-    /// Aspect for Spine animation system.
-    /// </summary>
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
