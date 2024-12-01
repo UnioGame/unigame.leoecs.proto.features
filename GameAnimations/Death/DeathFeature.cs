@@ -12,8 +12,6 @@ namespace UniGame.Ecs.Proto.Gameplay.Death
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
-            ecsSystems.Add(new CheckReadyToDeathSystem());
-            
             //if unit ready to death then create KillRequest
             ecsSystems.Add(new DetectReadyToDeathByHealthSystem());
             ecsSystems.Add(new ProcessDeathAnimationSystem());

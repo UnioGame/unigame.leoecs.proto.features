@@ -4,10 +4,11 @@
     using Animations.Aspects;
     using Aspects;
     using Core.Death.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -17,24 +18,17 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class CompleteDeathAnimationSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class CompleteDeathAnimationSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
         private DeathAspect _deathAspect;
         private AnimationTimelineAspect _animationAspect;
         
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _filter = _world
-                .Filter<DeadAnimationEvaluateComponent>()
-                .Inc<DeathAnimationComponent>()
-                .Inc<DeathCompletedComponent>()
-                .End();
-        }
+        private ProtoIt _filter = It
+            .Chain<DeadAnimationEvaluateComponent>()
+            .Inc<DeathAnimationComponent>()
+            .Inc<DeathCompletedComponent>()
+            .End();
         
         public void Run()
         {

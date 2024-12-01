@@ -4,10 +4,9 @@
     using Animations.Aspects;
     using Aspects;
     using Game.Ecs.Core.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.Ecs.Proto.Core.Death.Components;
-     
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine.Playables;
@@ -24,27 +23,19 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ProcessDeathAnimationSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ProcessDeathAnimationSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
         private AnimationTimelineAspect _animationAspect;
         private DeathAspect _deathAspect;
-        
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _filter = _world
-                .Filter<PrepareToDeathComponent>()
-                .Inc<DeathAnimationComponent>()
-                .Inc<PlayableDirectorComponent>()
-                .Exc<DeadAnimationEvaluateComponent>()
-                .End();
-        }
-        
+        private ProtoItExc _filter = It
+            .Chain<PrepareToDeathComponent>()
+            .Inc<DeathAnimationComponent>()
+            .Inc<PlayableDirectorComponent>()
+            .Exc<DeadAnimationEvaluateComponent>()
+            .End();
+
         public void Run()
         {
             foreach (var entity in _filter)
@@ -52,12 +43,12 @@
                 var ownerEntity = entity.PackEntity(_world);
                 ref var deadAnimation = ref _deathAspect.Animation.Get(entity);
                 ref var evaluate = ref _deathAspect.Evaluate.Add(entity);
-                
+
                 var animationEntity = _world.NewEntity();
                 var packedAnimationEntity = animationEntity.PackEntity(_world);
                 ref var createAnimation = ref _animationAspect.CreateSelfAnimation.Add(animationEntity);
                 ref var playAnimation = ref _animationAspect.PlaySelf.Add(animationEntity);
-                
+
                 createAnimation.Animation = deadAnimation.Animation;
                 createAnimation.Duration = (float)deadAnimation.Animation.duration;
                 createAnimation.WrapMode = DirectorWrapMode.Hold;
@@ -67,9 +58,9 @@
 
                 playAnimation.Duration = createAnimation.Duration;
                 playAnimation.Speed = createAnimation.Speed;
-                
+
                 evaluate.Value = packedAnimationEntity;
-                
+
                 _deathAspect.Disabled.GetOrAddComponent(entity);
                 _deathAspect.AwaitDeath.Add(entity);
             }
