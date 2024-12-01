@@ -4,6 +4,7 @@
     using Base.Aspects;
     using Components;
     using Leopotam.EcsLite;
+    using Leopotam.EcsProto;
 
     /// <summary>
     /// characteristic Mana aspect data
@@ -18,6 +19,6 @@
     [Serializable]
     public class ManaAspect : GameCharacteristicAspect<ManaComponent>
     {
-        public EcsPool<ManaComponent> Mana;
+        public ProtoPool<ManaComponent> Mana;
     }
 }
