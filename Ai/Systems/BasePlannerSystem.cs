@@ -4,13 +4,22 @@ namespace UniGame.Ecs.Proto.AI.Systems
     using Components;
     using Abstract;
     using Cysharp.Threading.Tasks;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Service;
      
     using Tools;
     using UniGame.LeoEcs.Shared.Extensions;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
+    [ECSDI]
     public abstract class BasePlannerSystem<TComponent>: 
         IAiPlannerSystem,IProtoRunSystem
         where TComponent : struct

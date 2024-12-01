@@ -1,38 +1,41 @@
 namespace UniGame.Ecs.Proto.AI.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
     using UnityEngine.Pool;
 
     /// <summary>
     /// collect ai agents info
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
-    public class AiCollectPlannerDataSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public class AiCollectPlannerDataSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
+        private AiAspect _aiAspect;
         
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<AiAgentComponent>()
-                .Exc<AiAgentSelfControlComponent>()
-                .End();
-        }
+        private ProtoItExc _filter  = It
+            .Chain<AiAgentComponent>()
+            .Exc<AiAgentSelfControlComponent>()
+            .End();
         
         public void Run()
         {
-            var agentsPool = _world.GetPool<AiAgentComponent>();
-            var aiDataPool = _world.GetPool<AiAgentPlanningComponent>();
-
             foreach (var agentEntity in _filter)
             {
-                ref var agentComponent = ref agentsPool.Get(agentEntity);
-                ref var dataComponent = ref aiDataPool.Add(agentEntity);
+                ref var agentComponent = ref _aiAspect.AiAgent.Get(agentEntity);
+                ref var dataComponent = ref _aiAspect.AiAgentPlanning.Add(agentEntity);
                 
                 var aiPlan = dataComponent.AiPlan;
                 dataComponent.AiPlan = aiPlan ?? ListPool<AiAgentPlanningData>.Get();

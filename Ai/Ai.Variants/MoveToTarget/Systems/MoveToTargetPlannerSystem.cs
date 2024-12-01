@@ -8,8 +8,9 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using Components;
     using Data;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using Movement.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -25,32 +26,30 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     [ECSDI]
     public class MoveToTargetPlannerSystem : BasePlannerSystem<MoveToTargetActionComponent>, IProtoInitSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
         private IProtoSystems _systems;
+        private MoveToTargetAspect _moveToTargetAspect;
         
-        private ProtoPool<MoveToGoalComponent> _goalPool;
-        private ProtoPool<MoveToTargetActionComponent> _moveToTargetActionPool;
-        private ProtoPool<MoveToTargetPlannerComponent> _moveToTargetPlannerPool;
+        private ProtoItExc _filter = It
+            .Chain<AiAgentComponent>()
+            .Inc<MoveToTargetPlannerComponent>()
+            .Inc<MoveToGoalComponent>()
+            .Exc<ImmobilityComponent>()
+            .Exc<DisabledComponent>()
+            .End();
         
         public void Init(IProtoSystems systems)
         {
             _systems = systems;
             _world = systems.GetWorld();
-            _filter = _world.Filter<AiAgentComponent>()
-                .Inc<MoveToTargetPlannerComponent>()
-                .Inc<MoveToGoalComponent>()
-                .Exc<ImmobilityComponent>()
-                .Exc<DisabledComponent>()
-                .End();
         }
 
         public override void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var goalComponent = ref _goalPool.Get(entity);
-                ref var plannerComponent = ref _moveToTargetPlannerPool.Get(entity);
+                ref var goalComponent = ref _moveToTargetAspect.ToGoal.Get(entity);
+                ref var plannerComponent = ref _moveToTargetAspect.ToTargetPlanner.Get(entity);
 
                 var goals = goalComponent.Goals;
                 var targetPriority = -1f;
@@ -72,7 +71,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
                     targetPriority = priority;
                 }
 
-                ref var component = ref _moveToTargetActionPool.GetOrAddComponent(entity);
+                ref var component = ref _moveToTargetAspect.ToTargetAction.GetOrAddComponent(entity);
 
                 component.Position = goal.Position;
                 component.Effects = goal.Effects;

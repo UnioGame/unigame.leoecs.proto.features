@@ -1,44 +1,55 @@
 namespace UniGame.Ecs.Proto.AI.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using Service;
     using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
-    public class DefaultPlannerSystem : BasePlannerSystem<AiDefaultActionComponent>,IProtoInitSystem
+    [ECSDI]
+    public class DefaultPlannerSystem : BasePlannerSystem<AiDefaultActionComponent>, IProtoInitSystem
     {
         [InlineProperty]
         [HideLabel]
         [SerializeField]
         private AiPlannerData _plannerData;
 
-        private EcsFilter _filter;
         private ProtoWorld _world;
         private IProtoSystems _systems;
+        private AiAspect _aiAspect;
+
+        private ProtoIt _filter = It
+            .Chain<AiAgentComponent>()
+            .End();
 
         public void Init(IProtoSystems systems)
         {
             _systems = systems;
-            _world= systems.GetWorld();
-            _filter = _world.Filter<AiAgentComponent>().End();
+            _world = systems.GetWorld();
         }
-        
+
         public override void Run()
         {
-            var actionComponentPool = _world.GetPool<AiDefaultActionComponent>();
-            
             foreach (var entity in _filter)
             {
-                if(!IsPlannerEnabledForEntity(_world,entity))
+                if (!IsPlannerEnabledForEntity(_world, entity))
                     continue;
-                
-                actionComponentPool.GetOrAddComponent<AiDefaultActionComponent>(entity);
-                ApplyPlanningResult(_systems,entity,_plannerData);
+
+                _aiAspect.AiDefaultAction.GetOrAddComponent(entity);
+                ApplyPlanningResult(_systems, entity, _plannerData);
             }
         }
     }

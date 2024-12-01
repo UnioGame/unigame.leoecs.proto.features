@@ -1,33 +1,37 @@
 namespace UniGame.Ecs.Proto.AI.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using Service;
-    using UniGame.LeoEcs.Shared.Extensions;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
-    public class AiPlanningSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public class AiPlanningSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
+        private AiAspect _aiAspect;
         
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<AiAgentComponent>()
-                .Exc<AiAgentSelfControlComponent>()
-                .End();
-        }
+        private ProtoItExc _filter  = It
+            .Chain<AiAgentComponent>()
+            .Exc<AiAgentSelfControlComponent>()
+            .End();
         
         public void Run()
         {
-            var aiAgentComponentPool = _world.GetPool<AiAgentComponent>();
-
             foreach (var entity in _filter)
             {
-                ref var agentComponent = ref aiAgentComponentPool.Get(entity);
+                ref var agentComponent = ref _aiAspect.AiAgent.Get(entity);
                 var plan = agentComponent.PlannerData;
                 var actions = agentComponent.PlannedActions;
 
@@ -38,7 +42,7 @@ namespace UniGame.Ecs.Proto.AI.Systems
 
         private void PriorityPlanning(AiPlannerData[] plan,bool[] actions)
         {
-            for (int i = 0; i < plan.Length; i++)
+            for (var i = 0; i < plan.Length; i++)
             {
                 var priority = plan[i].Priority;
                 actions[i] = priority>0;

@@ -5,12 +5,12 @@
     using Components;
     using Game.Code.GameLayers.Category;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
+    using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.Ecs.Proto.GameLayers.Category.Components;
     using UniGame.Ecs.Proto.GameLayers.Layer.Components;
-     
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -25,46 +25,36 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class SelectPoiPlannerSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class SelectPoiPlannerSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-        private EcsFilter _poiFilter;
-        private ProtoPool<MoveByPoiComponent> _dataPool;
-        private ProtoPool<MoveToPoiComponent> _poiPool;
-        private ProtoPool<MoveToPoiGoalsComponent> _goalsPool;
-        private ProtoPool<MoveToGoalComponent> _moveGoalPool;
-        private ProtoPool<TransformPositionComponent> _transformPool;
-        private ProtoPool<CategoryIdComponent> _categoryPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world
-                .Filter<MoveByPoiComponent>()
-                .Inc<MoveToTargetPlannerComponent>()
-                .Inc<MoveToPoiGoalsComponent>()
-                .Inc<MoveToGoalComponent>()
-                .Inc<TransformPositionComponent>()
-                .Inc<LayerIdComponent>()
-                .Inc<CategoryIdComponent>()
-                .Exc<DisabledComponent>()
-                .End();
-            
-            _poiFilter = _world
-                .Filter<MoveToPoiComponent>()
-                .End();
-        }
+        private UnityAspect _unityAspect;
+        private MoveToTargetAspect _moveToTargetAspect;
+        
+        private ProtoItExc _filter = It
+            .Chain<MoveByPoiComponent>()
+            .Inc<MoveToTargetPlannerComponent>()
+            .Inc<MoveToPoiGoalsComponent>()
+            .Inc<MoveToGoalComponent>()
+            .Inc<TransformPositionComponent>()
+            .Inc<LayerIdComponent>()
+            .Inc<CategoryIdComponent>()
+            .Exc<DisabledComponent>()
+            .End();
+        
+        private ProtoIt _poiFilter = It
+            .Chain<MoveToPoiComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var dataComponent = ref _dataPool.Get(entity);
-                ref var categoryComponent = ref _categoryPool.Get(entity);
-                ref var goalsComponent = ref _goalsPool.Get(entity);
-                ref var transformComponent = ref _transformPool.Get(entity);
-                ref var goals = ref _moveGoalPool.Get(entity);
+                ref var dataComponent = ref _moveToTargetAspect.ByPoi.Get(entity);
+                ref var categoryComponent = ref _moveToTargetAspect.CategoryId.Get(entity);
+                ref var goalsComponent = ref _moveToTargetAspect.ToPoiGoals.Get(entity);
+                ref var transformComponent = ref _unityAspect.Position.Get(entity);
+                ref var goals = ref _moveToTargetAspect.ToGoal.Get(entity);
 
                 //Если уже есть найденные цели, то POI игнорируются
                 var goalsTargets = goals.Goals;
@@ -80,7 +70,7 @@
 
                 foreach (var key in _poiFilter)
                 {
-                    var poiComponent = _poiPool.Get(key);
+                    var poiComponent = _moveToTargetAspect.ToPoi.Get(key);
 
                     if (poiComponent.Priority < 0)
                         continue;

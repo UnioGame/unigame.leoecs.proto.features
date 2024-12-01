@@ -28,26 +28,25 @@ namespace Game.Code.Ai.ActivateAbility
     [Serializable]
     public class ActivateAbilityPlannerSystem : BasePlannerSystem<ActivateAbilityActionComponent>,IProtoInitSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
         private IProtoSystems _systems;
         private ProtoPool<ActivateAbilityActionComponent> _actionPool;
         private ProtoPool<ActivateAbilityPlannerComponent> _activateAbilityPool;
         private ProtoPool<AbilityAiActionTargetComponent> _abilityTargetPool;
 
+        private ProtoItExc _filter = It
+            .Chain<AiAgentComponent>()
+            .Inc<AbilityAiActionTargetComponent>()
+            .Inc<TransformPositionComponent>()
+            .Inc<LayerIdComponent>()
+            .Inc<ActivateAbilityPlannerComponent>()
+            .Exc<PrepareToDeathComponent>()
+            .End();
+
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _systems = systems;
-            
-            _filter = _world
-                .Filter<AiAgentComponent>()
-                .Inc<AbilityAiActionTargetComponent>()
-                .Inc<TransformPositionComponent>()
-                .Inc<LayerIdComponent>()
-                .Inc<ActivateAbilityPlannerComponent>()
-                .Exc<PrepareToDeathComponent>()
-                .End();
         }
         
         public override void Run()

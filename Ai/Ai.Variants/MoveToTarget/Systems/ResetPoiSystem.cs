@@ -1,33 +1,38 @@
 ﻿namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 {
+    using System;
     using System.Linq;
     using Components;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-    public sealed class ResetPoiSystem : IProtoRunSystem,IProtoInitSystem
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ResetPoiSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<MoveToPoiGoalsComponent>()
-                .Inc<DisabledEvent>()
-                .End();
-        }
+        private MoveToTargetAspect _moveToTargetAspect;
+        
+        private ProtoIt _filter = It
+            .Chain<MoveToPoiGoalsComponent>()
+            .Inc<DisabledEvent>()
+            .End();
         
         public void Run()
         {
-            var goalsPool = _world.GetPool<MoveToPoiGoalsComponent>();
-
             foreach (var entity in _filter)
             {
-                ref var goals = ref goalsPool.Get(entity);
+                ref var goals = ref _moveToTargetAspect.ToPoiGoals.Get(entity);
                 var keys = goals.GoalsLinks.Keys.ToArray();
                 foreach (var key in keys)
                 {

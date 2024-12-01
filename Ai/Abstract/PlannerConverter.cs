@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.AI.Abstract
 {
     using System;
-    using System.Threading;
     using Configurations;
     using Leopotam.EcsProto;
     using Sirenix.OdinInspector;
@@ -9,7 +8,6 @@
     using UniGame.LeoEcs.Shared.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-    using UnityEngine.Serialization;
 
     [Serializable]
     public abstract class PlannerConverter : GameObjectConverter,IPlannerConverter, IEntityConverter

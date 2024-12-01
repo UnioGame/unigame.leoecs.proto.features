@@ -1,34 +1,38 @@
 ﻿namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 {
+    using System;
     using AI.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.Ecs.Proto.GameAi.MoveToTarget.Components;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Components;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
+    using Leopotam.EcsProto.QoL;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-    public class ClearMoveToTargetsSystem : IProtoRunSystem,IProtoInitSystem
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public class ClearMoveToTargetsSystem : IProtoRunSystem
     {
-        
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<AiAgentComponent>()
-                .Inc<MoveToGoalComponent>()
-                .Inc<MoveToTargetPlannerComponent>()
-                .End();
-        }
+        private MoveToTargetAspect _moveToTargetAspect;
+        
+        private ProtoIt _filter = It
+            .Chain<AiAgentComponent>()
+            .Inc<MoveToGoalComponent>()
+            .Inc<MoveToTargetPlannerComponent>()
+            .End();
         
         public void Run()
         {
-            var goalPool = _world.GetPool<MoveToGoalComponent>();
-
             foreach (var entity in _filter)
             {
-                ref var goalComponent = ref goalPool.Get(entity);
+                ref var goalComponent = ref _moveToTargetAspect.ToGoal.Get(entity);
                 goalComponent.Goals.Clear();
             }
         }

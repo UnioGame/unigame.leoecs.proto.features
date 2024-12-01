@@ -4,12 +4,12 @@
     using Components;
     using Data;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
+    using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
 #if ENABLE_IL2CPP
@@ -21,37 +21,29 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class SelectOutOfRangePlannerSystem : IProtoRunSystem,IProtoInitSystem
+    public class SelectOutOfRangePlannerSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world
-                .Filter<MoveByRangeComponent>()
-                .Inc<MoveToTargetPlannerComponent>()
-                .Inc<TransformPositionComponent>()
-                .Inc<MoveToGoalComponent>()
-                .Inc<MoveOutOfRangeComponent>()
-                .Exc<DisabledComponent>()
-                .End();
-        }
+        private UnityAspect _unityAspect;
+        private MoveToTargetAspect _moveToTargetAspect;
+        
+        private ProtoItExc _filter = It
+            .Chain<MoveByRangeComponent>()
+            .Inc<MoveToTargetPlannerComponent>()
+            .Inc<TransformPositionComponent>()
+            .Inc<MoveToGoalComponent>()
+            .Inc<MoveOutOfRangeComponent>()
+            .Exc<DisabledComponent>()
+            .End();
         
         public void Run()
         {
-            var transformPool = _world.GetPool<TransformPositionComponent>();
-            var rangePool = _world.GetPool<MoveByRangeComponent>();
-            var goalPool = _world.GetPool<MoveToGoalComponent>();
-            var outOfRangePool = _world.GetPool<MoveOutOfRangeComponent>();
 
             foreach (var entity in _filter)
             {
-                ref var component = ref goalPool.Get(entity);
-                ref var rangeComponent = ref rangePool.Get(entity);
-                ref var transformComponent = ref transformPool.Get(entity);
-
+                ref var component = ref _moveToTargetAspect.ToGoal.Get(entity);
+                ref var rangeComponent = ref _moveToTargetAspect.ByRange.Get(entity);
+                ref var transformComponent = ref _unityAspect.Position.Get(entity);
                 
                 var center = rangeComponent.Center;
                 
@@ -69,7 +61,7 @@
                 var minDistance = rangeComponent.MinDistance * rangeComponent.MinDistance;
                 var distance = math.distancesq(transformComponent.Position, center);
 
-                if (distance < minDistance) outOfRangePool.Del(entity);
+                if (distance < minDistance) _moveToTargetAspect.OutOfRange.Del(entity);
             }
         }
     }
