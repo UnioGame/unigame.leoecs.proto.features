@@ -1,45 +1,45 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ModificationEffect.Systems
 {
+    using System;
+    using Aspects;
     using Components;
     using Effects.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
+
+#if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-    public sealed class ProcessSingleModificationEffectSystem : IProtoRunSystem,IProtoInitSystem
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessSingleModificationEffectSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-        private ProtoPool<EffectComponent> _effectPool;
-        private ProtoPool<SingleModificationEffectComponent> _modificationPool;
+        private ModificationEffectAspect _modificationEffectAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<EffectComponent>()
-                .Inc<ApplyEffectSelfRequest>()
-                .Inc<SingleModificationEffectComponent>()
-                .Exc<ModificationEffectComponent>()
-                .End();
-            
-            _effectPool = _world.GetPool<EffectComponent>();
-            _modificationPool = _world.GetPool<SingleModificationEffectComponent>();
-        }
-        
+        private ProtoItExc _filter = It
+            .Chain<EffectComponent>()
+            .Inc<ApplyEffectSelfRequest>()
+            .Inc<SingleModificationEffectComponent>()
+            .Exc<ModificationEffectComponent>()
+            .End();
+
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var modification = ref _modificationPool.Get(entity);
+                ref var modification = ref _modificationEffectAspect.SingleModificationEffect.Get(entity);
                 var modificationHandler = modification.Value;
-                
+
                 ref var modificationComponent = ref _world
                     .AddComponent<ModificationEffectComponent>(entity);
-                
+
                 modificationComponent.ModificationHandlers.Add(modificationHandler);
             }
         }

@@ -1,10 +1,8 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ModificationEffect.Components
 {
     using System;
-    using System.Collections.Generic;
     using Characteristics;
     using Leopotam.EcsProto;
-
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -14,14 +12,13 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ModificationEffectComponent : IProtoAutoReset<ModificationEffectComponent>
+    public struct SingleModificationEffectComponent : IProtoAutoReset<SingleModificationEffectComponent>
     {
-        public List<ModificationHandler> ModificationHandlers;
-
-        public void AutoReset(ref ModificationEffectComponent c)
+        public ModificationHandler Value;
+        
+        public void AutoReset(ref SingleModificationEffectComponent c)
         {
-            c.ModificationHandlers ??= new List<ModificationHandler>();
-            c.ModificationHandlers.Clear();
+            c.Value = null;
         }
     }
 }

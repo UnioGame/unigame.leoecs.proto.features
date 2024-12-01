@@ -1,11 +1,13 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.FreezeEffect.Systems
 {
+    using System;
+    using Aspects;
     using Components;
+    using Effects.Aspects;
     using Effects.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// Create a request to use the freeze effect
@@ -17,32 +19,28 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+    [Serializable]
     [ECSDI]
-    public class CreateFreezeEffectSystem : IProtoInitSystem, IProtoRunSystem
+    public class CreateFreezeEffectSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
-        private ProtoPool<EffectComponent> _effectPool;
-        private ProtoPool<ApplyFreezeTargetEffectRequest> _applyFreezeEffectRequestPool;
-        private ProtoPool<EffectDurationComponent> _effectDurationPool;
+        private FreezeEffectAspect _freezeEffectAspect;
+        private EffectAspect _effectAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _filter = _world.Filter<EffectComponent>()
-                .Inc<ApplyEffectSelfRequest>()
-                .Inc<FreezeEffectComponent>()
-                .End();
-        }
+        private ProtoIt _filter = It
+            .Chain<EffectComponent>()
+            .Inc<ApplyEffectSelfRequest>()
+            .Inc<FreezeEffectComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var effectComponent = ref _effectPool.Get(entity);
-                ref var effectDurationComponent = ref _effectDurationPool.Get(entity);
-                ref var freezeRequest = ref _applyFreezeEffectRequestPool.Add(_world.NewEntity());
+                ref var effectComponent = ref _effectAspect.Effect.Get(entity);
+                ref var effectDurationComponent = ref _effectAspect.Duration.Get(entity);
+                ref var freezeRequest = ref _freezeEffectAspect.ApplyFreezeTarget.Add(_world.NewEntity());
+                
                 freezeRequest.Source = effectComponent.Source;
                 freezeRequest.Destination = effectComponent.Destination;
                 freezeRequest.DumpTime = effectDurationComponent.CreatingTime + effectDurationComponent.Duration;

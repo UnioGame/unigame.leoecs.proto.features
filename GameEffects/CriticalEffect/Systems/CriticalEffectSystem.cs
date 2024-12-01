@@ -1,17 +1,11 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.CriticalEffect.Systems
 {
 	using System;
-	using System.Linq;
 	using Aspect;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
-	using UniGame.Core.Runtime.Extension;
 	using UniGame.LeoEcs.Shared.Extensions;
-	using UniGame.Runtime.ObjectPool.Extensions;
-	using UnityEngine;
-	using UnityEngine.Pool;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 	/// <summary>
@@ -26,19 +20,15 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class CriticalEffectSystem : IProtoInitSystem, IProtoRunSystem
+	public class CriticalEffectSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		private CriticalEffectAspect _aspect;
-		private EcsFilter _filter;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world.Filter<CriticalEffectComponent>()
-				.Exc<CriticalEffectReadyComponent>()
-				.End();
-		}
+		private ProtoItExc _filter = It
+			.Chain<CriticalEffectComponent>()
+			.Exc<CriticalEffectReadyComponent>()
+			.End();
 
 		public void Run()
 		{

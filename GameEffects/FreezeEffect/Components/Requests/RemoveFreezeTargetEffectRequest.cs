@@ -1,10 +1,8 @@
-﻿namespace UniGame.Ecs.Proto.GameEffects.FreezeEffect.Components
+﻿namespace UniGame.Ecs.Proto.GameEffects.FreezeEffect.Components.Requests
 {
     using System;
+    using Leopotam.EcsProto.QoL;
 
-    /// <summary>
-    /// Says the ability uses the freezing effect. 
-    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -13,8 +11,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct FreezeEffectComponent
+    public struct RemoveFreezeTargetEffectRequest
     {
-        
+        public ProtoPackedEntity Target;
     }
 }

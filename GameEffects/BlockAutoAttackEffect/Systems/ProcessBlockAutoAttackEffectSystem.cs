@@ -1,11 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.BlockAutoAttackEffect.Systems
 {
 	using Ability.Aspects;
-	using Ability.Tools;
 	using Components;
 	using Effects.Aspects;
 	using Game.Ecs.Time.Service;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

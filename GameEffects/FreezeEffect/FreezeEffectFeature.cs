@@ -1,9 +1,8 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.FreezeEffect
 {
-    using Components;
+    using Components.Requests;
     using Cysharp.Threading.Tasks;
     using Effects.Feature;
-     
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Systems;
