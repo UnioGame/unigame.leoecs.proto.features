@@ -1,14 +1,15 @@
 ﻿namespace UniGame.Ecs.Proto.Shaders.Systems
 {
 	using System;
+	using Aspects;
 	using Components;
 	using Game.Ecs.Core.Components;
-	using Leopotam.EcsLite;
+	using LeoEcs.Bootstrap.Runtime.Abstract;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniCore.Runtime.ProfilerTools;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Components;
-	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
 	/// <summary>
@@ -23,40 +24,30 @@
 #endif
 	[ECSDI]
 	[Serializable]
-	public class ChampionGlobalMaskSystem : IProtoInitSystem, IProtoRunSystem
+	public class ChampionGlobalMaskSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _championFilter;
-		private EcsFilter _globalMaskFilter;
-		private ProtoPool<TransformPositionComponent> _positionPool;
-		private ProtoPool<ChampionGlobalMaskComponent> _championGlobalMaskPool;
+		private UnityAspect _unityAspect;
+		private ShadersAspect _shadersAspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			
-			_championFilter = _world
-				.Filter<TransformPositionComponent>()
-				.Inc<ChampionComponent>()
-				.End();
-
-			_globalMaskFilter = _world
-				.Filter<ChampionGlobalMaskComponent>()
-				.End();
-			
-			_positionPool = _world.GetPool<TransformPositionComponent>();
-			_championGlobalMaskPool = _world.GetPool<ChampionGlobalMaskComponent>();
-		}
+		private ProtoIt _championFilter = It
+			.Chain<TransformPositionComponent>()
+			.Inc<ChampionComponent>()
+			.End();
+		
+		private ProtoIt _globalMaskFilter = It
+			.Chain<ChampionGlobalMaskComponent>()
+			.End();
 
 		public void Run()
 		{
 			foreach (var championEntity in _championFilter)
 			{
-				ref var transformComponent = ref _positionPool.Get(championEntity);
+				ref var transformComponent = ref _unityAspect.Position.Get(championEntity);
 				ref var position = ref transformComponent.Position;
 				foreach (var entity in _globalMaskFilter)
 				{
-					ref var championGlobalMask = ref _championGlobalMaskPool.Get(entity);
+					ref var championGlobalMask = ref _shadersAspect.GlobalMask.Get(entity);
 					foreach (var championVariable in championGlobalMask.Variables)
 					{
 						foreach (var material in championGlobalMask.Materials)
