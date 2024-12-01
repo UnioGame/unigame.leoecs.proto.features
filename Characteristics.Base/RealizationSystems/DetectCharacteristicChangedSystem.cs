@@ -7,7 +7,6 @@
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -28,8 +27,6 @@
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
-
         private OwnershipAspect _ownershipAspect;
         
         private ProtoPool<CharacteristicValueChangedEvent<TCharacteristic>> _resultEventPool;
@@ -42,16 +39,16 @@
         private ProtoPool<CharacteristicChangedComponent<TCharacteristic>> _changedPool;
         private ProtoPool<CharacteristicChangedComponent> _changedCharacteristicPool;
 
+        private ProtoIt _filter = It
+            .Chain<CharacteristicChangedComponent<TCharacteristic>>()
+            .Inc<CharacteristicOwnerComponent<TCharacteristic>>()
+            .Inc<CharacteristicValueComponent>()
+            .Inc<OwnerLinkComponent>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _filter = _world
-                .Filter<CharacteristicChangedComponent>()
-                .Inc<CharacteristicOwnerComponent<TCharacteristic>>()
-                .Inc<CharacteristicValueComponent>()
-                .Inc<OwnerLinkComponent>()
-                .End();
             
             _resultEventPool = _world.GetPool<CharacteristicValueChangedEvent<TCharacteristic>>();
             _changedPool = _world.GetPool<CharacteristicChangedComponent<TCharacteristic>>();

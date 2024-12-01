@@ -4,12 +4,11 @@
     using Components;
     using Components.Requests;
     using Base;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
-
-
+    
     /// <summary>
     /// convert remove modification request to remove characteristic modification request
     /// </summary>
@@ -21,22 +20,22 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class RemoveCharacteristicModificationSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFiler;
         private ProtoPool<RemoveCharacteristicModificationRequest<TCharacteristic>> _requestPool;
         private ProtoPool<RemoveModificationRequest> _modificationPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
 
+        private ProtoIt _requestFiler = It
+            .Chain<RemoveCharacteristicModificationRequest<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _requestFiler = _world
-                .Filter<RemoveCharacteristicModificationRequest<TCharacteristic>>()
-                .End();
 
             _requestPool = _world.GetPool<RemoveCharacteristicModificationRequest<TCharacteristic>>();
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();

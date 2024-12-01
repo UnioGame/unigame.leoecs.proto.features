@@ -2,7 +2,6 @@
 {
     using System;
     using Leopotam.EcsProto.QoL;
-    using Unity.IL2CPP.CompilerServices;
 
     /// <summary>
     /// link to characteristics owner container

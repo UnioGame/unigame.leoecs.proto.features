@@ -5,8 +5,8 @@
     using Components.Requests;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -23,12 +23,12 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class CreateCharacteristicValueSystem<TCharacteristic> 
         : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFilter;
 
         private OwnershipAspect _ownershipAspect;
         
@@ -48,13 +48,13 @@
         private ProtoPool<BaseModificationsValueComponent> _valueModificationsPool;
         private ProtoPool<CharacteristicChangedComponent<TCharacteristic>> _ownerChangedPool;
 
+        private ProtoIt _requestFilter = It
+            .Chain<CreateCharacteristicRequest<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _requestFilter = _world
-                .Filter<CreateCharacteristicRequest<TCharacteristic>>()
-                .End();
 
             _requestPool = _world.GetPool<CreateCharacteristicRequest<TCharacteristic>>();
             

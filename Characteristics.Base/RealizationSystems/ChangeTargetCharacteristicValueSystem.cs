@@ -4,12 +4,11 @@
     using Components;
     using Components.Requests;
     using Base;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
-
-
+    
     /// <summary>
     /// changed base value of characteristics
     /// </summary>
@@ -21,23 +20,23 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class ChangeTargetCharacteristicValueSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _changeRequestFilter;
         
         private ProtoPool<ChangeCharacteristicValueRequest<TCharacteristic>> _requestPool;
         private ProtoPool<ChangeCharacteristicRequest> _changePool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
 
+        private ProtoIt _changeRequestFilter = It
+            .Chain<ChangeCharacteristicValueRequest<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _changeRequestFilter = _world
-                .Filter<ChangeCharacteristicValueRequest<TCharacteristic>>()
-                .End();
 
             _requestPool = _world.GetPool<ChangeCharacteristicValueRequest<TCharacteristic>>();
             _changePool = _world.GetPool<ChangeCharacteristicRequest>();

@@ -4,7 +4,6 @@
     using Components;
     using Components.Requests;
     using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -24,7 +23,6 @@
     public class ChangeCharacteristicValueSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _changeRequestFilter;
         
         private ProtoPool<ChangeCharacteristicRequest> _requestPool;
         private ProtoPool<CharacteristicValueComponent> _characteristicPool;
@@ -34,13 +32,13 @@
         private ProtoPool<CharacteristicChangedComponent> _changedPool;
         private ProtoPool<CharacteristicPreviousValueComponent> _previousPool;
 
+        private ProtoIt _changeRequestFilter = It
+            .Chain<ChangeCharacteristicRequest>()
+            .End();
+
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _changeRequestFilter = _world
-                .Filter<ChangeCharacteristicRequest>()
-                .End();
 
             _requestPool = _world.GetPool<ChangeCharacteristicRequest>();
             _characteristicPool = _world.GetPool<CharacteristicValueComponent>();

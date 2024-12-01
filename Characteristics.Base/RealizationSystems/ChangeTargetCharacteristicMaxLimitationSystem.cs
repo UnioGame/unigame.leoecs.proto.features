@@ -4,12 +4,11 @@
     using Components;
     using Components.Requests;
     using Base;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
-
-
+    
     /// <summary>
     /// changed base value of characteristics
     /// </summary>
@@ -21,24 +20,24 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class ChangeTargetCharacteristicMaxLimitationSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _changeRequestFilter;
         
         private ProtoPool<ChangeMaxLimitSelfRequest<TCharacteristic>> _requestPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
         private ProtoPool<ChangeMaxLimitRequest> _limitPool;
+        
+        private ProtoIt _changeRequestFilter = It
+            .Chain<ChangeMaxLimitSelfRequest<TCharacteristic>>()
+            .Inc<CharacteristicLinkComponent<TCharacteristic>>()
+            .End();
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _changeRequestFilter = _world
-                .Filter<ChangeMaxLimitSelfRequest<TCharacteristic>>()
-                .Inc<CharacteristicLinkComponent<TCharacteristic>>()
-                .End();
 
             _requestPool = _world.GetPool<ChangeMaxLimitSelfRequest<TCharacteristic>>();
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();

@@ -3,7 +3,7 @@
     using System;
     using Components;
     using Components.Requests;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -19,23 +19,23 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class RecalculateCharacteristicSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFilter;
         private ProtoPool<RecalculateCharacteristicSelfRequest<TCharacteristic>> _requestPool;
         private ProtoPool<RecalculateCharacteristicSelfRequest> _recalculatePool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
 
+        private ProtoIt _requestFilter = It
+            .Chain<RecalculateCharacteristicSelfRequest<TCharacteristic>>()
+            .Inc<CharacteristicLinkComponent<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _requestFilter = _world
-                .Filter<RecalculateCharacteristicSelfRequest<TCharacteristic>>()
-                .Inc<CharacteristicLinkComponent<TCharacteristic>>()
-                .End();
 
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();
             _recalculatePool = _world.GetPool<RecalculateCharacteristicSelfRequest>();

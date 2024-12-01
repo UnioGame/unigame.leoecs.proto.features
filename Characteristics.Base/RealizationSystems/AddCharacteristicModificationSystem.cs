@@ -4,7 +4,7 @@
     using Components;
     using Components.Requests;
     using Base;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -21,28 +21,27 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class AddCharacteristicModificationSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFiler;
         
         private ProtoPool<AddModificationRequest<TCharacteristic>> _requestPool;
         private ProtoPool<AddModificationRequest> _modificationPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
 
+        private ProtoIt _requestFiler = It
+            .Chain<AddModificationRequest<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
 
-            _requestFiler = _world
-                .Filter<AddModificationRequest<TCharacteristic>>()
-                .End();
-
             _requestPool = _world.GetPool<AddModificationRequest<TCharacteristic>>();
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();
             _modificationPool = _world.GetPool<AddModificationRequest>();
-            
         }
 
         public void Run()
@@ -67,6 +66,4 @@
             }
         }
     }
-    
-    // <summary>
 }

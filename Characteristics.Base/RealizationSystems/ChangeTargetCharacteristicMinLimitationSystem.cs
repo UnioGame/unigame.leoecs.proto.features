@@ -4,8 +4,9 @@
     using Components;
     using Components.Requests;
     using Base;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
 
@@ -20,24 +21,24 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class ChangeTargetCharacteristicMinLimitationSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _changeRequestFilter;
         
         private ProtoPool<ChangeMinLimitSelfRequest<TCharacteristic>> _requestPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
         private ProtoPool<ChangeMinLimitRequest> _limitPool;
+        
+        private ProtoIt _changeRequestFilter = It
+            .Chain<ChangeMinLimitSelfRequest<TCharacteristic>>()
+            .Inc<CharacteristicLinkComponent<TCharacteristic>>()
+            .End();
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _changeRequestFilter = _world
-                .Filter<ChangeMinLimitSelfRequest<TCharacteristic>>()
-                .Inc<CharacteristicLinkComponent<TCharacteristic>>()
-                .End();
 
             _requestPool = _world.GetPool<ChangeMinLimitSelfRequest<TCharacteristic>>();
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();

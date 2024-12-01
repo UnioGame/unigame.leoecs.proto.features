@@ -4,6 +4,7 @@
     using Components;
     using Components.Requests;
     using Base;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -21,21 +22,21 @@
 #endif
     /// reset target characteristic value to default
     [Serializable]
+    [ECSDI]
     public class ResetTargetCharacteristicSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFiler;
         private ProtoPool<ResetCharacteristicRequest> _resetPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
 
+        private ProtoIt _requestFiler = It
+            .Chain<ResetCharacteristicSelfRequest<TCharacteristic>>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _requestFiler = _world
-                .Filter<ResetCharacteristicSelfRequest<TCharacteristic>>()
-                .End();
 
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();
             _resetPool = _world.GetPool<ResetCharacteristicRequest>();
@@ -57,7 +58,7 @@
         }
     }
     
-    
+    /// <summary>
     /// reset target characteristic value to default
     /// </summary>
 #if ENABLE_IL2CPP
@@ -66,22 +67,22 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class ResetTargetCharacteristicMaxLimitSystem<TCharacteristic> : IProtoInitSystem, IProtoRunSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
-        private EcsFilter _requestFiler;
         private ProtoPool<ResetCharacteristicMaxLimitSelfRequest> _resetPool;
         private ProtoPool<CharacteristicLinkComponent<TCharacteristic>> _linkPool;
+        
+        private ProtoIt _requestFiler = It
+            .Chain<ResetCharacteristicMaxLimitSelfRequest<TCharacteristic>>()
+            .Inc<CharacteristicComponent<TCharacteristic>>()
+            .End();
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-
-            _requestFiler = _world
-                .Filter<ResetCharacteristicMaxLimitSelfRequest<TCharacteristic>>()
-                .Inc<CharacteristicComponent<TCharacteristic>>()
-                .End();
 
             _linkPool = _world.GetPool<CharacteristicLinkComponent<TCharacteristic>>();
             _resetPool = _world.GetPool<ResetCharacteristicMaxLimitSelfRequest>();
