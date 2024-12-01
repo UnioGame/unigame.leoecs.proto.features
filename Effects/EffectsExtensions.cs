@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Effects
 {
     using System.Collections.Generic;
-    using System.Runtime.CompilerServices;
     using Components;
     using Game.Code.Configuration.Runtime.Effects;
     using Game.Code.Configuration.Runtime.Effects.Abstract;

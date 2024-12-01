@@ -9,30 +9,26 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
-#endif
     
 #if ENABLE_IL2CP
+	using Unity.IL2CPP.CompilerServices;
+
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ValidateEffectsListSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ValidateEffectsListSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-        private List<ProtoPackedEntity> _cacheList = new List<ProtoPackedEntity>();
+        private List<ProtoPackedEntity> _cacheList = new();
 
         private EffectAspect _effectAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<EffectsListComponent>().End();
-        }
+        private ProtoIt _filter = It
+            .Chain<EffectsListComponent>()
+            .End();
         
         public void Run()
         {

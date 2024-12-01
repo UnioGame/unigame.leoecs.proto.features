@@ -21,7 +21,7 @@
 #endif
 
     [Serializable]
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Effects Feature",fileName = "Effects Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Effects Feature")]
     public sealed class EffectsFeature : BaseLeoEcsFeature
     {
         public int maxEffectsCount = EcsEffectsConfiguration.MAX_EFFECTS_COUNT;
@@ -46,7 +46,6 @@
             //create global effect root entity data
             ecsSystems.Add(new CreateEffectGlobalRootsSystem());
             
-            ecsSystems.Add(new UpdateEffectRootTargetsSystem());
             ecsSystems.Add(new ValidateEffectsListSystem());
             ecsSystems.Add(new ProcessEffectDurationSystem());
             

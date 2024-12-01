@@ -4,41 +4,34 @@
     using Aspects;
     using Components;
     using Game.Ecs.Time.Service;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-    
-#if ENABLE_IL2CPP
-    using Unity.IL2CPP.CompilerServices;
-#endif
     
     /// <summary>
     /// System for processing periodicity of effects
     /// </summary>
 #if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ProcessEffectPeriodicitySystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ProcessEffectPeriodicitySystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
         private EffectAspect _effectAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<EffectComponent>()
-                .Inc<EffectPeriodicityComponent>()
-                .Exc<DestroyEffectSelfRequest>()
-                .End();
-        }
+        private ProtoItExc _filter = It
+            .Chain<EffectComponent>()
+            .Inc<EffectPeriodicityComponent>()
+            .Exc<DestroyEffectSelfRequest>()
+            .End();
         
         public void Run()
         {
@@ -52,16 +45,16 @@
                         periodicity.LastApplyingTime = float.MaxValue;
                         _effectAspect.Apply.TryAdd(entity);
                     }
-                    
+
                     continue;
                 }
-                
+
                 var nextApplyingTime = periodicity.LastApplyingTime + periodicity.Periodicity;
-                if(GameTime.Time < nextApplyingTime && !Mathf.Approximately(nextApplyingTime, GameTime.Time))
+                if (GameTime.Time < nextApplyingTime && !Mathf.Approximately(nextApplyingTime, GameTime.Time))
                     continue;
 
                 periodicity.LastApplyingTime = GameTime.Time;
-                
+
                 _effectAspect.Apply.TryAdd(entity);
             }
         }

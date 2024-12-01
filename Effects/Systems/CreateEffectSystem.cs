@@ -5,7 +5,6 @@
     using Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniCore.Runtime.ProfilerTools;
@@ -14,30 +13,22 @@
 
 #if ENABLE_IL2CP
 	using Unity.IL2CPP.CompilerServices;
-	/// <summary>
-	/// Assembling ability
-	/// </summary>
+
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class CreateEffectSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class CreateEffectSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
         private EffectAspect _effectAspect;
         private OwnershipAspect _ownershipAspect;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world
-                .Filter<CreateEffectSelfRequest>()
-                .End();
-        }
+        
+        private ProtoIt _filter = It
+            .Chain<CreateEffectSelfRequest>()
+            .End();
         
         public void Run()
         {

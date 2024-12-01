@@ -5,8 +5,8 @@
 	using Components;
 	using Game.Ecs.Core.Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
@@ -22,25 +22,19 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class ProcessEffectViewPrepareToDeathSystem : IProtoInitSystem, IProtoRunSystem
+	public class ProcessEffectViewPrepareToDeathSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _prepareDeathFilter;
-		private EcsFilter _viewFilter;
-
 		private OwnershipAspect _ownershipAspect;
 		private EffectAspect _effectAspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_prepareDeathFilter = _world
-				.Filter<PrepareToDeathComponent>()
-				.End();
-			_viewFilter = _world
-				.Filter<EffectViewComponent>()
-				.End();
-		}
+		private ProtoIt _prepareDeathFilter = It
+			.Chain<PrepareToDeathComponent>()
+			.End();
+		
+		private ProtoIt _viewFilter = It
+			.Chain<EffectViewComponent>()
+			.End();
 
 		public void Run()
 		{

@@ -3,8 +3,8 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
@@ -21,25 +21,21 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ProcessEffectViewLifeTimeSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ProcessEffectViewLifeTimeSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
         private EffectAspect _effectAspect;
         
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<EffectViewComponent>().End();
-        }
+        private ProtoIt _filter = It
+            .Chain<EffectViewComponent>()
+            .End();
         
         public void Run()
         {
             foreach (var entity in _filter)
             {
                 ref var view = ref _effectAspect.View.Get(entity);
-                if(view.DeadTime > Time.time && !Mathf.Approximately(view.DeadTime, Time.time))
+                if (view.DeadTime > Time.time && !Mathf.Approximately(view.DeadTime, Time.time))
                     continue;
 
                 _effectAspect.DestroyView.TryAdd(entity);

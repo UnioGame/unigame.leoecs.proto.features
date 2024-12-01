@@ -2,7 +2,7 @@
 {
     using System;
     using Game.Code.Configuration.Runtime.Effects;
-    using Leopotam.EcsLite;
+    using Leopotam.EcsProto;
     using UnityEngine;
 
 #if ENABLE_IL2CPP
@@ -13,17 +13,15 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ViewInstanceTypeComponent : IEcsAutoReset<ViewInstanceTypeComponent>
+    public struct ViewInstanceTypeComponent : IProtoAutoReset<ViewInstanceTypeComponent>
     {
         public Transform[] value;
         
         public void AutoReset(ref ViewInstanceTypeComponent c)
         {
-            if (c.value == null)
-            {
-                var length = Enum.GetValues(typeof(ViewInstanceType)).Length;
-                c.value = new Transform[length];
-            }
+            if (c.value != null) return;
+            var length = Enum.GetValues(typeof(ViewInstanceType)).Length;
+            c.value = new Transform[length];
         }
     }
 }

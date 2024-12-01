@@ -1,12 +1,12 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Systems
 {
+	using System;
 	using Aspects;
 	using Components;
 	using Game.Ecs.Time.Service;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
 	/// <summary>
@@ -19,25 +19,20 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+	[Serializable]
 	[ECSDI]
-	public class DelayedEffectSystem : IProtoInitSystem, IProtoRunSystem
+	public class DelayedEffectSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
-
 		private EffectAspect _effectAspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<DelayedEffectComponent>()
-				.Exc<EffectDurationComponent>()
-				.Exc<EffectPeriodicityComponent>()
-				.Exc<CompletedDelayedEffectComponent>()
-				.End();
-		}
-
+		private ProtoItExc _filter = It
+			.Chain<DelayedEffectComponent>()
+			.Exc<EffectDurationComponent>()
+			.Exc<EffectPeriodicityComponent>()
+			.Exc<CompletedDelayedEffectComponent>()
+			.End();
+		
 		public void Run()
 		{
 			foreach (var entity in _filter)

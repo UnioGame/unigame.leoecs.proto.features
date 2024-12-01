@@ -5,7 +5,6 @@
     using Components;
     using Data;
     using Game.Modules.UnioModules.UniGame.CoreModules.UniGame.Core.Runtime.Extension;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -16,35 +15,32 @@
     /// </summary>
 #if ENABLE_IL2CP
 	using Unity.IL2CPP.CompilerServices;
-	/// <summary>
-	/// Assembling ability
-	/// </summary>
+ 
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class SelectChildParentByRootIdSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class SelectChildParentByRootIdSystem : IProtoInitSystem, IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
         
         private EffectAspect _effectAspect;
         private EffectsRootData _effectsRootData;
         private EffectRootKey[] _roots;
 
+        private ProtoItExc _filter = It
+            .Chain<EffectAppliedSelfEvent>()
+            .Inc<EffectRootIdComponent>()
+            .Exc<EffectParentComponent>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _effectsRootData = _world.GetGlobal<EffectsRootData>();
             _roots = _effectsRootData.roots;
-            
-            _filter = _world
-                .Filter<EffectAppliedSelfEvent>()
-                .Inc<EffectRootIdComponent>()
-                .Exc<EffectParentComponent>()
-                .End();
         }
         
         public void Run()

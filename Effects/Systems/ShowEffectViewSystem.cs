@@ -6,14 +6,13 @@
     using Cysharp.Threading.Tasks;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.AddressableTools.Runtime;
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniGame.Runtime.ObjectPool.Extensions;
+    using Runtime.ObjectPool.Extensions;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
@@ -22,18 +21,15 @@
     /// </summary>
 #if ENABLE_IL2CP
 	using Unity.IL2CPP.CompilerServices;
-	/// <summary>
-	/// Assembling ability
-	/// </summary>
+ 
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ShowEffectViewSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ShowEffectViewSystem : IProtoInitSystem, IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
         
         private EffectAspect _effectAspect;
@@ -44,18 +40,18 @@
         private int _counter = 0;
         private ILifeTime _lifeTime;
         
+        private ProtoItExc _filter = It
+            .Chain<EffectAppliedSelfEvent>()
+            .Inc<EffectComponent>()
+            .Inc<EffectViewDataComponent>()
+            .Inc<EffectDurationComponent>()
+            .Exc<EffectShowCompleteComponent>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _lifeTime = _world.GetWorldLifeTime();
-            
-            _filter = _world
-                .Filter<EffectAppliedSelfEvent>()
-                .Inc<EffectComponent>()
-                .Inc<EffectViewDataComponent>()
-                .Inc<EffectDurationComponent>()
-                .Exc<EffectShowCompleteComponent>()
-                .End();
         }
         
         public void Run()

@@ -4,8 +4,8 @@
     using Aspects;
     using Components;
     using Data;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -15,21 +15,16 @@
     /// </summary>
 #if ENABLE_IL2CP
 	using Unity.IL2CPP.CompilerServices;
-	/// <summary>
-	/// Assembling ability
-	/// </summary>
+ 
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class SelectGlobalParentByRootIdSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class SelectGlobalParentByRootIdSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
-        private EcsFilter _rootsFilter;
-        private EcsFilter _globalFilter;
         
         private EffectAspect _effectAspect;
         private EffectGlobalAspect _effectGlobalAspect;
@@ -38,28 +33,28 @@
         private EffectsRootData _effectsRootData;
         private EffectRootKey[] _roots;
         
+        private ProtoItExc _filter = It
+            .Chain<EffectAppliedSelfEvent>()
+            .Inc<EffectRootIdComponent>()
+            .Exc<EffectParentComponent>()
+            .End();
+        
+        private ProtoIt _rootsFilter = It
+            .Chain<EffectRootTargetComponent>()
+            .Inc<TransformComponent>()
+            .Inc<EffectRootIdComponent>()
+            .End();
+        
+        private ProtoIt _globalFilter = It
+            .Chain<EffectGlobalRootMarkerComponent>()
+            .Inc<EffectRootTransformsComponent>()
+            .End();
+        
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _effectsRootData = _world.GetGlobal<EffectsRootData>();
             _roots = _effectsRootData.roots;
-            
-            _filter = _world
-                .Filter<EffectAppliedSelfEvent>()
-                .Inc<EffectRootIdComponent>()
-                .Exc<EffectParentComponent>()
-                .End();
-
-            _rootsFilter = _world
-                .Filter<EffectRootTargetComponent>()
-                .Inc<TransformComponent>()
-                .Inc<EffectRootIdComponent>()
-                .End();
-
-            _globalFilter = _world
-                .Filter<EffectGlobalRootMarkerComponent>()
-                .Inc<EffectRootTransformsComponent>()
-                .End();
         }
         
         public void Run()
