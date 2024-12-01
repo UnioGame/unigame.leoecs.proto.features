@@ -1,7 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.ViewControl
 {
     using Systems;
-    using Components;
+    using Components.Requests;
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -9,7 +9,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
     
-    [CreateAssetMenu(menuName = "ECS Proto/Features/View Control Feature", fileName = "View Control Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/View Control Feature")]
     public sealed class ViewControlFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)

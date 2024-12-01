@@ -1,54 +1,57 @@
 ﻿namespace UniGame.Ecs.Proto.ViewControl.Systems
 {
-    using Components;
-    using Leopotam.EcsLite;
+    using System;
+    using Aspects;
+    using Components.Requests;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Shared.Extensions;
-    using UnityEngine;
+    using Object = UnityEngine.Object;
 
-    public sealed class ProcessHideViewRequestSystem : IProtoRunSystem,IProtoInitSystem
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessHideViewRequestSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world= systems.GetWorld();
-            _filter = _world.Filter<HideViewRequest>().End();
-        }
+        private ViewControlAspect _viewControlAspect;
         
+        private ProtoIt _filter = It
+            .Chain<HideViewRequest>()
+            .End();
+
         public void Run()
         {
-
-            var requestPool = _world.GetPool<HideViewRequest>();
-            var viewDataPool = _world.GetPool<ViewDataComponent>();
-            var viewInstancePool = _world.GetPool<ViewInstanceComponent>();
-
             foreach (var entity in _filter)
             {
-                ref var request = ref requestPool.Get(entity);
-                if(!request.Destination.Unpack(_world, out var destinationEntity))
-                    continue;
-                
-                if(!viewDataPool.Has(destinationEntity))
+                ref var request = ref _viewControlAspect.Hide.Get(entity);
+                if (!request.Destination.Unpack(_world, out var destinationEntity))
                     continue;
 
-                ref var viewData = ref viewDataPool.Get(destinationEntity);
-                if(!viewData.Views.TryGetValue(request.View, out var viewPackedEntity))
+                if (!_viewControlAspect.Data.Has(destinationEntity))
                     continue;
 
-                if(!viewPackedEntity.Unpack(_world, out var viewEntity))
+                ref var viewData = ref _viewControlAspect.Data.Get(destinationEntity);
+                if (!viewData.Views.TryGetValue(request.View, out var viewPackedEntity))
                     continue;
 
-                ref var viewInstance = ref viewInstancePool.Get(viewEntity);
+                if (!viewPackedEntity.Unpack(_world, out var viewEntity))
+                    continue;
+
+                ref var viewInstance = ref _viewControlAspect.Instance.Get(viewEntity);
                 viewInstance.Count--;
 
                 if (viewInstance.Count > 0)
                     continue;
 
                 viewData.Views.Remove(request.View);
-                
+
                 Object.Destroy(viewInstance.ViewInstance);
                 _world.DelEntity(viewEntity);
             }

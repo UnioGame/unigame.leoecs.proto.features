@@ -1,6 +1,7 @@
-﻿namespace UniGame.Ecs.Proto.ViewControl.Components
+﻿namespace UniGame.Ecs.Proto.ViewControl.Components.Requests
 {
     using System;
+    using Leopotam.EcsProto.QoL;
     using UnityEngine;
 
 #if ENABLE_IL2CPP
@@ -11,9 +12,10 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ViewInstanceComponent
+    public struct HideViewRequest
     {
-        public GameObject ViewInstance;
-        public int Count;
+        public ProtoPackedEntity Destination;
+
+        public GameObject View;
     }
 }
