@@ -9,10 +9,7 @@
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UnityEngine;
-
-    /// <summary>
-    /// Feature responsible for managing input-related systems.
-    /// </summary>
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

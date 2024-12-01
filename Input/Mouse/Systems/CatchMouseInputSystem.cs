@@ -2,8 +2,6 @@
 {
     using System;
     using Aspects;
-    using Components.Requests;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -20,7 +18,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CatchMouseInputSystem : IEcsRunSystem
+    public class CatchMouseInputSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private MouseAspect _mouseAspect;

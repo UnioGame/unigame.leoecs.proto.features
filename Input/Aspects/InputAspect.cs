@@ -6,10 +6,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
-
-    /// <summary>
-    /// Aspect containing pools for input components.
-    /// </summary>
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

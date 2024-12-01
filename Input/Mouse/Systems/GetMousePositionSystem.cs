@@ -22,7 +22,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class GetMousePositionSystem : IEcsRunSystem
+    public class GetMousePositionSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private MouseAspect _mouseAspect;

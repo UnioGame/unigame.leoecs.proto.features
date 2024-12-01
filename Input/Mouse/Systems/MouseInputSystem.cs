@@ -27,7 +27,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class MouseInputSystem : IEcsInitSystem, IEcsRunSystem
+    public class MouseInputSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
         private MouseAspect _mouseAspect;
