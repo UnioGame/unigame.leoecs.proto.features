@@ -15,8 +15,7 @@
     using UnityEngine;
 
     [Serializable]
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability/Ability Utility View Feature", 
-        fileName = "Ability Utility View Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability/Ability Utility View Feature")]
     public class AbilityUtilityViewFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)
@@ -32,7 +31,6 @@
 
         private IProtoSystems GetHighlightSystems(IProtoSystems systems)
         {
-            systems.AddSystem(new ProcessInHandAbilityHighlightSystem());
             systems.AddSystem(new ProcessNotInHandAbilityHighlightSystem());
             systems.AddSystem(new ProcessHighlightWhenDeadSystem());
             systems.AddSystem(new ProcessShowHighlightRequestSystem());

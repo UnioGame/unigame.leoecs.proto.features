@@ -1,41 +1,39 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Area.Systems
 {
+    using System;
+    using Aspects;
     using Components;
-    using Game.Ecs.Core.Components;
-    using Game.Ecs.Core.Death.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
-    using UnityEngine;
+    using Leopotam.EcsProto.QoL;
+    using Object = UnityEngine.Object;
 
-    public sealed class DestroyAreaByOwnerSystem : IProtoRunSystem, IProtoInitSystem
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class DestroyAreaByOwnerSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-        private ProtoPool<AreaInstanceComponent> _areaInstancePool;
-        private ProtoPool<KillRequest> _killRequest;
+        private AbilityUtilityViewAspect _abilityUtilityViewAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _filter = _world
-                .Filter<OwnerDestroyedEvent>()
-                .Inc<AreaInstanceComponent>()
-                .End();
-            
-            _areaInstancePool = _world.GetPool<AreaInstanceComponent>();
-            _killRequest = _world.GetPool<KillRequest>();
-        }
+        private ProtoIt _filter = It
+            .Chain<OwnerDestroyedEvent>()
+            .Inc<AreaInstanceComponent>()
+            .End();
         
         public void Run()
         {
-            
             foreach (var entity in _filter)
             {
-                ref var areaInstance = ref _areaInstancePool.Get(entity);
-                _areaInstancePool.Del(entity);
+                ref var areaInstance = ref _abilityUtilityViewAspect.AreaInstance.Get(entity);
+                _abilityUtilityViewAspect.AreaInstance.Del(entity);
                 
                 if (areaInstance.Instance == null)
                     continue;

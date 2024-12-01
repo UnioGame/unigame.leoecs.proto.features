@@ -1,38 +1,42 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Highlights.Systems
 {
+    using System;
+    using Aspects;
     using Components;
-    using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-    public sealed class ProcessHighlightWhenDeadSystem : IProtoRunSystem,IProtoInitSystem
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessHighlightWhenDeadSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<OwnerDestroyedEvent>()
-                .Inc<HighlightStateComponent>()
-                .End();
-        }
+        private AbilityUtilityViewAspect _abilityUtilityViewAspect;
+        
+        private ProtoIt _filter = It
+            .Chain<OwnerDestroyedEvent>()
+            .Inc<HighlightStateComponent>()
+            .End();
         
         public void Run()
         {
-            var highlightedStatePool = _world.GetPool<HighlightStateComponent>();
-            var hideHighlightPool = _world.GetPool<HideHighlightRequest>();
-
             foreach (var entity in _filter)
             {
-                ref var highlightedState = ref highlightedStatePool.Get(entity);
+                ref var highlightedState = ref _abilityUtilityViewAspect.HighlightState.Get(entity);
                 foreach (var packedEntity in highlightedState.Highlights)
                 {
                     var hideRequestEntity = _world.NewEntity();
-                    ref var hideRequest = ref hideHighlightPool.Add(hideRequestEntity);
+                    ref var hideRequest = ref _abilityUtilityViewAspect.HideHighlight.Add(hideRequestEntity);
                     
                     hideRequest.Source = entity.PackEntity(_world);
                     hideRequest.Destination = packedEntity.Key;

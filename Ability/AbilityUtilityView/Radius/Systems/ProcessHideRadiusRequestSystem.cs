@@ -1,47 +1,51 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Radius.Systems
 {
+    using System;
+    using Aspects;
     using Component;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
-    using ViewControl.Components;
+    using ViewControl.Aspects;
 
-    public sealed class ProcessHideRadiusRequestSystem : IProtoRunSystem,IProtoInitSystem
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessHideRadiusRequestSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
+        private AbilityUtilityViewAspect _abilityUtilityViewAspect;
+        private ViewControlAspect _viewControlAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<HideRadiusRequest>().End();
-        }
-        
+        private ProtoIt _filter = It
+            .Chain<HideRadiusRequest>()
+            .End();
+
         public void Run()
         {
-            var requestPool = _world.GetPool<HideRadiusRequest>();
-            var radiusStatePool = _world.GetPool<RadiusViewStateComponent>();
-            var hideViewPool = _world.GetPool<HideViewRequest>();
-
             foreach (var entity in _filter)
             {
-                ref var request = ref requestPool.Get(entity);
-                if(!request.Source.Unpack(_world, out var sourceEntity))
+                ref var request = ref _abilityUtilityViewAspect.HideRadius.Get(entity);
+                if (!request.Source.Unpack(_world, out var sourceEntity))
                     continue;
-                
-                ref var state = ref radiusStatePool.GetOrAddComponent(sourceEntity);
-                if(!state.RadiusViews.TryGetValue(request.Destination, out var radiusView))
+
+                ref var state = ref _abilityUtilityViewAspect.RadiusViewState.GetOrAddComponent(sourceEntity);
+                if (!state.RadiusViews.Remove(request.Destination, out var radiusView))
                     continue;
-                
-                state.RadiusViews.Remove(request.Destination);
-                
-                if(state.RadiusViews.Count == 0)
-                    radiusStatePool.Del(sourceEntity);
-                
+
+                if (state.RadiusViews.Count == 0)
+                    _abilityUtilityViewAspect.RadiusViewState.Del(sourceEntity);
+
                 var hideRequestEntity = _world.NewEntity();
-                ref var hideViewRequest = ref hideViewPool.Add(hideRequestEntity);
-                
+                ref var hideViewRequest = ref _viewControlAspect.Hide.Add(hideRequestEntity);
+
                 hideViewRequest.View = radiusView;
                 hideViewRequest.Destination = request.Destination;
             }

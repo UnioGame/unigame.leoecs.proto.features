@@ -1,63 +1,68 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Highlights.Systems
 {
+    using System;
+    using Aspects;
     using Components;
-    using Game.Ecs.Core.Components;
-    using Leopotam.EcsLite;
+    using Game.Ecs.Core.Aspects;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-    using ViewControl.Components;
+    using ViewControl.Aspects;
 
-    public sealed class ProcessShowHighlightRequestSystem : IProtoRunSystem,IProtoInitSystem
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessShowHighlightRequestSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
         private ProtoWorld _world;
+        private AbilityUtilityViewAspect _abilityUtilityViewAspect;
+        private FeaturesAspect _featuresAspect;
+        private ViewControlAspect _viewControlAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<ShowHighlightRequest>().End();
-        }
-        
+        private ProtoIt _filter = It
+            .Chain<ShowHighlightRequest>()
+            .End();
+
         public void Run()
         {
-            var requestPool = _world.GetPool<ShowHighlightRequest>();
-            var highlightPool = _world.GetPool<HighlightComponent>();
-            var avatarPool = _world.GetPool<EntityAvatarComponent>();
-            
-            var highlightStatePool = _world.GetPool<HighlightStateComponent>();
-            var showViewPool = _world.GetPool<ShowViewRequest>();
-
             foreach (var entity in _filter)
             {
-                ref var request = ref requestPool.Get(entity);
-                if(!request.Source.Unpack(_world, out var sourceEntity))
+                ref var request = ref _abilityUtilityViewAspect.ShowHighlight.Get(entity);
+                if (!request.Source.Unpack(_world, out var sourceEntity))
                     continue;
 
-                ref var state = ref highlightStatePool.GetOrAddComponent(sourceEntity);
-                if(state.Highlights.ContainsKey(request.Destination))
+                ref var state = ref _abilityUtilityViewAspect.HighlightState.GetOrAddComponent(sourceEntity);
+                if (state.Highlights.ContainsKey(request.Destination))
                     continue;
 
-                if(!request.Destination.Unpack(_world, out var destinationEntity))
-                    continue;
-                
-                if(!highlightPool.Has(destinationEntity) || !avatarPool.Has(destinationEntity))
+                if (!request.Destination.Unpack(_world, out var destinationEntity))
                     continue;
 
-                ref var highlight = ref highlightPool.Get(destinationEntity);
-                ref var avatar = ref avatarPool.Get(destinationEntity);
+                if (!_abilityUtilityViewAspect.Highlight.Has(destinationEntity) ||
+                    !_featuresAspect.EntityAvatar.Has(destinationEntity))
+                    continue;
+
+                ref var highlight = ref _abilityUtilityViewAspect.Highlight.Get(destinationEntity);
+                ref var avatar = ref _featuresAspect.EntityAvatar.Get(destinationEntity);
 
                 var showRequestEntity = _world.NewEntity();
-                ref var showViewRequest = ref showViewPool.Add(showRequestEntity);
-                
+                ref var showViewRequest = ref _viewControlAspect.Show.Add(showRequestEntity);
+
                 showViewRequest.Root = avatar.Feet;
                 showViewRequest.View = highlight.Highlight;
                 var size = avatar.Bounds.Radius * 2.0f;
                 showViewRequest.Size = new Vector3(size, size, size);
-                
+
                 showViewRequest.Destination = request.Destination;
-                
+
                 state.Highlights.Add(request.Destination, highlight.Highlight);
             }
         }
