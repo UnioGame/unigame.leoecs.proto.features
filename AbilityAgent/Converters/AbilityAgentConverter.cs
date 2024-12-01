@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Components;
     using Game.Code.Configuration.Runtime.Ability;
-    using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Converter.Runtime;

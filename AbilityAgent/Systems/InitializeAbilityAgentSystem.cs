@@ -5,11 +5,9 @@
     using Components;
     using GameLayers.Category.Components;
     using GameLayers.Layer.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// Initialize ability agent
@@ -23,22 +21,17 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class InitializeAbilityAgentSystem : IProtoInitSystem, IProtoRunSystem
+    public class InitializeAbilityAgentSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private AbilityAgentAspect _abilityAgentAspect;
-        private EcsFilter _abilityAgentFilter;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _abilityAgentFilter = _world
-                .Filter<AbilityAgentComponent>()
-                .Inc<CategoryIdComponent>()
-                .Inc<LayerIdComponent>()
-                .Exc<AbilityAgentReadyComponent>()
-                .End();
-        }
+        private ProtoItExc _abilityAgentFilter = It
+            .Chain<AbilityAgentComponent>()
+            .Inc<CategoryIdComponent>()
+            .Inc<LayerIdComponent>()
+            .Exc<AbilityAgentReadyComponent>()
+            .End();
 
         public void Run()
         {

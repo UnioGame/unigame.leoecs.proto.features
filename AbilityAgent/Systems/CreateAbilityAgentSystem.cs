@@ -3,12 +3,10 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// Create ability agent system
@@ -22,20 +20,15 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CreateAbilityAgentSystem : IProtoInitSystem, IProtoRunSystem
+    public class CreateAbilityAgentSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
         private AbilityAgentAspect _abilityAgentAspect;
         private UnityAspect _unityAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world
-                .Filter<CreateAbilityAgentSelfRequest>()
-                .End();
-        }
+        private ProtoIt _filter = It
+            .Chain<CreateAbilityAgentSelfRequest>()
+            .End();
 
         public void Run()
         {
