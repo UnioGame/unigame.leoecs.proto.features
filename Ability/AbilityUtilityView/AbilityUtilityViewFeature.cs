@@ -15,7 +15,7 @@
     using UnityEngine;
 
     [Serializable]
-    [CreateAssetMenu(menuName = "Proto Features/Ability/Ability Utility View Feature", 
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability/Ability Utility View Feature", 
         fileName = "Ability Utility View Feature")]
     public class AbilityUtilityViewFeature : BaseLeoEcsFeature
     {

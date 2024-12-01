@@ -14,7 +14,7 @@
     /// provides a feature to increase the damage of abilities,
     /// allows you to change the strength of abilities by AbilityPowerComponent
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/AbilityPower Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AbilityPower Feature")]
     public sealed class AbilityPowerFeature : CharacteristicFeature<AbilityPowerEcsFeature>
     {
     }

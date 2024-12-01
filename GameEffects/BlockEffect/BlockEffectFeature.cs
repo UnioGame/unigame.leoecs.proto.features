@@ -5,7 +5,7 @@
     using Leopotam.EcsProto;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Block Effect Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Block Effect Feature")]
     public sealed class BlockEffectFeature : EffectFeatureAsset
     {
         protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

@@ -13,7 +13,7 @@
     /// <summary>
     /// - recalculate attack speed characteristic
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/AttackSpeed Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AttackSpeed Feature")]
     public sealed class AttackSpeedFeature : CharacteristicFeature<AttackSpeedEcsFeature>
     {
     }

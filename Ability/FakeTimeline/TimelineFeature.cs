@@ -18,7 +18,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    [CreateAssetMenu(menuName = "Proto Features/Ability/Timeline Feature", 
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability/Timeline Feature", 
         fileName = "Timeline Feature")]
     public class TimelineFeature : BaseLeoEcsFeature
     {

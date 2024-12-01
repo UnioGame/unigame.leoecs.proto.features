@@ -8,7 +8,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Effects/Critical Effect Feature", fileName = "Critical Effect Feature")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Critical Effect Feature", fileName = "Critical Effect Feature")]
 	public class CriticalEffectFeature : EffectFeatureAsset
 	{
 		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

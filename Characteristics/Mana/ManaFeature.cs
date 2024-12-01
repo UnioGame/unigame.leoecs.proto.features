@@ -13,7 +13,7 @@
     /// <summary>
     /// new characteristic feature: Mana 
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Mana")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Mana")]
     public sealed class ManaFeature : CharacteristicFeature<ManaEcsFeature>
     {
 

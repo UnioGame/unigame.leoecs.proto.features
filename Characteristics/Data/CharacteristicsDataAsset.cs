@@ -27,7 +27,7 @@ namespace UniGame.Proto.Features.Characteristics
 {
     using UniModules;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Characteristics Data Asset", fileName = "Characteristics Data Asset")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Characteristics Data Asset", fileName = "Characteristics Data Asset")]
     public class CharacteristicsDataAsset : ScriptableObject
     {
         private const string GenerationPath = "Assets/UniGame.Generated/Characteristics";

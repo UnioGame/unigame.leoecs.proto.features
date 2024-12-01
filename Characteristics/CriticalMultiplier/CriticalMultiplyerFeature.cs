@@ -13,7 +13,7 @@
     /// <summary>
     /// - recalculate attack speed characteristic
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Critical Multiplier Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Critical Multiplier Feature")]
     public sealed class CriticalMultiplierFeature : CharacteristicFeature<CriticalMultiplierEcsFeature>
     {
     }

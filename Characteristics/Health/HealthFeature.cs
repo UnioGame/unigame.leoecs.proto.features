@@ -13,7 +13,7 @@
     /// <summary>
     /// new characteristic feature: Health 
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Health")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Health")]
     public sealed class HealthFeature : CharacteristicFeature<HealthEcsFeature>
     {
     }

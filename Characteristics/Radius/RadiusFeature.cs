@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Radius Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Radius Feature")]
     public sealed class RadiusFeature : CharacteristicFeature<RadiusEcsFeature>
     {
     }

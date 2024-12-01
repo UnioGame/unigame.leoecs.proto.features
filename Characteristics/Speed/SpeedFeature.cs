@@ -13,7 +13,7 @@
     /// <summary>
     /// new characteristic feature: Speed 
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Speed")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Speed")]
     public sealed class SpeedFeature : CharacteristicFeature<SpeedEcsFeature>
     {
 

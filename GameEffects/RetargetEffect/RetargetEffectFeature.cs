@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Effects/Retarget Effect Feature", fileName = "Retarget Effect Feature")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Retarget Effect Feature", fileName = "Retarget Effect Feature")]
 	public class RetargetEffectFeature : EffectFeatureAsset
 	{
 		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

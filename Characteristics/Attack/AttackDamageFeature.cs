@@ -13,7 +13,7 @@
     /// <summary>
     /// new characteristic feature: AttackDamage 
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/AttackDamage")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AttackDamage")]
     public sealed class AttackDamageFeature : CharacteristicFeature<AttackDamageEcsFeature>
     {
 

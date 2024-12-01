@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Equip Ability Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Equip Ability Action Feature", 
 		fileName = "Equip Ability Action Feature")]
 	public class EquipAbilityActionFeature : TutorialFeature
 	{

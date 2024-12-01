@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Shaders Feature", fileName = "Shaders Feature Configuration")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Shaders Feature", fileName = "Shaders Feature Configuration")]
 	public class ShadersFeature : BaseLeoEcsFeature
 	{
 		public override UniTask InitializeAsync(IProtoSystems ecsSystems)

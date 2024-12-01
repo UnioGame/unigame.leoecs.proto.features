@@ -13,7 +13,7 @@
     using UniModules.Editor;
 #endif
 
-    [CreateAssetMenu(menuName = "Proto Features/Game Actions/Actions Map", fileName = "Actions Map")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions/Actions Map", fileName = "Actions Map")]
     public class GameActionsMap : ScriptableObject
     {
         [InlineProperty]

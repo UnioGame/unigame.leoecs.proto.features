@@ -10,7 +10,7 @@ namespace UniGame.Ecs.Proto.Presets
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Game Presets Feature", fileName = "Game Presets Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Presets Feature", fileName = "Game Presets Feature")]
     public class PresetsFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)

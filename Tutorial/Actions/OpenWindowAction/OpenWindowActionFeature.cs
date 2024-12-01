@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Open Window Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Open Window Action Feature", 
 		fileName = "Open Window Action Feature")]
 	public class OpenWindowActionFeature : TutorialFeature
 	{

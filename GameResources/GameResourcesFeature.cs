@@ -13,7 +13,7 @@
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
-    [CreateAssetMenu(menuName = "Proto Features/Resources/Game Resources Feature", 
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Resources/Game Resources Feature", 
         fileName = "Game Resources Feature")]
     public class GameResourcesFeature : BaseLeoEcsFeature
     {

@@ -17,7 +17,7 @@
     /// <summary>
     /// Button action feature used in gameplay.
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Game Actions/Button Action Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions/Button Action Feature")]
     public class GamesActionFeature : BaseLeoEcsFeature
     {
         [SerializeReference]

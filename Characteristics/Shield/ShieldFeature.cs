@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Shield Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Shield Feature")]
     public sealed class ShieldFeature : CharacteristicFeature<ShieldEcsFeature>
     {
         

@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Close Temporary UI Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Close Temporary UI Action Feature", 
 		fileName = "Close Temporary UI Action Feature")]
 	public class CloseTemporaryUIActionFeature : TutorialFeature
 	{

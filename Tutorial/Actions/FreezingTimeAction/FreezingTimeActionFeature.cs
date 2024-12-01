@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Freezing Time Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Freezing Time Action Feature", 
 		fileName = "Freezing Time Action Feature")]
 	public class FreezingTimeActionFeature : TutorialFeature
 	{

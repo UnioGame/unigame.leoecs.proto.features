@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Dodge Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Dodge Feature")]
     public sealed class DodgeFeature : CharacteristicFeature<DodgeEcsFeature>
     {
     }

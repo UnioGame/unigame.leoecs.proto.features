@@ -6,7 +6,7 @@ namespace Game.Ecs.Input
     /// <summary>
     /// Feature responsible for managing input-related systems.
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Features/Input Feature", fileName = "Input Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Features/Input Feature", fileName = "Input Feature")]
     public class InputFeatureAsset : LeoEcsFeatureAssetT<InputFeature>
     {
     }

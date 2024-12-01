@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Freeze Effect Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Freeze Effect Feature")]
     public class FreezeEffectFeature : EffectFeatureAsset
     {
         protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

@@ -7,7 +7,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Teleport Effect Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Teleport Effect Feature")]
     public sealed class TeleportEffectFeature : EffectFeatureAsset
     {
         protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

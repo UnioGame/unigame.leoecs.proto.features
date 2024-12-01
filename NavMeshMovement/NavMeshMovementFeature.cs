@@ -13,7 +13,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
     
-    [CreateAssetMenu(menuName = "Proto Features/Movement/NavMesh Movement Feature", fileName = "NavMesh Movement Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Movement/NavMesh Movement Feature", fileName = "NavMesh Movement Feature")]
     public sealed class NavMeshMovementFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)

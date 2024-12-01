@@ -7,7 +7,7 @@ namespace UniGame.Ecs.Proto.Gameplay.Dodge
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Damage/Damage Shield Feature", fileName = "Damage Shield Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Damage/Damage Shield Feature", fileName = "Damage Shield Feature")]
     public class DamageShieldFeature : DamageSubFeature
     {
         public sealed override UniTask BeforeDamageSystem(IProtoSystems ecsSystems)

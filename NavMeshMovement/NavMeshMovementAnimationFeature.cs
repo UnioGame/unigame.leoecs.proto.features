@@ -7,7 +7,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Movement/NavMesh Movement Animation Feature", 
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Movement/NavMesh Movement Animation Feature", 
         fileName = "NavMesh Movement Animation Feature")]
     public sealed class NavMeshMovementAnimationFeature : BaseLeoEcsFeature
     {

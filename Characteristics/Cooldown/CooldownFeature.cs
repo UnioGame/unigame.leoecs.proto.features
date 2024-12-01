@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Cooldown Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Cooldown Feature")]
     public sealed class CooldownFeature : CharacteristicFeature<CooldownEcsFeature>
     {
     }

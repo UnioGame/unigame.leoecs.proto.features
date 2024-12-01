@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Damage/Armor Resist Feature", fileName = "Damage Armor Resist Feature")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Damage/Armor Resist Feature", fileName = "Damage Armor Resist Feature")]
 	public sealed class DamageArmorResistFeature : DamageSubFeature
 	{
 		public sealed override UniTask BeforeDamageSystem(IProtoSystems ecsSystems)

@@ -7,7 +7,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Modification Effect Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Modification Effect Feature")]
     public sealed class ModificationEffectFeature : EffectFeatureAsset
     {
         protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

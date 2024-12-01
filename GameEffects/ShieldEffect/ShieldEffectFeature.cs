@@ -7,7 +7,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Shield Effect Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Shield Effect Feature")]
     public sealed class ShieldEffectFeature : EffectFeatureAsset
     {
         protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

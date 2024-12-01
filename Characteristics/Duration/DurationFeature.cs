@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Duration Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Duration Feature")]
     public sealed class DurationFeature : CharacteristicFeature<DurationEcsFeature>
     {
     }

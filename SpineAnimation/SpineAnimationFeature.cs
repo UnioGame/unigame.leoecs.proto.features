@@ -13,7 +13,7 @@
     /// <summary>
     /// Spine Animation Feature in the game.
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Spine Animation Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Spine Animation Feature")]
     public class SpineAnimationFeature : BaseLeoEcsFeature
     {
         public sealed override UniTask InitializeAsync(IProtoSystems ecsSystems)

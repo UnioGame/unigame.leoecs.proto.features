@@ -9,7 +9,7 @@
     using UnityEngine;
 
     [Serializable]
-    [CreateAssetMenu(menuName = "Proto Features/Ability/Ability Input Feature", 
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability/Ability Input Feature", 
         fileName = "Ability Input Feature")]
     public sealed class AbilityUserInputFeature : BaseLeoEcsFeature
     {

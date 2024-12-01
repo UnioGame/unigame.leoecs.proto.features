@@ -7,7 +7,7 @@ namespace UniGame.Ecs.Proto.Ability
     using UnityEngine;
 
     
-    [CreateAssetMenu(menuName = "Proto Features/Ability Feature",fileName = "Ability Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Ability Feature",fileName = "Ability Feature")]
     public class AbilityFeatureAsset : BaseLeoEcsFeature
     {
         [HideLabel]

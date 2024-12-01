@@ -9,7 +9,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Show All UI Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Show All UI Action Feature", 
 		fileName = "Show All UI Action Feature")]
 	public class ShowAllUIActionFeature : TutorialFeature
 	{

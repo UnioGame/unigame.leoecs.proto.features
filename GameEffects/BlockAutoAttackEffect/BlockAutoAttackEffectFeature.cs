@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Effects/Block Auto Attack Effect Feature")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Block Auto Attack Effect Feature")]
 	public class BlockAutoAttackEffectFeature : EffectFeatureAsset
 	{
 		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)

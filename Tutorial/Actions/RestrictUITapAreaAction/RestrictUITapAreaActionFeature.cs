@@ -7,7 +7,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "Proto Features/Gameplay/Tutorial/TutorialAction/Restrict UI Tap Area Action Feature", 
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial/TutorialAction/Restrict UI Tap Area Action Feature", 
 		fileName = "Restrict UI Tap Area Action Feature")]
 	public class RestrictUITapAreaActionFeature : TutorialFeature
 	{

@@ -16,7 +16,7 @@ namespace UniGame.Ecs.Proto.Gameplay.Damage
     using UniModules.Editor;
 #endif
     
-    [CreateAssetMenu(menuName = "Proto Features/Gameplay/Damage Feature",fileName = "Damage Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Damage Feature",fileName = "Damage Feature")]
     public class DamageFeature  : BaseLeoEcsFeature
     {
         public List<DamageSubFeature> damageFeatures = new List<DamageSubFeature>();

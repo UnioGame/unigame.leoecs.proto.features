@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Armor Resist Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Armor Resist Feature")]
     public class ArmorResistFeature : CharacteristicFeature<ArmorResistEcsFeature>
     {
     }

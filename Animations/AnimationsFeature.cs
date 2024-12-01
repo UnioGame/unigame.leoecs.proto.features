@@ -13,7 +13,7 @@ namespace UniGame.Ecs.Proto.Animations
     /// <summary>
     /// Spawner game feature
     /// </summary>
-    [CreateAssetMenu(menuName = "Proto Features/Animations Feature", fileName = "Animations Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Animations Feature", fileName = "Animations Feature")]
     public class AnimationsFeature : BaseLeoEcsFeature
     {
         public float minimumPlayableSpeed = 0.1f;

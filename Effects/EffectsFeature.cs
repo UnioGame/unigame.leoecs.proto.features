@@ -21,7 +21,7 @@
 #endif
 
     [Serializable]
-    [CreateAssetMenu(menuName = "Proto Features/Effects/Effects Feature",fileName = "Effects Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Effects Feature",fileName = "Effects Feature")]
     public sealed class EffectsFeature : BaseLeoEcsFeature
     {
         public int maxEffectsCount = EcsEffectsConfiguration.MAX_EFFECTS_COUNT;

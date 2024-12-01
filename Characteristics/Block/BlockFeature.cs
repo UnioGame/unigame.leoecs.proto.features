@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "Proto Features/Characteristics/Block Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Block Feature")]
     public sealed class BlockFeature : CharacteristicFeature<BlockEcsFeature>
     {
     }
