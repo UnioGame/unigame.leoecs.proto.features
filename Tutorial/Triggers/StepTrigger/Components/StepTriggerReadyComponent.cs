@@ -1,8 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.Triggers.StepTrigger.Components
 {
 	using System;
-	using ActionTools;
-	using UnityEngine.Serialization;
 
 	/// <summary>
 	/// ADD DESCRIPTION HERE

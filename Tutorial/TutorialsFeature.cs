@@ -12,7 +12,7 @@
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
-	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial Feature", fileName = "Tutorial Feature")]
+	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial Feature")]
 	public class TutorialsFeature : BaseLeoEcsFeature
 	{
 		[SerializeReference]

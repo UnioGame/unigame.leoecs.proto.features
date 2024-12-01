@@ -1,16 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.Actions.OverrideRestrictTapAreaAction.Systems
 {
 	using System;
-	using System.Linq;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
-	using UniGame.Core.Runtime.Extension;
-	using UniGame.LeoEcs.Shared.Extensions;
-	using UniGame.Runtime.ObjectPool.Extensions;
-	using UnityEngine;
-	using UnityEngine.Pool;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 #if ENABLE_IL2CPP
@@ -22,20 +16,15 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class InitializationOverrideRestrictAreaActionSystem : IProtoInitSystem, IProtoRunSystem
+	public class InitializationOverrideRestrictAreaActionSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
 		private OverrideRestrictTapAreaActionAspect _aspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<OverrideRestrictTapAreaActionComponent>()
-				.Exc<OverrideRestrictTapAreaActionReadyComponent>()
-				.End();
-		}
+		private ProtoItExc _filter = It
+			.Chain<OverrideRestrictTapAreaActionComponent>()
+			.Exc<OverrideRestrictTapAreaActionReadyComponent>()
+			.End();
 
 		public void Run()
 		{

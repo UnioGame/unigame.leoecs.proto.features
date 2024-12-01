@@ -3,11 +3,9 @@
 	using System;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -18,35 +16,29 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class SelectionNextTapAreaSystem : IProtoInitSystem, IProtoRunSystem
+	public class SelectionNextTapAreaSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		private RestrictUITapAreaActionAspect _aspect;
-		private EcsFilter _activeRestrictTapAreaFilter;
-		private EcsFilter _restrictTapAreasFilter;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_activeRestrictTapAreaFilter = _world
-				.Filter<RestrictUITapAreaComponent>()
-				.Inc<ActivateRestrictUITapAreaComponent>()
-				.Inc<CompletedRestrictUITapAreaComponent>()
-				.End();
-
-			_restrictTapAreasFilter = _world
-				.Filter<RestrictUITapAreasComponent>()
-				.Exc<CompletedRestrictUITapAreaActionComponent>()
-				.End();
-		}
+		private ProtoIt _activeRestrictTapAreaFilter = It
+			.Chain<RestrictUITapAreaComponent>()
+			.Inc<ActivateRestrictUITapAreaComponent>()
+			.Inc<CompletedRestrictUITapAreaComponent>()
+			.End();
+		
+		private ProtoItExc _restrictTapAreasFilter = It
+			.Chain<RestrictUITapAreasComponent>()
+			.Exc<CompletedRestrictUITapAreaActionComponent>()
+			.End();
 
 		public void Run()
 		{
 			foreach (var entity in _activeRestrictTapAreaFilter)
 			{
-				if (_restrictTapAreasFilter.First() < 0) continue;
+				if (_restrictTapAreasFilter.IsEmpty()) continue;
 				
-				var areasEntity = (ProtoEntity)_restrictTapAreasFilter.First();
+				var areasEntity = _restrictTapAreasFilter.First().Entity;
 				ref var areasActionComponent = ref _aspect.RestrictUITapAreaAction.Get(areasEntity);
 				ref var areasComponent = ref _aspect.RestrictUITapAreas.Get(areasEntity);		
 				_aspect.ActivateRestrictUITapArea.Del(entity);

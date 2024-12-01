@@ -1,21 +1,16 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.Actions.SavePrefAction.Systems
 {
-	using System;
-	using System.Linq;
-	using Aspects;
-	using Components;
-	using Leopotam.EcsLite;
-	using Leopotam.EcsProto;
-	using UniGame.Core.Runtime.Extension;
-	using UniGame.Runtime.ObjectPool.Extensions;
-	using UnityEngine;
-	using UnityEngine.Pool;
-	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
+    using System;
+    using Aspects;
+    using Components;
+    using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
+    using UnityEngine;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-	/// <summary>
-	/// ADD DESCRIPTION HERE
-	/// </summary>
+    /// <summary>
+    /// ADD DESCRIPTION HERE
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -23,35 +18,31 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-	[Serializable]
-	[ECSDI]
-	public class SavePrefSystem : IProtoInitSystem, IProtoRunSystem
-	{
-		private ProtoWorld _world;
-		private EcsFilter _filter;
-		private SavePrefAspect _aspect;
+    [Serializable]
+    [ECSDI]
+    public class SavePrefSystem : IProtoRunSystem
+    {
+        private ProtoWorld _world;
+        private SavePrefAspect _aspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<SavePrefComponent>()
-				.Exc<CompletedSavePrefComponent>()
-				.End();
-		}
+        private ProtoItExc _filter = It
+            .Chain<SavePrefComponent>()
+            .Exc<CompletedSavePrefComponent>()
+            .End();
 
-		public void Run()
-		{
-			foreach (var entity in _filter)
-			{
-				ref var prefComponent = ref _aspect.SavePref.Get(entity);
-				if (!PlayerPrefs.HasKey(prefComponent.Value))
-				{
-					PlayerPrefs.SetString(prefComponent.Value, prefComponent.Value);
-					PlayerPrefs.Save();
-				}
-				_aspect.CompletedSavePref.Add(entity);
-			}
-		}
-	}
+        public void Run()
+        {
+            foreach (var entity in _filter)
+            {
+                ref var prefComponent = ref _aspect.SavePref.Get(entity);
+                if (!PlayerPrefs.HasKey(prefComponent.Value))
+                {
+                    PlayerPrefs.SetString(prefComponent.Value, prefComponent.Value);
+                    PlayerPrefs.Save();
+                }
+
+                _aspect.CompletedSavePref.Add(entity);
+            }
+        }
+    }
 }

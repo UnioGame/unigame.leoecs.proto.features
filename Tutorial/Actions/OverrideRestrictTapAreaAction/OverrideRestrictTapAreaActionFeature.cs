@@ -1,6 +1,5 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.Actions.OverrideRestrictTapAreaAction
 {
-	using Abstracts;
 	using Cysharp.Threading.Tasks;
 	using Leopotam.EcsProto;
 	using Systems;

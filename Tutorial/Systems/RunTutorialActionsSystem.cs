@@ -4,11 +4,9 @@
 	using Aspects;
 	using Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 
 	/// <summary>
 	/// Run tutorial actions.
@@ -22,19 +20,14 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class RunTutorialActionsSystem : IProtoInitSystem, IProtoRunSystem
+	public class RunTutorialActionsSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		private TutorialTriggerPointAspect _aspect;
-		private EcsFilter _requestFilter;
-
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_requestFilter = _world
-				.Filter<RunTutorialActionsRequest>()
-				.End();
-		}
+		
+		private ProtoIt _requestFilter = It
+			.Chain<RunTutorialActionsRequest>()
+			.End();
 
 		public void Run()
 		{

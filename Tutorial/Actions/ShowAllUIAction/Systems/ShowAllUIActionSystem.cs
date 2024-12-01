@@ -3,10 +3,9 @@
 	using System;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 
 	/// <summary>
 	/// Show all UI. Send event to show all UI.
@@ -20,20 +19,15 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class ShowAllUIActionSystem : IProtoInitSystem, IProtoRunSystem
+	public class ShowAllUIActionSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
 		private ShowAllUIActionAspect _aspect;
-
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<ShowAllUIActionComponent>()
-				.Exc<CompletedShowAllUIComponent>()
-				.End();
-		}
+		
+		private ProtoItExc _filter = It
+			.Chain<ShowAllUIActionComponent>()
+			.Exc<CompletedShowAllUIComponent>()
+			.End();
 
 		public void Run()
 		{

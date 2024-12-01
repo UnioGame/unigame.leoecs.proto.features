@@ -2,7 +2,6 @@
 {
 	using System;
 	using ActionTools;
-	using UnityEngine.Serialization;
 
 	/// <summary>
 	/// ADD DESCRIPTION HERE

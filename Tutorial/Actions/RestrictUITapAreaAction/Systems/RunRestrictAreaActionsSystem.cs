@@ -5,9 +5,8 @@
 	using Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
 	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
-	using UniGame.LeoEcs.Shared.Extensions;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 #if ENABLE_IL2CPP
@@ -19,25 +18,19 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class RunRestrictAreaActionsSystem : IProtoInitSystem, IProtoRunSystem
+	public class RunRestrictAreaActionsSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		
 		private RestrictUITapAreaActionAspect _aspect;
 		private OwnershipAspect _ownershipAspect;
 		
-		private EcsFilter _actionsFilter;
-
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_actionsFilter = _world
-				.Filter<RestrictUITapAreaComponent>()
-				.Inc<ActivateRestrictUITapAreaComponent>()
-				.Exc<CompletedRunRestrictActionsComponent>()
-				.End();
-		}
-
+		private ProtoItExc _actionsFilter = It
+			.Chain<RestrictUITapAreaComponent>()
+			.Inc<ActivateRestrictUITapAreaComponent>()
+			.Exc<CompletedRunRestrictActionsComponent>()
+			.End();
+		
 		public void Run()
 		{
 			foreach (var entity in _actionsFilter)

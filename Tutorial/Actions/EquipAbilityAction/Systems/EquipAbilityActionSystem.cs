@@ -4,8 +4,8 @@
 	using Aspects;
 	using Components;
 	using Game.Ecs.Core.Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Extensions;
 
@@ -21,30 +21,26 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class EquipAbilityActionSystem : IProtoInitSystem, IProtoRunSystem
+	public class EquipAbilityActionSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		private EquipAbilityActionAspect _aspect;
-		private EcsFilter _championFilter;
-		private EcsFilter _abilityActionFilter;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_championFilter = _world
-				.Filter<ChampionComponent>()
-				.End();
-			_abilityActionFilter = _world
-				.Filter<EquipAbilityActionComponent>()
-				.Exc<CompletedEquipAbilityActionComponent>()
-				.End();
-		}
+
+		private ProtoIt _championFilter = It
+			.Chain<ChampionComponent>()
+			.End();
+		
+		private ProtoItExc _abilityActionFilter= It
+			.Chain<EquipAbilityActionComponent>()
+			.Exc<CompletedEquipAbilityActionComponent>()
+			.End();
 
 		public void Run()
 		{
-			if (_championFilter.First() < 0) return;
+			if (_championFilter.IsEmpty()) return;
 			
-			var championEntity = (ProtoEntity)_championFilter.First();
+			var championEntity = _championFilter.First().Entity;
 			
 			foreach (var equipAbilityActionEntity in _abilityActionFilter)
 			{

@@ -1,16 +1,11 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.Actions.CloseTemporaryUIAction.Systems
 {
 	using System;
-	using System.Linq;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
-	using UniGame.Core.Runtime.Extension;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Shared.Extensions;
-	using UniGame.Runtime.ObjectPool.Extensions;
-	using UnityEngine;
-	using UnityEngine.Pool;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.ViewSystem.Components;
 
@@ -26,20 +21,15 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class CloseTemporaryUIActionSystem : IProtoInitSystem, IProtoRunSystem
+	public class CloseTemporaryUIActionSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
 		private CloseTemporaryUIActionAspect _aspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<CloseTemporaryUIActionComponent>()
-				.Exc<CompletedCloseTemporaryUIActionComponent>()
-				.End();
-		}
+		private ProtoItExc _filter = It
+			.Chain<CloseTemporaryUIActionComponent>()
+			.Exc<CompletedCloseTemporaryUIActionComponent>()
+			.End();
 
 		public void Run()
 		{

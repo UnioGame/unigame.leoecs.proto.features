@@ -5,7 +5,6 @@
 	using Data;
 	using Leopotam.EcsProto;
 	using Systems;
-	using UniGame.Context.Runtime.Extension;
 	using UniGame.Core.Runtime;
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;

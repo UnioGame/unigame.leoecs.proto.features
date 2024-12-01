@@ -2,7 +2,6 @@
 {
 	using System;
 	using Components;
-	using Game.Ecs.Core.Components;
 	using Leopotam.EcsProto;
 	using Triggers.ActionTrigger.Components;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;

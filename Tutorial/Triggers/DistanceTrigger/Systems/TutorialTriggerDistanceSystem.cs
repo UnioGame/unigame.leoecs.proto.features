@@ -5,12 +5,10 @@
 	using Components;
 	using Game.Ecs.Core.Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using Tutorial.Components;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 	using Unity.Mathematics;
 
 	/// <summary>
@@ -25,42 +23,31 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class TutorialTriggerDistanceSystem : IProtoInitSystem, IProtoRunSystem
+	public class TutorialTriggerDistanceSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
 		
 		private DistanceTriggerAspect _aspect;
 		private OwnershipAspect _ownershipAspect;
 		
-		private EcsFilter _startLevelFilter;
-		private EcsFilter _championFilter;
-		private EcsFilter _distanceTriggerPointFilter;
-
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-
-			_startLevelFilter = _world
-				.Filter<TutorialReadyComponent>()
-				.End();
-			
-			_championFilter = _world
-				.Filter<ChampionComponent>()
-				.End();
-			
-			_distanceTriggerPointFilter = _world
-				.Filter<DistanceTriggerPointComponent>()
-				.Exc<CompletedDistanceTriggerPointComponent>()
-				.End();
-			
-		}
+		private ProtoIt _startLevelFilter = It
+			.Chain<TutorialReadyComponent>()
+			.End();
+		
+		private ProtoIt _championFilter = It
+			.Chain<ChampionComponent>()
+			.End();
+		
+		private ProtoItExc _distanceTriggerPointFilter = It
+			.Chain<DistanceTriggerPointComponent>()
+			.Exc<CompletedDistanceTriggerPointComponent>()
+			.End();
 
 		public void Run()
 		{
-			if (_startLevelFilter.First() < 0) return;
-			if (_championFilter.First() < 0) return;
+			if (_startLevelFilter.IsEmpty() || _championFilter.IsEmpty()) return;
 			
-			var championEntity = (ProtoEntity)_championFilter.First();
+			var championEntity = _championFilter.First().Entity;
 			ref var positionComponent = ref _aspect.Position.Get(championEntity);
 			ref var position = ref positionComponent.Position;
 			

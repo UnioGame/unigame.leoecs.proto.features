@@ -3,10 +3,9 @@
 	using System;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 	using UniGame.LeoEcs.ViewSystem.Extensions;
 
 	/// <summary>
@@ -21,20 +20,15 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class OpenWindowActionSystem : IProtoInitSystem, IProtoRunSystem
+	public class OpenWindowActionSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
 		private OpenWindowActionAspect _aspect;
-
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<OpenWindowActionComponent>()
-				.Exc<CompletedOpenWindowActionComponent>()
-				.End();
-		}
+		
+		private ProtoItExc _filter = It
+			.Chain<OpenWindowActionComponent>()
+			.Exc<CompletedOpenWindowActionComponent>()
+			.End();
 
 		public void Run()
 		{

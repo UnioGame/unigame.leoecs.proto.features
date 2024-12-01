@@ -3,8 +3,8 @@
 	using System;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
+	using Leopotam.EcsProto.QoL;
 	using Tutorial.Components;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Extensions;
@@ -18,30 +18,23 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class StepTriggerSystem : IProtoInitSystem, IProtoRunSystem
+	public class StepTriggerSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _filter;
 		private StepTriggerAspect _aspect;
-		private EcsFilter _startLevelFilter;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			_filter = _world
-				.Filter<StepTriggerReadyComponent>()
-				.Exc<CompletedStepTriggerComponent>()
-				.End();
-			
-			_startLevelFilter = _world
-				.Filter<TutorialReadyComponent>()
-				.End();
-		}
+		private ProtoItExc _filter = It
+			.Chain<StepTriggerReadyComponent>()
+			.Exc<CompletedStepTriggerComponent>()
+			.End();
+		
+		private ProtoIt _startLevelFilter = It
+			.Chain<TutorialReadyComponent>()
+			.End();
 
 		public void Run()
 		{
-			var first = _startLevelFilter.First();
-			if (first < 0) return;
+			if (_startLevelFilter.IsEmpty()) return;
 			
 			foreach (var entity in _filter)
 			{

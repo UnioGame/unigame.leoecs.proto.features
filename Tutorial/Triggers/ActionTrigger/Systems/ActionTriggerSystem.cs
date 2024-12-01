@@ -3,12 +3,10 @@
 	using System;
 	using Aspects;
 	using Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using Tutorial.Components;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-	using UniGame.LeoEcs.Shared.Extensions;
 
 	/// <summary>
 	/// Sends request to run tutorial actions.
@@ -22,35 +20,27 @@
 #endif
 	[Serializable]
 	[ECSDI]
-	public class ActionTriggerSystem : IProtoInitSystem, IProtoRunSystem
+	public class ActionTriggerSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _startLevelFilter;
-		private EcsFilter _requestFilter;
-		private EcsFilter _actionTriggerFilter;
 		private ActionTriggerAspect _aspect;
 
-		public void Init(IProtoSystems systems)
-		{
-			_world = systems.GetWorld();
-			
-			_startLevelFilter = _world
-				.Filter<TutorialReadyComponent>()
-				.End();
-			
-			_requestFilter = _world
-				.Filter<ActionTriggerRequest>()
-				.End();
-			
-			_actionTriggerFilter = _world
-				.Filter<ActionTriggerComponent>()
-				.Exc<CompletedActionTriggerComponent>()
-				.End();
-		}
+		private ProtoIt _startLevelFilter = It
+			.Chain<TutorialReadyComponent>()
+			.End();
+		
+		private ProtoIt _requestFilter = It
+			.Chain<ActionTriggerRequest>()
+			.End();
+		
+		private ProtoItExc _actionTriggerFilter = It
+			.Chain<ActionTriggerComponent>()
+			.Exc<CompletedActionTriggerComponent>()
+			.End();
 
 		public void Run()
 		{
-			if (_startLevelFilter.First() < 0) return;
+			if (_startLevelFilter.IsEmpty()) return;
 			
 			foreach (var entity in _requestFilter)
 			{
