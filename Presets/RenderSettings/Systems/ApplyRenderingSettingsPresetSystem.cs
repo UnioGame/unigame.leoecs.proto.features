@@ -1,10 +1,12 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using RenderSettings.Aspects;
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
@@ -18,50 +20,38 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class ApplyRenderingSettingsPresetSystem : IProtoInitSystem, IProtoRunSystem
+    [ECSDI]
+    public class ApplyRenderingSettingsPresetSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
+        private PresetsAspect _presetsAspect;
+        private RenderSettingsAspect _renderSettingsAspect;
 
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<RenderingSettingsPresetComponent> _presetPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-
-            _targetFilter = _world
-                .Filter<RenderingSettingsPresetComponent>()
-                .Inc<PresetTargetComponent>()
-                .Inc<PresetApplyingComponent>()
-                .Inc<PresetApplyingDataComponent>()
-                .Inc<PresetProgressComponent>()
-                .End();
-            
-            _progressPool = _world.GetPool<PresetProgressComponent>();
-            _applyingDataPool = _world.GetPool<PresetApplyingDataComponent>();
-            _presetPool = _world.GetPool<RenderingSettingsPresetComponent>();
-        }
+        private ProtoIt _targetFilter = It
+            .Chain<RenderingSettingsPresetComponent>()
+            .Inc<PresetTargetComponent>()
+            .Inc<PresetApplyingComponent>()
+            .Inc<PresetApplyingDataComponent>()
+            .Inc<PresetProgressComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var applyingDataComponent = ref _applyingDataPool.Get(targetEntity);
+                ref var applyingDataComponent = ref _presetsAspect.PresetApplyingData.Get(targetEntity);
                 if(!applyingDataComponent.Source.Unpack(_world,out var sourceEntity))
                     continue;
 
-                ref var targetPresetComponent = ref _presetPool.GetOrAddComponent(targetEntity);
-                ref var presetComponent = ref _presetPool.GetOrAddComponent(sourceEntity);
-                ref var progressComponent = ref _progressPool.GetOrAddComponent(targetEntity);
+                ref var targetPresetComponent = ref _renderSettingsAspect.SettingsPreset.GetOrAddComponent(targetEntity);
+                ref var presetComponent = ref _renderSettingsAspect.SettingsPreset.GetOrAddComponent(sourceEntity);
+                ref var progressComponent = ref _presetsAspect.PresetProgress.GetOrAddComponent(targetEntity);
 
                 var activePreset = targetPresetComponent.Value;
                 var sourcePreset = presetComponent.Value;
                 
                 activePreset.ApplyLerp(activePreset,sourcePreset,progressComponent.Value);
                 activePreset.ApplyToRendering();
-                //RenderingSettingsPreset.Lerp(activePreset,sourcePreset,progressComponent.Value);
             }
         }
     }

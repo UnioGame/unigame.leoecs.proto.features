@@ -1,52 +1,39 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
-
+    using Leopotam.EcsProto.QoL;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-#endif
 
-
-    [Serializable]
-#if ENABLE_IL2CPP
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-    public class DisableActivatedPresetsSystem : IProtoInitSystem, IProtoRunSystem
+    [Serializable]
+    [ECSDI]
+    public class DisableActivatedPresetsSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _sourceFilter;
-        
-        private ProtoPool<ActivePresetSourceComponent> _activePool;
-        private ProtoPool<PresetActivatedComponent> _activatedPool;
+        private PresetsAspect _presetsAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _sourceFilter = _world
-                .Filter<PresetComponent>()
-                .Inc<ActivePresetSourceComponent>()
-                .Inc<PresetActivatedComponent>()
-                .End();
-
-            _activePool = _world.GetPool<ActivePresetSourceComponent>();
-            _activatedPool = _world.GetPool<PresetActivatedComponent>();
-        }
+        private ProtoIt _sourceFilter = It
+            .Chain<PresetComponent>()
+            .Inc<ActivePresetSourceComponent>()
+            .Inc<PresetActivatedComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var sourceEntity in _sourceFilter)
             {
-                _activePool.Del(sourceEntity);
-                _activatedPool.Del(sourceEntity);
-                    
+                _presetsAspect.ActivePresetSource.Del(sourceEntity);
+                _presetsAspect.PresetActivated.Del(sourceEntity);
+
                 break;
             }
         }

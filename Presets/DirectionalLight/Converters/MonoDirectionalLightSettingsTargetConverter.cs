@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Presets.Directional_Light.Converters
+﻿namespace UniGame.Ecs.Proto.Presets.DirectionalLight.Converters
 {
     using System;
     using Abstract;

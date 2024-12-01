@@ -1,5 +1,5 @@
-﻿namespace UniGame.Ecs.Proto.Presets.SpotLightSettings.Systems
-{
+﻿namespace UniGame.Ecs.Proto.Presets.DirectionalLight.Systems
+{    
     using UniGame.Ecs.Proto.Presets.Components;
     using Components;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -11,7 +11,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     
     /// <summary>
-    /// Apply spot light preset in game.
+    /// Apply directional light preset in game.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -22,21 +22,20 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class ApplySpotLightSettingsPresetSystem : IProtoRunSystem
+    public class ApplyDirectionalLightSettingsPresetSystem: IProtoRunSystem
     {
         private ProtoWorld _world;
         private PresetsAspect _presetsAspect;
-        private SpotLightSettingsAspect _spotLightSettingsAspect;
-        
+        private DirectionalLightAspect _directionalLightAspect;
 
         private ProtoIt _targetFilter = It
-            .Chain<SpotLightSettingsPresetComponent>()
+            .Chain<DirectionalLightSettingsPresetComponent>()
             .Inc<PresetTargetComponent>()
             .Inc<PresetApplyingComponent>()
             .Inc<PresetApplyingDataComponent>()
             .Inc<PresetProgressComponent>()
             .End();
-        
+
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
@@ -45,15 +44,16 @@
                 if (!applyingDataComponent.Source.Unpack(_world, out var sourceEntity))
                     continue;
                 
-                ref var targetPresetComponent = ref _spotLightSettingsAspect.SettingsPreset.GetOrAddComponent(targetEntity);
-                ref var presetComponent = ref _spotLightSettingsAspect.SettingsPreset.GetOrAddComponent(sourceEntity);
+                ref var targetPresetComponent = ref _directionalLightAspect.LightSettingsPreset.GetOrAddComponent(targetEntity);
+                ref var presetComponent = ref _directionalLightAspect.LightSettingsPreset.GetOrAddComponent(sourceEntity);
                 ref var progressComponent = ref _presetsAspect.PresetProgress.GetOrAddComponent(targetEntity);
 
                 var activePreset = targetPresetComponent.Value;
                 var sourcePreset = presetComponent.Value;
-
+                
                 activePreset.ApplyLerp(activePreset, sourcePreset, progressComponent.Value);
-                activePreset.ApplyToSpotLight();
+                
+                activePreset.ApplyToDirectionalLight();
             }
         }
     }

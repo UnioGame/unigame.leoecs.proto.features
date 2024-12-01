@@ -1,11 +1,12 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
     using Game.Ecs.Time.Service;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
 
     /// <summary>
     /// update preset progression
@@ -18,40 +19,29 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class CalculatePresetProgressSystem : IProtoInitSystem, IProtoRunSystem
+    [ECSDI]
+    public class CalculatePresetProgressSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<PresetApplyingComponent> _applyingPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-
-            _targetFilter = _world
-                .Filter<PresetApplyingComponent>()
-                .Inc<PresetApplyingDataComponent>()
-                .Inc<PresetProgressComponent>()
-                .End();
-            
-            _applyingDataPool = _world.GetPool<PresetApplyingDataComponent>();
-            _applyingPool = _world.GetPool<PresetApplyingComponent>();
-            _progressPool = _world.GetPool<PresetProgressComponent>();
-        }
-
+        private PresetsAspect _presetsAspect;
+        
+        private ProtoIt _targetFilter = It
+            .Chain<PresetApplyingComponent>()
+            .Inc<PresetApplyingDataComponent>()
+            .Inc<PresetProgressComponent>()
+            .End();
+        
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var dataComponent = ref _applyingDataPool.Get(targetEntity);
+                ref var dataComponent = ref _presetsAspect.PresetApplyingData.Get(targetEntity);
 
                 var timePassed = GameTime.Time - dataComponent.StartTime;
                 var duration = dataComponent.Duration;
                 var progress = duration <= 0 ? 1f : timePassed / duration;
                 
-                ref var progressComponent = ref _progressPool.Get(targetEntity);
+                ref var progressComponent = ref _presetsAspect.PresetProgress.Get(targetEntity);
                 progressComponent.Value = progress;
             }
         }

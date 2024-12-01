@@ -1,11 +1,14 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
+    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Light.Aspects;
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
@@ -19,54 +22,43 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class ApplyLightPresetSystem : IProtoInitSystem, IProtoRunSystem
+    [ECSDI]
+    public class ApplyLightPresetSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
+        private PresetsAspect _presetsAspect;
+        private UnityAspect _unityAspect;
+        private LightAspect _lightAspect;
 
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<LightPresetComponent> _presetPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
-        private ProtoPool<LightComponent> _lightPool;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-
-            _targetFilter = _world
-                .Filter<LightPresetComponent>()
-                .Inc<PresetTargetComponent>()
-                .Inc<LightComponent>()
-                .Inc<PresetApplyingComponent>()
-                .Inc<PresetApplyingDataComponent>()
-                .Inc<PresetProgressComponent>()
-                .End();
-            
-            _progressPool = _world.GetPool<PresetProgressComponent>();
-            _lightPool = _world.GetPool<LightComponent>();
-            _applyingDataPool = _world.GetPool<PresetApplyingDataComponent>();
-            _presetPool = _world.GetPool<LightPresetComponent>();
-        }
+        private ProtoIt _targetFilter = It
+            .Chain<LightPresetComponent>()
+            .Inc<PresetTargetComponent>()
+            .Inc<LightComponent>()
+            .Inc<PresetApplyingComponent>()
+            .Inc<PresetApplyingDataComponent>()
+            .Inc<PresetProgressComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var applyingDataComponent = ref _applyingDataPool.Get(targetEntity);
-                if(!applyingDataComponent.Source.Unpack(_world,out var sourceEntity))
+                ref var applyingDataComponent = ref _presetsAspect.PresetApplyingData.Get(targetEntity);
+                if (!applyingDataComponent.Source.Unpack(_world, out var sourceEntity))
                     continue;
 
-                ref var targetPresetComponent = ref _presetPool.GetOrAddComponent(targetEntity);
-                ref var lightComponent = ref _lightPool.GetOrAddComponent(targetEntity);
-                ref var presetComponent = ref _presetPool.GetOrAddComponent(sourceEntity);
-                ref var progressComponent = ref _progressPool.GetOrAddComponent(targetEntity);
+                ref var targetPresetComponent = ref _lightAspect.LightPreset.GetOrAddComponent(targetEntity);
+                ref var lightComponent = ref _unityAspect.Light.GetOrAddComponent(targetEntity);
+                ref var presetComponent = ref _lightAspect.LightPreset.GetOrAddComponent(sourceEntity);
+                ref var progressComponent = ref _presetsAspect.PresetProgress.GetOrAddComponent(targetEntity);
 
                 ref var activePreset = ref targetPresetComponent.Value;
                 ref var sourcePreset = ref presetComponent.Value;
 
                 var light = lightComponent.Value;
-                
-                LightPresetTools.Lerp(light,ref activePreset,ref sourcePreset,progressComponent.Value);
+
+                LightPresetTools.Lerp(light, ref activePreset, ref sourcePreset, progressComponent.Value);
             }
         }
     }

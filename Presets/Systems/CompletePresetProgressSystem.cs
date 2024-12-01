@@ -1,11 +1,11 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Shared.Extensions;
-
+    using Leopotam.EcsProto.QoL;
 
     /// <summary>
     /// Apply material preset to target system.
@@ -18,42 +18,29 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class CompletePresetProgressSystem : IProtoInitSystem, IProtoRunSystem
+    [ECSDI]
+    public class CompletePresetProgressSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
+        private PresetsAspect _presetsAspect;
 
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<PresetApplyingComponent> _applyingPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-
-            _targetFilter = _world
-                .Filter<PresetApplyingComponent>()
-                .Inc<PresetProgressComponent>()
-                .Inc<PresetApplyingDataComponent>()
-                .End();
-            
-            _world.GetPool<PresetIdComponent>();
-            _applyingDataPool = _world.GetPool<PresetApplyingDataComponent>();
-            _applyingPool = _world.GetPool<PresetApplyingComponent>();
-            _progressPool = _world.GetPool<PresetProgressComponent>();
-        }
+        private ProtoIt _targetFilter = It
+            .Chain<PresetApplyingComponent>()
+            .Inc<PresetProgressComponent>()
+            .Inc<PresetApplyingDataComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var progressComponent = ref _progressPool.Get(targetEntity);
+                ref var progressComponent = ref _presetsAspect.PresetProgress.Get(targetEntity);
                 var progress = progressComponent.Value;
 
                 if (progress < 1f) continue;
                 
-                _applyingPool.Del(targetEntity);
-                _applyingDataPool.Del(targetEntity);
+                _presetsAspect.PresetApplying.Del(targetEntity);
+                _presetsAspect.PresetApplyingData.Del(targetEntity);
             }
         }
     }

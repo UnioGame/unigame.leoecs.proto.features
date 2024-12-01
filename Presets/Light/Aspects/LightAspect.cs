@@ -1,11 +1,10 @@
-﻿namespace UniGame.Ecs.Proto.Presets.Components
+﻿namespace UniGame.Ecs.Proto.Presets.Light.Aspects
 {
     using System;
-    using UnityEngine;
-
-    /// <summary>
-    /// value of material preset
-    /// </summary>
+    using Components;
+    using Leopotam.EcsProto;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -14,8 +13,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct MaterialPresetComponent
+    public class LightAspect : EcsAspect
     {
-        public Material Value;
+        public ProtoPool<LightPresetComponent> LightPreset;
     }
 }

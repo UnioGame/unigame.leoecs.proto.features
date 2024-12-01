@@ -1,10 +1,13 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
     using Game.Ecs.Time.Service;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
@@ -18,73 +21,54 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class FindPresetTargetsSystem : IProtoInitSystem, IProtoRunSystem
+    [ECSDI]
+    public class FindPresetTargetsSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
-        private EcsFilter _sourceFilter;
-        
-        private ProtoPool<PresetIdComponent> _idPool;
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<PresetApplyingComponent> _applyingPool;
-        private ProtoPool<PresetDurationComponent> _durationPool;
-        private ProtoPool<PresetActivatedComponent> _activatedPresetPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
+        private PresetsAspect _presetsAspect;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
+        private ProtoItExc _targetFilter = It
+            .Chain<PresetIdComponent>()
+            .Inc<PresetTargetComponent>()
+            .Exc<PresetApplyingComponent>()
+            .Exc<PresetApplyingDataComponent>()
+            .End();
 
-            _targetFilter = _world
-                .Filter<PresetIdComponent>()
-                .Inc<PresetTargetComponent>()
-                .Exc<PresetApplyingComponent>()
-                .Exc<PresetApplyingDataComponent>()
-                .End();
-            
-            _sourceFilter = _world
-                .Filter<PresetIdComponent>()
-                .Inc<PresetSourceComponent>()
-                .Inc<ActivePresetSourceComponent>()
-                .End();
-
-            _idPool = _world.GetPool<PresetIdComponent>();
-            _applyingDataPool = _world.GetPool<PresetApplyingDataComponent>();
-            _applyingPool = _world.GetPool<PresetApplyingComponent>();
-            _durationPool = _world.GetPool<PresetDurationComponent>();
-            _activatedPresetPool = _world.GetPool<PresetActivatedComponent>();
-            _progressPool = _world.GetPool<PresetProgressComponent>();
-        }
+        private ProtoIt _sourceFilter = It
+            .Chain<PresetIdComponent>()
+            .Inc<PresetSourceComponent>()
+            .Inc<ActivePresetSourceComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var targetIdComponent = ref _idPool.Get(targetEntity);
-                
+                ref var targetIdComponent = ref _presetsAspect.PresetIdC.Get(targetEntity);
+
                 foreach (var sourceEntity in _sourceFilter)
                 {
-                    ref var sourceIdComponent = ref _idPool.Get(sourceEntity);
-                    if(sourceIdComponent.Value != targetIdComponent.Value) continue;
+                    ref var sourceIdComponent = ref _presetsAspect.PresetIdC.Get(sourceEntity);
+                    if (sourceIdComponent.Value != targetIdComponent.Value) continue;
 
-                    ref var progressComponent = ref _progressPool.GetOrAddComponent(targetEntity);
-                    ref var applyingDataComponent = ref _applyingDataPool.Add(targetEntity);
-                    ref var applyingComponent = ref _applyingPool.Add(targetEntity);
+                    ref var progressComponent = ref _presetsAspect.PresetProgress.GetOrAddComponent(targetEntity);
+                    ref var applyingDataComponent = ref _presetsAspect.PresetApplyingData.Add(targetEntity);
+                    ref var applyingComponent = ref _presetsAspect.PresetApplying.Add(targetEntity);
 
                     progressComponent.Value = 0f;
                     applyingDataComponent.Duration = 0;
                     applyingDataComponent.StartTime = GameTime.Time;
-                    
-                    if (_durationPool.Has(sourceEntity))
+
+                    if (_presetsAspect.PresetDuration.Has(sourceEntity))
                     {
-                        ref var durationComponent = ref _durationPool.Get(sourceEntity);
+                        ref var durationComponent = ref _presetsAspect.PresetDuration.Get(sourceEntity);
                         applyingDataComponent.Duration = durationComponent.Value;
                     }
 
                     applyingDataComponent.Source = sourceEntity.PackEntity(_world);
 
-                    _activatedPresetPool.GetOrAddComponent(sourceEntity);
-                    
+                    _presetsAspect.PresetActivated.GetOrAddComponent(sourceEntity);
+
                     break;
                 }
             }

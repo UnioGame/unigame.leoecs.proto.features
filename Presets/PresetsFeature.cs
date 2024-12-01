@@ -1,16 +1,16 @@
 namespace UniGame.Ecs.Proto.Presets
 {
-    using UniGame.Ecs.Proto.Presets.Directional_Light.Systems;
     using UniGame.Ecs.Proto.Presets.FogShaderSettings.Systems;
     using UniGame.Ecs.Proto.Presets.SpotLightSettings.Systems;
     using Cysharp.Threading.Tasks;
+    using DirectionalLight.Systems;
     using Leopotam.EcsProto;
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Presets Feature", fileName = "Game Presets Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Presets Feature")]
     public class PresetsFeature : BaseLeoEcsFeature
     {
         public override UniTask InitializeAsync(IProtoSystems ecsSystems)

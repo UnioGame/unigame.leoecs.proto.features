@@ -1,12 +1,11 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Systems
 {
     using System;
+    using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// Apply material preset to target system.
@@ -20,40 +19,31 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class ApplyMaterialPresetToTargetSystem : IProtoInitSystem, IProtoRunSystem
+    public class ApplyMaterialPresetToTargetSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _targetFilter;
+        private PresetsAspect _presetsAspect;
 
-        private ProtoPool<PresetApplyingDataComponent> _applyingDataPool;
-        private ProtoPool<MaterialPresetComponent> _materialDataPool;
-        private ProtoPool<PresetProgressComponent> _progressPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-
-            _targetFilter = _world
-                .Filter<MaterialPresetComponent>()
-                .Inc<PresetTargetComponent>()
-                .Inc<PresetApplyingComponent>()
-                .Inc<PresetProgressComponent>()
-                .Inc<PresetApplyingDataComponent>()
-                .End();
-        }
+        private ProtoIt _targetFilter = It
+            .Chain<MaterialPresetComponent>()
+            .Inc<PresetTargetComponent>()
+            .Inc<PresetApplyingComponent>()
+            .Inc<PresetProgressComponent>()
+            .Inc<PresetApplyingDataComponent>()
+            .End();
 
         public void Run()
         {
             foreach (var targetEntity in _targetFilter)
             {
-                ref var dataComponent = ref _applyingDataPool.Get(targetEntity);
+                ref var dataComponent = ref _presetsAspect.PresetApplyingData.Get(targetEntity);
                 if(!dataComponent.Source.Unpack(_world,out var sourceEntity))
                     continue;
 
-                ref var targetMaterialData = ref _materialDataPool.Get(targetEntity);
-                ref var sourceMaterialData = ref _materialDataPool.Get(sourceEntity);
+                ref var targetMaterialData = ref _presetsAspect.MaterialPreset.Get(targetEntity);
+                ref var sourceMaterialData = ref _presetsAspect.MaterialPreset.Get(sourceEntity);
 
-                ref var progressComponent = ref _progressPool.Get(targetEntity);
+                ref var progressComponent = ref _presetsAspect.PresetProgress.Get(targetEntity);
 
                 var targetMaterial = targetMaterialData.Value;
                 var sourceMaterial = sourceMaterialData.Value;
