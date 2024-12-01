@@ -17,7 +17,7 @@
     /// <summary>
     /// Button action feature used in gameplay.
     /// </summary>
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions/Button Action Feature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions Feature",fileName = "Games Action Feature")]
     public class GamesActionFeature : BaseLeoEcsFeature
     {
         [SerializeReference]
@@ -25,16 +25,17 @@
         
         [InlineEditor]
         [SerializeField]
-        private List<GameActionsSubFeature> subFeatures = new();
+        [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
+        private List<GameActionsSubFeatureAsset> subFeatures = new();
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             var tasks = features
                 .Where(x => x != null)
-                .Select(x => x.InitializeActions(ecsSystems))
+                .Select(x => x.InitializeAsync(ecsSystems))
                 .Concat(subFeatures
                     .Where(x => x!=null)
-                    .Select(x => x.InitializeActions(ecsSystems)));
+                    .Select(x => x.InitializeAsync(ecsSystems)));
 
             await UniTask.WhenAll(tasks);
         }
@@ -48,7 +49,7 @@
             subFeatures.RemoveAll(x => x == null);
 
             var featuresTypes = TypeCache.GetTypesDerivedFrom(typeof(IGameActionsSubFeature));
-            var assetFeatures = AssetEditorTools.GetAssets<GameActionsSubFeature>();
+            var assetFeatures = AssetEditorTools.GetAssets<GameActionsSubFeatureAsset>();
 
             foreach (var subFeature in assetFeatures)
             {
@@ -56,17 +57,31 @@
                     continue;
                 subFeatures.Add(subFeature);
             }
+
+            var thisPath = AssetDatabase.GetAssetPath(this)
+                .Replace($"{name}.asset", string.Empty);
             
             foreach (var featureType in featuresTypes)
             {
                 if(featureType.IsInterface || featureType.IsAbstract)
                     continue;
-                if(!featureType.HasDefaultConstructor())
-                    continue;
                 if (features.Any(x => x.GetType() == featureType))
                     continue;
-                if(typeof(Object).IsAssignableFrom(featureType))
+                
+                var isScriptableObject = typeof(ScriptableObject).IsAssignableFrom(featureType);
+                if(!featureType.HasDefaultConstructor() && !isScriptableObject)
                     continue;
+                
+                if (typeof(ScriptableObject).IsAssignableFrom(featureType))
+                {
+                    if(string.IsNullOrEmpty(thisPath)) continue;
+                    var featureAsset = CreateInstance(featureType) as GameActionsSubFeatureAsset;
+                    featureAsset.name = featureType.Name;
+                    featureAsset.EditorInitialize(thisPath);
+                    featureAsset.SaveAsset(thisPath);
+                    subFeatures.Add(featureAsset);
+                    continue;
+                }
                 
                 var feature = featureType.CreateWithDefaultConstructor() as IGameActionsSubFeature;
                 features.Add(feature);

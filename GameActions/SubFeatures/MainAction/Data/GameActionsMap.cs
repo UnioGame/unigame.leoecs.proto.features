@@ -31,6 +31,8 @@
 
         public static void GenerateStaticProperties(GameActionsMap map)
         {
+            if(map == null) return;
+            
             var idType = typeof(GameActionId);
             var idTypeName = nameof(GameActionId);
             var idsTypeName = $"{nameof(GameActionId)}s";
@@ -58,20 +60,13 @@
                 writer.WriteLine("{");
                 writer.WriteLine($"    public partial struct {idsTypeName}");
                 writer.WriteLine("    {");
-
-                var typesField = typeof(GameActionsData)
-                    .GetField(nameof(GameActionsData.collection),
-                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-
-                if (typesField != null)
+                
+                var types = map.value.collection;
+                foreach (var type in types)
                 {
-                    var types = (List<MainAction>)typesField.GetValue(map.value);
-                    foreach (var type in types)
-                    {
-                        var propertyName = type.name.Replace(" ", "");
-                        writer.WriteLine(
-                            $"        public static {idTypeName} {propertyName} = new {idTypeName} {{ value = {type.id} }};");
-                    }
+                    var propertyName = type.name.Replace(" ", "");
+                    writer.WriteLine(
+                        $"        public static {idTypeName} {propertyName} = new {idTypeName} {{ value = {type.id} }};");
                 }
 
                 writer.WriteLine("    }");
