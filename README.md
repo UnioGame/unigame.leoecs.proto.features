@@ -14,3 +14,9 @@ As an example:
 - **ConfirmGameStart**.
 - **ShowHeroesCollection**.
 
+Of course, you can define any game action that you need and add support of any input system that you want.
+
+## Configuration
+
+![game actions config](https://github.com/UnioGame/UniGame.LeoEcs.Proto.Features/blob/main/GitAssets/gameactions_config.png)
+
