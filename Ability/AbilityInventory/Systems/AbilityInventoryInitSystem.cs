@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.AbilityInventory.Systems
 {
+	using System;
 	using Aspects;
 	using Components;
 	using Game.Code.Services.AbilityLoadout.Abstract;
@@ -7,15 +8,19 @@
 	using Leopotam.EcsProto;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Extensions;
-	using Unity.IL2CPP.CompilerServices;
 
 	/// <summary>
 	/// Initialize meta data for all abilities
 	/// </summary>
+#if ENABLE_IL2CP
+	using Unity.IL2CPP.CompilerServices;
+
 	[Il2CppSetOption(Option.NullChecks, false)]
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
 	[ECSDI]
+	[Serializable]
 	public class AbilityInventoryInitSystem : IProtoRunSystem,IProtoInitSystem
 	{
 		private IAbilityCatalogService _abilityLoadoutService;

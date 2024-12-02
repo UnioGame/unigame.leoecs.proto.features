@@ -3,6 +3,7 @@
     using System;
     using Components;
     using Components.Requests;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -20,6 +21,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class ChangeCharacteristicValueSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;

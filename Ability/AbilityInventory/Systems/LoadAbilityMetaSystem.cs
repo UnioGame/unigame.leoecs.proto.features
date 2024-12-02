@@ -1,10 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.AbilityInventory.Systems
 {
+    using System;
     using System.Collections.Generic;
     using Ability.Common.Components;
     using Aspects;
     using Components;
-    using Converters;
     using Cysharp.Threading.Tasks;
     using Equip.Components;
     using Game.Code.Services.AbilityLoadout.Abstract;
@@ -15,15 +15,19 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Collections;
-    using Unity.IL2CPP.CompilerServices;
 
     /// <summary>
     /// Initialize meta data for all abilities
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#if ENABLE_IL2CP
+	using Unity.IL2CPP.CompilerServices;
+
+	[Il2CppSetOption(Option.NullChecks, false)]
+	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [ECSDI]
+    [Serializable]
     public class LoadAbilityMetaSystem : IProtoRunSystem,IProtoInitSystem
     {
         private IAbilityCatalogService _abilityLoadoutService;

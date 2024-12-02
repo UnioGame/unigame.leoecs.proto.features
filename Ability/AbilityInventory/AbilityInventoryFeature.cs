@@ -6,7 +6,6 @@
 	using Converters;
 	using Cysharp.Threading.Tasks;
 	using Equip.Components;
-	using Game.Code.Services.Ability.Data.Arena;
 	using Game.Code.Services.AbilityLoadout.Abstract;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;

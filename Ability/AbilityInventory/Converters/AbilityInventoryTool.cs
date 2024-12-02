@@ -4,9 +4,6 @@
 	/// Convert ability meta data to entity
 	/// </summary>
 	using Aspects;
-	using Components;
-	using Game.Code.Configuration.Runtime.Ability.Description;
-	using Game.Code.Services.AbilityLoadout.Data;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
