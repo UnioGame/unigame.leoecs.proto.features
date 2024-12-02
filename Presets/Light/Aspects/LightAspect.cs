@@ -2,6 +2,7 @@
 {
     using System;
     using Components;
+    using LeoEcs.Shared.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     
@@ -16,5 +17,6 @@
     public class LightAspect : EcsAspect
     {
         public ProtoPool<LightPresetComponent> LightPreset;
+        public ProtoPool<LightComponent> Light;
     }
 }

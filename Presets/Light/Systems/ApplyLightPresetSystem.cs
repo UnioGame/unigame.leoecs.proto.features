@@ -49,7 +49,7 @@
                     continue;
 
                 ref var targetPresetComponent = ref _lightAspect.LightPreset.GetOrAddComponent(targetEntity);
-                ref var lightComponent = ref _unityAspect.Light.GetOrAddComponent(targetEntity);
+                ref var lightComponent = ref _lightAspect.Light.GetOrAddComponent(targetEntity);
                 ref var presetComponent = ref _lightAspect.LightPreset.GetOrAddComponent(sourceEntity);
                 ref var progressComponent = ref _presetsAspect.PresetProgress.GetOrAddComponent(targetEntity);
 
