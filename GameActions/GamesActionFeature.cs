@@ -2,9 +2,14 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Components.Events;
+    using Components.Requests;
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using Sirenix.OdinInspector;
+    using GameActions;
+    using GameActions.Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniModules.UniCore.Runtime.Utils;
     using UnityEngine;
@@ -20,6 +25,10 @@
     [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions Feature",fileName = "Games Action Feature")]
     public class GamesActionFeature : BaseLeoEcsFeature
     {
+        [InlineProperty]
+        [HideLabel]
+        public GameInputActionsFeature inputActions = new();
+        
         [SerializeReference]
         public List<IGameActionsSubFeature> features = new();
         
@@ -30,6 +39,10 @@
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
+            ecsSystems.DelHere<GameActionEvent>();
+            
+            await inputActions.InitializeAsync(ecsSystems);
+            
             var tasks = features
                 .Where(x => x != null)
                 .Select(x => x.InitializeAsync(ecsSystems))
@@ -37,6 +50,12 @@
                     .Where(x => x!=null)
                     .Select(x => x.InitializeAsync(ecsSystems)));
 
+            ecsSystems.AddSystem(new HandleGameActionRequestSystem());
+            
+            //delete processed requests to activate game actions
+            ecsSystems.DelHere<GameActionRequest>();
+            ecsSystems.DelHere<GameActionSelfRequest>();
+            
             await UniTask.WhenAll(tasks);
         }
 
@@ -44,7 +63,7 @@
         public void FillFeatures()
         {
 #if UNITY_EDITOR
-
+            
             features.RemoveAll(x => x == null);
             subFeatures.RemoveAll(x => x == null);
 
@@ -60,6 +79,8 @@
 
             var thisPath = AssetDatabase.GetAssetPath(this)
                 .Replace($"{name}.asset", string.Empty);
+            
+            inputActions.EditorInitialize(thisPath);
             
             foreach (var featureType in featuresTypes)
             {

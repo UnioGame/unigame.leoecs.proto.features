@@ -1,4 +1,4 @@
-﻿namespace Game.Ecs.ButtonAction.SubFeatures.MainAction.Data
+﻿namespace Game.Ecs.GameActions.Data
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +8,7 @@
     public class GameActionsData
     {
         [InlineProperty]
-        public List<MainAction> collection = new();
+        [ListDrawerSettings(ListElementLabelName = "@name")]
+        public List<GameActionData> collection = new();
     }
 }

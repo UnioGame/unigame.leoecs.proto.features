@@ -1,9 +1,10 @@
 ﻿namespace Game.Ecs.ButtonAction.Components.Requests
 {
     using System;
+    using GameActions.Data;
 
     /// <summary>
-    /// Representing a button action(click) self request.
+    /// request to activate game action.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -13,8 +14,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ButtonActionSelfRequest
+    public struct GameActionRequest
     {
-
+        public int Id;
     }
 }

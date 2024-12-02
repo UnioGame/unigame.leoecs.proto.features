@@ -17,6 +17,6 @@
     [Serializable]
     public abstract class GameActionsSubFeature : EcsFeature,IGameActionsSubFeature
     {
-
+        public virtual void EditorInitialize(string path) { }
     }
 }

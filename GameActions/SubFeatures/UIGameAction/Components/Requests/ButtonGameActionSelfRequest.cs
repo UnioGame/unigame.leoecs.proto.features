@@ -1,11 +1,10 @@
-﻿namespace Game.Ecs.ButtonAction.Components
+﻿namespace Game.Ecs.ButtonAction.Components.Requests
 {
     using System;
 
     /// <summary>
-    /// Represents a button action component.
+    /// ADD DESCRIPTION HERE
     /// </summary>
-    /// <typeparam name="TAction">The type of action map.</typeparam>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -14,8 +13,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ButtonActionComponent<TAction>
+    public struct ButtonGameActionSelfRequest
     {
-        public TAction Id;
     }
 }

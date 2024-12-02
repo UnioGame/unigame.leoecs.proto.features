@@ -1,15 +1,12 @@
-﻿namespace Game.Ecs.ButtonAction.SubFeatures.MainAction.Systems
+﻿namespace Game.Ecs.GameActions.Systems
 {
     using System;
-    using Aspects;
     using ButtonAction.Aspects;
-    using Components;
-    using Components.Requests;
-    using Data;
+    using ButtonAction.Components;
+    using ButtonAction.Components.Requests;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// System for handling main button actions.
@@ -23,28 +20,26 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class MainActionSystem : IProtoRunSystem
+    public class UiButtonActionSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private MainActionAspect _mainActionAspect;
+        private GameActionAspect _gameActionAspect;
         private ButtonActionAspect _buttonActionAspect;
         
         private ProtoIt _filter = It
-            .Chain<ButtonActionSelfRequest>()
-            .Inc<ButtonActionComponent<GameActionId>>()
+            .Chain<ButtonGameActionSelfRequest>()
+            .Inc<ButtonGameActionComponent>()
             .End();
         
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var buttonActionComponent = ref _mainActionAspect.Action.Get(entity);
+                ref var buttonActionComponent = ref _buttonActionAspect.Action.Get(entity);
                 var id = buttonActionComponent.Id;
-                
-                ref var buttonActionEvent = ref _mainActionAspect.ActionEvent.Add(_world.NewEntity());
-                buttonActionEvent.Id = id;
-                
-                _buttonActionAspect.ActionRequest.TryRemove(entity);
+
+                ref var gameActionRequest = ref _gameActionAspect.ActionSelfRequest.GetOrAdd(entity);
+                gameActionRequest.Id = id;
             }
         }
     }

@@ -1,11 +1,12 @@
-﻿namespace Game.Ecs.ButtonAction.Components.Events
+﻿namespace Game.Ecs.ButtonAction.Components
 {
     using System;
+    using UnityEngine.UI;
 
     /// <summary>
-    /// Represents an event associated with a button action.
+    /// Represents a button action component.
     /// </summary>
-    /// <typeparam name="TAction">The type of button action.</typeparam>
+    /// <typeparam name="TAction">The type of action map.</typeparam>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -14,8 +15,9 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct ButtonActionEvent<TAction>
+    public struct ButtonGameActionComponent
     {
-        public TAction Id;
+        public int Id;
+        public Button Button;
     }
 }

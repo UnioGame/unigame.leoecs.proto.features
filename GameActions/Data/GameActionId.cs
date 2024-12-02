@@ -1,4 +1,4 @@
-﻿namespace Game.Ecs.ButtonAction.SubFeatures.MainAction.Data
+﻿namespace Game.Ecs.GameActions.Data
 {
     using System;
     using System.Collections.Generic;
@@ -38,12 +38,13 @@
                 yield break;
             }
 
-            foreach (var type in types.value.collection)
+            for (var i = 0; i < types.value.collection.Count; i++)
             {
+                var type = types.value.collection[i];
                 yield return new ValueDropdownItem<GameActionId>()
                 {
                     Text = type.name,
-                    Value = (GameActionId)type.id,
+                    Value = (GameActionId)i,
                 };
             }
 #endif

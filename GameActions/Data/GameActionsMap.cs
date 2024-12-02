@@ -1,8 +1,6 @@
-﻿namespace Game.Ecs.ButtonAction.SubFeatures.MainAction.Data
+﻿namespace Game.Ecs.GameActions.Data
 {
-    using System.Collections.Generic;
     using System.IO;
-    using System.Reflection;
     using System.Text;
     using Sirenix.OdinInspector;
     using UniModules;
@@ -62,11 +60,12 @@
                 writer.WriteLine("    {");
                 
                 var types = map.value.collection;
-                foreach (var type in types)
+                for (var i = 0; i < types.Count; i++)
                 {
+                    var type = types[i];
                     var propertyName = type.name.Replace(" ", "");
                     writer.WriteLine(
-                        $"        public static {idTypeName} {propertyName} = new {idTypeName} {{ value = {type.id} }};");
+                        $"        public static {idTypeName} {propertyName} = new {idTypeName} {{ value = {i} }};");
                 }
 
                 writer.WriteLine("    }");
