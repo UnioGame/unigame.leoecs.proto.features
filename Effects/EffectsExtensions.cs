@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Effects
 {
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using Components;
     using Game.Code.Configuration.Runtime.Effects;
     using Game.Code.Configuration.Runtime.Effects.Abstract;
@@ -19,9 +20,7 @@
 #endif
     public static class EffectsExtensions
     {
-#if ENABLE_IL2CPP
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static void CreateRequests(this List<IEffectConfiguration> effects, 
             ProtoWorld world, 
             ProtoPackedEntity source,
@@ -52,9 +51,7 @@
         }
         
         
-#if ENABLE_IL2CPP
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
         public static Transform GetViewInstance(this ProtoEntity entity, ProtoWorld world, int viewInstanceId)
         {
             var viewInstancePool = world.GetPool<ViewInstanceTypeComponent>();

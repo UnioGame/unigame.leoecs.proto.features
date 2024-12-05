@@ -35,6 +35,7 @@
             ProtoPackedEntity owner,
             string resourceId,
             float3 spawnPosition,
+            Quaternion spawnRotation = default,
             Transform parent = null,
             ILifeTime resourceLifeTime = null)
         {
@@ -48,7 +49,7 @@
                 spawnEntity,
                 resourceId,
                 spawnPosition,
-                quaternion.identity,
+                spawnRotation,
                 One,
                 parent,
                 resourceLifeTime);
@@ -61,7 +62,7 @@
             ProtoEntity entity,
             string resourceId, 
             float3 spawnPosition,
-            quaternion rotation,
+            Quaternion rotation,
             float3 scale,
             Transform parentTransform = null,
             ILifeTime resourceLifeTime = null)
