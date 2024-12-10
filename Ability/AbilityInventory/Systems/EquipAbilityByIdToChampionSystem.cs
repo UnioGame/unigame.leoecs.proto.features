@@ -1,22 +1,26 @@
 ﻿namespace UniGame.Ecs.Proto.AbilityInventory.Systems
 {
+    using System;
     using Aspects;
     using Components;
     using Game.Ecs.Core.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    using Unity.IL2CPP.CompilerServices;
 
     /// <summary>
     /// Search ability in inventory
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#if ENABLE_IL2CP
+	using Unity.IL2CPP.CompilerServices;
+
+	[Il2CppSetOption(Option.NullChecks, false)]
+	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [ECSDI]
+    [Serializable]
     public class EquipAbilityByIdToChampionSystem : IProtoRunSystem
     {
         private ProtoWorld _world;

@@ -3,17 +3,15 @@
 	using System;
 	using System.Collections.Generic;
 	using Ability.Aspects;
-	using Ability.Tools;
 	using Aspects;
 	using Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
 	using Game.Modules.leoecs.proto.tools.Ownership.Components;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Extensions;
-	using Unity.Collections;
+
 	/// <summary>
 	/// Equip ability to slot
 	/// </summary>

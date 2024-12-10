@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.BlockAutoAttackEffect.Systems
 {
+	using System;
 	using Ability.Aspects;
 	using Components;
 	using Effects.Aspects;
@@ -20,6 +21,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
 	[ECSDI]
+	[Serializable]
 	public class ProcessBlockAutoAttackEffectSystem : IProtoRunSystem
 	{
 		private ProtoWorld _world;

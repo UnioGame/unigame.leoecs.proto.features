@@ -15,7 +15,7 @@ namespace UniGame.Ecs.Proto.GameResources.Data
         };
 
         public float3 Position;
-        public quaternion Rotation;
+        public Quaternion Rotation;
         public float3 Scale;
     }
 }

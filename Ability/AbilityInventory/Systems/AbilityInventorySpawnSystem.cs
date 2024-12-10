@@ -5,7 +5,6 @@
 	using Aspects;
 	using Components;
 	using Game.Code.Services.AbilityLoadout.Abstract;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

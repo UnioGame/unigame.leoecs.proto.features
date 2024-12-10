@@ -1,7 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.Systems
 {
+	using System;
 	using Aspects;
 	using Components;
+	using LeoEcs.Bootstrap.Runtime.Attributes;
 	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
@@ -18,6 +20,8 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+	[Serializable]
+	[ECSDI]
 	public class AbilityUnlockSystem : IProtoInitSystem, IProtoRunSystem
 	{
 		private ProtoWorld _world;

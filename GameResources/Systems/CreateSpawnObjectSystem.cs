@@ -42,17 +42,11 @@
                 ref var requestComponent = ref _resourceAspect.InstanceSpawnRequest.Get(requestEntity);
                 ref var resourceSpawnComponent = ref _resourceAspect.SpawnResource.Get(requestEntity);
 
-                var resourceInstance = requestComponent.Value.Spawn();
+                var position = resourceSpawnComponent.LocationData.Position;
+                var rotation = resourceSpawnComponent.LocationData.Rotation;
+                var resourceInstance = requestComponent.Value.Spawn(position, rotation, resourceSpawnComponent.Parent, false);
 
                 var instanceGameObject = (GameObject)resourceInstance;
-                if (resourceSpawnComponent.Parent)
-                {
-                    instanceGameObject.transform.SetParent(resourceSpawnComponent.Parent);
-                }
-
-                instanceGameObject.transform.position = resourceSpawnComponent.LocationData.Position;
-                instanceGameObject.transform.rotation = resourceSpawnComponent.LocationData.Rotation;
-                instanceGameObject.transform.localScale = resourceSpawnComponent.LocationData.Scale;
                 
                 ref var gameObjectComponent = ref _unityAspect.GameObject.Add(requestEntity);
                 gameObjectComponent.Value = instanceGameObject;

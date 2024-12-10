@@ -1,12 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.AbilityInventory.Systems
 {
 	using System;
-	using Ability.Common.Components;
 	using Aspects;
 	using Components;
 	using Cysharp.Threading.Tasks;
 	using Game.Code.Services.AbilityLoadout.Abstract;
-	using Leopotam.EcsLite;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
