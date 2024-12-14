@@ -45,15 +45,16 @@
                 foreach (var viewItem in _actionViewData.gameActionsViews)
                 {
                     if(viewItem.gameActionId != gameId) continue;
-
-                    if (viewItem.spawnInContainer)
-                    {
-                        _viewAspect.ShowView(viewItem.view, viewItem.useBusyContainer);
-                    }
-                    else
-                    {
-                        _viewAspect.ShowView(viewItem.view, viewItem.viewType);
-                    }
+                    
+                    //todo: Сергей посмотри этот код, тут не существующий метод
+                    // if (viewItem.spawnInContainer)
+                    // {
+                    //     _viewAspect.ShowView(viewItem.view, viewItem.useBusyContainer);
+                    // }
+                    // else
+                    // {
+                    //     _viewAspect.ShowView(viewItem.view, viewItem.viewType);
+                    // }
                 }
             }
         }
