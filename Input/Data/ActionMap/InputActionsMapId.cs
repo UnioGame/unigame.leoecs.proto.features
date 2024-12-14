@@ -5,6 +5,7 @@
     using System.Linq;
     using Sirenix.OdinInspector;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
 #if UNITY_EDITOR
     using UniModules.Editor;
@@ -12,10 +13,10 @@
 
     [Serializable]
     [ValueDropdown("@Game.Ecs.Input.Data.InputActionsMapId.GetIds()")]
-    public struct InputActionsMapId
+    public struct InputActionsMapId : IEquatable<int>
     {
         [SerializeField]
-        private int _value;
+        public int value;
 
         #region statis editor data
 
@@ -69,29 +70,34 @@
 
         public static implicit operator int(InputActionsMapId v)
         {
-            return v._value;
+            return v.value;
         }
 
         public static explicit operator InputActionsMapId(int v)
         {
-            return new InputActionsMapId { _value = v };
+            return new InputActionsMapId { value = v };
         }
 
-        public override string ToString() => _value.ToString();
+        public override string ToString() => value.ToString();
 
-        public override int GetHashCode() => _value;
+        public override int GetHashCode() => value;
 
         public InputActionsMapId FromInt(int data)
         {
-            _value = data;
+            value = data;
 
             return this;
+        }
+
+        public bool Equals(int other)
+        {
+            return value == other;
         }
 
         public override bool Equals(object obj)
         {
             if (obj is InputActionsMapId mask)
-                return mask._value == _value;
+                return mask.value == value;
 
             return false;
         }

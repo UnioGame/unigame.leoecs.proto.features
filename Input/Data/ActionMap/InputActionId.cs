@@ -14,7 +14,7 @@
 
     [Serializable]
     [ValueDropdown("@Game.Ecs.Input.Data.InputActionId.GetIds()")]
-    public struct InputActionId
+    public struct InputActionId : IEquatable<int>
     {
         [SerializeField]
         public int value;
@@ -91,6 +91,11 @@
         public InputActionId FromInt(int data)
         {
             return (InputActionId)data;
+        }
+
+        public bool Equals(int other)
+        {
+            return value == other;
         }
 
         public override bool Equals(object obj)

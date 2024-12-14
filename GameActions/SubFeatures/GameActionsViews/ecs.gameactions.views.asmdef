@@ -1,0 +1,24 @@
+{
+    "name": "ecs.gameactions.views",
+    "rootNamespace": "",
+    "references": [
+        "GUID:209749b816e76d241a52eb0770dbdcb5",
+        "GUID:b9e4029c2cdc84f7d82433cf8a1d0e69",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:bd4ea46f2fdce47f0a34f0df46c013f5",
+        "GUID:272073269874424393dc31f4c1d9dff7",
+        "GUID:fb6ae105a5cc2ed4dba94a99ecedb498",
+        "GUID:8e4577c9194c10845984cf27eb974fd1",
+        "GUID:6632c725b5599b14c865359e6ecc36f4",
+        "GUID:58b7a134e5db91d42a51f4d0a96e89f1"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
