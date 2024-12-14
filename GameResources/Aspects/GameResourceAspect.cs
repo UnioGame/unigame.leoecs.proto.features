@@ -25,6 +25,7 @@
         public ProtoPool<GameResourceSpawnComponent> SpawnResource;
         public ProtoPool<GameResourceLoadTaskComponent> LoadTask;
         public ProtoPool<PoolableComponent> Poolable;
+        public ProtoPool<AddressablesGuidComponent> AddressablesGuid;
         
         //requests
         public ProtoPool<GameResourceSpawnRequest> SpawnRequest;
