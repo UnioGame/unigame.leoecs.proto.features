@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// 
+    /// Component containing a unique string identifier (GUID)
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
