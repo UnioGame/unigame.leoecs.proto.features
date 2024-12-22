@@ -56,6 +56,7 @@
                 if (instanceGameObject.TryGetComponent<ILeoEcsMonoConverter>(out var converter))
                 {
                     converter.Convert(_world, requestEntity);
+                    instanceGameObject.SetActive(true);
                 }
 
                 _resourceAspect.Poolable.Add(requestEntity);
