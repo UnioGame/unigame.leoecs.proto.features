@@ -4,10 +4,12 @@
     using Aspects;
     using Components;
     using Cysharp.Threading.Tasks;
+    using Game.Code.DataBase.Runtime;
     using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -54,12 +56,41 @@
                     case UniTaskStatus.Pending:
                         continue;
                     case UniTaskStatus.Succeeded:
-                        ref var instanceSpawnRequest = ref _gameResourceAspect.InstanceSpawnRequest.Add(taskEntity);
-                        instanceSpawnRequest.Value = (UnityEngine.Object)taskComponent.Value.AsValueTask().Result.Result;
+                        TaskSucceededCallback(taskComponent.Value, taskEntity);
                         _gameResourceAspect.LoadTask.Del(taskEntity);
                         break;
                 }
             }
+        }
+
+        private void TaskSucceededCallback(UniTask<GameResourceResult> loadTask, ProtoEntity taskEntity)
+        {
+            var resourceResult = loadTask.AsTask().Result;
+            if (!string.IsNullOrEmpty(resourceResult.Error))
+            {
+                GameLog.LogError($"Resource loading ERROR: {resourceResult.Error}");
+            }
+
+            if (resourceResult.Exception != default)
+            {
+                GameLog.LogError($"Resource loading EXCEPTION: {resourceResult.Exception}");
+            }
+
+            if (resourceResult.Result == null)
+            {
+                GameLog.LogError($"Resource loading NULL result");
+                return;
+            }
+            
+            var result = resourceResult.Result as UnityEngine.Object;
+            if (result == null)
+            {
+                GameLog.LogError($"Resource loading NULL casted result");
+                return;
+            }
+            
+            ref var instanceSpawnRequest = ref _gameResourceAspect.InstanceSpawnRequest.Add(taskEntity);
+            instanceSpawnRequest.Value = result;
         }
     }
 }

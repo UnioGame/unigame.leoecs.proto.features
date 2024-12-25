@@ -10,6 +10,7 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Runtime.ObjectPool.Extensions;
+    using UniCore.Runtime.ProfilerTools;
     using UnityEngine;
 
 #if ENABLE_IL2CPP
@@ -45,18 +46,22 @@
                 var position = resourceSpawnComponent.LocationData.Position;
                 var rotation = resourceSpawnComponent.LocationData.Rotation;
                 var resourceInstance = requestComponent.Value.Spawn(position, rotation, resourceSpawnComponent.Parent, false);
-
-                var instanceGameObject = (GameObject)resourceInstance;
                 
-                ref var gameObjectComponent = ref _unityAspect.GameObject.Add(requestEntity);
-                gameObjectComponent.Value = instanceGameObject;
-                ref var transformComponent = ref _unityAspect.Transform.Add(requestEntity);
-                transformComponent.Value = instanceGameObject.transform;
-                
-                if (instanceGameObject.TryGetComponent<ILeoEcsMonoConverter>(out var converter))
+                if (resourceInstance && resourceInstance is GameObject resourceInstanceGameObject)
                 {
-                    converter.Convert(_world, requestEntity);
-                    instanceGameObject.SetActive(true);
+                    ref var gameObjectComponent = ref _unityAspect.GameObject.Add(requestEntity);
+                    gameObjectComponent.Value = resourceInstanceGameObject;
+                    ref var transformComponent = ref _unityAspect.Transform.Add(requestEntity);
+                    transformComponent.Value = resourceInstanceGameObject.transform;
+                
+                    if (resourceInstanceGameObject.TryGetComponent<ILeoEcsMonoConverter>(out var converter))
+                    {
+                        converter.Convert(_world, requestEntity);
+                    }
+                }
+                else
+                {
+                    GameLog.Log("Possible null prototype");
                 }
 
                 _resourceAspect.Poolable.Add(requestEntity);
