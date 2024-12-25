@@ -9,12 +9,12 @@
     /// <summary>
     /// characteristics marker
     /// </summary>
-    [Serializable]
 #if ENABLE_IL2CPP
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+    [Serializable]
     public struct CharacteristicComponent<TType>
     {
         public float Value;
@@ -28,6 +28,7 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+    [Serializable]
     public struct CharacteristicComponent
     {
         public float Value;

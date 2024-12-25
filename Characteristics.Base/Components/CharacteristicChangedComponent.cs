@@ -8,12 +8,12 @@
     /// <summary>
     /// characteristic changed marker
     /// </summary>
-    [Serializable]
 #if ENABLE_IL2CPP
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+    [Serializable]
     public struct CharacteristicChangedComponent
     {
         public float Value;
@@ -23,12 +23,12 @@
     /// <summary>
     /// characteristic changed marker
     /// </summary>
-    [Serializable]
 #if ENABLE_IL2CPP
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+    [Serializable]
     public struct CharacteristicChangedComponent<TCharacteristic>
     {
         public float Value;

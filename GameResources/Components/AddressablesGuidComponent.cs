@@ -1,9 +1,9 @@
-﻿namespace UniGame.Ecs.Proto.Characteristics.Base.Components
+﻿namespace UniGame.Ecs.Proto.GameResources.Components
 {
     using System;
-    
+
     /// <summary>
-    /// characteristics marker
+    /// Component containing a unique string identifier (GUID)
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -13,8 +13,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct CharacteristicValueComponent
+    public struct AddressablesGuidComponent
     {
-        public float Value;
+        public string Guid;
     }
 }
