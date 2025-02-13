@@ -1,0 +1,18 @@
+{
+  "name": "game.ecs.state.editor",
+  "rootNamespace": "",
+  "references": [
+    "GUID:209749b816e76d241a52eb0770dbdcb5",
+    "GUID:bd4ea46f2fdce47f0a34f0df46c013f5",
+    "GUID:b9e4029c2cdc84f7d82433cf8a1d0e69"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
