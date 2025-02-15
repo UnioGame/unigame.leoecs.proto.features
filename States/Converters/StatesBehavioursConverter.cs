@@ -6,7 +6,6 @@ namespace Game.Ecs.State.Converters
     using Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Extensions;
-    using Data;
     using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniModules.UniGame.Core.Runtime.DataStructure;
@@ -23,29 +22,14 @@ namespace Game.Ecs.State.Converters
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class StateBehavioursConverter : GameObjectConverter
+    public class StatesBehavioursConverter : GameObjectConverter
     {
         public List<StateBehaviourData> behaviours = new();
 
         protected override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)
         {
-            var behaviourEntity = GameStateBehaviourAspect.CreateStateBehaviourEntity(entity, world);
-            ref var behavioursComponent = ref world.GetComponent<StateBehavioursMapComponent>(behaviourEntity);
-            
-            foreach (var behaviour in behaviours)
-            {
-                behavioursComponent.Behaviours.Add(behaviour.stateId, behaviour.stateBehaviour);
-            }
+            GameStatesAspect.AddStatesBehaviours(entity, world, behaviours);
         }
 
-    }
-    
-    [Serializable]
-    public class StateBehaviourData
-    {
-        public StateId stateId;
-        
-        [SerializeReference]
-        public IStateBehaviour stateBehaviour;
     }
 }

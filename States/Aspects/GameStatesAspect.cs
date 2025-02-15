@@ -2,10 +2,13 @@ namespace Game.Ecs.State.Aspects
 {
     using Leopotam.EcsProto;
     using System;
+    using System.Collections.Generic;
     using Components;
     using Components.Events;
     using Components.Requests;
+    using Converters;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Collections;
 
@@ -17,6 +20,7 @@ namespace Game.Ecs.State.Aspects
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public class GameStatesAspect : EcsAspect
     {
 
@@ -60,6 +64,17 @@ namespace Game.Ecs.State.Aspects
         public ProtoPool<StateChangedSelfEvent> StateChanged;
 
 
+        public static void AddStatesBehaviours(ProtoEntity entity, ProtoWorld world,List<StateBehaviourData> behaviours)
+        {
+            var behaviourEntity = GameStateBehaviourAspect.CreateStateBehaviourEntity(entity, world);
+            ref var behavioursComponent = ref world.GetOrAddComponent<StateBehavioursMapComponent>(behaviourEntity);
+            
+            foreach (var behaviour in behaviours)
+            {
+                behavioursComponent.Behaviours.Add(behaviour.stateId, behaviour.stateBehaviour);
+            }
+        }
+        
         public static ProtoEntity CreateStatesEntity(ProtoEntity entity,ProtoWorld world, bool useHistory = false)
         {
             ref var statesMapComponent = ref world.AddComponent<StatesMapComponent>(entity);
