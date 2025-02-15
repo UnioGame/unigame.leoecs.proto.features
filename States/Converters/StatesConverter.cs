@@ -48,7 +48,7 @@ namespace Game.Ecs.State.Converters
 #if ODIN_INSPECTOR
         [BoxGroup(nameof(behaviours))]
         [ShowIf(nameof(addBehaviour))]
-        [InlineProperty]
+        [ListDrawerSettings(ListElementLabelName = "@Name")]
 #endif
         public List<StateBehaviourData> behaviours = new();
 

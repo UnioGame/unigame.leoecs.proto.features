@@ -7,6 +7,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+    using UniGame.LeoEcs.Shared.Extensions;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -33,11 +34,17 @@
             foreach (var entity in _stateFilter)
             {
                 ref var stateBehaviour = ref _behaviourAspect.StateBehaviour.Get(entity);
+                ref var stateComponent = ref _stateAspect.State.Get(entity);
+                
                 var behaviour = stateBehaviour.Value;
                 
                 if(behaviour == null) continue;
                 
-                behaviour.Update(entity,_world);
+                var next = behaviour.Update(entity,_world);
+                if (next <= 0 || next == stateComponent.Id) continue;
+                
+                ref var changeRequest = ref _stateAspect.ChangeState.GetOrAddComponent(entity);
+                changeRequest.StateId = next;
             }
         }
     }

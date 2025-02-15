@@ -65,14 +65,7 @@ namespace Game.Ecs.State
         {
             if (stateMap == null)
             {
-                var thisPath = AssetDatabase.GetAssetPath(this);
-                if (string.IsNullOrEmpty(thisPath)) return;
-                var directory = thisPath.GetDirectoryPath();
-                var resultStatesPath = directory.CombinePath("GameStatesMap.asset");
-                var statesAsset = ScriptableObject.CreateInstance<StateDataAsset>();
-                AssetDatabase.CreateAsset(statesAsset, resultStatesPath);
-                AssetDatabase.Refresh();
-                statesAsset = AssetDatabase.LoadAssetAtPath<StateDataAsset>(resultStatesPath);
+                var statesAsset = this.CreateAsset<StateDataAsset>("GameStatesMap");
                 stateMap = statesAsset;
                 this.MarkDirty();
                 AssetDatabase.SaveAssets();

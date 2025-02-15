@@ -7,6 +7,8 @@
     [Serializable]
     public class StateBehaviourData
     {
+        public string Name => stateBehaviour == null ? "None" : stateBehaviour.GetType().Name;
+
         public StateId stateId;
         
         [SerializeReference]
