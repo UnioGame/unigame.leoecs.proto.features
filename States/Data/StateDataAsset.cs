@@ -13,7 +13,7 @@
     {
         #region inspector
         
-        [InlineProperty]
+        [ListDrawerSettings(ListElementLabelName = "@Name")]
         public List<State> Types = new List<State>();
         
         #endregion
@@ -65,7 +65,7 @@
             {
                 writer.WriteLine($"namespace {namespaceName}");
                 writer.WriteLine("{");
-                writer.WriteLine("    public partial StateIds");
+                writer.WriteLine("    public class StateIds");
                 writer.WriteLine("    {");
 
                 var typesField = typeof(StateDataAsset).GetField("Types",

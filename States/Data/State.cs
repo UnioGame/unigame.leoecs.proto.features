@@ -2,6 +2,7 @@
 
 namespace Game.Ecs.State.Data
 {
+
     [Serializable]
     public struct State
     {
