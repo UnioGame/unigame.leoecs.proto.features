@@ -4,6 +4,7 @@ namespace Game.Ecs.State.Data
 
     public interface IStateBehaviour
     {
+        void Initialize(ProtoWorld world);
         void Enter(ProtoEntity entity,ProtoWorld world);
         void Update(ProtoEntity entity,ProtoWorld world);
         void Exit(ProtoEntity entity,ProtoWorld world);       
