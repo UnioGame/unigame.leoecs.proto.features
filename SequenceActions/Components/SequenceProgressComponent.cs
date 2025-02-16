@@ -13,6 +13,8 @@
     [Serializable]
     public struct SequenceProgressComponent
     {
+        public bool IsComplete;
+        public bool IsError;
         public float MaxProgress;
         public float CompleteProgress;
         public float ProgressWeight;

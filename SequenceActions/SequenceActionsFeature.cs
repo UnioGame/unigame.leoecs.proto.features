@@ -4,10 +4,12 @@ namespace Game.Ecs.State
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto.QoL;
     using Modules.leoecs.proto.features.SequenceActions.Data;
+    using Modules.SequenceActions.Components.Events;
     using Modules.SequenceActions.Components.Requests;
     using Modules.SequenceActions.Systems;
     using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Bootstrap.Runtime;
+    using UniGame.LeoEcs.Shared.Extensions;
     using UnityEditor;
     using UnityEngine;
     
@@ -25,14 +27,21 @@ namespace Game.Ecs.State
 
         public sealed override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
+            var world = ecsSystems.GetWorld();
+            var asset = Object.Instantiate(sequenceActionsMap);
+            world.SetGlobal(asset);
+
+            ecsSystems.AddSystem(new HandleCompletedSequenceSystem());
+            
+            ecsSystems.DelHere<SequenceCompleteSelfEvent>();
+            
             ecsSystems.AddSystem(new StartSequenceActionByIdSystem());
             ecsSystems.AddSystem(new StartSequenceSystem());
             
             ecsSystems.AddSystem(new StartSequenceActionSystem());
             ecsSystems.AddSystem(new UpdateSequenceActionSystem());
-            ecsSystems.AddSystem(new UpdateSequenceProgressSystem());
             ecsSystems.AddSystem(new UpdateSequenceSystem());
-
+            ecsSystems.AddSystem(new UpdateSequenceProgressSystem());
             
             ecsSystems.DelHere<StartSequenceByIdRequest>();
             ecsSystems.DelHere<StartSequenceRequest>();

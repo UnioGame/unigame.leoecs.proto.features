@@ -17,7 +17,7 @@
     public struct SequenceActionComponent
     {
         public ISequenceAction Action;
-        public UniTask<SequenceActionResult> Task;
+        public UniTask Task;
         public CancellationToken Token;
     }
 }

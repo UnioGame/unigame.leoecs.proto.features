@@ -16,6 +16,7 @@
     public struct StartSequenceRequest
     {
         public ProtoPackedEntity Target;
+        public bool AutoDestroy;
         public SequenceActionData[] Actions;
     }
 }

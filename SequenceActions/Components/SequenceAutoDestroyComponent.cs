@@ -1,7 +1,6 @@
 ﻿namespace Game.Modules.SequenceActions.Components
 {
     using System;
-    using Data;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -11,7 +10,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct SequenceCompleteComponent
+    public struct SequenceAutoDestroyComponent
     {
+        
     }
 }

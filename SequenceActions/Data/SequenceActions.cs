@@ -34,29 +34,19 @@
             ProtoWorld world,
             CancellationToken cancellationToken = default)
         {
-            var totalProgress = 0f;
-            
-            foreach (var action in actions)
+            foreach (var actionItem in actions)
             {
-                //totalProgress += action.progress;
-            }
-            
-            foreach (var action in actions)
-            {
-                if(cancellationToken.IsCancellationRequested)
-                {
-                    return new SequenceActionResult()
-                    {
-                        Error = string.Empty,
-                        IsDone = false,
-                        IsError = false,
-                    };
-                }
-                
-                //await action.Execute(world,cancellationToken);
+                var action = actionItem.action;
+                var actionResult = await action.ExecuteAsync(sequenceEntity,world,cancellationToken);
+                if (!actionResult.IsSuccess)
+                    return actionResult;
             }
 
-            return default;
+            return new SequenceActionResult()
+            {
+                IsSuccess = true,
+                IsFinished = true,
+            };
         }
     }
 }

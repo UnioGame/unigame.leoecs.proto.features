@@ -44,6 +44,8 @@
                 ref var sequenceDataComponent = ref _actionAspect.SequenceData.Add(entity);
                 ref var sequenceProgressComponent = ref _actionAspect.SequenceProgress.Add(entity);
                 ref var lifeTimeComponent = ref _actionAspect.LifeTime.Add(entity);
+                if(startSequenceRequest.AutoDestroy)
+                    _actionAspect.AutoDestroy.Add(entity);
                 
                 var length = actions.Length;
                 sequenceDataComponent.Actions = actions;

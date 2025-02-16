@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Leopotam.EcsLite;
+    using Leopotam.EcsProto.QoL;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -14,7 +15,9 @@
     [Serializable]
     public struct StartSequenceByIdRequest
     {
-        public int SequenceActionId;
+        public ProtoPackedEntity Target;
+        public string Sequence;
+        public bool AutoDestroy;
     }
     
     

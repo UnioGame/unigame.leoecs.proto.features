@@ -20,6 +20,8 @@
         public ProtoPackedEntity Target;
         public SequenceActionData[] Actions;
         public SequenceActionResult[] Results;
+        public SequenceActionResult Result;
+        
         public int Length;
         public int ActiveAction;
         

@@ -34,21 +34,19 @@
             foreach (var entity in _startSequenceFilter)
             {
                 ref var startSequenceRequest = ref _actionAspect.StartAction.Get(entity);
-                if (startSequenceRequest.Token.IsCancellationRequested)
-                    continue;
-                
-                if(startSequenceRequest.Action == null) continue;
-                
                 ref var sequenceAction = ref _actionAspect.SequenceAction.GetOrAddComponent(entity);
                 ref var progressComponent = ref _actionAspect.ActionProgress.GetOrAddComponent(entity);
                 
                 var action = startSequenceRequest.Action;
-
+                var isDone = startSequenceRequest.Token.IsCancellationRequested || startSequenceRequest.Action == null;
+                
                 progressComponent.IsSuccess = false;
                 progressComponent.ActionName = action.ActionName;
-                progressComponent.IsFinished = false;
-                progressComponent.Progress = 0f;
+                progressComponent.IsFinished = isDone;
+                progressComponent.Progress = isDone ? 1f : 0f;
                 progressComponent.Message = string.Empty;
+                
+                if (isDone) continue;
                 
                 var packedEntity = entity.PackEntity(_world);
                 var token = startSequenceRequest.Token;

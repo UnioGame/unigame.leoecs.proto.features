@@ -28,6 +28,7 @@
         public ProtoPool<SequenceProgressComponent> SequenceProgress;
         public ProtoPool<SequenceCompleteComponent> Complete;
         public ProtoPool<LifeTimeComponent> LifeTime;
+        public ProtoPool<SequenceAutoDestroyComponent> AutoDestroy;
         
         //actions
         public ProtoPool<SequenceActionComponent> SequenceAction;

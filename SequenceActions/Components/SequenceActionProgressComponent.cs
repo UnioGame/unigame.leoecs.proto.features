@@ -14,10 +14,11 @@
     public struct SequenceActionProgressComponent : IEcsAutoReset<SequenceActionProgressComponent>
     {
         public bool IsSuccess;
+        public bool IsFinished;
         public float Progress;
         public string ActionName;
-        public bool IsFinished;
         public string Message;
+        public string Error;
         
         public void AutoReset(ref SequenceActionProgressComponent c)
         {
