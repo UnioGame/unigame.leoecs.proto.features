@@ -3,10 +3,11 @@
     using System;
 
     [Serializable]
-    public struct SequenceActionResultComponent
+    public struct SequenceActionResult
     {
         public bool IsDone;
         public bool IsError;
         public string Error;
+        public float Progress;
     }
 }

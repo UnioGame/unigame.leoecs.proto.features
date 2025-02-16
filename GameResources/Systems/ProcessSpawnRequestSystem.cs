@@ -41,7 +41,7 @@
                 ref var spawnRequest = ref _gameResourceAspect.SpawnRequest.Get(entity);
                 
                 var entityLifeTime = _ownershipAspect.LifeTime.Add(entity);
-                var resourceLifeTime = spawnRequest.LifeTime ?? entityLifeTime;
+                var resourceLifeTime = spawnRequest.LifeTime ?? entityLifeTime.LifeTime;
                 
                 var loadResourceTask = _gameDatabase
                     .LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);

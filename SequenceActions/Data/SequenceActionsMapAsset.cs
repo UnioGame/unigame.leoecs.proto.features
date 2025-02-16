@@ -24,8 +24,9 @@
     [Serializable]
     public class SequenceActionItem
     {
-        public int Id;
         public string ActionName;
         public AssetReferenceT<SequenceActionAsset> ActionAsset;
+        
+        public int Id => ActionName.GetHashCode();
     }
 }

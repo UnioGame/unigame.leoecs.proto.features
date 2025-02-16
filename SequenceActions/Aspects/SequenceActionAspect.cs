@@ -2,12 +2,13 @@
 {
     using System;
     using Components;
+    using Components.Events;
     using Components.Requests;
     using Data;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using SequenceActionResultComponent = Data.SequenceActionResultComponent;
+    using UniGame.LeoEcsLite.LeoEcs.Shared.Components;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -20,16 +21,27 @@
     [ECSDI]
     public class SequenceActionAspect : EcsAspect
     {
-        public ProtoPool<SequenceActionComponent> SequenceAction;
-        public ProtoPool<SequenceActionProgressComponent> Progress;
-        public ProtoPool<SequenceActionActiveComponent> Active;
+        public ProtoWorld World;
         
+        //sequence
+        public ProtoPool<SequenceDataComponent> SequenceData;
+        public ProtoPool<SequenceProgressComponent> SequenceProgress;
+        public ProtoPool<SequenceCompleteComponent> Complete;
+        public ProtoPool<LifeTimeComponent> LifeTime;
+        
+        //actions
+        public ProtoPool<SequenceActionComponent> SequenceAction;
+        public ProtoPool<SequenceActionProgressComponent> ActionProgress;
         public ProtoPool<SequenceActionResultComponent> Result;
         
         //requests
+        public ProtoPool<StartSequenceByIdRequest> StartById;
+        public ProtoPool<StartSequenceRequest> Start;
         
-        public ProtoPool<StartSequenceActionRequest> Start;
-        public ProtoPool<StartSequenceActionByIdRequest> StartById;
+        public ProtoPool<StartSequenceActionSelfRequest> StartAction;
+        
+        //events
+        public ProtoPool<SequenceCompleteSelfEvent> CompleteEvent;
         
     }
 }

@@ -10,8 +10,10 @@
     {
         string ActionName { get; }
         
-        UniTask<SequenceActionResultComponent> Execute(ProtoPackedEntity sequenceEntity,
-            ProtoWorld world,CancellationToken cancellationToken = default);
+        UniTask<SequenceActionResult> ExecuteAsync(
+            ProtoPackedEntity entity,
+            ProtoWorld world,
+            CancellationToken cancellationToken = default);
     }
     
 }

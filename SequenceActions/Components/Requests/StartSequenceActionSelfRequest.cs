@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using Abstract;
     using Leopotam.EcsLite;
+    using UnityEngine.Serialization;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -12,9 +15,10 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct StartSequenceActionByIdRequest
+    public struct StartSequenceActionSelfRequest 
     {
-        public int SequenceActionId;
+        public ISequenceAction Action;
+        public CancellationToken Token;
     }
     
     

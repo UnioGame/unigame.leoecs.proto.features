@@ -1,7 +1,8 @@
 ﻿namespace Game.Modules.SequenceActions.Components
 {
     using System;
-    
+    using UnityEngine.Serialization;
+
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -10,8 +11,11 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct SequenceActionActiveComponent
+    public struct SequenceProgressComponent
     {
-        
+        public float MaxProgress;
+        public float CompleteProgress;
+        public float ProgressWeight;
+        public float Progress;
     }
 }

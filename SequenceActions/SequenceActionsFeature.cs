@@ -2,7 +2,9 @@ namespace Game.Ecs.State
 {
     using Leopotam.EcsProto;
     using Cysharp.Threading.Tasks;
+    using Leopotam.EcsProto.QoL;
     using Modules.leoecs.proto.features.SequenceActions.Data;
+    using Modules.SequenceActions.Components.Requests;
     using Modules.SequenceActions.Systems;
     using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Bootstrap.Runtime;
@@ -23,9 +25,18 @@ namespace Game.Ecs.State
 
         public sealed override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
-
+            ecsSystems.AddSystem(new StartSequenceActionByIdSystem());
+            ecsSystems.AddSystem(new StartSequenceSystem());
+            
             ecsSystems.AddSystem(new StartSequenceActionSystem());
             ecsSystems.AddSystem(new UpdateSequenceActionSystem());
+            ecsSystems.AddSystem(new UpdateSequenceProgressSystem());
+            ecsSystems.AddSystem(new UpdateSequenceSystem());
+
+            
+            ecsSystems.DelHere<StartSequenceByIdRequest>();
+            ecsSystems.DelHere<StartSequenceRequest>();
+            ecsSystems.DelHere<StartSequenceActionSelfRequest>();
             
             return UniTask.CompletedTask;
         }

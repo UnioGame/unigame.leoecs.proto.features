@@ -12,11 +12,11 @@
     using UnityEngine;
 
     [Serializable]
-    public class SequenceAction : ISequenceAction
+    public class SequenceActions : ISequenceAction
     {
         #region inspector
         
-        public string sequenceName = nameof(SequenceAction);
+        public string sequenceName = nameof(SequenceActions);
         
 #if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = nameof(SequenceActionData.ActionName))]
@@ -29,20 +29,23 @@
 
         public string ActionName => sequenceName;
 
-        public async UniTask<SequenceActionResultComponent> Execute(ProtoPackedEntity sequenceEntity,
-            ProtoWorld world,CancellationToken cancellationToken = default)
+        public async UniTask<SequenceActionResult> ExecuteAsync(
+            ProtoPackedEntity sequenceEntity,
+            ProtoWorld world,
+            CancellationToken cancellationToken = default)
         {
             var totalProgress = 0f;
+            
             foreach (var action in actions)
             {
-                totalProgress += action.progress;
+                //totalProgress += action.progress;
             }
             
             foreach (var action in actions)
             {
                 if(cancellationToken.IsCancellationRequested)
                 {
-                    return new SequenceActionResultComponent()
+                    return new SequenceActionResult()
                     {
                         Error = string.Empty,
                         IsDone = false,

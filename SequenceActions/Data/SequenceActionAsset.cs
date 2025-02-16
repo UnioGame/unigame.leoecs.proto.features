@@ -1,8 +1,7 @@
 ﻿namespace Game.Modules.SequenceActions
 {
-    using System;
-    using Abstract;
     using UnityEngine;
+    using UnityEngine.Serialization;
 
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
@@ -13,22 +12,12 @@
     public class SequenceActionAsset : ScriptableObject
     {
 #if ODIN_INSPECTOR
+        [FormerlySerializedAs("action")]
         [InlineProperty]
         [HideLabel]
 #endif
-        public SequenceAction action = new();
+        public SequenceActions actions = new();
         
-        public string ActionName => action.ActionName;
-    }
-
-    [Serializable]
-    public struct SequenceActionData
-    {
-        public float progress;
-        
-        [SerializeReference]
-        public ISequenceAction action;
-        
-        public string ActionName => action == null ? "None" : action.ActionName;
+        public string ActionName => actions.ActionName;
     }
 }

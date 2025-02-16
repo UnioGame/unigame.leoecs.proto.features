@@ -3,7 +3,6 @@
     using System;
     using Aspects;
     using Components;
-    using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -21,32 +20,26 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class UpdateSequenceActionSystem : IProtoRunSystem
+    public class UpdateSequenceSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
         private SequenceActionAspect _sequenceAspect;
         
         private ProtoItExc _updateSequenceFilter = It
             .Chain<SequenceActionComponent>()
+            .Inc<SequenceDataComponent>()
             .Inc<SequenceActionProgressComponent>()
             .Exc<SequenceCompleteComponent>()
             .End();
 
+        public void Init(IProtoSystems systems)
+        {
+            _world = systems.GetWorld();
+        }
+
         public void Run()
         {
-            foreach (var entity in _updateSequenceFilter)
-            {
-                ref var sequenceAction = ref _sequenceAspect.SequenceAction.Get(entity);
-                ref var progress = ref _sequenceAspect.ActionProgress.Get(entity);
-                
-                var status = sequenceAction.Task.Status;
-                if (status != UniTaskStatus.Pending)
-                {
-                    progress.IsSuccess = status == UniTaskStatus.Succeeded;
-                    progress.IsFinished = true;
-                    progress.Progress = 1f;
-                }
-            }
+
         }
     }
 }

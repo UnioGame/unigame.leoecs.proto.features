@@ -13,6 +13,7 @@
     [Serializable]
     public struct SequenceActionProgressComponent : IEcsAutoReset<SequenceActionProgressComponent>
     {
+        public bool IsSuccess;
         public float Progress;
         public string ActionName;
         public bool IsFinished;
