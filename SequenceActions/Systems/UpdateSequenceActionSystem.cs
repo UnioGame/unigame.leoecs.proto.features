@@ -24,7 +24,7 @@
     public class UpdateSequenceActionSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private SequenceActionAspect _sequenceAspect;
+        private SequenceAspect _sequenceAspect;
         
         private ProtoItExc _updateSequenceFilter = It
             .Chain<SequenceActionComponent>()

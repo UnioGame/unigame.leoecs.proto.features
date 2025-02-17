@@ -21,7 +21,7 @@
     [ECSDI]
     public class StartSequenceActionSystem : IProtoRunSystem
     {
-        private SequenceActionAspect _actionAspect;
+        private SequenceAspect _actionAspect;
         private ProtoWorld _world;
 
         private ProtoItExc _startSequenceFilter = It
@@ -53,7 +53,7 @@
                 var task = action.ExecuteAsync(packedEntity, _world, token)
                     .AttachExternalCancellation(token)
                     .Preserve();
-                
+
                 sequenceAction.Action = action;
                 sequenceAction.Task = task;
                 sequenceAction.Token = startSequenceRequest.Token;

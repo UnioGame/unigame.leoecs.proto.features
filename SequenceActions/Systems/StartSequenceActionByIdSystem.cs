@@ -6,7 +6,7 @@
     using Aspects;
     using Components;
     using Components.Requests;
-    using leoecs.proto.features.SequenceActions.Data;
+    using Feature.SequenceActions.Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -23,7 +23,7 @@
     [ECSDI]
     public class StartSequenceActionByIdSystem : IProtoInitSystem, IProtoRunSystem
     {
-        private SequenceActionAspect _actionAspect;
+        private SequenceAspect _actionAspect;
         
         private ProtoWorld _world;
         private Dictionary<string,SequenceActionItem> _actions;

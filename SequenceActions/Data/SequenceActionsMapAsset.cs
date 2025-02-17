@@ -1,13 +1,16 @@
-﻿namespace Game.Modules.leoecs.proto.features.SequenceActions.Data
+﻿namespace Game.Modules.Feature.SequenceActions.Data
 {
     using System;
     using System.Collections.Generic;
     using Modules.SequenceActions;
-    using UniModules.Editor;
-    using UniModules.UniGame.AddressableExtensions.Editor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
+#if UNITY_EDITOR
+    using UniModules.UniGame.AddressableExtensions.Editor;
+    using UniModules.Editor;
+#endif
+    
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;  
 #endif

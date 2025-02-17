@@ -8,7 +8,7 @@
     public struct SequenceActionData
     {
         public float progressWeight;
-        
+
         [SerializeReference]
         public ISequenceAction action;
         

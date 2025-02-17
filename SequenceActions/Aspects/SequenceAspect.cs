@@ -19,7 +19,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class SequenceActionAspect : EcsAspect
+    public class SequenceAspect : EcsAspect
     {
         public ProtoWorld World;
         

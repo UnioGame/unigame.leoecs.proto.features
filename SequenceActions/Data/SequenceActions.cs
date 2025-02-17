@@ -21,7 +21,6 @@
 #if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = nameof(SequenceActionData.ActionName))]
 #endif
-        [SerializeReference]
         public List<SequenceActionData> actions = new();
 
         

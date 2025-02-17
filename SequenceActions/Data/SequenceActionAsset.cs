@@ -12,12 +12,11 @@
     public class SequenceActionAsset : ScriptableObject
     {
 #if ODIN_INSPECTOR
-        [FormerlySerializedAs("action")]
         [InlineProperty]
         [HideLabel]
 #endif
         public SequenceActions actions = new();
         
-        public string ActionName => actions.ActionName;
+        public string ActionName => name;
     }
 }

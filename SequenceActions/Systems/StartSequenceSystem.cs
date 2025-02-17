@@ -21,7 +21,7 @@
     [ECSDI]
     public class StartSequenceSystem : IProtoRunSystem
     {
-        private SequenceActionAspect _actionAspect;
+        private SequenceAspect _actionAspect;
         private ProtoWorld _world;
 
         private ProtoItExc _startSequenceFilter = It
