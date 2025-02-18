@@ -17,6 +17,6 @@
     {
         public ProtoPackedEntity Target;
         public bool AutoDestroy;
-        public SequenceActionData[] Actions;
+        public ISequenceAction Action;
     }
 }

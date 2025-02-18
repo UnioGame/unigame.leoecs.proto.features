@@ -9,10 +9,10 @@
     public interface ISequenceAction
     {
         string ActionName { get; }
+        
+        SequenceActionResult Status { get; }
 
-        UniTask<SequenceActionResult> ExecuteAsync(
-            ProtoPackedEntity entity,
-            ProtoWorld world,
+        UniTask ExecuteAsync(ProtoPackedEntity entity, ProtoWorld world,
             CancellationToken cancellationToken = default);
     }
 }

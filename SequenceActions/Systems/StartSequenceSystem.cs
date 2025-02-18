@@ -1,15 +1,16 @@
 ﻿namespace Game.Modules.SequenceActions.Systems
 {
     using System;
-    using System.Buffers;
     using Aspects;
     using Components;
     using Components.Requests;
+    using Cysharp.Threading.Tasks;
     using Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-
+    using UniGame.LeoEcs.Shared.Extensions;
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -26,7 +27,7 @@
 
         private ProtoItExc _startSequenceFilter = It
             .Chain<StartSequenceRequest>()
-            .Exc<SequenceDataComponent>()
+            .Exc<SequenceActionComponent>()
             .End();
 
         public void Run()
@@ -37,32 +38,41 @@
                 if(!startSequenceRequest.Target.Unpack(_world, out var target))
                     continue;
 
-                var actions = startSequenceRequest.Actions;
-                if(actions == null || actions.Length == 0)
-                    continue;
-                
-                ref var sequenceDataComponent = ref _actionAspect.SequenceData.Add(entity);
-                ref var sequenceProgressComponent = ref _actionAspect.SequenceProgress.Add(entity);
-                ref var lifeTimeComponent = ref _actionAspect.LifeTime.Add(entity);
-                if(startSequenceRequest.AutoDestroy)
-                    _actionAspect.AutoDestroy.Add(entity);
-                
-                var length = actions.Length;
-                sequenceDataComponent.Actions = actions;
-                sequenceDataComponent.Target = startSequenceRequest.Target;
-                sequenceDataComponent.Length = length;
-                sequenceDataComponent.Results = ArrayPool<SequenceActionResult>.Shared.Rent(length);
-                sequenceDataComponent.ActiveAction = 0;
+                var action = startSequenceRequest.Action;
+                if(action == null) continue;
 
-                for (var i = 0; i < actions.Length; i++)
-                {
-                    ref var actionItem = ref actions[i];
-                    sequenceProgressComponent.MaxProgress += actionItem.progressWeight;
-                }
+                _actionAspect.Complete.TryRemove(entity);
                 
-                ref var startActionRequest = ref _actionAspect.StartAction.Add(entity);
-                startActionRequest.Action = actions[0].action;
-                startActionRequest.Token = lifeTimeComponent.Token;
+                ref var sequenceComponent = ref _actionAspect.Sequence.GetOrAddComponent(entity);
+                ref var lifeTimeComponent = ref _actionAspect.LifeTime.GetOrAddComponent(entity);
+                ref var resultComponent = ref _actionAspect.Result.GetOrAddComponent(entity);
+                ref var sequenceAction = ref _actionAspect.SequenceAction.GetOrAddComponent(entity);
+                if(startSequenceRequest.AutoDestroy)
+                    _actionAspect.AutoDestroy.GetOrAddComponent(entity);
+                
+                sequenceComponent.Target = startSequenceRequest.Target;
+                sequenceComponent.Action = action;
+                
+                var startActions = SequenceActionResult.None;
+                var actionName = action.ActionName;
+                
+                resultComponent.Value = startActions;
+
+                var packedEntity = entity.PackEntity(_world);
+                var token = lifeTimeComponent.Token;
+                var task = action.ExecuteAsync(packedEntity, _world, token)
+                    .AttachExternalCancellation(token)
+                    .Preserve();
+
+                sequenceAction.Action = action;
+                sequenceAction.ActionName = actionName;
+                sequenceAction.Task = task;
+                sequenceAction.Token = token;
+                
+                task.Forget();
+                
+                //mark sequence as active
+                _actionAspect.Active.GetOrAddComponent(entity);
             }
         }
     }

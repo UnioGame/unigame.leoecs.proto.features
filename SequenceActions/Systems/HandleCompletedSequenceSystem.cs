@@ -22,7 +22,7 @@
         
         private ProtoIt _startSequenceFilter = It
             .Chain<SequenceCompleteComponent>()
-            .Inc<SequenceDataComponent>()
+            .Inc<SequenceComponent>()
             .Inc<SequenceAutoDestroyComponent>()
             .End();
 

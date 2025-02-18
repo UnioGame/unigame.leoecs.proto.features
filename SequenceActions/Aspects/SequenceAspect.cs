@@ -24,22 +24,35 @@
         public ProtoWorld World;
         
         //sequence
-        public ProtoPool<SequenceDataComponent> SequenceData;
-        public ProtoPool<SequenceProgressComponent> SequenceProgress;
+        public ProtoPool<SequenceComponent> Sequence;
         public ProtoPool<SequenceCompleteComponent> Complete;
+        /// <summary>
+        /// sequence result data updated every frame
+        /// </summary>
+        public ProtoPool<SequenceResultComponent> Result;
+        /// <summary>
+        /// sequence life time
+        /// </summary>
         public ProtoPool<LifeTimeComponent> LifeTime;
+        /// <summary>
+        /// mark entity for auto destroy after sequence complete
+        /// </summary>
         public ProtoPool<SequenceAutoDestroyComponent> AutoDestroy;
         
-        //actions
+        /// <summary>
+        /// merk entity as active sequence
+        /// </summary>
+        public ProtoPool<SequenceActiveComponent> Active;
+        
+        /// <summary>
+        /// sequence action data
+        /// </summary>
         public ProtoPool<SequenceActionComponent> SequenceAction;
-        public ProtoPool<SequenceActionProgressComponent> ActionProgress;
-        public ProtoPool<SequenceActionResultComponent> Result;
+        
         
         //requests
         public ProtoPool<StartSequenceByIdRequest> StartById;
         public ProtoPool<StartSequenceRequest> Start;
-        
-        public ProtoPool<StartSequenceActionSelfRequest> StartAction;
         
         //events
         public ProtoPool<SequenceCompleteSelfEvent> CompleteEvent;
