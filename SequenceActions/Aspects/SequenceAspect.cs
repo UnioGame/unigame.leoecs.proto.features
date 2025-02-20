@@ -6,6 +6,7 @@
     using Components.Requests;
     using Data;
     using Leopotam.EcsProto;
+    using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcsLite.LeoEcs.Shared.Components;
@@ -26,6 +27,7 @@
         //sequence
         public ProtoPool<SequenceComponent> Sequence;
         public ProtoPool<SequenceCompleteComponent> Complete;
+        public ProtoPool<SequenceFailedComponent> Failed;
         /// <summary>
         /// sequence result data updated every frame
         /// </summary>

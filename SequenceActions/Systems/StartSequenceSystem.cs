@@ -42,24 +42,25 @@
                 if(action == null) continue;
 
                 _actionAspect.Complete.TryRemove(entity);
+                _actionAspect.Failed.TryRemove(entity);
                 
                 ref var sequenceComponent = ref _actionAspect.Sequence.GetOrAddComponent(entity);
                 ref var lifeTimeComponent = ref _actionAspect.LifeTime.GetOrAddComponent(entity);
                 ref var resultComponent = ref _actionAspect.Result.GetOrAddComponent(entity);
                 ref var sequenceAction = ref _actionAspect.SequenceAction.GetOrAddComponent(entity);
+
                 if(startSequenceRequest.AutoDestroy)
                     _actionAspect.AutoDestroy.GetOrAddComponent(entity);
                 
                 sequenceComponent.Target = startSequenceRequest.Target;
                 sequenceComponent.Action = action;
                 
-                var startActions = SequenceActionResult.None;
                 var actionName = action.ActionName;
-                
-                resultComponent.Value = startActions;
+                resultComponent.Value = SequenceActionResult.None;
 
                 var packedEntity = entity.PackEntity(_world);
                 var token = lifeTimeComponent.Token;
+
                 var task = action.ExecuteAsync(packedEntity, _world, token)
                     .AttachExternalCancellation(token)
                     .Preserve();

@@ -39,8 +39,12 @@
                 var behaviour = stateBehaviour.Value;
                 
                 if(behaviour == null) continue;
+
+                var stateResult = behaviour.Update(entity, _world);
                 
-                var next = behaviour.Update(entity,_world);
+                if(!stateResult.Completed) continue;
+                    
+                var next = stateResult.NextState;
                 if (next <= 0 || next == stateComponent.Id) continue;
                 
                 ref var changeRequest = ref _stateAspect.ChangeState.GetOrAddComponent(entity);

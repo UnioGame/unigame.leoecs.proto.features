@@ -1,5 +1,5 @@
 {
-    "name": "game.ecs.state",
+    "name": "game.ecs.state.impl",
     "rootNamespace": "",
     "references": [
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
@@ -16,9 +16,7 @@
         "GUID:d1e2d2da7928afa4c970929015e91944",
         "GUID:8c5798340b43490aba98e63320018156",
         "GUID:e0cd26848372d4e5c891c569017e11f1",
-        "GUID:312ddd7ebe69456291005522064cd84c",
-        "GUID:94b76ab488496fe4ba2e594d6c583770",
-        "GUID:09e33a25d611449382cd3b4801d603ac"
+        "GUID:312ddd7ebe69456291005522064cd84c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

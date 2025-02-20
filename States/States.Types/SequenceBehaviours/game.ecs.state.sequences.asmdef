@@ -1,5 +1,5 @@
 {
-    "name": "game.ecs.state",
+    "name": "game.ecs.state.sequences",
     "rootNamespace": "",
     "references": [
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
@@ -8,7 +8,6 @@
         "GUID:9e24947de15b9834991c9d8411ea37cf",
         "GUID:d8b63aba1907145bea998dd612889d6b",
         "GUID:dc47bdc03c214bd2a0259cb949a59dc6",
-        "GUID:3b810d7decb848fc8442853de1690356",
         "GUID:209749b816e76d241a52eb0770dbdcb5",
         "GUID:bd4ea46f2fdce47f0a34f0df46c013f5",
         "GUID:b9e4029c2cdc84f7d82433cf8a1d0e69",
@@ -17,6 +16,7 @@
         "GUID:8c5798340b43490aba98e63320018156",
         "GUID:e0cd26848372d4e5c891c569017e11f1",
         "GUID:312ddd7ebe69456291005522064cd84c",
+        "GUID:b540d99e0d1b472e8bb93ff1086903db",
         "GUID:94b76ab488496fe4ba2e594d6c583770",
         "GUID:09e33a25d611449382cd3b4801d603ac"
     ],

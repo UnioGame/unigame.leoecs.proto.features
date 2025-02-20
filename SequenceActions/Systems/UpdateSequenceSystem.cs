@@ -48,6 +48,11 @@
 
                 ref var sequenceComplete = ref _sequenceAspect.Complete.GetOrAddComponent(entity);
                 ref var sequenceCompleteEvent = ref _sequenceAspect.CompleteEvent.GetOrAddComponent(entity);
+
+                if (!status.IsSuccess)
+                {
+                    _sequenceAspect.Failed.GetOrAddComponent(entity);
+                }
             }
         }
     }

@@ -18,3 +18,13 @@ Add define #GAME_ECS_STATES to your project to enable feature
 5. Regenerate States Ids for external usage
 
 It's will generate a new file with all states ids in "Assets/UniGame.Generated/Ecs/StateId.cs"
+
+6. Create State Entity prefab with StatesConverter converter and setup entity states
+
+7. Setup States behaviours on every state
+
+
+## ECS States
+
+- StateComponent - component with current state id 
+- ChangeStateSelfRequest - request to change state for entity if this action is allowed when StateChangedSelfEvent is fired on the entity
