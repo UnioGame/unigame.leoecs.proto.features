@@ -41,7 +41,7 @@
                 ref var spawnRequest = ref _gameResourceAspect.SpawnRequest.Get(entity);
                 
                 var entityLifeTime = _ownershipAspect.LifeTime.Add(entity);
-                var resourceLifeTime = spawnRequest.LifeTime ?? entityLifeTime;
+                var resourceLifeTime = spawnRequest.LifeTime == null ? entityLifeTime : spawnRequest.LifeTime;
                 
                 var loadResourceTask = _gameDatabase
                     .LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);
@@ -50,6 +50,7 @@
                 resourceSpawnComponent.LocationData = spawnRequest.LocationData;
                 resourceSpawnComponent.ResourceLifeTime = resourceLifeTime;
                 resourceSpawnComponent.Parent = spawnRequest.Parent;
+                resourceSpawnComponent.SetActive = spawnRequest.SetActive;
 
                 ref var loadTaskComponent = ref _gameResourceAspect.LoadTask.Add(entity);
                 loadTaskComponent.Value = loadResourceTask;
