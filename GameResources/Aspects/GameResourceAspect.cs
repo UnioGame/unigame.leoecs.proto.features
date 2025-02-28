@@ -38,7 +38,8 @@
             float3 spawnPosition,
             Quaternion spawnRotation = default,
             Transform parent = null,
-            ILifeTime resourceLifeTime = null)
+            ILifeTime resourceLifeTime = null,
+            bool setActive = false)
         {
             var spawnEntity = world.NewEntity();
             if (owner.Unpack(world, out var ownerEntity))
@@ -53,7 +54,8 @@
                 spawnRotation,
                 One,
                 parent,
-                resourceLifeTime);
+                resourceLifeTime,
+                setActive);
 
             return spawnEntity;
         }
@@ -66,12 +68,14 @@
             Quaternion rotation,
             float3 scale,
             Transform parentTransform = null,
-            ILifeTime resourceLifeTime = null)
+            ILifeTime resourceLifeTime = null,
+            bool setActive = false)
         {
             ref var spawnRequest = ref SpawnRequest.Add(entity);
             spawnRequest.Parent = parentTransform;
             spawnRequest.ResourceId = resourceId;
             spawnRequest.LifeTime = resourceLifeTime;
+            spawnRequest.SetActive = setActive;
             spawnRequest.LocationData = new GamePoint()
             {
                 Position = spawnPosition,

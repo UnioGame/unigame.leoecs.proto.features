@@ -9,6 +9,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Runtime.ObjectPool.Extensions;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -46,7 +47,14 @@
             foreach (var poolableEntity in _poolableFilter)
             {
                 ref var gameObjectComponent = ref _unityAspect.GameObject.Get(poolableEntity);
+                if (gameObjectComponent.Value == null)
+                {
+                    GameLog.Log("GameObjectComponent value is null!");
+                    continue;
+                }
+                
                 gameObjectComponent.Value.Despawn();
+                _unityAspect.GameObject.Del(poolableEntity);
             }
         }
     }

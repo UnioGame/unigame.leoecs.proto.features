@@ -22,6 +22,7 @@ namespace UniGame.Ecs.Proto.GameResources.Components
         public GamePoint LocationData;
         public Transform Parent;
         public ILifeTime LifeTime;
+        public bool SetActive;
 
         public void Apply(ref GameResourceSpawnRequest data)
         {
@@ -29,6 +30,7 @@ namespace UniGame.Ecs.Proto.GameResources.Components
             data.LocationData = LocationData;
             data.Parent = Parent;
             data.LifeTime = LifeTime;
+            data.SetActive = SetActive;
         }
 
         public void AutoReset(ref GameResourceSpawnRequest c)
@@ -37,6 +39,7 @@ namespace UniGame.Ecs.Proto.GameResources.Components
             c.Parent = default;
             c.LocationData = GamePoint.Zero;
             c.LifeTime = default;
+            c.SetActive = false;
         }
     }
 }
