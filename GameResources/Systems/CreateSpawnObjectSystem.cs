@@ -45,7 +45,7 @@
 
                 var position = resourceSpawnComponent.LocationData.Position;
                 var rotation = resourceSpawnComponent.LocationData.Rotation;
-                var resourceInstance = requestComponent.Value.Spawn(position, rotation, resourceSpawnComponent.Parent, false);
+                var resourceInstance = requestComponent.Value.Spawn(position, rotation, resourceSpawnComponent.Parent, false, true);
                 
                 if (resourceInstance && resourceInstance is GameObject resourceInstanceGameObject)
                 {
