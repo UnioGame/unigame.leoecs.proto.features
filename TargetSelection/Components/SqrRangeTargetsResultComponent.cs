@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.TargetSelection.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
@@ -21,7 +22,9 @@
         public ProtoPackedEntity[] Values;
         public int Count;
         
-        public void AutoReset(ref SqrRangeTargetsResultComponent c)
+        public void SetHandlers(IProtoPool<SqrRangeTargetsResultComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref SqrRangeTargetsResultComponent c)
         {
             c.Values ??= new ProtoPackedEntity[TargetSelectionData.MaxTargets];
             c.Count = 0;

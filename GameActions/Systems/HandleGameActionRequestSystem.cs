@@ -6,7 +6,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-
+    using UniGame.LeoEcs.Shared.Extensions;
     /// <summary>
     /// System for handling main button actions.
     /// </summary>
@@ -46,7 +46,7 @@
             {
                 ref var actionRequest = ref _aspect.ActionSelfRequest.Get(entity);
                 if(!_aspect.IsGameActionEnabled(actionRequest.Id))continue;
-                ref var actionEvent = ref _aspect.ActionEvent.Add(_world.NewEntity());
+                ref var actionEvent = ref _aspect.ActionEvent.NewEntity();
                 actionEvent.Id = actionRequest.Id;
             }
         }

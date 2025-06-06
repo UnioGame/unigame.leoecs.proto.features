@@ -27,11 +27,11 @@
 		[Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
 		[PropertyOrder(2)]
 		[ListDrawerSettings(ListElementLabelName = "@Label")]
-		public AbilityRecord[] abilities = Array.Empty<AbilityRecord>();
+		public List<AbilityRecord> abilities = new();
 
 		private Dictionary<string, IGameResourceRecord> _map = new();
 
-		public override IGameResourceRecord[] Records => abilities;
+		public override IReadOnlyList<IGameResourceRecord> Records => abilities;
 
 		public override async UniTask<CategoryInitializeResult> InitializeAsync(ILifeTime lifeTime)
 		{
@@ -61,12 +61,12 @@
 			return default;
 		}
 
-		public override IGameResourceRecord[] FindResources(string filter)
+		public override IReadOnlyList<IGameResourceRecord> FindResources(string filter)
 		{
 			return abilities
 				.Where(x => x.name.Contains(filter, StringComparison.OrdinalIgnoreCase))
 				.Select(x => x as IGameResourceRecord)
-				.ToArray();
+				.ToList();
 		}
 
 		public override Dictionary<string, IGameResourceRecord> Map => _map;
@@ -109,7 +109,7 @@
 				abilityItems.Add(record);
 			}
 
-			abilities = abilityItems.ToArray();
+			abilities = abilityItems;
 			
 			this.MarkDirty();
 #endif

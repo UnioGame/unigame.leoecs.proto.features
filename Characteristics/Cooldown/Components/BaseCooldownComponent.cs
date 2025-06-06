@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Characteristics;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -11,7 +12,9 @@
         
         public List<Modification> Modifications;
         
-        public void AutoReset(ref BaseCooldownComponent c)
+        public void SetHandlers(IProtoPool<BaseCooldownComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref BaseCooldownComponent c)
         {
             c.Modifications ??= new List<Modification>();
             c.Modifications.Clear();

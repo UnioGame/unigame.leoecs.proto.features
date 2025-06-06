@@ -26,8 +26,8 @@
     public class UpdateAbilityProcessingStatusSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _abilityRootFilter;
-        private EcsFilter _abilityInUseFilter;
+        private ProtoIt _abilityRootFilter;
+        private ProtoIt _abilityInUseFilter;
         
         private AbilityAspect _abilityAspect;
         private AbilityOwnerAspect _abilityOwnerAspect;

@@ -6,6 +6,7 @@
     using Effects.Aspects;
     using Effects.Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     

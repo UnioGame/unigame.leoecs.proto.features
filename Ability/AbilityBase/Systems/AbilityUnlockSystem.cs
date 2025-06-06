@@ -25,7 +25,7 @@
 	public class AbilityUnlockSystem : IProtoInitSystem, IProtoRunSystem
 	{
 		private ProtoWorld _world;
-		private EcsFilter _eventFilter;
+		private ProtoIt _eventFilter;
 
 		private AbilityAspect _abilityAspect;
 

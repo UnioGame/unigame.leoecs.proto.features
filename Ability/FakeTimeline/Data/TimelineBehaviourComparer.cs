@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Aspects;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto.QoL;
 
     public class TimelineBehaviourComparer : IComparer<ProtoPackedEntity>

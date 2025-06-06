@@ -10,7 +10,7 @@
 
     public sealed class ProcessDestroyedBlockMovementEffectSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
 
         public void Init(IProtoSystems systems)

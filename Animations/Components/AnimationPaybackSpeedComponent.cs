@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Animations.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -19,7 +20,9 @@
     {
         public float Value;
         
-        public void AutoReset(ref AnimationPaybackSpeedComponent c)
+        public void SetHandlers(IProtoPool<AnimationPaybackSpeedComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AnimationPaybackSpeedComponent c)
         {
             c.Value = 1f;
         }

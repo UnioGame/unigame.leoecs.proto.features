@@ -22,7 +22,7 @@
     public class InvalidatedAbilitySystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
+        private ProtoIt _filter;
 
         public void Init(IProtoSystems systems)
         {

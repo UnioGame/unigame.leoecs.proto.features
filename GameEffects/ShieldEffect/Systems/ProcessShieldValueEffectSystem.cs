@@ -3,30 +3,31 @@
     using Characteristics.Shield.Components;
     using Components;
     using Effects.Components;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    public sealed class ProcessShieldValueEffectSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public sealed class ProcessShieldValueEffectSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
+        private ProtoItExc _filter = It.Chain<ShieldEffectComponent>()
+            .Inc<EffectComponent>()
+            .Exc<DestroyEffectSelfRequest>()
+            .End();
+        
+        private ProtoPool<EffectComponent> _effectPool;
+        private ProtoPool<ShieldComponent> _shieldPool;
+        private ProtoPool<DestroyEffectSelfRequest> _destroyRequestPool;
+        
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<ShieldEffectComponent>()
-                .Inc<EffectComponent>()
-                .Exc<DestroyEffectSelfRequest>()
-                .End();
-        }
         
         public void Run()
         {
-            var effectPool = _world.GetPool<EffectComponent>();
-            var shieldPool = _world.GetPool<ShieldComponent>();
-            var destroyRequestPool = _world.GetPool<DestroyEffectSelfRequest>();
+            var effectPool = _effectPool;
+            var shieldPool = _shieldPool;
+            var destroyRequestPool = _destroyRequestPool;
 
             foreach (var entity in _filter)
             {

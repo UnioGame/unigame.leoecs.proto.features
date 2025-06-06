@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Data;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -9,7 +10,9 @@
     {
         public List<MoveToGoalData> Goals;
         
-        public void AutoReset(ref MoveToGoalComponent c)
+        public void SetHandlers(IProtoPool<MoveToGoalComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref MoveToGoalComponent c)
         {
             c.Goals ??= new List<MoveToGoalData>(8);
             c.Goals.Clear();

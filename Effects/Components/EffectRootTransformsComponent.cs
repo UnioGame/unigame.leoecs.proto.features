@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using UnityEngine;
 
@@ -19,7 +20,9 @@
     {
         public Transform[] Value;
         
-        public void AutoReset(ref EffectRootTransformsComponent c)
+        public void SetHandlers(IProtoPool<EffectRootTransformsComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref EffectRootTransformsComponent c)
         {
             c.Value ??= Array.Empty<Transform>();
             for (var i = 0; i < c.Value.Length; i++)

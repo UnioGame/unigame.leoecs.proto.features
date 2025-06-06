@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.Components
 {
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
@@ -16,7 +17,9 @@
         public ProtoPackedEntity[] PreviousEntities;
         public int PreviousCount;
         
-        public void AutoReset(ref AbilityTargetsComponent c)
+        public void SetHandlers(IProtoPool<AbilityTargetsComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AbilityTargetsComponent c)
         {
             c.Entities = new ProtoPackedEntity[12];
             c.Count = 0;

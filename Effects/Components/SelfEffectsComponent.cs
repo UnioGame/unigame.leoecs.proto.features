@@ -2,6 +2,7 @@
 {
 	using System.Collections.Generic;
 	using Game.Code.Configuration.Runtime.Effects.Abstract;
+	using LeoEcs.Proto;
 	using Leopotam.EcsProto;
 
 
@@ -9,7 +10,9 @@
 	{
 		public List<IEffectConfiguration> Effects;
         
-		public void AutoReset(ref SelfEffectsComponent c)
+		public void SetHandlers(IProtoPool<SelfEffectsComponent> pool) => pool.SetResetHandler(AutoReset);
+		
+		public static void AutoReset(ref SelfEffectsComponent c)
 		{
 			c.Effects ??= new List<IEffectConfiguration>();
 			c.Effects.Clear();

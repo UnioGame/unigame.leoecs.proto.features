@@ -6,6 +6,7 @@
     using Components.Events;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+    using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine.SceneManagement;
 
     /// <summary>

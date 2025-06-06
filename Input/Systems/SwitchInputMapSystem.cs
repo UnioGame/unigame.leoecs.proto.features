@@ -25,8 +25,8 @@
         private ProtoWorld _world;
         private InputAspect _inputAspect;
         
-        private EcsFilter _requestFilter;
-        private EcsFilter _inputFilter;
+        private ProtoIt _requestFilter;
+        private ProtoIt _inputFilter;
         
         private InputActionsMapData _inputActionsData;
 

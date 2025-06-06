@@ -22,8 +22,8 @@
     {
         private ProtoWorld _world;
         
-        private EcsFilter _filter;
-        private EcsFilter _excFilter;
+        private ProtoIt _filter;
+        private ProtoItExc _excFilter;
         
         private NavMeshAspect _navigationAspect;
 

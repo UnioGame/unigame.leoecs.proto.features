@@ -19,7 +19,7 @@
     [ECSDI]
     public sealed class KillCompletedAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;

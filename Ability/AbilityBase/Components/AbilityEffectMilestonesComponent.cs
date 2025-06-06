@@ -2,6 +2,7 @@
 {
     using System;
     using Game.Code.Animations.EffectMilestones;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 #if ENABLE_IL2CP
@@ -15,7 +16,9 @@
     {
         public EffectMilestone[] Milestones;
         
-        public void AutoReset(ref AbilityEffectMilestonesComponent c)
+        public void SetHandlers(IProtoPool<AbilityEffectMilestonesComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AbilityEffectMilestonesComponent c)
         {
             c.Milestones = Array.Empty<EffectMilestone>();
         }

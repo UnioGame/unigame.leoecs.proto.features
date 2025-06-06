@@ -5,6 +5,7 @@
 	using Components;
 	using Game.Ecs.Core.Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+	using LeoEcs.Shared.Extensions;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using Tutorial.Components;
@@ -45,9 +46,9 @@
 
 		public void Run()
 		{
-			if (_startLevelFilter.IsEmpty() || _championFilter.IsEmpty()) return;
+			if (_startLevelFilter.IsEmptySlow() || _championFilter.IsEmptySlow()) return;
 			
-			var championEntity = _championFilter.First().Entity;
+			var championEntity = _championFilter.FirstSlow().Entity;
 			ref var positionComponent = ref _aspect.Position.Get(championEntity);
 			ref var position = ref positionComponent.Position;
 			

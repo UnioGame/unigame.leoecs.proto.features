@@ -2,6 +2,8 @@
 {
     using System;
     using Leopotam.EcsLite;
+    using Leopotam.EcsProto;
+    using UniGame.LeoEcs.Proto;
     using UnityEngine.InputSystem;
 
     /// <summary>
@@ -15,11 +17,13 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct InputActionsComponent : IEcsAutoReset<InputActionsComponent>
+    public struct InputActionsComponent : IProtoAutoReset<InputActionsComponent>
     {
         public DefaultInputActions InputActions;
         
-        public void AutoReset(ref InputActionsComponent c)
+        public void SetHandlers(IProtoPool<InputActionsComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref InputActionsComponent c)
         {
             c.InputActions = new DefaultInputActions();
         }

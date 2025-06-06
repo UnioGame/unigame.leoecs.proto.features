@@ -22,7 +22,7 @@
     [ECSDI]
     public sealed class EvaluateAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         private AnimationToolSystem _animationTool;
         

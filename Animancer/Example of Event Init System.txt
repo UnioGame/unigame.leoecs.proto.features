@@ -31,7 +31,7 @@ namespace Game.Ecs.Animation.MainCharacterAnimation.Systems
     public class InitAnimationEventsSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsWorld _world;
-        private EcsFilter _navMeshAgentFilter;
+        private ProtoIt _navMeshAgentFilter;
         
         private AnimationCoreAspect _animationCoreAspect;
         private CharacterAudioAspect _characterAudioAspect;

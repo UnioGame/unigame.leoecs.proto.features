@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Damage.Components.Events
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
@@ -23,7 +24,9 @@
         public ProtoPackedEntity Source;
         public ProtoPackedEntity Destination;
         
-        public void AutoReset(ref MadeDamageEvent c)
+        public void SetHandlers(IProtoPool<MadeDamageEvent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref MadeDamageEvent c)
         {
             c.Value = 0.0f;
             c.IsCritical = false;

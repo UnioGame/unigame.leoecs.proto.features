@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using Game.Code.Configuration.Runtime.Ability;
+	using LeoEcs.Proto;
 	using Leopotam.EcsProto;
 
 
@@ -21,7 +22,9 @@
 	{
 		public List<AbilityCell> AbilityCells;
 		
-		public void AutoReset(ref EquipAbilityActionComponent c)
+		public void SetHandlers(IProtoPool<EquipAbilityActionComponent> pool) => pool.SetResetHandler(AutoReset);
+		
+		public static void AutoReset(ref EquipAbilityActionComponent c)
 		{
 			c.AbilityCells ??= new List<AbilityCell>();
 			c.AbilityCells.Clear();

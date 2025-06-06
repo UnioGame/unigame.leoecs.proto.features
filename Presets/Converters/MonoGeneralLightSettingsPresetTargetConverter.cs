@@ -4,6 +4,7 @@
     using UniGame.Ecs.Proto.Presets.SpotLightSettings.Converters;
     using Abstract;
     using System;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using UniGame.Ecs.Proto.Presets.FogShaderSettings.Converters;
     using Sirenix.OdinInspector;

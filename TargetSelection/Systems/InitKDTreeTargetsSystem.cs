@@ -5,6 +5,7 @@ namespace UniGame.Ecs.Proto.TargetSelection.Systems
     using Unity.Mathematics;
     using System;
     using Aspects;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -32,7 +33,7 @@ namespace UniGame.Ecs.Proto.TargetSelection.Systems
 
         public void Run()
         {
-            if (_kdDataFilter.IsEmpty())
+            if (_kdDataFilter.IsEmptySlow())
                 InitKDTreeTargets();
         }
 

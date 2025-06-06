@@ -6,6 +6,7 @@
     using Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -21,30 +22,22 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CheckEquipAbilityLoadingSystem : IProtoInitSystem, IProtoRunSystem
+    public class CheckEquipAbilityLoadingSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filterRequest;
+        private ProtoItExc _filterRequest = It
+            .Chain<EquipAbilitySelfRequest>()
+            .Inc<AbilityLoadingComponent>()
+            .Exc<AbilityBuildingComponent>()
+            .End();
+        
+        private ProtoIt _metaFilter = It
+            .Chain<AbilityMetaComponent>()
+            .Inc<AbilityIdComponent>()
+            .End();
         
         private AbilityInventoryAspect _abilityInventory;
         private AbilityMetaAspect _metaAspect;
-        private EcsFilter _metaFilter;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-			
-            _filterRequest = _world
-                .Filter<EquipAbilitySelfRequest>()
-                .Inc<AbilityLoadingComponent>()
-                .Exc<AbilityBuildingComponent>()
-                .End();
-
-            _metaFilter = _world
-                .Filter<AbilityMetaComponent>()
-                .Inc<AbilityIdComponent>()
-                .End();
-        }
 
         public void Run()
         {

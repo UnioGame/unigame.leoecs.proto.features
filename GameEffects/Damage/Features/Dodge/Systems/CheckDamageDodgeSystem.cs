@@ -6,6 +6,7 @@
     using Damage.Aspects;
     using Damage.Components.Request;
     using LeoEcs.Bootstrap.Runtime.Attributes;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Random = UnityEngine.Random;

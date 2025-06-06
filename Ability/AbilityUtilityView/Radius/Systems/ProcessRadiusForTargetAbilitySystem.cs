@@ -27,7 +27,7 @@
     [ECSDI]
     public sealed class ProcessRadiusForTargetAbilitySystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
 
         private LifeTimeAspect _lifeTimeAspect;

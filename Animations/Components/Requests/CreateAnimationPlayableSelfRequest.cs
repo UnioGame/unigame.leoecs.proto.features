@@ -2,6 +2,7 @@
 {
     using System;
     using Game.Code.Animations;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UnityEngine.Playables;
@@ -29,7 +30,9 @@
         public float Duration;
         public float Speed;
         
-        public void AutoReset(ref CreateAnimationPlayableSelfRequest c)
+        public void SetHandlers(IProtoPool<CreateAnimationPlayableSelfRequest> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref CreateAnimationPlayableSelfRequest c)
         {
             c.Target = default;
             c.Animation = null;

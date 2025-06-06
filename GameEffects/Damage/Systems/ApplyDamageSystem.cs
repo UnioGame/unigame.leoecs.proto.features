@@ -7,6 +7,7 @@
     using Leopotam.EcsProto.QoL;
     using Characteristics.Health.Aspects;
     using Characteristics.Shield.Aspects;
+    using LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>

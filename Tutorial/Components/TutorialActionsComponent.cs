@@ -3,6 +3,7 @@
 	using System;
 	using System.Collections.Generic;
 	using Abstracts;
+	using LeoEcs.Proto;
 	using Leopotam.EcsProto;
 
 
@@ -21,7 +22,9 @@
 	{
 		public List<ITutorialAction> Actions;
 		
-		public void AutoReset(ref TutorialActionsComponent c)
+		public void SetHandlers(IProtoPool<TutorialActionsComponent> pool) => pool.SetResetHandler(AutoReset);
+		
+		public static void AutoReset(ref TutorialActionsComponent c)
 		{
 			c.Actions ??= new List<ITutorialAction>();
 			c.Actions.Clear();

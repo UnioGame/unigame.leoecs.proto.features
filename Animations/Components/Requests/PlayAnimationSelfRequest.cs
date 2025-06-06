@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Animations.Components.Requests
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
     /// <summary>
@@ -23,7 +24,9 @@
         //OPTIONAL - animation speed
         public float Speed;
         
-        public void AutoReset(ref PlayAnimationSelfRequest c)
+        public void SetHandlers(IProtoPool<PlayAnimationSelfRequest> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref PlayAnimationSelfRequest c)
         {
             c.Duration = 0;
             c.StartTime = 0;

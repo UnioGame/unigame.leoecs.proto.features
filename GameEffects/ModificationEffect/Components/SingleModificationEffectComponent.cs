@@ -2,6 +2,7 @@
 {
     using System;
     using Characteristics;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 #if ENABLE_IL2CPP
@@ -16,7 +17,9 @@
     {
         public ModificationHandler Value;
         
-        public void AutoReset(ref SingleModificationEffectComponent c)
+        public void SetHandlers(IProtoPool<SingleModificationEffectComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref SingleModificationEffectComponent c)
         {
             c.Value = null;
         }

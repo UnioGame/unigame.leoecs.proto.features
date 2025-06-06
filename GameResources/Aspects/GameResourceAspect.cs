@@ -6,6 +6,7 @@
     using Core.Runtime;
     using Data;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Components;

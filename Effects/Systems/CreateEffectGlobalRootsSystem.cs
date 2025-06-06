@@ -3,6 +3,7 @@
     using System;
     using Components;
     using Data;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -29,7 +30,7 @@
 
         public void Run()
         {
-            if (!_filter.IsEmpty()) return;
+            if (!_filter.IsEmptySlow()) return;
 
             var globalRoot = _world.NewEntity();
             ref var globalRootMarker = ref _effectGlobalAspect.Global.Add(globalRoot);

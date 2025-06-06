@@ -23,7 +23,7 @@
     [ECSDI]
     public sealed class PlayTimelineAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         private AnimationToolSystem _animationTool;
         

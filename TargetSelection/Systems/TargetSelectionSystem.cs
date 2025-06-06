@@ -6,6 +6,7 @@
     using Game.Code.GameLayers.Category;
     using Game.Code.GameLayers.Layer;
     using Game.Ecs.TargetSelection;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using TargetSelection;

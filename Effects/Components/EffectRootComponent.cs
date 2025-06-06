@@ -2,6 +2,7 @@
 {
     using System;
     using Data;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -20,7 +21,9 @@
     {
         public EffectRootValue[] Value;
         
-        public void AutoReset(ref EffectRootComponent c)
+        public void SetHandlers(IProtoPool<EffectRootComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref EffectRootComponent c)
         {
             c.Value = Array.Empty<EffectRootValue>();
         }

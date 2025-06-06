@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Radius.AggressiveRadius.Components
 {
     using System.Collections.Generic;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
@@ -21,8 +22,10 @@
             _entities.Clear();
             _entities.AddRange(entities);
         }
+        
+        public void SetHandlers(IProtoPool<AggressiveRadiusViewStateComponent> pool) => pool.SetResetHandler(AutoReset);
 
-        public void AutoReset(ref AggressiveRadiusViewStateComponent c)
+        public static void AutoReset(ref AggressiveRadiusViewStateComponent c)
         {
             c._entities ??= new List<ProtoPackedEntity>();
             c._entities.Clear();

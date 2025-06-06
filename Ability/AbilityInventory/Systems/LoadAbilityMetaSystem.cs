@@ -36,10 +36,10 @@
         
         private ILifeTime _lifeTime;
         private ProtoWorld _world;
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private NativeHashSet<int> _loadingAbilities;
         private bool _loaded;
-        private EcsFilter _metaFilter;
+        private ProtoIt _metaFilter;
         private List<AbilityItemData> _abilityItems = new();
 
         public void Init(IProtoSystems systems)

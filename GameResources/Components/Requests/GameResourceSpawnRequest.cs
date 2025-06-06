@@ -4,6 +4,7 @@ namespace UniGame.Ecs.Proto.GameResources.Components
     using Core.Runtime;
     using Data;
     using Game.Code.DataBase.Runtime;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Abstract;
@@ -30,8 +31,10 @@ namespace UniGame.Ecs.Proto.GameResources.Components
             data.Parent = Parent;
             data.LifeTime = LifeTime;
         }
+        
+        public void SetHandlers(IProtoPool<GameResourceSpawnRequest> pool) => pool.SetResetHandler(AutoReset);
 
-        public void AutoReset(ref GameResourceSpawnRequest c)
+        public static void AutoReset(ref GameResourceSpawnRequest c)
         {
             c.ResourceId = (GameResourceRecordId)string.Empty;
             c.Parent = default;

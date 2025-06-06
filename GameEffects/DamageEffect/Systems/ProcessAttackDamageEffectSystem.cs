@@ -7,6 +7,7 @@
     using Effects.Components;
     using Gameplay.CriticalAttackChance.Aspects;
     using Gameplay.Damage.Aspects;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

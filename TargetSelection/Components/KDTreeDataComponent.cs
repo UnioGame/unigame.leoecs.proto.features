@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.TargetSelection.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Unity.Mathematics;
@@ -22,7 +23,9 @@
         public float3[] Values;
         public int Count;
         
-        public void AutoReset(ref KDTreeDataComponent c)
+        public void SetHandlers(IProtoPool<KDTreeDataComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref KDTreeDataComponent c)
         {
             c.Values ??= new float3[TargetSelectionData.MaxAgents];
             c.PackedEntities ??= new ProtoPackedEntity[TargetSelectionData.MaxAgents];

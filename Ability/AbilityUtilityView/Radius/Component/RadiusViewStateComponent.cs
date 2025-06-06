@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.AbilityUtilityView.Radius.Component
 {
     using System.Collections.Generic;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UnityEngine;
@@ -9,7 +10,9 @@
     {
         public Dictionary<ProtoPackedEntity, GameObject> RadiusViews;
         
-        public void AutoReset(ref RadiusViewStateComponent c)
+        public void SetHandlers(IProtoPool<RadiusViewStateComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref RadiusViewStateComponent c)
         {
             c.RadiusViews ??= new Dictionary<ProtoPackedEntity, GameObject>();
             c.RadiusViews.Clear();

@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
     using System.Collections.Generic;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
@@ -13,7 +14,9 @@
     {
         public List<ProtoPackedEntity> Effects;
         
-        public void AutoReset(ref EffectsListComponent c)
+        public void SetHandlers(IProtoPool<EffectsListComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref EffectsListComponent c)
         {
             c.Effects ??= new List<ProtoPackedEntity>();
             c.Effects.Clear();

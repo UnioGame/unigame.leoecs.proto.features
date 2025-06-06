@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.GameAi.ActivateAbility.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using TargetSelection;
@@ -21,7 +22,9 @@
         public ProtoPackedEntity[] Values;
         public int Count;
         
-        public void AutoReset(ref AbilityRangeActionDataComponent c)
+        public void SetHandlers(IProtoPool<AbilityRangeActionDataComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AbilityRangeActionDataComponent c)
         {
             c.Values ??= new ProtoPackedEntity[TargetSelectionData.MaxTargets];
             c.Count = 0;

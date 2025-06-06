@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Characteristics;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
     /// <summary>
@@ -22,7 +23,9 @@
         
         public List<Modification> Modifications;
         
-        public void AutoReset(ref BaseDurationComponent c)
+        public void SetHandlers(IProtoPool<BaseDurationComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref BaseDurationComponent c)
         {
             c.Modifications ??= new List<Modification>();
             c.Modifications.Clear();

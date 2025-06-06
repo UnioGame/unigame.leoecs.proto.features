@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Characteristics;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -18,7 +19,9 @@
     {
         public List<ModificationHandler> ModificationHandlers;
 
-        public void AutoReset(ref ModificationEffectComponent c)
+        public void SetHandlers(IProtoPool<ModificationEffectComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref ModificationEffectComponent c)
         {
             c.ModificationHandlers ??= new List<ModificationHandler>();
             c.ModificationHandlers.Clear();

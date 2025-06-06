@@ -20,7 +20,7 @@
     [ECSDI]
     public sealed class HandlePlayOnPlayableSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;

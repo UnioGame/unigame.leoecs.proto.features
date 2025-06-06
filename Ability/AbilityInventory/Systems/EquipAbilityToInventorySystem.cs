@@ -22,31 +22,24 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class EquipAbilityToInventorySystem : IProtoInitSystem, IProtoRunSystem
+    public class EquipAbilityToInventorySystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filterRequest;
+        private ProtoItExc _filterRequest = It
+            .Chain<EquipAbilitySelfRequest>()
+            .Exc<AbilityLoadingComponent>()
+            .Exc<AbilityBuildingComponent>()
+            .Exc<AbilityMetaLinkComponent>()
+            .End();
+        
+        private ProtoIt _metaFilter = It
+            .Chain<AbilityMetaComponent>()
+            .Inc<AbilityIdComponent>()
+            .End();
         
         private AbilityInventoryAspect _abilityInventory;
         private AbilityMetaAspect _metaAspect;
-        private EcsFilter _metaFilter;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-			
-            _filterRequest = _world
-                .Filter<EquipAbilitySelfRequest>()
-                .Exc<AbilityLoadingComponent>()
-                .Exc<AbilityBuildingComponent>()
-                .Exc<AbilityMetaLinkComponent>()
-                .End();
-
-            _metaFilter = _world
-                .Filter<AbilityMetaComponent>()
-                .Inc<AbilityIdComponent>()
-                .End();
-        }
+        
 
         public void Run()
         {

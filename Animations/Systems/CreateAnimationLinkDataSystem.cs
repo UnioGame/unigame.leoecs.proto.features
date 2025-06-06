@@ -21,7 +21,7 @@
     [ECSDI]
     public sealed class CreateAnimationLinkDataSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         private ILifeTime _worldLifeTime;
         private AnimationToolSystem _animationTool;

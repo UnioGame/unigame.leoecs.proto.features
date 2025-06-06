@@ -15,8 +15,8 @@
     [UsedImplicitly]
     public sealed class CameraLookAtTargetSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
-        private EcsFilter _targetFilter;
+        private ProtoIt _filter;
+        private ProtoIt _targetFilter;
         private ProtoWorld _world;
 
         public void Init(IProtoSystems systems)

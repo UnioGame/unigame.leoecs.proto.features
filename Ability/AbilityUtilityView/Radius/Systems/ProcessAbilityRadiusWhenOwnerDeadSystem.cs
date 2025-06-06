@@ -5,6 +5,7 @@
     using Component;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 

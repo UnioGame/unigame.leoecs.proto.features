@@ -4,6 +4,7 @@
 	using System.Collections.Generic;
 	using ActionTools;
 	using Data;
+	using LeoEcs.Proto;
 	using Leopotam.EcsProto;
 
 	/// <summary>
@@ -21,7 +22,10 @@
 	{
 		public List<RestrictTapArea> Areas;
 		public ActionId ActionId;
-		public void AutoReset(ref RestrictUITapAreaActionComponent c)
+		
+		public void SetHandlers(IProtoPool<RestrictUITapAreaActionComponent> pool) => pool.SetResetHandler(AutoReset);
+		
+		public static void AutoReset(ref RestrictUITapAreaActionComponent c)
 		{
 			c.Areas ??= new List<RestrictTapArea>();
 			c.Areas.Clear();

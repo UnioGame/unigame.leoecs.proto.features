@@ -5,6 +5,7 @@
     using Components;
     using GameLayers.Category.Components;
     using GameLayers.Layer.Components;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

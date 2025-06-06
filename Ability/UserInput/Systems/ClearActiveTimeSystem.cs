@@ -3,6 +3,7 @@
     using Common.Components;
     using Game.Ecs.Input.Components;
     using Game.Ecs.Input.Components.Requests;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -15,24 +16,22 @@
 	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-    public sealed class ClearActiveTimeSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public sealed class ClearActiveTimeSystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
-        private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<AbilityMapComponent>()
-                .Inc<UserInputTargetComponent>()
-                .Exc<AbilityUpInputRequest>()
-                .End();
-        }
+        private ProtoItExc _filter = It.Chain<AbilityMapComponent>()
+                    .Inc<UserInputTargetComponent>()
+                    .Exc<AbilityUpInputRequest>()
+                    .End();
         
+        private ProtoWorld _world;
+        private ProtoPool<AbilityActiveTimeComponent> _activateTimePool;
+        private ProtoPool<AbilityMapComponent> _abilityMapPool;
+
         public void Run()
         {
-            var activateTimePool = _world.GetPool<AbilityActiveTimeComponent>();
-            var abilityMapPool = _world.GetPool<AbilityMapComponent>();
+            var activateTimePool = _activateTimePool;
+            var abilityMapPool = _abilityMapPool;
             
             foreach (var entity in _filter)
             {

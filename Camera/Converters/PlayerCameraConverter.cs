@@ -34,7 +34,7 @@
         #endregion
 
         private ProtoWorld _world;
-        private EcsFilter _filter;
+        private ProtoIt _filter;
 
         public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
         {

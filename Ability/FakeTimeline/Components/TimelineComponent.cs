@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Unity.Collections;
@@ -20,7 +21,9 @@
 
         public float playStartTime;
         
-        public void AutoReset(ref TimelineComponent c)
+        public void SetHandlers(IProtoPool<TimelineComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref TimelineComponent c)
         {
             if (!c.playables.IsCreated)
             {

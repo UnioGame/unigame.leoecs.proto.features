@@ -45,7 +45,7 @@
 		{
 			foreach (var actionEntity in _actionFilter)
 			{
-				if (_championFilter.IsEmpty()) continue;
+				if (_championFilter.IsEmptySlow()) continue;
 				
 				var championEntity = _championFilter.First().Entity;
 				var healthComponent = _aspect.Healths.Get(championEntity);

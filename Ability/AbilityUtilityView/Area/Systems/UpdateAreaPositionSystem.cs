@@ -24,7 +24,7 @@
     [ECSDI]
     public sealed class UpdateAreaPositionSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
 
         private LifeTimeAspect _lifeTimeAspect;

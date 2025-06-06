@@ -28,28 +28,24 @@
     public class AttachAbilityConfigurationSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filterRequest;
+        private ProtoItExc _filterRequest = It.Chain<EquipAbilitySelfRequest>()
+            .Inc<AbilityMetaLinkComponent>()
+            .Exc<AbilityBuildingComponent>()
+            .Exc<AbilityConfigurationComponent>()
+            .End();
         
         private AbilityInventoryAspect _abilityInventory;
         private AbilityMetaAspect _metaAspect;
-        private EcsFilter _metaFilter;
+        private ProtoIt _metaFilter;
         private ILifeTime _lifeTime;
-        private List<MetaConfigurationValue> _configurationLoading;
+        private List<MetaConfigurationValue> _configurationLoading = new();
         private NativeHashSet<ProtoEntity> _metaLoading;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             _lifeTime = _world.GetWorldLifeTime();
-            _configurationLoading = new List<MetaConfigurationValue>();
             _metaLoading = new NativeHashSet<ProtoEntity>(64, Allocator.Persistent).AddTo(_lifeTime);
-            
-            _filterRequest = _world
-                .Filter<EquipAbilitySelfRequest>()
-                .Inc<AbilityMetaLinkComponent>()
-                .Exc<AbilityBuildingComponent>()
-                .Exc<AbilityConfigurationComponent>()
-                .End();
         }
 
         public void Run()

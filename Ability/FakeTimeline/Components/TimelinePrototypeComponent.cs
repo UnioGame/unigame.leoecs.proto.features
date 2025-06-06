@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Unity.Collections;
@@ -17,7 +18,7 @@
     {
         public NativeList<ProtoPackedEntity> playables;
         
-        public void AutoReset(ref TimelinePrototypeComponent c)
+        public static void AutoReset(ref TimelinePrototypeComponent c)
         {
             if (c.playables.IsCreated)
             {
@@ -28,6 +29,8 @@
                 c.playables = new NativeList<ProtoPackedEntity>(12, Allocator.Persistent);
             }
         }
+        
+        public void SetHandlers(IProtoPool<TimelinePrototypeComponent> pool) => pool.SetResetHandler(AutoReset);
 
         public void Add(ProtoPackedEntity packedEntity)
         {

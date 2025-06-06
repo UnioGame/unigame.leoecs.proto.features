@@ -7,6 +7,7 @@
     using Components.Requests;
     using Game.Ecs.Time.Service;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;

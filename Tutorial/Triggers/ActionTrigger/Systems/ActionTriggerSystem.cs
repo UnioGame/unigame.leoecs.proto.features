@@ -3,6 +3,7 @@
 	using System;
 	using Aspects;
 	using Components;
+	using LeoEcs.Shared.Extensions;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using Tutorial.Components;
@@ -40,7 +41,7 @@
 
 		public void Run()
 		{
-			if (_startLevelFilter.IsEmpty()) return;
+			if (_startLevelFilter.IsEmptySlow()) return;
 			
 			foreach (var entity in _requestFilter)
 			{

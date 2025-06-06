@@ -5,6 +5,7 @@
     using Common.Components;
     using Component;
     using LeoEcs.Bootstrap.Runtime.Attributes;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 

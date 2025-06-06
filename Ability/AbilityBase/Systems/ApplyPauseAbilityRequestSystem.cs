@@ -25,7 +25,7 @@
     public class ApplyPauseAbilityRequestSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filter;
+        private ProtoIt _filter;
 
         private AbilityAspect _abilityAspect;
 

@@ -18,26 +18,19 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class CollectAbilityMetaInformationSystem : IProtoInitSystem, IProtoRunSystem
+    public class CollectAbilityMetaInformationSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _filterRequest;
+        private ProtoItExc _filterRequest = It
+            .Chain<EquipAbilitySelfRequest>()
+            .Inc<AbilityMetaLinkComponent>()
+            .Inc<AbilityConfigurationComponent>()
+            .Exc<AbilityLoadingComponent>()
+            .Exc<AbilityBuildingComponent>()
+            .End();
         
         private AbilityInventoryAspect _abilityInventory;
         private AbilityMetaAspect _metaAspect;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-			
-            _filterRequest = _world
-                .Filter<EquipAbilitySelfRequest>()
-                .Inc<AbilityMetaLinkComponent>()
-                .Inc<AbilityConfigurationComponent>()
-                .Exc<AbilityLoadingComponent>()
-                .Exc<AbilityBuildingComponent>()
-                .End();
-        }
 
         public void Run()
         {

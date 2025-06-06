@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UnityEngine;
@@ -18,7 +19,10 @@
     {
         public Dictionary<ProtoPackedEntity, GameObject> Highlights;
         
-        public void AutoReset(ref HighlightStateComponent c)
+        
+        public void SetHandlers(IProtoPool<HighlightStateComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref HighlightStateComponent c)
         {
             c.Highlights ??= new Dictionary<ProtoPackedEntity, GameObject>();
             c.Highlights.Clear();

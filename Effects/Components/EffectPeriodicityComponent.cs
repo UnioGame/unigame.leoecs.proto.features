@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -19,7 +20,9 @@
         /// </summary>
         public float LastApplyingTime;
         
-        public void AutoReset(ref EffectPeriodicityComponent c)
+        public void SetHandlers(IProtoPool<EffectPeriodicityComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref EffectPeriodicityComponent c)
         {
             c.Periodicity = 0.0f;
             c.LastApplyingTime = float.MinValue;

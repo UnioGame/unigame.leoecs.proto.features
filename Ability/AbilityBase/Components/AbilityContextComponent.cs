@@ -3,6 +3,7 @@
     using System;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniGame.LeoEcs.Proto;
     using Unity.Collections;
 
 #if ENABLE_IL2CPP
@@ -19,7 +20,9 @@
         public ProtoPackedEntity abilityEntity;
         public NativeList<ProtoPackedEntity> targets;
         
-        public void AutoReset(ref AbilityContextComponent c)
+        public void SetHandlers(IProtoPool<AbilityContextComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AbilityContextComponent c)
         {
             if (c.targets.IsCreated)
             {

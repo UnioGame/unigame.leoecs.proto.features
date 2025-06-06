@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UnityEngine;
@@ -18,7 +19,9 @@
     {
         public Dictionary<GameObject, ProtoPackedEntity> Views;
 
-        public void AutoReset(ref ViewDataComponent c)
+        public void SetHandlers(IProtoPool<ViewDataComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref ViewDataComponent c)
         {
             c.Views ??= new Dictionary<GameObject, ProtoPackedEntity>();
             c.Views.Clear();

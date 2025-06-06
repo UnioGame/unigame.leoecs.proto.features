@@ -24,7 +24,7 @@
     [ECSDI]
     public sealed class ProcessTeleportEffectSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private EcsFilter _filter;
+        private ProtoIt _filter;
         private ProtoWorld _world;
         
         private ProtoPool<EffectComponent> _effectPool;

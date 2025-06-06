@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
 
@@ -19,7 +20,9 @@
         /// </summary>
         public float CreatingTime;
         
-        public void AutoReset(ref EffectDurationComponent c)
+        public void SetHandlers(IProtoPool<EffectDurationComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref EffectDurationComponent c)
         {
             c.Duration = 0.0f;
             c.CreatingTime = float.MinValue;

@@ -2,6 +2,7 @@
 {
     using System;
     using Game.Code.Configuration.Runtime.Effects;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using UnityEngine;
 
@@ -16,6 +17,8 @@
     public struct ViewInstanceTypeComponent : IProtoAutoReset<ViewInstanceTypeComponent>
     {
         public Transform[] value;
+        
+        public void SetHandlers(IProtoPool<ViewInstanceTypeComponent> pool) => pool.SetResetHandler(AutoReset);
         
         public void AutoReset(ref ViewInstanceTypeComponent c)
         {

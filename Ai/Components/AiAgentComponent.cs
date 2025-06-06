@@ -2,6 +2,7 @@ namespace UniGame.Ecs.Proto.AI.Components
 {
     using System;
     using Configurations;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Service;
 
@@ -25,7 +26,9 @@ namespace UniGame.Ecs.Proto.AI.Components
 
         public AiPlannerData[] PlannerData;
         
-        public void AutoReset(ref AiAgentComponent c)
+        public void SetHandlers(IProtoPool<AiAgentComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AiAgentComponent c)
         {
             c.Configuration = null;
             if (c.PlannedActions != null)

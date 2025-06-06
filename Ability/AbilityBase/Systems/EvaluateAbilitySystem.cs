@@ -6,6 +6,7 @@
     using Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Timer.Components;
@@ -20,24 +21,16 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class EvaluateAbilitySystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class EvaluateAbilitySystem : IProtoRunSystem
     {
-        private EcsFilter _filter;
+        private ProtoItExc _filter = It.Chain<AbilityUsingComponent>()
+            .Inc<DurationComponent>()
+            .Inc<CooldownComponent>()
+            .Exc<AbilityPauseComponent>()
+            .End();
+        
         private ProtoWorld _world;
-
         private AbilityAspect _abilityAspect;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world
-                .Filter<AbilityUsingComponent>()
-                .Inc<DurationComponent>()
-                .Inc<CooldownComponent>()
-                .Exc<AbilityPauseComponent>()
-                .End();
-            
-        }
         
         public void Run()
         {

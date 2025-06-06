@@ -4,6 +4,7 @@
     using Animations.Aspects;
     using Aspects;
     using Game.Ecs.Core.Components;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.Ecs.Proto.Core.Death.Components;

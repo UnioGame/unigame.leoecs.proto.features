@@ -7,6 +7,7 @@
     using System;
     using Abstract;
     using DirectionalLight.Converters;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Converter.Runtime;
 

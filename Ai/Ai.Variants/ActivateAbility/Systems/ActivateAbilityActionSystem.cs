@@ -8,6 +8,7 @@
     using UniGame.Ecs.Proto.AI.Abstract;
     using UniGame.Ecs.Proto.AI.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+    using UniGame.LeoEcs.Shared.Extensions;
     /// <summary>
     /// Show and Hides HealthBars based on UnderTheTargetComponent 
     /// </summary>

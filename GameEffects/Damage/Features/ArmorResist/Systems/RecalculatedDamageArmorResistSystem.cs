@@ -5,6 +5,7 @@
 	using Damage.Aspects;
 	using Damage.Components.Request;
 	using GameEffects.DamageEffect.DamageTypes.Aspects;
+	using LeoEcs.Shared.Extensions;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

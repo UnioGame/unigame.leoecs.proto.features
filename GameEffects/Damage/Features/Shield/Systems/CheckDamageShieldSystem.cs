@@ -4,6 +4,7 @@
     using Aspects;
     using Characteristics.Shield.Aspects;
     using Components.Request;
+    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

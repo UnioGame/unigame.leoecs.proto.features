@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Animations.Components
 {
     using System;
+    using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using UnityEngine.Playables;
 
@@ -19,7 +20,9 @@
     {
         public PlayableAsset Value;
         
-        public void AutoReset(ref AnimationPlayableComponent c)
+        public void SetHandlers(IProtoPool<AnimationPlayableComponent> pool) => pool.SetResetHandler(AutoReset);
+        
+        public static void AutoReset(ref AnimationPlayableComponent c)
         {
             c.Value = null;
         }

@@ -26,7 +26,7 @@
 		private IAbilityCatalogService _abilityLoadoutService;
 		private AbilityInventoryAspect _inventoryAspect;
 		private ProtoWorld _world;
-		private EcsFilter _filter;
+		private ProtoIt _filter;
 
 		public void Init(IProtoSystems systems)
 		{
@@ -41,7 +41,7 @@
 		public void Run()
 		{
 			var first = _filter.First();
-			if (first > 0) return;
+			if (first.Found == false) return;
 			
 			foreach (var record in _abilityLoadoutService.InventoryAbilities)
 			{
