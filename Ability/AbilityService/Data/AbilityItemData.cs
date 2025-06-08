@@ -5,7 +5,7 @@
 	using Configuration.Runtime.Ability.Description;
 	using Sirenix.OdinInspector;
 	using UniGame.Core.Runtime;
-	using UniModules.UniCore.Runtime.Utils;
+	using UniGame.Runtime.Utils;
 	using UnityEngine;
 	using UnityEngine.AddressableAssets;
 

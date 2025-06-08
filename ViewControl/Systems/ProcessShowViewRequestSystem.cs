@@ -66,7 +66,7 @@
 
                 if (!request.Destination.Unpack(_world, out var unpackedDestination))
                 {
-                    GameLog.LogError("Cannot unpack destination entity");
+                    GameLog.LogError("ProcessShowViewRequestSystem: Cannot unpack destination entity");
                     continue;
                 }
 

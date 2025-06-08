@@ -15,7 +15,7 @@
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniModules.UniCore.Runtime.Utils;
+    using Runtime.Utils;
     using UnityEngine;
 
 #if UNITY_EDITOR

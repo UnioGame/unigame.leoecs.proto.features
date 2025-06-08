@@ -5,7 +5,7 @@
     using Cysharp.Threading.Tasks;
     using Sirenix.OdinInspector;
     using UniGame.AddressableTools.Runtime;
-    using UniModules.UniGame.Core.Runtime.DataFlow.Extensions;
+    using UniGame.Core.Runtime;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using Object = UnityEngine.Object;

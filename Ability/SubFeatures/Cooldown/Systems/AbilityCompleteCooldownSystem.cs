@@ -6,7 +6,6 @@
     using LeoEcs.Timer.Components.Events;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     
@@ -19,7 +18,7 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class AbilityCompleteCooldownSystem : IProtoInitSystem, IProtoRunSystem
+    public class AbilityCompleteCooldownSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
 
@@ -31,17 +30,11 @@
             .Exc<ActiveAbilityComponent>()
             .End();
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-        }
-
         public void Run()
         {
             foreach (var abilityEntity in _abilityFilter)
             {
                 _abilityAspect.Active.Add(abilityEntity);
-                GameLog.Log("Ability cooldown complete.");
             }
         }
     }

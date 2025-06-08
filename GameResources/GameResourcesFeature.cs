@@ -6,7 +6,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Systems;
-    using UniGame.Context.Runtime.Extension;
+    using Context.Runtime;
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;

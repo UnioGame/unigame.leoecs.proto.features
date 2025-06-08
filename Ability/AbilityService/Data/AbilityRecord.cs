@@ -4,7 +4,7 @@
 	using Cysharp.Text;
 	using DataBase.Runtime.Abstract;
 	using Sirenix.OdinInspector;
-	using UniModules.UniCore.Runtime.Utils;
+	using UniGame.Runtime.Utils;
 
 	[Serializable]
 	public class AbilityRecord : IGameResourceRecord

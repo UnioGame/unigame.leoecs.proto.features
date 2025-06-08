@@ -6,7 +6,6 @@
     using Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Unity.Collections;
 
@@ -43,13 +42,6 @@
                 timelineComponent.playables.Sort(_comparer);
 
                 _timelineAspect.TimelineReady.Add(timelineEntity);
-
-                foreach (var p in timelineComponent.playables)
-                {
-                    GameLog.Log(p.Id.ToString());
-                }
-                
-                GameLog.Log("emply");
             }
         }
     }

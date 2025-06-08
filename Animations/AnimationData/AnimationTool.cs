@@ -2,7 +2,7 @@
 {
     using EffectMilestones;
     using EffectMilestones.Timeline;
-    using UniGame.Shared.Runtime.Timeline;
+    using UniGame.Runtime.Timeline;
     using UnityEditor;
     using UnityEngine.Playables;
     using UnityEngine.Timeline;

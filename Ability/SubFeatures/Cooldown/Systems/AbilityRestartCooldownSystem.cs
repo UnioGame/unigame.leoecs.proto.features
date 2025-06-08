@@ -8,7 +8,6 @@
     using LeoEcs.Bootstrap.Runtime.Abstract;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     
@@ -56,7 +55,6 @@
                 }
                 
                 _timerAspect.Restart.GetOrAddComponent(abilityEntity);
-                GameLog.Log("Ability cooldown restarted.");
             }
         }
     }

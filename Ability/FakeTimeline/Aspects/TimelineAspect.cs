@@ -9,8 +9,8 @@
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
-    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UnityEngine;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -42,9 +42,7 @@
             if (!TimelinePrototype.Has(timelinePrototypeEntity))
             {
 #if UNITY_EDITOR || DEBUG
-                
-                GameLog.LogError("Entity does not contain TimelinePrototype component.");
-
+                Debug.LogError("TimelineAspect: Entity does not contain TimelinePrototype component.");
 #endif
                 return default;
             }

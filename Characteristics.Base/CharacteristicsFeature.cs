@@ -9,13 +9,13 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
     using Components.Requests;
     using Systems;
     using Sirenix.OdinInspector;
-    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using System.Linq;
     using UnityEngine;
     using System;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Shared.Extensions;
 
 #if UNITY_EDITOR

@@ -7,10 +7,12 @@
     using Game.Ecs.ButtonAction.Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using R3;
     using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniRx;
+     
     using UnityEngine;
     using UnityEngine.Scripting.APIUpdating;
     using UnityEngine.UI;
@@ -60,9 +62,11 @@
             if (button == null) return;
 
             var packedEntity = world.PackEntity(entity);
+            
             _buttonDisposable = button
                 .OnClickAsObservable()
-                .Subscribe(() => OnClick(packedEntity,world));
+                .Subscribe(x => OnClick(packedEntity,world))
+                .AddTo(target.GetAssetLifeTime());
         }
         
         private void OnClick(ProtoPackedEntity entity,ProtoWorld world)

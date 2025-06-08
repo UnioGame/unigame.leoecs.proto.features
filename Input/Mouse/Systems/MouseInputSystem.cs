@@ -1,6 +1,6 @@
 ﻿namespace Game.Ecs.Input.Mouse.Systems
 {
-    using UniRx;
+     
     using System;
     using Aspects;
     using Components;
@@ -9,9 +9,10 @@
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using R3;
     using UniGame.Core.Runtime;
     using UnityEngine.InputSystem;
-    using UniModules.UniCore.Runtime.DataFlow;
+    using UniGame.Runtime.DataFlow;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 

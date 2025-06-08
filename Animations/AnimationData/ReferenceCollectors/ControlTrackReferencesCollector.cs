@@ -3,7 +3,7 @@
     using System;
     using Abstract;
     using Modules.UnioModules.UniGame.CoreModules.UniGame.Core.Runtime.Extension;
-    using UniGame.Shared.Runtime.Timeline;
+    using UniGame.Runtime.Timeline;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Playables;
     using UnityEngine.Timeline;

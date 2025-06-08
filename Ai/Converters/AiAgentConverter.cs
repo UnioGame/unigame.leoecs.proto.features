@@ -11,7 +11,7 @@ namespace UniGame.Ecs.Proto.AI.Converters
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniModules.UniGame.Core.Runtime.DataFlow.Extensions;
+    using Core.Runtime;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using UnityEngine.Serialization;

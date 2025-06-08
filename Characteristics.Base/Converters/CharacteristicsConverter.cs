@@ -8,8 +8,8 @@
     using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
-    using UniModules.UniCore.Runtime.ReflectionUtils;
-    using UniModules.UniCore.Runtime.Utils;
+    using Runtime.ReflectionUtils;
+    using Runtime.Utils;
     using UnityEngine;
     using Object = UnityEngine.Object;
 

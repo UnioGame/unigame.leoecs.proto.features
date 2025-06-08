@@ -9,8 +9,8 @@
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcsLite.LeoEcs.Shared.Components;
-    using UniModules.UniCore.Runtime.DataFlow;
-    using UniModules.UniGame.Core.Runtime.DataFlow.Extensions;
+    using Runtime.DataFlow;
+    using Core.Runtime;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 

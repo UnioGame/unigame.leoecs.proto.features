@@ -7,7 +7,6 @@
 	using LeoEcs.Bootstrap.Runtime.Abstract;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
-	using UniCore.Runtime.ProfilerTools;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Components;
 	using UnityEngine;
@@ -55,7 +54,7 @@
 							#if UNITY_EDITOR
 							if (material == null)
 							{
-								GameLog.LogError($"Material is null for {championGlobalMask}");
+								Debug.LogError($"Material is null for {championGlobalMask}");
 								continue;
 							}
 							#endif

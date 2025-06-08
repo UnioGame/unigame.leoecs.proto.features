@@ -61,7 +61,7 @@
                 }
                 else
                 {
-                    GameLog.Log("Possible null prototype");
+                    GameLog.Log("CreateSpawnObjectSystem: Possible null prototype");
                 }
 
                 _resourceAspect.Poolable.Add(requestEntity);
