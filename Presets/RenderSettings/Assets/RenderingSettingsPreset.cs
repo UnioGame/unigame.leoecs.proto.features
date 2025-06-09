@@ -1,10 +1,14 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Assets
 {
     using System;
-    using Sirenix.OdinInspector;
+
     using UnityEngine;
     using UnityEngine.Rendering;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class RenderingSettingsPreset
     {
@@ -13,23 +17,74 @@
         public bool showProSettings;
         
         public SourceMode sourceMode;
-        [ColorUsage(true, true)] [ShowIf(nameof(IsGradientSelected))] public Color skyColor;
-        [ColorUsage(true, true)] [ShowIf(nameof(IsGradientSelected))] public Color equatorColor;
-        [ColorUsage(true, true)] [ShowIf(nameof(IsGradientSelected))] public Color groundColor;
-        [ColorUsage(true, true)] [HideIf(nameof(IsGradientSelected))] public Color ambientColor;
+        [ColorUsage(true, true)] 
+        
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(IsGradientSelected))] 
+#endif 
+        public Color skyColor;
+        [ColorUsage(true, true)] 
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(IsGradientSelected))] 
+#endif 
+        public Color equatorColor;
+        [ColorUsage(true, true)] 
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(IsGradientSelected))] 
+#endif 
+        public Color groundColor;
+        [ColorUsage(true, true)] 
+#if ODIN_INSPECTOR
+        [HideIf(nameof(IsGradientSelected))] 
+#endif 
+        public Color ambientColor;
+        
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public float ambientIntensity;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public DefaultReflectionMode defaultReflectionMode;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public int defaultReflectionResolution;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public float flareFadeSpeed;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public float flareStrength;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public float haloStrength;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public int reflectionBounces;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public float reflectionIntensity;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public Material skybox;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public Color subtractiveShadowColor;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(showProSettings))] 
+#endif 
+        public Light sun;
 
-        [ShowIf(nameof(showProSettings))] public float ambientIntensity;
-        [ShowIf(nameof(showProSettings))] public DefaultReflectionMode defaultReflectionMode;
-        [ShowIf(nameof(showProSettings))] public int defaultReflectionResolution;
-        [ShowIf(nameof(showProSettings))] public float flareFadeSpeed;
-        [ShowIf(nameof(showProSettings))] public float flareStrength;
-        [ShowIf(nameof(showProSettings))] public float haloStrength;
-        [ShowIf(nameof(showProSettings))] public int reflectionBounces;
-        [ShowIf(nameof(showProSettings))] public float reflectionIntensity;
-        [ShowIf(nameof(showProSettings))] public Material skybox;
-        [ShowIf(nameof(showProSettings))] public Color subtractiveShadowColor;
-        [ShowIf(nameof(showProSettings))] public Light sun;
-
+        
         #endregion
 
         #region static data

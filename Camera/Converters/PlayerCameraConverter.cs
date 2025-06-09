@@ -4,11 +4,15 @@
     using Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// Конвертер игровой камеры на управляемом персонаже.
     /// </summary>
@@ -25,9 +29,11 @@
         [SerializeField]
         private Vector3 _offset;
 
+#if ODIN_INSPECTOR
         [BoxGroup("runtime")]
         [ShowIf(nameof(IsPlaying))]
         [OnValueChanged(nameof(OnComponentChanged))]
+#endif
         [SerializeField]
         private CameraLookTargetComponent _cameraComponent;
         

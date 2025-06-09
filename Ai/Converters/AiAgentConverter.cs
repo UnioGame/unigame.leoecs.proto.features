@@ -6,7 +6,6 @@ namespace UniGame.Ecs.Proto.AI.Converters
     using Configurations;
     using Leopotam.EcsProto;
     using Service;
-    using Sirenix.OdinInspector;
     using UniGame.AddressableTools.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
@@ -16,6 +15,10 @@ namespace UniGame.Ecs.Proto.AI.Converters
     using UnityEngine.AddressableAssets;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class AiAgentConverter : LeoEcsConverter,ILeoEcsGizmosDrawer
     {
@@ -27,23 +30,29 @@ namespace UniGame.Ecs.Proto.AI.Converters
         [SerializeField]
         public float sensorRange = 100f;
 
-        [FormerlySerializedAs("_useForceControl")]
+#if ODIN_INSPECTOR
         [ShowIf(nameof(IsRuntime))]
         [BoxGroup("debug")]      
+#endif
+        [FormerlySerializedAs("_useForceControl")]
         [Tooltip("add AiAgentSelfControlComponent if checked")]
         [SerializeField]
         public bool useForceControl = false;
 
-        [FormerlySerializedAs("_activeActions")]
+#if ODIN_INSPECTOR
         [ShowIf(nameof(IsRuntime))]
-        [BoxGroup("debug")]
+        [BoxGroup("debug")] 
+#endif
+        [FormerlySerializedAs("_activeActions")]
         [Tooltip("runtime inspector for selected ai actions")]
         [SerializeField]
         public bool[] activeActions;
         
-        [FormerlySerializedAs("_plannerData")]
+#if ODIN_INSPECTOR
         [ShowIf(nameof(IsRuntime))]
-        [BoxGroup("debug")]
+        [BoxGroup("debug")]   
+#endif
+        [FormerlySerializedAs("_plannerData")]
         [Tooltip("runtime inspector for selected ai actions")]
         [SerializeField]
         public AiPlannerData[] plannerData;

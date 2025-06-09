@@ -6,17 +6,22 @@
 	using Cysharp.Threading.Tasks;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
-	using Sirenix.OdinInspector;
 	using Systems;
 	using UniGame.LeoEcs.Bootstrap.Runtime;
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
+	
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
 
 	[CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Tutorial Feature")]
 	public class TutorialsFeature : BaseLeoEcsFeature
 	{
-		[SerializeReference]
+#if ODIN_INSPECTOR
 		[Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
+#endif
+		[SerializeReference]
 		public List<TutorialFeature> tutorialFeatures = new List<TutorialFeature>();
 		
 		public override async UniTask InitializeAsync(IProtoSystems ecsSystems)

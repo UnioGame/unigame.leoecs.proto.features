@@ -10,7 +10,7 @@
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+
     using SubFeatures;
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
@@ -18,6 +18,10 @@
     using Runtime.Utils;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -25,12 +29,16 @@
     [Serializable]
     public sealed class AbilityFeature : EcsFeature
     {
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
+#endif 
+        [SerializeReference]
         public List<AbilitySubFeature> abilityFeatures;
         
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
+#endif 
+        [SerializeReference]
         public List<AbilityPluginFeature> abilityPlugins;
 
         protected override async UniTask OnInitializeAsync(IProtoSystems ecsSystems)
@@ -166,7 +174,9 @@
             }
         }
 
+#if ODIN_INSPECTOR
         [Button(DirtyOnClick = true)]
+#endif 
         private void Fill()
         {
 #if UNITY_EDITOR

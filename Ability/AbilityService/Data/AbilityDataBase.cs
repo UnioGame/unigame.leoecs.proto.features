@@ -6,9 +6,13 @@
 	using Cysharp.Threading.Tasks;
 	using DataBase.Runtime;
 	using DataBase.Runtime.Abstract;
-	using Sirenix.OdinInspector;
+
 	using UniGame.Core.Runtime;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 #if UNITY_EDITOR
 	using UniModules.Editor;
 	using UniModules.UniGame.AddressableExtensions.Editor;
@@ -24,9 +28,11 @@
 	{
 		public string id = "Ability";
 		
+#if ODIN_INSPECTOR
 		[Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
 		[PropertyOrder(2)]
 		[ListDrawerSettings(ListElementLabelName = "@Label")]
+#endif
 		public List<AbilityRecord> abilities = new();
 
 		private Dictionary<string, IGameResourceRecord> _map = new();
@@ -81,7 +87,9 @@
 			return AbilityRecord.Empty;
 		}
 		
+#if ODIN_INSPECTOR
 		[Button(ButtonSizes.Large,Icon = SdfIconType.ArchiveFill)]
+#endif
 		public override IReadOnlyList<IGameResourceRecord> FillCategory()
 		{
 			var abilityItems = new List<AbilityRecord>();
@@ -119,7 +127,9 @@
 		
 #if UNITY_EDITOR
 
+#if ODIN_INSPECTOR
 		[Button]
+#endif
 		private void ValidateMeta()
 		{
 			var abilityItemAssets = AssetEditorTools.GetAssets<AbilityItemAsset>();

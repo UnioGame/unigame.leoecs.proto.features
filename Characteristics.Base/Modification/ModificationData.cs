@@ -1,23 +1,33 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics
 {
     using System;
-    using Sirenix.OdinInspector;
+    using System.ComponentModel.DataAnnotations;
+    using Core.Runtime;
+
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class ModificationData : ISearchFilterable
     {
         public string id;
         
+#if ODIN_INSPECTOR
         [FoldoutGroup("Modification")]
         [HideLabel]
         [InlineProperty]
+#endif
         public ModificationInfo info = new ModificationInfo();
         
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [FoldoutGroup("Modification")]
         [InlineProperty]
         [HideLabel]
+#endif
+        [SerializeReference]
         [Required]
         public IModificationFactory factory;
 

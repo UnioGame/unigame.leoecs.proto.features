@@ -9,13 +9,17 @@
     using Feature;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+
     using UniGame.AddressableTools.Runtime;
     using UniGame.AddressableTools.Runtime.AssetReferencies;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -26,8 +30,10 @@
     {
         public int maxEffectsCount = EcsEffectsConfiguration.MAX_EFFECTS_COUNT;
         
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
+#endif
+        [SerializeReference]
         public List<EffectFeatureAsset> effectFeatures = new List<EffectFeatureAsset>();
 
         public AddressableValue<EffectsRootConfiguration> effectsRootValue;
@@ -89,7 +95,9 @@
             ecsSystems.DelHere<ApplyEffectSelfRequest>();
         }
 
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void FillEffects()
         {
 #if UNITY_EDITOR

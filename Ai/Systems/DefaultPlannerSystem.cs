@@ -7,10 +7,14 @@ namespace UniGame.Ecs.Proto.AI.Systems
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Service;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -22,8 +26,10 @@ namespace UniGame.Ecs.Proto.AI.Systems
     [ECSDI]
     public class DefaultPlannerSystem : BasePlannerSystem<AiDefaultActionComponent>, IProtoInitSystem
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         [SerializeField]
         private AiPlannerData _plannerData;
 

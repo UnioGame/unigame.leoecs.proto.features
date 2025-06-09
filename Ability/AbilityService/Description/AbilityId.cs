@@ -3,13 +3,21 @@
     using System;
     using System.Collections.Generic;
     using Services.AbilityLoadout.Data;
+    using UniGame.Core.Runtime;
+
+
+#if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
     using UnityEngine;
 
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Code.Configuration.Runtime.Ability.Description.AbilityId.GetAbilityIds()")]
+#endif
     [Serializable]
     public struct AbilityId
     {

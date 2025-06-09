@@ -7,17 +7,23 @@
     using Game.Code.Configuration.Runtime.Effects.Abstract;
     using Game.Ecs.Time.Service;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public abstract class EffectConfiguration : IEffectConfiguration
     {
         private const string SpawnParentKey = "spawn parent";
         
+#if ODIN_INSPECTOR
         [OnValueChanged("CheckViewLiveTime", InvokeOnInitialize = true)]
+#endif
         [Min(-1.0f)]
         [SerializeField]
         public float duration;
@@ -35,7 +41,9 @@
         
         public AssetReferenceGameObject view;
         
+#if ODIN_INSPECTOR
         [OnValueChanged("CheckViewLiveTime")]
+#endif
         public bool trimToDuration;
         
         
@@ -45,21 +53,29 @@
             viewLifeTime = duration;
         }
         
+#if ODIN_INSPECTOR
         [HideIf("trimToDuration")]
+#endif
         [Min(-1.0f)]
         [SerializeField]
         public float viewLifeTime;
 
+#if ODIN_INSPECTOR
         [TitleGroup(SpawnParentKey)]
+#endif
         public bool spawnAtRoot;
         
+#if ODIN_INSPECTOR
         [TitleGroup(SpawnParentKey)]
-        [SerializeField]
         [HideIf(nameof(spawnAtRoot))]
+#endif
+        [SerializeField]
         public ViewInstanceType viewInstanceType = ViewInstanceType.Body;
 
+#if ODIN_INSPECTOR
         [TitleGroup(SpawnParentKey)]
         [ShowIf(nameof(spawnAtRoot))]
+#endif
         public EffectRootId effectRoot;
         
         

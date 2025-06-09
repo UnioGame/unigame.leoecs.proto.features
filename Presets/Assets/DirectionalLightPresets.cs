@@ -1,8 +1,12 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Assets
 {
     using System;
-    using Sirenix.OdinInspector;
+
     using UnityEngine;
+    
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
     
     [Serializable]
     public class DirectionalLightPresets
@@ -19,8 +23,10 @@
         public Color color;
         public float intensity;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(showTargetValue))]
         [Required]
+#endif
         public Light directionLight;
         
         

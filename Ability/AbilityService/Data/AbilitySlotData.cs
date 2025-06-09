@@ -2,8 +2,13 @@
 {
 	using System;
 	using System.Collections.Generic;
-	using Sirenix.OdinInspector;
+	using UniGame.Core.Runtime;
 
+
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 #if UNITY_EDITOR
 	using UniModules.Editor;
 #endif
@@ -13,10 +18,14 @@
 	{
 		public const string EmptySlot = "Empty";
         
+#if ODIN_INSPECTOR
 		[ValueDropdown(nameof(GetAbilitySlots))]
+#endif
 		public int slotType;
 
+#if ODIN_INSPECTOR
 		[ValueDropdown(nameof(GetAbilityIds))]
+#endif
 		public int ability;
 
 		public IEnumerable<ValueDropdownItem<int>> GetAbilitySlots()

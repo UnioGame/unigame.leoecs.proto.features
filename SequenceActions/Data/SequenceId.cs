@@ -4,9 +4,13 @@
     using System;
     using System.Collections.Generic;
     using Data;
-    using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -16,7 +20,9 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
     [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Modules.Feature.SequenceActions.SequenceId.GetIds()")]
+#endif
     public struct SequenceId
     {
         [SerializeField]

@@ -1,9 +1,13 @@
 ﻿namespace UniGame.Ecs.Proto.Gameplay.Tutorial.ActionTools
 {
 	using System;
-	using Sirenix.OdinInspector;
+
 	using UnityEngine;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 	[Serializable]
 #if ODIN_INSPECTOR
 	[ValueDropdown("@unigame.ecs.proto.Gameplay.Tutorial.ActionTools.TutorialKeysTool.GetKey()",IsUniqueList = true,DropdownTitle = "Tutorial Key")]

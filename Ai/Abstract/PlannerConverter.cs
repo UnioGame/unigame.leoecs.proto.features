@@ -3,12 +3,15 @@
     using System;
     using Configurations;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public abstract class PlannerConverter : GameObjectConverter,IPlannerConverter, IEntityConverter
     {
@@ -42,9 +45,11 @@
     public class PlannerConverter<TComponent> : PlannerConverter
         where TComponent : struct, IApplyableComponent<TComponent>
     {
-        [InlineProperty]
-        [SerializeField]
+#if ODIN_INSPECTOR
         [HideLabel]
+        [InlineProperty]
+#endif
+        [SerializeField]
         public TComponent data;
     
         protected sealed override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)

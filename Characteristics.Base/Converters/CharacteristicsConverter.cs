@@ -5,7 +5,7 @@
     using System.Linq;
     using JetBrains.Annotations;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
     using Runtime.ReflectionUtils;
@@ -13,24 +13,33 @@
     using UnityEngine;
     using Object = UnityEngine.Object;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
+#if ODIN_INSPECTOR
     using Sirenix.Utilities.Editor;
+#endif
     using UnityEditor;
 #endif
     
     [Serializable]
     public sealed class CharacteristicsConverter : LeoEcsConverter, ILeoEcsGizmosDrawer, IEcsConverterProvider
     {
-        [ListDrawerSettings(ShowFoldout = true)]
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [Required]
+        [ListDrawerSettings(ShowFoldout = true)]
+#endif
+        [SerializeReference]
         [ItemNotNull]
         public List<ICharacteristicConverter> characteristics = new List<ICharacteristicConverter>();
         
         public IEnumerable<IEcsComponentConverter> Converters => characteristics;
 
-        
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void Reset()
         {
 #if UNITY_EDITOR
@@ -104,7 +113,7 @@
         
         private void BeginDrawListElement(int index)
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
             var item =  characteristics[index];
             var label = item.GetType().PrettyName();
             SirenixEditorGUI.BeginBox(label);

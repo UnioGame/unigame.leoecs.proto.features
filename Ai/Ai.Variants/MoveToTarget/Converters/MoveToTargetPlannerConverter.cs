@@ -5,16 +5,22 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Converters
     using AI.Abstract;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     [Serializable]
     public class MoveToTargetPlannerConverter : PlannerConverter<MoveToTargetPlannerComponent>,ILeoEcsGizmosDrawer
     {
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [InlineProperty]
+#endif 
+        [SerializeReference]
         public List<IMoveByConverter> converters = new List<IMoveByConverter>();
 
         protected override void OnApplyComponents(GameObject target, ProtoWorld world, ProtoEntity entity)

@@ -5,16 +5,22 @@
     using Assets;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     public sealed class MonoRenderingSettingsPresetSourceConverter : MonoLeoEcsConverter
     {
-        [SerializeField]
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif 
+        [SerializeField]
         public RenderingSettingsSourceConverter renderingConverter = new RenderingSettingsSourceConverter();
         
         public sealed override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
@@ -26,27 +32,41 @@
     [Serializable]
     public sealed class RenderingSettingsSourceConverter : EcsComponentConverter,IPresetAction
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public string targetId = nameof(RenderingSettingsPresetComponent);
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public float duration;
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public bool showButtons;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
         [FoldoutGroup("Rendering Settings")]
         [HideLabel]
+#endif 
         public RenderingSettingsPreset preset;
 
+#if ODIN_INSPECTOR
         [Button] 
         [ShowIf(nameof(showButtons))]
+#endif 
         public void Bake()
         {
             preset.BakeActiveRenderingSettings();
         }    
         
+#if ODIN_INSPECTOR
         [Button] 
         [ShowIf(nameof(showButtons))]
+#endif 
         public void ApplyToTarget()
         {
             preset.ApplyToRendering();

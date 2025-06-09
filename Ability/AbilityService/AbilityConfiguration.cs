@@ -17,11 +17,15 @@
     [CreateAssetMenu(fileName = "Ability Configuration", menuName = "Game/Ability/Ability Configuration")]
     public sealed class AbilityConfiguration : ScriptableObject
     {
+#if ODIN_INSPECTOR
         [PropertySpace(8)]
+#endif
         [SerializeReference]
         public List<IAbilityBehaviour> abilityBehaviours = new List<IAbilityBehaviour>();
         
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void Save()
         {
 #if UNITY_EDITOR

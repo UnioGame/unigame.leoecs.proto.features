@@ -1,20 +1,23 @@
-﻿using System;
-
-using System.Collections.Generic;
-using Sirenix.OdinInspector;
-using UnityEngine;
-using System.Linq;
+﻿namespace Game.Ecs.Scenes.Data
+{
+    using System;
+    using System.Collections.Generic;
+    using UnityEngine;
+    using System.Linq;
+    using UniGame.Core.Runtime;
 
 #if UNITY_EDITOR
-using UniModules.Editor;
+    using UniModules.Editor;
 #endif
 
-
-namespace Game.Ecs.Scenes.Data
-{
-
-    [Serializable]
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Ecs.Scenes.Data.SceneId.GetSceneInfoIds()", IsUniqueList = true, DropdownTitle = "SceneId")]
+#endif
+    [Serializable]
     public partial struct SceneId
     {
         [SerializeField]

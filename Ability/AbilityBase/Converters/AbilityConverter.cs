@@ -10,13 +10,17 @@
     using Game.Code.Services.AbilityLoadout.Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Collections;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -26,9 +30,11 @@
     {
         #region inspector
 
-        [SerializeField] 
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(UpdateAbilityConfiguration))]
         [OnValueChanged(nameof(ResetDefault))]
+#endif 
+        [SerializeField] 
         public List<AbilityCell> abilityCells = new List<AbilityCell>();
 
         public bool userInput;
@@ -104,7 +110,9 @@
             return _defaultAbility;
         }
 
+#if ODIN_INSPECTOR
         [ButtonGroup("UpdateGizmos")]
+#endif 
         public void UpdateAbilityConfiguration()
         {
 #if UNITY_EDITOR

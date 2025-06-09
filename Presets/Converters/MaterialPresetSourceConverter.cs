@@ -6,7 +6,7 @@
     using Abstract;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.AddressableTools.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -14,6 +14,10 @@
     using UnityEngine.AddressableAssets;
     using Object = UnityEngine.Object;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -21,16 +25,24 @@
     [Serializable]
     public sealed class MaterialPresetSourceConverter : EcsComponentConverter,IPresetAction
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public string targetId;
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public AssetReferenceT<Material> materialReference;
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public float duration;
         
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
-        [Space]
         [BoxGroup("editor")]
+#endif
+        [Space]
         public bool showButtons = true;
 
         public bool ButtonsEnabled => showButtons && isEnabled;
@@ -52,8 +64,10 @@
             durationComponent.Value = duration;
         }
 
+#if ODIN_INSPECTOR
         [ButtonGroup()]
         [ShowIf(nameof(ButtonsEnabled))]
+#endif
         public void Bake()
         {
 #if UNITY_EDITOR
@@ -68,8 +82,10 @@
 #endif
         }
         
-        [ButtonGroup()]
-        [ShowIf(nameof(ButtonsEnabled))]
+    #if ODIN_INSPECTOR
+            [ButtonGroup()]
+            [ShowIf(nameof(ButtonsEnabled))]
+    #endif
         public void ApplyToTarget()
         {
 #if UNITY_EDITOR

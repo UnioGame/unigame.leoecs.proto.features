@@ -6,24 +6,36 @@
     using UniGame.Ecs.Proto.Presets.Components;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.Ecs.Proto.Presets.Converters;
     using UniGame.LeoEcs.Converter.Runtime;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     [Serializable]
     public class SpotLightSettingsSourceConverter : EcsComponentConverter, IPresetAction
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public string targetId = nameof(SpotLightSettingsPresetComponent);
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public float duration;
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif 
         public bool showButtons;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
         [FoldoutGroup("Spot Light Settings")]
         [HideLabel]
+#endif 
         public SpotLightPresets preset = new SpotLightPresets()
         {
             showTargetValue = false
@@ -73,15 +85,19 @@
             }
         }
 
+#if ODIN_INSPECTOR
         [Button]
         [ShowIf(nameof(showButtons))]
+#endif 
         public void Bake()
         {
             SearchTarget(false);
         }
 
+#if ODIN_INSPECTOR
         [Button]
         [ShowIf(nameof(showButtons))]
+#endif 
         public void ApplyToTarget()
         {
             SearchTarget(true);

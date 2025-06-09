@@ -1,15 +1,21 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.SpotLightSettings.Converters
 {
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UnityEngine;
     
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     public sealed class MonoSpotLightSettingsPresetSourceConverter : MonoLeoEcsConverter
     {
-        [SerializeField]
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
+        [SerializeField]
         public SpotLightSettingsSourceConverter spotLightConverter = new SpotLightSettingsSourceConverter();
 
         public sealed override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)

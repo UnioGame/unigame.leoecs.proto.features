@@ -4,19 +4,24 @@
 	using Components;
 	using Configurations;
 	using Leopotam.EcsProto;
-	using Sirenix.OdinInspector;
 	using UniGame.LeoEcs.Converter.Runtime;
 	using UniGame.LeoEcs.Converter.Runtime.Abstract;
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 	[Serializable]
 	public class TutorialTriggerPointConverter : LeoEcsConverter, ILeoEcsGizmosDrawer
 	{
 		#region Inspector
 		
+#if ODIN_INSPECTOR
 		[Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
 		[InlineEditor]
+#endif
 		[SerializeReference]
 		public TutorialTriggerPointConfiguration configuration;
 

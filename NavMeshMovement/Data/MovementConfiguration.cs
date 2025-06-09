@@ -1,9 +1,13 @@
 ﻿namespace Game.Code.Configuration.Runtime.Entity.Movement
 {
-    using Sirenix.OdinInspector;
+
     using UnityEngine;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [CreateAssetMenu(fileName = "Movement Configuration", menuName = "Game/Configurations/Entity/Movement Configuration", order = 0)]
     public sealed class MovementConfiguration : ScriptableObject
     {
@@ -23,9 +27,11 @@
         [SerializeField]
         public float maxAnimationRunSpeed = 6.0f;
 
-        [HideInInspector]
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
+        [HideInInspector]
         public MovementData movementData = new MovementData();
         
         public float Speed => speed;

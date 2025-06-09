@@ -6,12 +6,16 @@ namespace UniGame.Ecs.Proto.Gameplay.Damage
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -44,7 +48,9 @@ namespace UniGame.Ecs.Proto.Gameplay.Damage
             ecsSystems.DelHere<ApplyDamageRequest>();
         }
         
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [Button]
+#endif
         public void FillFeatures()
         {
 #if UNITY_EDITOR

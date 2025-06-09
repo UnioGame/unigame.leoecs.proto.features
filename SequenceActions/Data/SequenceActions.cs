@@ -8,9 +8,12 @@
     using Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
     using Unity.Mathematics;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class SequenceActions : ISequenceAction
     {

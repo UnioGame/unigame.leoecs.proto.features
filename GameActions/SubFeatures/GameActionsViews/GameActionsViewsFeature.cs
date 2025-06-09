@@ -4,11 +4,15 @@
     using Data;
     using global::Game.Ecs.ButtonAction;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// handle game actions to show views
     /// </summary>
@@ -21,8 +25,10 @@
 #endif
     public class GameActionsViewsFeature : EcsFeature,IGameActionsSubFeature
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         public GameActionViewsData gameActionViewSettings = new(); 
         
         protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)

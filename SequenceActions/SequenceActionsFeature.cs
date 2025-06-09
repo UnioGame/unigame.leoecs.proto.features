@@ -8,23 +8,28 @@ namespace Game.Ecs.State
     using Modules.SequenceActions.Components.Events;
     using Modules.SequenceActions.Components.Requests;
     using Modules.SequenceActions.Systems;
-    using Sirenix.OdinInspector;
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UnityEditor;
     using UnityEngine;
     
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
+    using UnityEditor;
     using UniModules.Editor;
 #endif
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/SequenceActions/SequenceActions Feature",fileName = "SequenceActions")]
     public class SequenceActionsFeature : BaseLeoEcsFeature
     {
-        [Header("actions map")]
+#if ODIN_INSPECTOR
         [InlineEditor]
         [HideLabel]
+#endif
+        [Header("actions map")]
         public SequenceActionsMapAsset sequenceActionsMap;
 
         public sealed override UniTask InitializeAsync(IProtoSystems ecsSystems)

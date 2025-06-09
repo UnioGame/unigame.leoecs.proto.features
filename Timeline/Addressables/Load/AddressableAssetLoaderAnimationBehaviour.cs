@@ -3,17 +3,22 @@
     using System;
     using System.Collections.Generic;
     using Cysharp.Threading.Tasks;
-    using Sirenix.OdinInspector;
     using UniGame.AddressableTools.Runtime;
     using UniGame.Core.Runtime;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
     using Object = UnityEngine.Object;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class AddressableAssetLoaderAnimationBehaviour : AddressableAnimationBehaviour
     {
+#if ODIN_INSPECTOR
         [DrawWithUnity]
+#endif
         public List<AssetReference> assets = new List<AssetReference>();
 
         

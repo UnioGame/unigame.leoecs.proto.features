@@ -3,13 +3,16 @@
     using System;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -30,7 +33,9 @@
         }
 
 #if UNITY_EDITOR
+#if ODIN_INSPECTOR
         [Button]
+#endif
         private void SetReferenceSelf()
         {
             var targetPath = AssetDatabase.GetAssetPath(gameObject);

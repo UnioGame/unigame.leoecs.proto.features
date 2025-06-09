@@ -3,12 +3,16 @@
     using System;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Converter.Runtime.Converters;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     public sealed class MonoLightPresetSourceConverter : MonoLeoEcsConverter<LightPresetSourceConverter>
     {
     }
@@ -20,13 +24,18 @@
         
         public bool useLight;
         
+#if ODIN_INSPECTOR
         [HideIf(nameof(useLight))]
         [FoldoutGroup("Light Preset")]
         [InlineProperty]
         [HideLabel]
+#endif 
+
         public LightPreset lightPreset;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(useLight))]
+#endif 
         public Light light;
         
         public float duration;

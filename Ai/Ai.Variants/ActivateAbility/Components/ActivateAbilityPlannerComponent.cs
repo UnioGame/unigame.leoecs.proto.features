@@ -2,11 +2,15 @@ namespace Game.Code.Ai.ActivateAbility
 {
     using System;
     using GameLayers.Category;
-    using Sirenix.OdinInspector;
+
     using UniGame.Ecs.Proto.AI.Service;
     using UniGame.LeoEcs.Shared.Abstract;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
 #if ENABLE_IL2CP
 	using Unity.IL2CPP.CompilerServices;
 
@@ -20,9 +24,11 @@ namespace Game.Code.Ai.ActivateAbility
         /// <summary>
         /// Action Planner Data
         /// </summary>
+#if ODIN_INSPECTOR
         [InlineProperty]
-        [SerializeField]
         [HideLabel]
+#endif 
+        [SerializeField]
         public AiPlannerData PlannerData;
 
         public void Apply(ref ActivateAbilityPlannerComponent component)
@@ -32,7 +38,9 @@ namespace Game.Code.Ai.ActivateAbility
     }
 
     [Serializable]
+#if ODIN_INSPECTOR
     [HorizontalGroup(nameof(CategoryPriority),LabelWidth = 40)]
+#endif 
     public struct CategoryPriority
     {
         public CategoryId Category;

@@ -2,29 +2,39 @@
 {
     using System;
     using Abstract;
-    using Sirenix.OdinInspector;
+    using Core.Runtime;
     using UnityEngine;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class AiActionData : ISearchFilterable
     {
         private const int LabelWidth = 100;
         
-        [FormerlySerializedAs("_name")]
+#if ODIN_INSPECTOR
         [LabelWidth(LabelWidth)]
+#endif
+        [FormerlySerializedAs("_name")]
         [SerializeField]
         public string name = string.Empty;
         
-        [FormerlySerializedAs("_planner")]
+#if ODIN_INSPECTOR
         [LabelWidth(LabelWidth)]
         [InlineProperty]
+#endif
+        [FormerlySerializedAs("_planner")]
         [SerializeReference]
         public IAiPlannerSystem planner;
 
-        [FormerlySerializedAs("_action")]
+#if ODIN_INSPECTOR
         [LabelWidth(LabelWidth)]
         [InlineProperty]
+#endif
+        [FormerlySerializedAs("_action")]
         [SerializeReference]
         public IAiActionSystem action;
 

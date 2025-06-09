@@ -2,15 +2,21 @@ namespace Game.Code.Services.Ability.Data.Arena
 {
     using System;
     using System.Runtime.CompilerServices;
-    using Sirenix.OdinInspector;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [CreateAssetMenu(fileName = "Ability Id Data", menuName = "Game/Configurations/Arena/Abilities/Ability Type Id Data", order = 0)]
     public class AbilityCategoryIdData : ScriptableObject
     {
         public AbilityCategory defaultCategory = new AbilityCategory();
 
-        [InlineProperty] public AbilityCategory[] categoryIds = Array.Empty<AbilityCategory>();
+#if ODIN_INSPECTOR
+        [InlineProperty] 
+#endif
+        public AbilityCategory[] categoryIds = Array.Empty<AbilityCategory>();
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

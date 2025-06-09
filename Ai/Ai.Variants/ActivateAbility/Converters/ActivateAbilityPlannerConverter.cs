@@ -5,17 +5,23 @@
     using AI.Abstract;
     using Game.Code.Ai.ActivateAbility;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime.Abstract;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     [Serializable]
     public class ActivateAbilityPlannerConverter : 
         PlannerConverter<ActivateAbilityPlannerComponent>, 
         ILeoEcsGizmosDrawer
     {
-        [SerializeReference] 
+#if ODIN_INSPECTOR
         [InlineProperty]
+#endif 
+        [SerializeReference] 
         private List<IAbilityByConverter> _converters = new List<IAbilityByConverter>();
 
         protected override void OnApplyComponents(GameObject target, ProtoWorld world, ProtoEntity entity)

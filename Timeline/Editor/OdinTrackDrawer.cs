@@ -1,11 +1,20 @@
 ﻿namespace Game.Code.Timeline.Editor
 {
     using UnityEditor;
-    using Sirenix.OdinInspector.Editor;
+
     using UnityEngine.Timeline;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector.Editor;
+#endif
+    
     [CustomEditor(typeof(TrackAsset))]
-    public class OdinTrackDrawer : OdinEditor
+    public class OdinTrackDrawer 
+#if ODIN_INSPECTOR
+        : OdinEditor
+#else 
+        : Editor
+#endif
     {
         
     }

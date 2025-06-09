@@ -4,11 +4,15 @@
     using Components;
     using Data;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// mark gameobject as effect root target
     /// </summary>
@@ -24,7 +28,10 @@
     {
         public EffectRootId effectRootId;
         public bool useRootTransform = true;
+        
+#if ODIN_INSPECTOR
         [HideIf(nameof(useRootTransform))]
+#endif
         public Transform rootValue;
         
         protected override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)

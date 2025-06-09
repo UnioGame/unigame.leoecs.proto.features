@@ -3,31 +3,43 @@
 	using System;
 	using Configuration.Runtime.Ability;
 	using Configuration.Runtime.Ability.Description;
-	using Sirenix.OdinInspector;
+
 	using UniGame.Core.Runtime;
 	using UniGame.Runtime.Utils;
 	using UnityEngine;
 	using UnityEngine.AddressableAssets;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 	[Serializable]
 	public class AbilityItemData : IUnique, ISearchFilterable
 	{
 		public static readonly AbilityItemData EmptyItem = new AbilityItemData();
 
+#if ODIN_INSPECTOR
 		[TitleGroup("settings")]
+#endif
 		public int id;
 		
+#if ODIN_INSPECTOR
 		[TitleGroup("settings")]
 		[InlineProperty]
 		[HideLabel]
+#endif
 		public AbilityData data = new();
 
+#if ODIN_INSPECTOR
 		[TitleGroup("behaviour")]
+#endif
 		public AssetReferenceT<AbilityConfiguration> configurationReference;
 		
+#if ODIN_INSPECTOR
 		[TitleGroup("visual")]
 		[InlineProperty]
 		[HideLabel]
+#endif
 		[SerializeField]
 		public AbilityVisualDescription visualDescription;
 		

@@ -2,10 +2,14 @@
 {
     using System.IO;
     using System.Text;
-    using Sirenix.OdinInspector;
+
     using UniModules;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UnityEditor;
     using UniModules.Editor;
@@ -14,14 +18,18 @@
     [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions/Actions Map", fileName = "Actions Map")]
     public class GameActionsMap : ScriptableObject
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         public GameActionsData value = new();
 
         #region IdGenerator
 
 #if UNITY_EDITOR
+#if ODIN_INSPECTOR
         [Button("Generate Static Properties")]
+#endif
         public void GenerateProperties()
         {
             GenerateStaticProperties(this);

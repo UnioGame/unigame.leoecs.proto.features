@@ -6,29 +6,43 @@
 	using Game.Ecs.Core.Components;
 	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
 	using Leopotam.EcsProto;
-	using Sirenix.OdinInspector;
+
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
     
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
+#if ODIN_INSPECTOR
 	[InlineProperty]
+#endif
 	[CreateAssetMenu(menuName = "Game/Tutorial/Tutorial Trigger Point Configuration", fileName = "Tutorial Trigger Point Configuration")]
 	public class TutorialTriggerPointConfiguration : ScriptableObject
 	{
 		#region Inspector
         
+#if ODIN_INSPECTOR
 		[BoxGroup("Start")]
+#endif
 		[SerializeReference]
 		public ITutorialTrigger StartTrigger;
 		
+#if ODIN_INSPECTOR
 		[BoxGroup("Start")]
+#endif
 		[SerializeReference]
 		public List<ITutorialAction> StartTriggerActions;
-
+		
+#if ODIN_INSPECTOR
 		[BoxGroup("Final")]
+#endif
 		[SerializeReference]
 		public ITutorialTrigger FinalTrigger;
 		
+#if ODIN_INSPECTOR
 		[BoxGroup("Final")]
+#endif
 		[SerializeReference]
 		public List<ITutorialAction> FinalTriggerActions;
 

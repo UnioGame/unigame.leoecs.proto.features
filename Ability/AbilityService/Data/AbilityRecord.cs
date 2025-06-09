@@ -3,9 +3,13 @@
 	using System;
 	using Cysharp.Text;
 	using DataBase.Runtime.Abstract;
-	using Sirenix.OdinInspector;
+
 	using UniGame.Runtime.Utils;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 	[Serializable]
 	public class AbilityRecord : IGameResourceRecord
 	{
@@ -20,14 +24,18 @@
 		public int id;
 		public int slotType;
 		
+#if ODIN_INSPECTOR
 		[TitleGroup("ability data")]
 		[InlineProperty]
 		[HideLabel]
+#endif
 		public AbilityData data = new AbilityData();
 		
+#if ODIN_INSPECTOR
 		[TitleGroup("ability behaviour")]
 		[InlineProperty]
 		[HideLabel]
+#endif
 		public AssetReferenceAbility ability;
 		
 		public string Name => name;

@@ -3,14 +3,21 @@
     using System.Linq;
     using Code.GameLayers.Layer;
     using Code.GameLayers.Relationship;
-    using Sirenix.Utilities.Editor;
+    
     using UnityEditor;
     using UnityEngine;
+    
+#if ODIN_INSPECTOR
+    using Sirenix.Utilities.Editor;
+#endif
 
     [CustomEditor(typeof(RelationshipIdMap))]
     public sealed class RelationshipIdMapEditor : Editor
     {
+        
+#if ODIN_INSPECTOR
         private GUITable _table;
+#endif
         
         private LayerIdConfiguration _layerIdConfiguration;
         private RelationshipIdConfiguration _relationshipIdConfiguration;
@@ -23,10 +30,13 @@
         {
             serializedObject.Update();
             
+#if ODIN_INSPECTOR
             if(_layerIdConfiguration == null || _table == null)
                 return;
             
             _table.DrawTable();
+#endif
+
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -48,7 +58,11 @@
             var layersCount = _layerIdConfiguration.LayerNames.Count(x => !string.IsNullOrEmpty(x));
             layersCount = Mathf.Min(layersCount, RelationshipIdMap.MaxRowAndColumnCount);
             
-            _table = GUITable.Create(layersCount, layersCount, DrawTableElement, "Layers", DrawColumnLabel, "Layers", DrawRowLabel);
+    #if ODIN_INSPECTOR
+                _table = GUITable.Create(layersCount, layersCount, DrawTableElement,
+                    "Layers", DrawColumnLabel, "Layers", DrawRowLabel);
+    #endif
+            
         }
 
         private void DrawRowLabel(Rect position, int x)

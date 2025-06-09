@@ -6,7 +6,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Runtime.Timeline;
-    using Sirenix.OdinInspector;
+
     using UniGame.AddressableTools.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -16,6 +16,10 @@
     using UnityEngine.Playables;
     using UnityEngine.Timeline;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     public sealed class SpawnAnimationMonoConverter : MonoLeoEcsConverter
     {
         [SerializeField]
@@ -27,7 +31,9 @@
         [SerializeField]
         public bool disableParts = true;
         
+#if ODIN_INSPECTOR
         [Required]
+#endif
         [SerializeField]
         public GameObject[] disabledParts;
      
@@ -81,7 +87,9 @@
             }
         }
 
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void Test()
         {
             // Get the PlayableGraph from the PlayableDirector
@@ -103,7 +111,9 @@
         [SerializeField]
         public AssetReferenceT<PlayableAsset> spawnAnimation;
 
+#if ODIN_INSPECTOR
         [Required]
+#endif
         [SerializeField]
         private GameObject[] disabledParts;
         

@@ -2,12 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
-    using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class AbilityData
     {
+#if ODIN_INSPECTOR
         [ValueDropdown(nameof(GetAbilitiesSlots))]
+#endif
         public int slotType;
 
         public bool isDefault;

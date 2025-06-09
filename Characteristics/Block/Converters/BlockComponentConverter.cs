@@ -4,11 +4,15 @@ namespace UniGame.Ecs.Proto.Characteristics.Block.Converters
     using Components;
     using Leopotam.EcsProto;
     using UniGame.Ecs.Proto.Characteristics.Base.Components.Requests;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// Converts block data and applies it to the target game object in the ECS world.
     /// </summary>
@@ -24,11 +28,15 @@ namespace UniGame.Ecs.Proto.Characteristics.Block.Converters
     {
         public float block = 0f;
 
-        [SerializeField]
+#if ODIN_INSPECTOR
         [MaxValue(100)]
+#endif
+        [SerializeField]
         public float maxDodge = 100f;
 
+#if ODIN_INSPECTOR
         [MinValue(0)]
+#endif
         public float minDodge = 0f;
 
         public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)

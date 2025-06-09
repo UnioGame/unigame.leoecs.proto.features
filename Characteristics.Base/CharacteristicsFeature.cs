@@ -8,7 +8,7 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
     using Components.Events;
     using Components.Requests;
     using Systems;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using System.Linq;
     using UnityEngine;
@@ -18,6 +18,10 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
     using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Shared.Extensions;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
     using UnityEditor;
@@ -26,8 +30,10 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Characteristics Feature", fileName = "Characteristics Feature")]
     public class CharacteristicsFeature : BaseLeoEcsFeature
     {
-        [SerializeReference]
+#if ODIN_INSPECTOR
         [Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
+#endif
+        [SerializeReference]
         public List<CharacteristicEcsFeature> characteristicFeatures = new List<CharacteristicEcsFeature>();
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
@@ -106,7 +112,9 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
             ecsSystems.DelHere<RecalculateCharacteristicSelfRequest>();
         }
 
+#if ODIN_INSPECTOR
         [Button("Fill Characteristics")]
+#endif
         public void FillCharacteristics()
         {
 #if UNITY_EDITOR

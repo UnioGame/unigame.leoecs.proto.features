@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using UniGame.Ecs.Proto.GameEffects.ModificationEffect.Components;
-using Sirenix.OdinInspector;
+
 using UniGame.LeoEcs.Shared.Extensions;
 using UnityEngine;
+
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
 
 namespace UniGame.Ecs.Proto.Characteristics.Converters
 {
@@ -17,7 +21,10 @@ namespace UniGame.Ecs.Proto.Characteristics.Converters
     [Serializable]
     public class ModificationsConverter : EcsComponentConverter
     {
-        [InlineProperty] [SerializeReference]
+#if ODIN_INSPECTOR
+        [InlineProperty] 
+#endif
+        [SerializeReference]
         public List<ModificationHandler> modifications = new List<ModificationHandler>();
 
         public override void Apply(ProtoWorld world, ProtoEntity entity)

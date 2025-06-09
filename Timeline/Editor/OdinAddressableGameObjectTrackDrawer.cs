@@ -1,11 +1,19 @@
 ﻿namespace Game.Code.Timeline.Editor
 {
     using Addressables;
-    using Sirenix.OdinInspector.Editor;
     using UnityEditor;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector.Editor;
+#endif
+    
     [CustomEditor(typeof(AddressableLoadGameObjectAnimationTrack))]
-    public class OdinAddressableGameObjectTrackDrawer : OdinEditor
+    public class OdinAddressableGameObjectTrackDrawer 
+#if ODIN_INSPECTOR
+        : OdinEditor
+#else 
+        : Editor
+#endif
     {
         
     }

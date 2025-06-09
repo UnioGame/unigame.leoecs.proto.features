@@ -3,29 +3,43 @@
     using Assets;
     using UniGame.Ecs.Proto.Presets.Components;
     using Components;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Shared.Extensions;
     using System;
     using Abstract;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Converter.Runtime;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// Fog shader convertor
     /// </summary>
     [Serializable]
     public class FogShaderSettingsSourceConverter : EcsComponentConverter,IPresetAction
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public string targetId = nameof(FogShaderSettingsPresetComponent);
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public float duration;
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public bool showButtons;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
         [FoldoutGroup("Fog Shader Settings")]
         [HideLabel]
+#endif
         public FogShaderPresets preset = new FogShaderPresets();
 
         public override void Apply(ProtoWorld world, ProtoEntity entity)
@@ -42,15 +56,19 @@
             durationComponent.Value = duration;
         }
 
+#if ODIN_INSPECTOR
         [Button] 
         [ShowIf(nameof(showButtons))]
+#endif
         public void Bake()
         {
             preset.BakeActiveFogShaderSettings();
         }
 
+#if ODIN_INSPECTOR
         [Button] 
         [ShowIf(nameof(showButtons))]
+#endif
         public void ApplyToTarget()
         {
             preset.ApplyToShader();

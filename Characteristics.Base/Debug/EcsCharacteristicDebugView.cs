@@ -1,17 +1,26 @@
 ﻿namespace Game.Editor.Runtime.CharacteristicsViewer
 {
     using System;
-    using Sirenix.OdinInspector;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
+#if ODIN_INSPECTOR
     [InlineProperty]
     [HideLabel]
+#endif
+
     [Serializable]
     public class EcsCharacteristicDebugView
     {
+#if ODIN_INSPECTOR
         [FoldoutGroup("$Name")]
         [InlineProperty]
         [HideLabel]
         [ShowIf(nameof(IsActive))]
+#endif
         public CharacteristicValue Value;
 
         public virtual bool IsActive { get; set; }
@@ -23,9 +32,11 @@
             Value = CreateView();
         }
 
+#if ODIN_INSPECTOR
         [FoldoutGroup("$Name")]
         [ButtonGroup("$Name/Commands", Stretch = true)]
         [Button]
+#endif
         public virtual void Recalculate()
         {
             

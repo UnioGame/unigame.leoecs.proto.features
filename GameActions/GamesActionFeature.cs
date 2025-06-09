@@ -7,13 +7,17 @@
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+
     using GameActions;
     using GameActions.Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.Runtime.Utils;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
     using UnityEditor;
@@ -25,16 +29,20 @@
     [CreateAssetMenu(menuName = "ECS Proto/Features/Game Actions Feature",fileName = "Games Action Feature")]
     public class GamesActionFeature : BaseLeoEcsFeature
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         public GameInputActionsFeature inputActions = new();
         
         [SerializeReference]
         public List<IGameActionsSubFeature> features = new();
         
-        [InlineEditor]
-        [SerializeField]
+#if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
+        [InlineEditor]
+#endif
+        [SerializeField]
         private List<GameActionsSubFeatureAsset> subFeatures = new();
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
@@ -59,7 +67,9 @@
             await UniTask.WhenAll(tasks);
         }
 
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void FillFeatures()
         {
 #if UNITY_EDITOR

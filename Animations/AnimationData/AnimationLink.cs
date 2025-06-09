@@ -1,11 +1,15 @@
 ﻿namespace Game.Code.Animations
 {
     using EffectMilestones;
-    using Sirenix.OdinInspector;
+
     using UnityEngine;
     using UnityEngine.Playables;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -13,8 +17,10 @@
     [CreateAssetMenu(fileName = "Animation Link", menuName = "Game/Animation/Animation Link")]
     public sealed class AnimationLink : ScriptableObject
     {
-        [FormerlySerializedAs("_animation")] 
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(BakeMilestones))]
+#endif
+        [FormerlySerializedAs("_animation")] 
         [SerializeField]
         public PlayableAsset animation;
 
@@ -26,24 +32,30 @@
         [Tooltip("If duration is 0, animation will be played with default playable asset duration")]
         public float duration = 0;
         
-        [SerializeField]
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
+        [SerializeField]
         public PlayableBindingData bindingData = new PlayableBindingData();
 
+#if ODIN_INSPECTOR
         [PropertySpace(8)]
-        [Space]
-        [SerializeField]
         [InlineProperty]
         [HideLabel]
+#endif
+        [Space]
+        [SerializeField]
         public EffectMilestonesData milestones;
 
         public bool showCommands = true;
         
         public float Duration => duration <= 0 && animation!=null ? (float)animation.duration : duration ;
         
+#if ODIN_INSPECTOR
         [ButtonGroup()]
         [ShowIf(nameof(showCommands))]
+#endif
         public void BakeMilestones()
         {
             AnimationTool.BakeMilestones(milestones,animation);
@@ -52,8 +64,10 @@
 #endif
         }
         
+#if ODIN_INSPECTOR
         [ButtonGroup]
         [ShowIf(nameof(showCommands))]
+#endif
         public void Clear()
         {
             bindingData.Clear();
@@ -63,9 +77,10 @@
 #endif
         }
 
-
+#if ODIN_INSPECTOR
         [Button(SdfIconType.DoorOpen)]
         [ShowIf(nameof(showCommands))]
+#endif
         public void OpenEditor()
         {
             AnimationEditorData.OpenEditor(this);

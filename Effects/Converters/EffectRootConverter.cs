@@ -5,11 +5,15 @@
     using Data;
     using Game.Modules.UnioModules.UniGame.CoreModules.UniGame.Core.Runtime.Extension;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
 #endif
     
@@ -31,13 +35,18 @@
         [Tooltip("bake effect roots on convert. if false - convert only in editor mode")]
         public bool bakeOnConvert = false;
         
+#if ODIN_INSPECTOR
         [TitleGroup("Backed Effect Roots")]
+#endif
+
         public Transform[] backedRoots = Array.Empty<Transform>();
 
-        [TitleGroup("Backed Effect Roots")]
-        [NonSerialized]
+#if ODIN_INSPECTOR
         [OnInspectorGUI]
         [InlineButton(nameof(Bake),icon:SdfIconType.Activity)]
+        [TitleGroup("Backed Effect Roots")]
+#endif
+        [NonSerialized]
         private GameObject _target;
         
         protected override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)

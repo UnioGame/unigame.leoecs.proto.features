@@ -5,9 +5,12 @@
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Text;
-    using Sirenix.OdinInspector;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniGame.MultiScene.Runtime;
     using UnityEditor;
@@ -17,14 +20,18 @@
     [CreateAssetMenu(menuName = "ECS Proto/Scenes/Scene Map",fileName = "Scene Map")]
     public class SceneMap : ScriptableObject
     {
+#if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = "@name")]
+#endif
         public List<SceneInfo> collection = new();
         
         #region IdGenerator
 
 #if UNITY_EDITOR
 
+#if ODIN_INSPECTOR
         [Button("Collect Scenes")]
+#endif
         public void CollectScenes()
         {
             var sceneAssets = AssetEditorTools.GetAssets<MultiSceneAsset>();
@@ -44,7 +51,9 @@
             this.MarkDirty();
         }
         
+#if ODIN_INSPECTOR
         [Button("Generate Static Properties")]
+#endif
         public void GenerateProperties()
         {
             GenerateStaticProperties(this);

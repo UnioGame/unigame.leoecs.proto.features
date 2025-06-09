@@ -2,13 +2,19 @@
 {
     using System;
     using System.Collections.Generic;
-    using Sirenix.OdinInspector;
+  
 
+#if ODIN_INSPECTOR
+  using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class GameActionsData
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [ListDrawerSettings(ListElementLabelName = "@name")]
+#endif
         public List<GameActionData> collection = new();
     }
 }

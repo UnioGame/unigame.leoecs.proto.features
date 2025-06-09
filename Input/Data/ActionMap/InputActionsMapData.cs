@@ -2,16 +2,21 @@
 {
     using System;
     using System.Runtime.CompilerServices;
-    using Sirenix.OdinInspector;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+     using Sirenix.OdinInspector;
+#endif
+    
     [CreateAssetMenu(menuName = "Game/Maps/Input ActionMaps Map", fileName = "Input ActionMaps Map")]
     public class InputActionsMapData : ScriptableObject
     {
         [HideInInspector]
         public InputActionsMap defaultInputActionsMap = new InputActionsMap();
         
+#if ODIN_INSPECTOR
         [InlineProperty]
+#endif
         public InputActionsMap[] inputActionsMaps = Array.Empty<InputActionsMap>();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

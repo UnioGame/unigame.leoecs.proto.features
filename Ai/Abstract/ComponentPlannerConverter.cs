@@ -2,12 +2,15 @@
 {
     using System;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Abstract;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public abstract class ComponentPlannerConverter : EcsComponentConverter, IEntityConverter
     {
@@ -27,10 +30,12 @@
     public class ComponentPlannerConverter<TComponent> : ComponentPlannerConverter
         where TComponent : struct, IApplyableComponent<TComponent>
     {
+#if ODIN_INSPECTOR
         [FoldoutGroup(nameof(data))]
         [InlineProperty]
-        [SerializeField]
         [HideLabel]
+#endif
+        [SerializeField]
         public TComponent data;
     
         protected override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)

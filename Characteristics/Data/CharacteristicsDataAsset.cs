@@ -1,15 +1,18 @@
 ﻿using System;
 
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
+
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Serialization;
+
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
 
 #if UNITY_EDITOR
 using UniModules.Editor;
@@ -25,6 +28,7 @@ using UnityEditor;
 
 namespace UniGame.Proto.Features.Characteristics
 {
+    using Core.Runtime;
     using UniModules;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Characteristics Data Asset", fileName = "Characteristics Data Asset")]
@@ -35,13 +39,17 @@ namespace UniGame.Proto.Features.Characteristics
         private const string ReplaceKey = "CHARACTERISTIC_FEATURE";
         private const string FeatureFileName = "CHARACTERISTIC_FEATUREFeature.cs";
         
+#if ODIN_INSPECTOR
         [InlineProperty]
+#endif
         public List<Characteristic> Types = new List<Characteristic>();
 
         #region IdGenerator
 
 #if UNITY_EDITOR
+#if ODIN_INSPECTOR || TRI_INSPECTOR
         [Button("Generate Characteristics")]
+#endif
         public void GenerateProperties()
         {
             try
@@ -154,10 +162,13 @@ namespace UniGame.Proto.Features.Characteristics
         public int Id;
     }
 
-    [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@UniGame.Proto.Features.Characteristics.CharacteristicId.GetCharacteristics()", 
         IsUniqueList = true,
         DropdownTitle = "Characteristics")]
+#endif
+    [Serializable]
+
     public partial struct CharacteristicId
     {
         [SerializeField]

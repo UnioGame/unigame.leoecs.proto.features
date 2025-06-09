@@ -3,16 +3,21 @@
     using System;
     using System.Collections.Generic;
     using Cysharp.Threading.Tasks;
-    using Sirenix.OdinInspector;
     using UniGame.AddressableTools.Runtime;
     using UniGame.Core.Runtime;
     using UniGame.Runtime.ObjectPool.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+
     [Serializable]
     public class AddressableGameObjectAnimationBehaviour : AddressableAnimationBehaviour
     {
+#if ODIN_INSPECTOR
         [DrawWithUnity]
+#endif
         public List<AddressableGameObjectData> assets = new List<AddressableGameObjectData>();
 
         public override void Load(GameObject source,float inputWeight, float progress)

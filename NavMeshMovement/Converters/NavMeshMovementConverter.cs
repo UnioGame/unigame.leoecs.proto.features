@@ -5,18 +5,23 @@
     using Game.Code.Configuration.Runtime.Entity.Movement;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
     using UnityEngine.AI;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public sealed class NavMeshMovementConverter : LeoEcsConverter
     {
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         public MovementData movementData = new MovementData();
         
         public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)

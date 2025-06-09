@@ -1,35 +1,61 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.Assets
 {
     using System;
-    using Sirenix.OdinInspector;
+
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class FogShaderPresets
     {
         public bool autoUpdate = false;
         
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public Color mainFogColor = Color.blue;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float distance0 = 5.0f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float distance100 = 5.5f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         [Range(0f, 10f)] public float heightScale = 1.0f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float heightOffset = 0.0f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public Color bottomColor = Color.red;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public bool secondColor = true;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public bool bottomFog = false;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         [Range(-1f, 1f)] public float bottomAlphaMultiply = -0.8f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float bottom0 = 2.0f;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float bottom100 = -5.0f;
 
         private static readonly int MainFogColor = Shader.PropertyToID("MainFogColor");

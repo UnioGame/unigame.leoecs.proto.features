@@ -3,11 +3,15 @@
     using System;
     using System.Collections.Generic;
     using global::Game.Ecs.GameActions.Data;
-    using Sirenix.OdinInspector;
+
     using UniGame.UiSystem.Runtime.Settings;
     using UniModules.UniGame.UiSystem.Runtime;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class GameActionViewsData
     {
@@ -26,7 +30,9 @@
         [FormerlySerializedAs("spawnWithContainer")]
         public bool spawnInContainer = false;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(spawnInContainer))]
+#endif
         public bool useBusyContainer = false;
     }
 }

@@ -7,23 +7,37 @@
     using UniGame.Ecs.Proto.Presets.Converters;
     using Components;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class DirectionalLightSettingsSourceConverter : EcsComponentConverter, IPresetAction
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public string targetId = nameof(DirectionalLightSettingsPresetComponent);
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public float duration;
+        
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
+#endif
         public bool showButtons;
 
+#if ODIN_INSPECTOR
         [ShowIf(nameof(isEnabled))]
         [FoldoutGroup("Directional Light Settings")]
         [HideLabel]
+#endif
         public DirectionalLightPresets preset = new DirectionalLightPresets()
         {
             showTargetValue = false
@@ -73,15 +87,19 @@
             }
         }
 
+#if ODIN_INSPECTOR
         [Button]
         [ShowIf(nameof(showButtons))]
+#endif
         public void Bake()
         {
             SearchTarget(false);
         }
 
+#if ODIN_INSPECTOR
         [Button]
         [ShowIf(nameof(showButtons))]
+#endif
         public void ApplyToTarget()
         {
             SearchTarget(true);

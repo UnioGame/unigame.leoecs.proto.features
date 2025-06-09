@@ -2,15 +2,20 @@
 {
     using System;
     using System.Collections.Generic;
-    using Sirenix.OdinInspector;
+    using Core.Runtime;
+
 
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
-    
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
 
     [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@unigame.ecs.proto.Effects.Data.EffectRootId.EffectsRoots()",IsUniqueList = true,DropdownTitle = "Equip Slot")]
+#endif
     public struct EffectRootId
     {
         public int value;

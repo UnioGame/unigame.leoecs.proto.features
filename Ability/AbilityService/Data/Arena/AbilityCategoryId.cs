@@ -4,8 +4,13 @@ namespace Game.Code.Services.Ability.Data.Arena
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -16,7 +21,9 @@ namespace Game.Code.Services.Ability.Data.Arena
     /// Shelf Category Id
     /// </summary>
     [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Code.Services.Ability.Data.Arena.AbilityCategoryId.GetIds()")]
+#endif
     public struct AbilityCategoryId
     {
         public int value;

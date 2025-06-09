@@ -1,8 +1,11 @@
 ﻿namespace Game.Code.Ai.ActivateAbility
 {
     using System;
-    using Sirenix.OdinInspector;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     [Serializable]
     public struct AbilityFilter
     {
@@ -11,7 +14,9 @@
         /// <summary>
         /// Приоритет выбора. Первые элементы более приоритетны остальным
         /// </summary>
+#if ODIN_INSPECTOR
         [ShowIf(nameof(UsePriority))]
+#endif 
         public CategoryPriority[] Priorities;
 
         /// <summary>

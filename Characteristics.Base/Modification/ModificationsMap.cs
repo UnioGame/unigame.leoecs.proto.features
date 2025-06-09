@@ -4,15 +4,21 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Sirenix.OdinInspector;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class ModificationsMap : IModificationsMap
     {
         #region inspector
         
+#if ODIN_INSPECTOR
         [Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
         [ListDrawerSettings(ListElementLabelName = "id")]
+#endif
         public List<ModificationData> modifications = new List<ModificationData>();
 
         #endregion

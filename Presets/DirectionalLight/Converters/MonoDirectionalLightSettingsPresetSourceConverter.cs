@@ -1,14 +1,21 @@
 ﻿namespace UniGame.Ecs.Proto.Presets.DirectionalLight.Converters
 {
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UnityEngine;
+    
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif 
+    
     public class MonoDirectionalLightSettingsPresetSourceConverter : MonoLeoEcsConverter
     {
-        [SerializeField]
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif 
+        [SerializeField]
         public DirectionalLightSettingsSourceConverter directionalLightConverter = new();
 
         public sealed override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)

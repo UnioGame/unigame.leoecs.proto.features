@@ -2,40 +2,64 @@
 {
     using System;
     using UnityEngine;
-    using Sirenix.OdinInspector;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     [Serializable]
     public class SpotLightPresets
     {
+#if ODIN_INSPECTOR
         [ShowIf(nameof(showTargetValue))]
+#endif
         public bool autoUpdate = false;
         [HideInInspector]
         public bool showTargetValue = true;
 
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public bool active;
 
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public Vector3 position;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public Vector3 rotation;
         
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdateSpotAngle))]
+#endif
         [Range(0, 179)]
         public float spotAngle;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdateSpotAngle))]
+#endif
         [Range(0, 179)]
         public float innerSpotAngle;
 
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public Color color;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float intensity;
+#if ODIN_INSPECTOR
         [OnValueChanged(nameof(AutoUpdate))]
+#endif
         public float range;
         
+#if ODIN_INSPECTOR
         [ShowIf(nameof(showTargetValue))]
         [Required]
+#endif
         public Light spotLight;
         
         private static SpotLightPresets _bufferPreset = new SpotLightPresets();

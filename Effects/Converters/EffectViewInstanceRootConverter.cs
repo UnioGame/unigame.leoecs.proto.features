@@ -4,11 +4,15 @@
     using Components;
     using Game.Code.Configuration.Runtime.Effects;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
 #endif
     
@@ -23,7 +27,9 @@
     public class EffectViewInstanceRootConverter : GameObjectConverter
     {
 #if UNITY_EDITOR
+#if ODIN_INSPECTOR
         [InlineButton(nameof(FillOptions))]
+#endif
 #endif
         public ViewInstanceTypeSlot[] viewInstances;
         
@@ -59,7 +65,9 @@
     [Serializable]
     public class ViewInstanceTypeSlot
     {
+#if ODIN_INSPECTOR
         [ReadOnly]
+#endif
         public ViewInstanceType type;
         public Transform transform;
     }

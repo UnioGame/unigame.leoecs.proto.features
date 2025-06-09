@@ -4,8 +4,11 @@
     using Components;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
-    using Sirenix.OdinInspector;
     using UnityEngine;
+  
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
     
     /// <summary>
     /// Converts mana regeneration data and applies it to the target game object in the ECS world.
@@ -20,7 +23,9 @@
     [Serializable]
     public sealed class ManaRegenerationComponentConverter : GameCharacteristicConverter<ManaRegenerationComponent>
     {
+#if ODIN_INSPECTOR
         [ShowInInspector, PropertyRange(0f, 1f)]
+#endif
         public float tickTime = 0.2f;
 
         public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)

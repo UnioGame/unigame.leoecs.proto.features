@@ -8,7 +8,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using R3;
-    using Sirenix.OdinInspector;
+
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -17,6 +17,10 @@
     using UnityEngine.Scripting.APIUpdating;
     using UnityEngine.UI;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
     /// <summary>
     /// Converter main menu action to entity.
     /// </summary>
@@ -35,8 +39,10 @@
     {
         public GameActionId gameActionId;
         
+#if ODIN_INSPECTOR
         [InlineProperty]
         [HideLabel]
+#endif
         public ButtonStartValue buttonStartValue;
         
         public Button button;

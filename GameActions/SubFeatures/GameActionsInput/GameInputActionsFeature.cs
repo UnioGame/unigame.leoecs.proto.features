@@ -5,12 +5,16 @@
     using Data;
     using Leopotam.EcsProto;
     using Systems;
-    using Sirenix.OdinInspector;
+
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
     using Object = UnityEngine.Object;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -21,8 +25,10 @@
     [Serializable]
     public class GameInputActionsFeature : EcsFeature
     {
-        [SerializeField]
+#if ODIN_INSPECTOR
         [InlineEditor]
+#endif
+        [SerializeField]
         public GameActionsMap mainActionMap;
 
         protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)

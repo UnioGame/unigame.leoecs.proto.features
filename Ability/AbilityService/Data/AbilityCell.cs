@@ -3,8 +3,12 @@
     using System;
     using Description;
     using Services.AbilityLoadout.Data;
-    using Sirenix.OdinInspector;
 
+
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
@@ -14,7 +18,9 @@
     {
         public bool IsDefault;
         
+#if ODIN_INSPECTOR
         [InlineButton(nameof(PingAbility), "Ping")]
+#endif
         public AbilityId AbilityId;
         public AbilitySlotId SlotId;
         

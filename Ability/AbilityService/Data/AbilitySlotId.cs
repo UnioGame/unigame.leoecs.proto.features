@@ -3,15 +3,23 @@
 	using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using UniGame.Core.Runtime;
+    
+#if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
     using UnityEngine;
 
     [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Code.Services.AbilityLoadout.Data.AbilitySlotId.GetAbilitySlots()", IsUniqueList = true,
         DropdownTitle = "Ability Slot")]
+#endif
     public struct AbilitySlotId
     {
         public static readonly AbilitySlotId EmptyAbilitySlot = (AbilitySlotId)(-1);

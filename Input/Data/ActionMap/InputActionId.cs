@@ -4,16 +4,21 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using Sirenix.OdinInspector;
     using UnityEngine;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
 
-    [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Ecs.Input.Data.InputActionId.GetIds()")]
+#endif
+    [Serializable]
     public struct InputActionId : IEquatable<int>
     {
         [SerializeField]
@@ -23,6 +28,7 @@
 
         private static InputActionsMapData _inputActionsData;
 
+#if ODIN_INSPECTOR
         public static IEnumerable<ValueDropdownItem<InputActionId>> GetIds()
         {
 #if UNITY_EDITOR
@@ -49,10 +55,11 @@
 #endif
             yield break;
         }
-
+#endif
+        
         public static string GetName(InputActionId inputActionsMapId)
         {
-#if UNITY_EDITOR
+#if UNITY_EDITOR && ODIN_INSPECTOR
             var ids = GetIds();
             var item = ids.FirstOrDefault(x => x.Value == inputActionsMapId);
             var itemText = item.Text;

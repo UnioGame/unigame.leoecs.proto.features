@@ -5,17 +5,23 @@
 	using ActionTools;
 	using Components;
 	using Leopotam.EcsProto;
-	using Sirenix.OdinInspector;
+
 	using UniGame.LeoEcs.Shared.Extensions;
 	using UnityEngine;
 
+#if ODIN_INSPECTOR
+	using Sirenix.OdinInspector;
+#endif
+	
 	[Serializable]
 	public class AnalyticsActionConfiguration : ITutorialAction
 	{
 		#region Inspector
 
-
+#if ODIN_INSPECTOR
 		[TitleGroup("Event Data")]
+#endif
+
 		[SerializeReference]
 		public TutorialKey stepName;
         

@@ -3,16 +3,22 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
     using UnityEngine;
     using UnityEngine.Serialization;
 
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
 #if UNITY_EDITOR
     using UniModules.Editor;
 #endif
 
-    [Serializable]
+#if ODIN_INSPECTOR
     [ValueDropdown("@Game.Ecs.Input.Data.InputActionsMapId.GetIds()")]
+#endif
+    [Serializable]
     public struct InputActionsMapId : IEquatable<int>
     {
         [SerializeField]
@@ -21,7 +27,7 @@
         #region statis editor data
 
         private static InputActionsMapData _inputActionsData;
-
+        
         public static IEnumerable<ValueDropdownItem<InputActionsMapId>> GetIds()
         {
 #if UNITY_EDITOR

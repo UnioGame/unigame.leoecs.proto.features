@@ -3,14 +3,21 @@
     using System;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Sirenix.OdinInspector;
+    using UniGame.Core.Runtime;
     using UniGame.Ecs.Proto.Characteristics.Base.Components;
     using UniGame.Ecs.Proto.Characteristics.Base.Components.Requests;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    [Serializable]
+#if ODIN_INSPECTOR
+    using Sirenix.OdinInspector;
+#endif
+    
+#if ODIN_INSPECTOR
     [InlineProperty]
     [HideLabel]
+#endif
+    [Serializable]
+
     public class CharacteristicDebugViewer<TCharacteristic> :
         EcsCharacteristicDebugView,
         ISearchFilterable

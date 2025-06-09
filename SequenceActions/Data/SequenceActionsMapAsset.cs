@@ -25,7 +25,9 @@
 #endif
         public List<SequenceActionItem> actions = new();
 
+#if ODIN_INSPECTOR
         [Button]
+#endif
         public void CollectSequences()
         {
 #if UNITY_EDITOR
