@@ -1,7 +1,7 @@
 ﻿namespace Game.Ecs.Scenes.Services
 {
     using Cysharp.Threading.Tasks;
-    using UniGame.GameFlow.Runtime.Interfaces;
+    using UniGame.GameFlow.Runtime;
     using UnityEngine.SceneManagement;
 
     public interface ISceneService : IGameService

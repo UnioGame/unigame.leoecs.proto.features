@@ -4,7 +4,7 @@
     using Aspect;
     using Components;
     using Game.Ecs.Core.Components;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

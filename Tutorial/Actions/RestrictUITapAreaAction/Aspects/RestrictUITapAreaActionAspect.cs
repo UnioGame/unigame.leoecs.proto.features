@@ -4,7 +4,7 @@
 	using Components;
 	using Leopotam.EcsProto;
 	using Triggers.ActionTrigger.Components;
-	using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+	using LeoEcs.Bootstrap;
 	
 	[Serializable]
 	public class RestrictUITapAreaActionAspect : EcsAspect

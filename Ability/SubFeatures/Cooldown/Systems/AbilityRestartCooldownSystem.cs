@@ -5,7 +5,7 @@
     using Components;
     using FakeTimeline.Aspects;
     using FakeTimeline.Components.Requests;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

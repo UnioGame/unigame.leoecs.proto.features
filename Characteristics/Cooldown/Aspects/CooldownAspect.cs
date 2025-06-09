@@ -3,7 +3,7 @@
     using System;
     using Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect that manages cooldown feature.

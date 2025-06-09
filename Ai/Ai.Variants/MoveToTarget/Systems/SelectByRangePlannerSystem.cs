@@ -4,7 +4,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using Components;
     using Game.Ecs.Core.Death.Components;
     using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

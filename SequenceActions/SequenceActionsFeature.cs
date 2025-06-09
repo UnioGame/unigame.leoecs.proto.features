@@ -4,7 +4,7 @@ namespace Game.Ecs.State
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto.QoL;
     using Modules.Feature.SequenceActions.Data;
-    using Modules.leoecs.proto.features.SequenceActions.Data;
+    using Modules.SequenceActions.Data;
     using Modules.SequenceActions.Components.Events;
     using Modules.SequenceActions.Components.Requests;
     using Modules.SequenceActions.Systems;

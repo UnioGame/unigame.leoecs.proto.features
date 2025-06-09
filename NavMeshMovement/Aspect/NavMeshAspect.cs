@@ -7,7 +7,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     [Serializable]
     public class NavMeshAspect : EcsAspect

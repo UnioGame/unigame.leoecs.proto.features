@@ -5,7 +5,7 @@
     using Components.Requests;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
     
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

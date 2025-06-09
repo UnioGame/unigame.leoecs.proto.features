@@ -10,7 +10,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using UniGame.LeoEcsLite.LeoEcs.Shared.Components;
     using Unity.Mathematics;
     using UnityEngine;

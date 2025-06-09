@@ -3,7 +3,7 @@
     using System;
     using Events;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Represents the aspect for the Dodge game mechanic.

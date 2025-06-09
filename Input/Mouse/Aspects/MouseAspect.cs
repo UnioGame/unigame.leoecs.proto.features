@@ -7,7 +7,7 @@
     using Input.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect containing a pool for components related to mouse input.

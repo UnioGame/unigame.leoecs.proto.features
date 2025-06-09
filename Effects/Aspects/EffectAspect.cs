@@ -6,7 +6,7 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     [Serializable]
     public class EffectAspect : EcsAspect

@@ -28,7 +28,7 @@
     using Leopotam.EcsProto.QoL;
     using Tools;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Timer.Components;
     using Unity.IL2CPP.CompilerServices;
     using UnityEngine.Serialization;

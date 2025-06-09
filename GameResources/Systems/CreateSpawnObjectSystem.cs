@@ -4,7 +4,7 @@
     using Aspects;
     using Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using LeoEcs.Converter.Runtime;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;

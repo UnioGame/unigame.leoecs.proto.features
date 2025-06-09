@@ -8,7 +8,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Modules.leoecs.proto.features.GameActions.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect of a button action in the game.

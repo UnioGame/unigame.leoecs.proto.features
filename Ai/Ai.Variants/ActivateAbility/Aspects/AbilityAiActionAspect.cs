@@ -11,7 +11,7 @@
     using UniGame.Ecs.Proto.GameLayers.Layer.Components;
     using UniGame.Ecs.Proto.GameLayers.Relationship.Components;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
 
     [Serializable]
     public class AbilityAiActionAspect : EcsAspect

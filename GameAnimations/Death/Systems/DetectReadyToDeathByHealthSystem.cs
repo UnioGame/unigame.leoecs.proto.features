@@ -7,7 +7,7 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

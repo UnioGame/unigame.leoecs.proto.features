@@ -4,7 +4,7 @@
     using Components;
     using Components.Requests;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect for managing critical attack chance feature.

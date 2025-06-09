@@ -4,7 +4,7 @@
 	using Aspects;
 	using Components;
 	using Cysharp.Threading.Tasks;
-	using Game.Code.Services.AbilityLoadout.Abstract;
+	using Game.Code.AbilityLoadout;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

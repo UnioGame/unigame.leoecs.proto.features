@@ -1,4 +1,4 @@
-﻿namespace Game.Modules.leoecs.proto.features.SequenceActions.Data
+﻿namespace Game.Modules.SequenceActions.Data
 {
     using System;
     using System.Collections.Generic;

@@ -7,7 +7,7 @@
     using Data;
     using Leopotam.EcsProto;
     using Systems;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcsLite.LeoEcs.Shared.Components;
 

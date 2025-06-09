@@ -8,7 +8,7 @@
     using Effects.Components;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Ability agent aspect

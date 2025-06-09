@@ -4,7 +4,7 @@
     using Components;
     using Events.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect for the HealingEffect system in the game.

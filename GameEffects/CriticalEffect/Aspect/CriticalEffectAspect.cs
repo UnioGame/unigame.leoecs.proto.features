@@ -5,7 +5,7 @@
 	using Effects.Components;
 	using Gameplay.CriticalAttackChance.Components;
 	using Leopotam.EcsProto;
-	using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+	using LeoEcs.Bootstrap;
 	
 	[Serializable]
 	public class CriticalEffectAspect : EcsAspect

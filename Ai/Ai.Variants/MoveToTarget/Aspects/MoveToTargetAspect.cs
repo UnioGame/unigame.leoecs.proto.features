@@ -4,7 +4,7 @@
     using Leopotam.EcsProto;
     using UniGame.Ecs.Proto.GameAi.MoveToTarget.Components;
     using UniGame.Ecs.Proto.GameLayers.Category.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
     
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

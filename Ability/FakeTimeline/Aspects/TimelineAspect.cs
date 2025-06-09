@@ -9,7 +9,7 @@
     using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using UnityEngine;
 
 #if ENABLE_IL2CPP

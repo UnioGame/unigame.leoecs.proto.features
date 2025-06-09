@@ -4,7 +4,7 @@
 	using Components;
 	using Leopotam.EcsProto;
 	using Tutorial.Components;
-	using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+	using LeoEcs.Bootstrap;
 
 	/// <summary>
 	/// tutorial trigger aspect

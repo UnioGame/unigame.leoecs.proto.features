@@ -6,7 +6,7 @@
     using Components.Requests;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using UniGame.LeoEcs.Bootstrap;
 
     /// <summary>
     /// Aspect of a button action in the game.

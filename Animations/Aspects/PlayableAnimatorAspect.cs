@@ -6,7 +6,7 @@
     using Components.Requests;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     [Serializable]
     public class PlayableAnimatorAspect : EcsAspect

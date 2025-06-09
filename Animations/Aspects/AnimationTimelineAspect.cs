@@ -8,7 +8,7 @@
     using Game.Ecs.Core.Components;
     using Game.Modules.leoecs.proto.tools.Ownership.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Timer.Components;
 
     [Serializable]

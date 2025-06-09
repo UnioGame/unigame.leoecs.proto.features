@@ -11,7 +11,7 @@
     using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
     using GameResources.Aspects;
     using GameResources.Systems;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

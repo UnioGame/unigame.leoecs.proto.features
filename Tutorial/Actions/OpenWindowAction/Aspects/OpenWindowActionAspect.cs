@@ -2,7 +2,7 @@
 {
 	using Components;
 	using Leopotam.EcsProto;
-	using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+	using LeoEcs.Bootstrap;
 
 	public class OpenWindowActionAspect : EcsAspect
 	{

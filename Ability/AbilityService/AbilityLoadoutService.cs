@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using System.Linq;
 	using Ability.Data;
-	using Abstract;
+	using Code.AbilityLoadout;
 	using Cysharp.Threading.Tasks;
 	using Data;
 	using UniGame.AddressableTools.Runtime;

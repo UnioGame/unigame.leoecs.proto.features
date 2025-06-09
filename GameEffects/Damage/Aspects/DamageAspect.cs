@@ -5,7 +5,7 @@
     using Components.Events;
     using Components.Request;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// Represents a damage aspect in the gameplay feature.

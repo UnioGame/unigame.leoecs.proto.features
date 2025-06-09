@@ -6,7 +6,7 @@
     using Components.Requests;
     using Base;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// new characteristic aspect

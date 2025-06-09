@@ -3,7 +3,7 @@
     using System;
     using Aspects;
     using Components;
-    using LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsProto;

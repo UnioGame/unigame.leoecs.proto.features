@@ -6,7 +6,7 @@
     using Components.Requests;
     using LeoEcs.Shared.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     /// <summary>
     /// data of characteristics components

@@ -13,7 +13,7 @@ namespace UniGame.Ecs.Proto.AbilityInventory.Aspects
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Components;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     [Serializable]
     [ECSDI]

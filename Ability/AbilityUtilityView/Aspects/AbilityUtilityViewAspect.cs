@@ -7,7 +7,7 @@
     using Leopotam.EcsProto;
     using Radius.AggressiveRadius.Components;
     using Radius.Component;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

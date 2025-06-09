@@ -6,7 +6,7 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
     using Leopotam.EcsProto;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
 
     [Serializable]
     public class DeathAspect : EcsAspect

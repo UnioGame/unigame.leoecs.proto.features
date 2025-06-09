@@ -7,7 +7,7 @@
     using Components;
     using Cysharp.Threading.Tasks;
     using Equip.Components;
-    using Game.Code.Services.AbilityLoadout.Abstract;
+    using Game.Code.AbilityLoadout;
     using Game.Code.Services.AbilityLoadout.Data;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;

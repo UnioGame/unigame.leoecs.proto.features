@@ -4,7 +4,7 @@
 	using System.Collections.Generic;
 	using Components;
 	using Game.Code.Services.Ability.Data;
-	using Game.Code.Services.AbilityLoadout.Abstract;
+	using Game.Code.AbilityLoadout;
 	using Leopotam.EcsProto;
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 	using UniGame.LeoEcs.Shared.Extensions;

@@ -6,7 +6,7 @@
     using Components;
     using Components.Requests;
     using Cysharp.Threading.Tasks;
-    using leoecs.proto.features.SequenceActions.Data;
+    using Modules.SequenceActions.Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.AddressableTools.Runtime;

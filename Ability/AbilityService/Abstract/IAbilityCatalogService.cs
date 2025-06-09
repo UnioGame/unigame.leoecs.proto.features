@@ -1,10 +1,10 @@
-﻿namespace Game.Code.Services.AbilityLoadout.Abstract
+﻿namespace Game.Code.AbilityLoadout
 {
 	using System.Collections.Generic;
-	using Ability.Data;
 	using Cysharp.Threading.Tasks;
-	using Data;
-	using UniGame.GameFlow.Runtime.Interfaces;
+	using Services.Ability.Data;
+	using Services.AbilityLoadout.Data;
+	using UniGame.GameFlow.Runtime;
 
 	public interface IAbilityCatalogService : IGameService
 	{

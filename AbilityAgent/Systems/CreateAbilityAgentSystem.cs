@@ -6,7 +6,7 @@
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Abstract;
+    using LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
