@@ -1,8 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using Core.Runtime;
 
     using UnityEngine;
 
@@ -26,9 +24,9 @@
         [FoldoutGroup("Modification")]
         [InlineProperty]
         [HideLabel]
+        [Sirenix.OdinInspector.Required]
 #endif
         [SerializeReference]
-        [Required]
         public IModificationFactory factory;
 
         public Type ModificationType => factory.TargetType;
