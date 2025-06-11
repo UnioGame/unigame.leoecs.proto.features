@@ -8,7 +8,7 @@
     using UniGame.AddressableTools.Runtime.AssetReferencies;
     using UniModules;
     using UniModules.Editor;
-    using UniModules.UniGame.AddressableExtensions.Editor;
+    using UniGame.AddressableTools.Editor;
     using UnityEditor;
     using UnityEngine;
     using UnityEngine.AddressableAssets;

@@ -15,7 +15,7 @@
 	
 #if UNITY_EDITOR
 	using UniModules.Editor;
-	using UniModules.UniGame.AddressableExtensions.Editor;
+	using UniGame.AddressableTools.Editor;
 #endif
 	using UnityEngine;
 	using UnityEngine.AddressableAssets;
