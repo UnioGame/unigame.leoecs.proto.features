@@ -3,6 +3,7 @@ namespace Game.Ecs.SpineAnimation.Components.Requests
     using System;
     using Data.AnimationType;
     using Leopotam.EcsProto;
+    using UniGame.LeoEcs.Proto;
 
     /// <summary>
     /// Request to play a spine animation on the entity itself.
@@ -21,10 +22,15 @@ namespace Game.Ecs.SpineAnimation.Components.Requests
         public AnimationTypeId NextAnimationTypeId;
         public float TimeScale;
         
-        public void AutoReset(ref PlaySpineAnimationSelfRequest c)
+        public static void AutoReset(ref PlaySpineAnimationSelfRequest c)
         {
             c.NextAnimationTypeId = AnimationTypeId.Idle;
             c.TimeScale = 1f;
+        }
+
+        public void SetHandlers(IProtoPool<PlaySpineAnimationSelfRequest> pool)
+        {
+            pool.SetResetHandler(AutoReset);
         }
     }
 }

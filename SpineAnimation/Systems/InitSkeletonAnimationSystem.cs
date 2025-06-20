@@ -6,10 +6,10 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Modules.leoecs.proto.tools.Ownership.Aspects;
+    using R3;
     using Spine;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniRx;
 
     /// <summary>
     /// System for initializing skeleton animation and subscription to spine events.
