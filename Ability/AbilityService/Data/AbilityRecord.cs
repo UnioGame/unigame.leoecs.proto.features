@@ -1,7 +1,6 @@
 ﻿namespace Game.Code.Services.AbilityLoadout.Data
 {
 	using System;
-	using Cysharp.Text;
 	using DataBase.Runtime.Abstract;
 
 	using UniGame.Runtime.Utils;
@@ -47,7 +46,7 @@
 			return filter.Equals(name,StringComparison.OrdinalIgnoreCase);
 		}
 
-		public string Label => ZString.Format("{0} | ({1})",name,id);
+		public string Label => $"{name} | ({id})";
 
 		public bool IsMatch(string searchString)
 		{

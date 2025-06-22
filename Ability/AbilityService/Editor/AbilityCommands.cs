@@ -2,10 +2,7 @@
 {
     using System.IO;
     using AbilityLoadout.Data;
-    using Animations;
     using Configuration.Runtime.Ability;
-    using Cysharp.Text;
-    using UniGame.AddressableTools.Runtime.AssetReferencies;
     using UniModules;
     using UniModules.Editor;
     using UniGame.AddressableTools.Editor;
@@ -40,9 +37,9 @@
             var abilityConfiguration = ScriptableObject.CreateInstance<AbilityConfiguration>();
             var animation = ScriptableObject.CreateInstance<TimelineAsset>();
             
-            abilityMeta.name = ZString.Format(AbilityNameTemplate,abilityName,MetaAssetName);
-            abilityConfiguration.name = ZString.Format(AbilityNameTemplate,abilityName,ConfigurationAssetName);
-            animation.name = ZString.Format(AbilityNameTemplate,abilityName,AnimationAssetName);
+            abilityMeta.name = string.Format(AbilityNameTemplate,abilityName,MetaAssetName);
+            abilityConfiguration.name = string.Format(AbilityNameTemplate,abilityName,ConfigurationAssetName);
+            animation.name = string.Format(AbilityNameTemplate,abilityName,AnimationAssetName);
 
             abilityMeta = abilityMeta.SaveAsset(abilityFolder, false, false);
             abilityConfiguration = abilityConfiguration.SaveAsset(abilityFolder, false, false);
@@ -91,7 +88,7 @@
             
             var name = string.IsNullOrEmpty(path)
                 ? DefaultAbilityName
-                : ZString.Format(DefaultAbilityNameTemplate,Path.GetFileNameWithoutExtension(path));
+                : string.Format(DefaultAbilityNameTemplate,Path.GetFileNameWithoutExtension(path));
                 
             CreateAbility(name);
         }
