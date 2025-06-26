@@ -5,9 +5,9 @@
     using Data;
     using Data.AnimationType;
     using Leopotam.EcsProto;
+    using UniGame.DataStructure;
     using UniGame.LeoEcs.Converter.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UniModules.UniGame.Core.Runtime.DataStructure;
     using UnityEngine;
 
     /// <summary>
