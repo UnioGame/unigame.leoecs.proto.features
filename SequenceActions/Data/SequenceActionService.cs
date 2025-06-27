@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Feature.SequenceActions.Data;
-    using UniGame.UniNodes.GameFlow.Runtime;
+    using UniGame.GameFlow.Runtime;
+
 
     [Serializable]
     public class SequenceActionService : GameService, ISequenceActionService

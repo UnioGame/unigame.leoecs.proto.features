@@ -69,7 +69,7 @@
 
         #endregion
         
-        private LifeTimeDefinition _lifeTime;
+        private LifeTime _lifeTime;
         private ProtoWorld _world;
         private ProtoEntity _entity;
 
@@ -80,7 +80,7 @@
             _world = world;
             _entity = entity;
             
-            _lifeTime ??= new LifeTimeDefinition()
+            _lifeTime ??= new LifeTime()
                 .AddTo(target.GetAssetLifeTime());
             _lifeTime.Release();
 
