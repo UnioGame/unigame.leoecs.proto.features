@@ -50,6 +50,7 @@
                 resourceSpawnComponent.LocationData = spawnRequest.LocationData;
                 resourceSpawnComponent.ResourceLifeTime = resourceLifeTime;
                 resourceSpawnComponent.Parent = spawnRequest.Parent;
+                resourceSpawnComponent.SetActive = spawnRequest.SetActive;
 
                 ref var loadTaskComponent = ref _gameResourceAspect.LoadTask.Add(entity);
                 loadTaskComponent.Value = loadResourceTask;

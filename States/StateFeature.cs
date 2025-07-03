@@ -1,5 +1,7 @@
 namespace Game.Ecs.State
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Components.Events;
@@ -11,6 +13,7 @@ namespace Game.Ecs.State
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniModules;
+    using UniModules.UniCore.Runtime.Utils;
     using UnityEngine;
     
 #if UNITY_EDITOR
@@ -44,6 +47,9 @@ namespace Game.Ecs.State
             ecsSystems.Add(new ChangeStateSystem());
             // System for updating the state history of an entity.
             ecsSystems.Add(new UpdateStateHistorySystem());
+
+            foreach (var stateSystem in stateMap.stateSystems)
+                ecsSystems.AddSystem(stateSystem);
             
             ecsSystems.DelHere<AddStateSelfRequest>();
             ecsSystems.DelHere<RemoveStateSelfRequest>();
@@ -70,8 +76,8 @@ namespace Game.Ecs.State
                 this.MarkDirty();
                 AssetDatabase.SaveAssets();
             }
-
         }
+        
         
 #endif
 #endif

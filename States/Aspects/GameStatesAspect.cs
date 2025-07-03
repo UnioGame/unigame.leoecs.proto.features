@@ -71,8 +71,10 @@ namespace Game.Ecs.State.Aspects
             
             foreach (var behaviour in behaviours)
             {
-                behaviour.stateBehaviour.Initialize(world);
-                behavioursComponent.Behaviours.Add(behaviour.stateId, behaviour.stateBehaviour);
+                var stateBehaviour = behaviour.stateBehaviour;
+                var id = behaviour.stateId;
+                stateBehaviour.Initialize(world);
+                behavioursComponent.Behaviours.Add(id, stateBehaviour);
             }
         }
         

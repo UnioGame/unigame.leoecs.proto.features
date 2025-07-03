@@ -20,5 +20,6 @@
         public GamePoint LocationData;
         public Transform Parent;
         public ILifeTime ResourceLifeTime;
+        public bool SetActive;
     }
 }
