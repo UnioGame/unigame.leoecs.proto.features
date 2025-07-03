@@ -32,7 +32,20 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
+    "defineConstraints": [
+        "LEO_ECS_PROTO_ENABLED"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.leopotam.proto",
+            "expression": "",
+            "define": "LEO_ECS_PROTO_ENABLED"
+        },
+        {
+            "name": "com.codewriter.triinspector",
+            "expression": "",
+            "define": "TRI_INSPECTOR"
+        }
+    ],
     "noEngineReferences": false
 }
