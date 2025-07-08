@@ -11,7 +11,6 @@
     using Leopotam.EcsProto.QoL;
 
     using UniGame.AddressableTools.Runtime;
-    using UniGame.AddressableTools.Runtime.AssetReferencies;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
