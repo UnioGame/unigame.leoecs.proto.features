@@ -82,7 +82,7 @@
             
             _lifeTime ??= new LifeTime()
                 .AddTo(target.GetAssetLifeTime());
-            _lifeTime.Release();
+            _lifeTime.Restart();
 
             ref var viewParentComponent = ref world.GetOrAddComponent<GameViewParentComponent>(entity);
             viewParentComponent.Parent = parent == null ? target.transform : parent;
