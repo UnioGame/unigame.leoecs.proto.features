@@ -4,7 +4,7 @@
 	using Aspects;
 	using Components;
 	using Game.Ecs.Core.Components;
-	using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+	using UniGame.Proto.Ownership;
 	using LeoEcs.Shared.Extensions;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;

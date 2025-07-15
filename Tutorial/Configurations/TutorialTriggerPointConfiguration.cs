@@ -4,7 +4,7 @@
 	using Abstracts;
 	using Components;
 	using Game.Ecs.Core.Components;
-	using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+	using UniGame.Proto.Ownership;
 	using Leopotam.EcsProto;
 
 	using UniGame.LeoEcs.Shared.Extensions;

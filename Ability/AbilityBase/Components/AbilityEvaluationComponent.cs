@@ -1,6 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.Common.Components
 {
-    using Game.Modules.leoecs.proto.features.Ability.AbilityBase.Components;
+    using UniGame.Proto.Ability;
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
 

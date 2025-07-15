@@ -6,7 +6,7 @@
     using Cysharp.Threading.Tasks;
     using Game.Code.DataBase.Runtime;
     using Game.Ecs.Core.Components;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using UniGame.Proto.Ownership;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniCore.Runtime.ProfilerTools;

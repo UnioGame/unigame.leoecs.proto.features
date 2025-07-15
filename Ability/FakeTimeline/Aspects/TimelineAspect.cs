@@ -6,7 +6,7 @@
     using Components.Events;
     using Components.Requests;
     using Game.Ecs.Time.Service;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using UniGame.Proto.Ownership;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using LeoEcs.Bootstrap;

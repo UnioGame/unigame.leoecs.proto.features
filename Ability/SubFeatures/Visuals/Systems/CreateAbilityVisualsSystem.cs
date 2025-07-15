@@ -7,8 +7,7 @@
     using Effects;
     using FakeTimeline.Aspects;
     using FakeTimeline.Components.Requests;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using UniGame.Proto.Ownership;
     using GameResources.Aspects;
     using GameResources.Systems;
     using LeoEcs.Bootstrap;

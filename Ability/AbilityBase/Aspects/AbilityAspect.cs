@@ -17,10 +17,8 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Input.Components.Evetns;
     using Game.Ecs.Time.Service;
-    using Game.Modules.leoecs.proto.features.Ability.AbilityBase.Components;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using Game.Modules.leoecs.proto.tools.Ownership.Components;
-    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using UniGame.Proto.Ability;
+    using UniGame.Proto.Ownership;
     using GameLayers.Category.Components;
     using GameLayers.Relationship.Components;
     using LeoEcs.Shared.Extensions;
@@ -37,6 +35,7 @@
     public class AbilityAspect : EcsAspect
     {
         public AbilityOwnerAspect AbilityOwnerAspect;
+        
         [FormerlySerializedAs("LifeTimeAspect")]
         public OwnershipAspect ownershipAspect;
         

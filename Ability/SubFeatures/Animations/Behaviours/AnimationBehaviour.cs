@@ -3,7 +3,7 @@
     using System;
     using Components;
     using FakeTimeline.Data;
-    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using UniGame.Proto.Ownership;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
 

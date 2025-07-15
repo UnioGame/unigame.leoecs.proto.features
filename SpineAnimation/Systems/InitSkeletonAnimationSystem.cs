@@ -5,7 +5,7 @@
     using Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Modules.leoecs.proto.tools.Ownership.Aspects;
+    using UniGame.Proto.Ownership;
     using R3;
     using Spine;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;

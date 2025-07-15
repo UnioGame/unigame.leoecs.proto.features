@@ -8,7 +8,7 @@
     using Game.Code.Timeline;
     using Game.Ecs.Core.Aspects;
     using Game.Ecs.Core.Components;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
+    using UniGame.Proto.Ownership;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;

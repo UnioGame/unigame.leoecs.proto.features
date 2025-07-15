@@ -3,7 +3,7 @@
     using System;
     using Aspects;
     using Component;
-    using Game.Modules.leoecs.proto.tools.Ownership.Components;
+    using UniGame.Proto.Ownership;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;

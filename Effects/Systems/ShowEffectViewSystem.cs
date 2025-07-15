@@ -4,8 +4,7 @@
     using Aspects;
     using Components;
     using Cysharp.Threading.Tasks;
-    using Game.Modules.leoecs.proto.tools.Ownership.Aspects;
-    using Game.Modules.leoecs.proto.tools.Ownership.Extensions;
+    using UniGame.Proto.Ownership;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.AddressableTools.Runtime;

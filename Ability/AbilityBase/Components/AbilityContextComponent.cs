@@ -1,4 +1,4 @@
-﻿namespace Game.Modules.leoecs.proto.features.Ability.AbilityBase.Components
+﻿namespace UniGame.Proto.Ability
 {
     using System;
     using Leopotam.EcsProto;
