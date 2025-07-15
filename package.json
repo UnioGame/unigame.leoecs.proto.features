@@ -1,10 +1,10 @@
 {
   "name": "com.uniunigame.ecs.proto.game.features",
   "author": "UniGame",
-  "displayName": "UniGame Ecs Proto Game Features",
+  "displayName": "Leo Ecs Proto Game Features",
   "description": "Collection game related ecs features",
   "unity": "2023.1",
-  "version": "2025.0.2",
+  "version": "2025.0.3",
   "keywords": [
     "UniGame",
     "Modules",
