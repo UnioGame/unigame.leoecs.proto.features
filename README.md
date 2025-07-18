@@ -86,4 +86,14 @@ ResetCharacteristicSelfRequest<TCharacteristic>>();
 ResetCharacteristicModificationsSelfRequest<TCharacteristic>>();
 ```
 
+Demo filter to get notification of health characteristic changes
+
+```csharp
+private ProtoIt _filter = It
+    .Chain<CharacteristicChangedComponent<HealthComponent>>()
+    .Inc<CharacteristicComponent<HealthComponent>>()
+    .Inc<HealthComponent>()
+    .End();
+```
+
 
