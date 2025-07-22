@@ -14,17 +14,16 @@
     /// - recalculate attack speed characteristic
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AttackSpeed Feature")]
-    public sealed class AttackSpeedFeature : CharacteristicFeature<AttackSpeedEcsFeature>
+    public sealed class AttackSpeedFeature : CharacteristicFeature<AttackSpeedEcsFeature,AttackSpeedComponent>
     {
+        
     }
     
     [Serializable]
-    public sealed class AttackSpeedEcsFeature : CharacteristicEcsFeature
+    public sealed class AttackSpeedEcsFeature : CharacteristicEcsFeature<AttackSpeedComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register health characteristic
-            ecsSystems.AddCharacteristic<AttackSpeedComponent>();
             //update attack speed value
             ecsSystems.Add(new UpdateAttackSpeedChangedSystem());
 

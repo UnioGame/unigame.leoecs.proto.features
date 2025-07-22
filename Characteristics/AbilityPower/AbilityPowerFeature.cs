@@ -15,20 +15,20 @@
     /// allows you to change the strength of abilities by AbilityPowerComponent
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AbilityPower Feature")]
-    public sealed class AbilityPowerFeature : CharacteristicFeature<AbilityPowerEcsFeature>
+    public sealed class AbilityPowerFeature : CharacteristicFeature<AbilityPowerEcsFeature,AbilityPowerComponent>
     {
     }
     
     [Serializable]
-    public sealed class AbilityPowerEcsFeature : CharacteristicEcsFeature
+    public sealed class AbilityPowerEcsFeature : CharacteristicEcsFeature<AbilityPowerComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            ecsSystems.AddCharacteristic<AbilityPowerComponent>();
             // update ability power value
             ecsSystems.Add(new RecalculateAbilityPowerSystem());
-
+            
             return UniTask.CompletedTask;
         }
+        
     }
 }

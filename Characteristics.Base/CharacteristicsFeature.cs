@@ -123,6 +123,8 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
             var instances = TypeCache.GetTypesDerivedFrom<CharacteristicEcsFeature>();
             foreach (var characteristic in instances)
             {
+                if(characteristic.IsAbstract) continue;
+                
                 var firstOrDefault = characteristicFeatures
                     .FirstOrDefault(x => x.GetType() == characteristic);
                 var contains = firstOrDefault != null;

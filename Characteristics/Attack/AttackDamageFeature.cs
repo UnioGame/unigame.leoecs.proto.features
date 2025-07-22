@@ -14,21 +14,18 @@
     /// new characteristic feature: AttackDamage 
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AttackDamage")]
-    public sealed class AttackDamageFeature : CharacteristicFeature<AttackDamageEcsFeature>
+    public sealed class AttackDamageFeature : CharacteristicFeature<AttackDamageEcsFeature,AttackDamageComponent>
     {
-
     }
 
     /// <summary>
     /// new characteristic feature: AttackDamage 
     /// </summary>
     [Serializable]
-    public sealed class AttackDamageEcsFeature : CharacteristicEcsFeature
+    public sealed class AttackDamageEcsFeature : CharacteristicEcsFeature<AttackDamageComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register AttackDamage characteristic
-            ecsSystems.AddCharacteristic<AttackDamageComponent>();
             //update AttackDamage by request
             ecsSystems.Add(new ProcessAttackDamageChangedSystem());
 

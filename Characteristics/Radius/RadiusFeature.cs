@@ -11,16 +11,15 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Radius Feature")]
-    public sealed class RadiusFeature : CharacteristicFeature<RadiusEcsFeature>
+    public sealed class RadiusFeature : CharacteristicFeature<RadiusEcsFeature,RadiusComponent>
     {
     }
     
     [Serializable]
-    public sealed class RadiusEcsFeature : CharacteristicEcsFeature
+    public sealed class RadiusEcsFeature : CharacteristicEcsFeature<RadiusComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            ecsSystems.AddCharacteristic<RadiusComponent>();
             ecsSystems.Add(new RecalculateRadiusSystem());
             return UniTask.CompletedTask;
         }

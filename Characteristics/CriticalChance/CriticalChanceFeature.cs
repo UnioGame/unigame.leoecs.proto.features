@@ -14,17 +14,15 @@
     /// - recalculate attack speed characteristic
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Critical Chance Feature")]
-    public sealed class CriticalChanceFeature : CharacteristicFeature<CriticalChanceEcsFeature>
+    public sealed class CriticalChanceFeature : CharacteristicFeature<CriticalChanceEcsFeature,CriticalChanceComponent>
     {
     }
 
     [Serializable]
-    public sealed class CriticalChanceEcsFeature : CharacteristicEcsFeature
+    public sealed class CriticalChanceEcsFeature : CharacteristicEcsFeature<CriticalChanceComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register health characteristic
-            ecsSystems.AddCharacteristic<CriticalChanceComponent>();
             //update attack speed value
             ecsSystems.Add(new UpdateCriticalChanceChangedSystem());
 

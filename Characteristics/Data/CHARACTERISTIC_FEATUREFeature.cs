@@ -13,15 +13,13 @@
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/CHARACTERISTIC_FEATURE Feature")]
     public sealed class CHARACTERISTIC_FEATUREFeature 
-        : CharacteristicFeature<CHARACTERISTIC_FEATUREEcsFeature> { }
+        : CharacteristicFeature<CHARACTERISTIC_FEATUREEcsFeature,CHARACTERISTIC_FEATUREComponent> { }
     
     [Serializable]
-    public sealed class CHARACTERISTIC_FEATUREEcsFeature : CharacteristicEcsFeature
+    public sealed class CHARACTERISTIC_FEATUREEcsFeature : CharacteristicEcsFeature<CHARACTERISTIC_FEATUREComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register health characteristic
-            ecsSystems.AddCharacteristic<CHARACTERISTIC_FEATUREComponent>();
             return UniTask.CompletedTask;
         }
     }

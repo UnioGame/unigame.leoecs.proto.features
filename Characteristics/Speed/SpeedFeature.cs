@@ -14,24 +14,22 @@
     /// new characteristic feature: Speed 
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Speed")]
-    public sealed class SpeedFeature : CharacteristicFeature<SpeedEcsFeature>
+    public sealed class SpeedFeature : CharacteristicFeature<SpeedEcsFeature,SpeedComponent>
     {
-
+        
     }
 
     /// <summary>
     /// new characteristic feature: Speed 
     /// </summary>
     [Serializable]
-    public sealed class SpeedEcsFeature : CharacteristicEcsFeature
+    public sealed class SpeedEcsFeature : CharacteristicEcsFeature<SpeedComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register Speed characteristic
-            ecsSystems.AddCharacteristic<SpeedComponent>();
-            //update Speed by request
+            // update ability power value
             ecsSystems.Add(new ProcessSpeedChangedSystem());
-
+            
             return UniTask.CompletedTask;
         }
     }

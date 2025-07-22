@@ -11,17 +11,15 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Armor Resist Feature")]
-    public class ArmorResistFeature : CharacteristicFeature<ArmorResistEcsFeature>
+    public class ArmorResistFeature : CharacteristicFeature<ArmorResistEcsFeature,ArmorResistComponent>
     {
     }
 
     [Serializable]
-    public sealed class ArmorResistEcsFeature : CharacteristicEcsFeature
+    public sealed class ArmorResistEcsFeature : CharacteristicEcsFeature<ArmorResistComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            // add armor resist component to unit
-            ecsSystems.AddCharacteristic<ArmorResistComponent>();
             // update armor resist value
             ecsSystems.Add(new UpdateArmorResistSystem());
             return UniTask.CompletedTask;

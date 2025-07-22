@@ -14,7 +14,7 @@
     /// new characteristic feature: Mana 
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Mana")]
-    public sealed class ManaFeature : CharacteristicFeature<ManaEcsFeature>
+    public sealed class ManaFeature : CharacteristicFeature<ManaEcsFeature,ManaComponent>
     {
 
     }
@@ -23,12 +23,10 @@
     /// new characteristic feature: Mana 
     /// </summary>
     [Serializable]
-    public sealed class ManaEcsFeature : CharacteristicEcsFeature
+    public sealed class ManaEcsFeature : CharacteristicEcsFeature<ManaComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register Mana characteristic
-            ecsSystems.AddCharacteristic<ManaComponent>();
             //update Mana by request
             ecsSystems.Add(new ProcessManaChangedSystem());
 

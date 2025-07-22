@@ -11,16 +11,16 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Block Feature")]
-    public sealed class BlockFeature : CharacteristicFeature<BlockEcsFeature>
+    public sealed class BlockFeature : CharacteristicFeature<BlockEcsFeature,BlockComponent>
     {
+        
     }
 
     [Serializable]
-    public sealed class BlockEcsFeature : CharacteristicEcsFeature
+    public sealed class BlockEcsFeature : CharacteristicEcsFeature<BlockComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            ecsSystems.AddCharacteristic<BlockComponent>();
             ecsSystems.Add(new RecalculateBlockSystem());
 
             return UniTask.CompletedTask;

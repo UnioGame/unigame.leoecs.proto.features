@@ -14,20 +14,18 @@
     /// - recalculate attack speed characteristic
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Critical Multiplier Feature")]
-    public sealed class CriticalMultiplierFeature : CharacteristicFeature<CriticalMultiplierEcsFeature>
+    public sealed class CriticalMultiplierFeature 
+        : CharacteristicFeature<CriticalMultiplierEcsFeature,CriticalMultiplierComponent>
     {
     }
     
     [Serializable]
-    public sealed class CriticalMultiplierEcsFeature : CharacteristicEcsFeature
+    public sealed class CriticalMultiplierEcsFeature : CharacteristicEcsFeature<CriticalMultiplierComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register health characteristic
-            ecsSystems.AddCharacteristic<CriticalMultiplierComponent>();
             //update attack speed value
             ecsSystems.Add(new UpdateCriticalChanceChangedSystem());
-            
             return UniTask.CompletedTask;
         }
     }

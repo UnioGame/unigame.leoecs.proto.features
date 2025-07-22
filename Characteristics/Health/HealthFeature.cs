@@ -14,7 +14,7 @@
     /// new characteristic feature: Health 
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Health")]
-    public sealed class HealthFeature : CharacteristicFeature<HealthEcsFeature>
+    public sealed class HealthFeature : CharacteristicFeature<HealthEcsFeature,HealthComponent>
     {
     }
 
@@ -22,15 +22,12 @@
     /// new characteristic feature: Health 
     /// </summary>
     [Serializable]
-    public sealed class HealthEcsFeature : CharacteristicEcsFeature
+    public sealed class HealthEcsFeature : CharacteristicEcsFeature<HealthComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register Health characteristic
-            ecsSystems.AddCharacteristic<HealthComponent>();
             //update Health by request
             ecsSystems.Add(new ProcessHealthChangedSystem());
-
             return UniTask.CompletedTask;
         }
     }

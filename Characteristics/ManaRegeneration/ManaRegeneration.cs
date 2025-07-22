@@ -14,28 +14,25 @@
     /// new characteristic feature: ManaRegeneration 
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/ManaRegeneration")]
-    public sealed class ManaRegenerationFeature : CharacteristicFeature<ManaRegenerationEcsFeature>
+    public sealed class ManaRegenerationFeature : CharacteristicFeature<ManaRegenerationEcsFeature,ManaRegenerationComponent>
     {
-
     }
 
     /// <summary>
     /// new characteristic feature: ManaRegeneration 
     /// </summary>
     [Serializable]
-    public sealed class ManaRegenerationEcsFeature : CharacteristicEcsFeature
+    public sealed class ManaRegenerationEcsFeature : CharacteristicEcsFeature<ManaRegenerationComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register ManaRegeneration characteristic
-            ecsSystems.AddCharacteristic<ManaRegenerationComponent>();
             //update ManaRegeneration by request
             ecsSystems.Add(new ProcessManaRegenerationChangedSystem());
             
             // Mana regeneration. Uses request ChangeManaRequest when you want to change mana value.
             // Inside uses a timer. 
             ecsSystems.Add(new ProcessManaRegenerationSystem());
-            
+
             return UniTask.CompletedTask;
         }
     }

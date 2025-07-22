@@ -14,20 +14,17 @@
     /// - recalculate attack speed characteristic
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/AttackRange Feature")]
-    public sealed class AttackRangeFeature : CharacteristicFeature<AttackRangeEcsFeature>
+    public sealed class AttackRangeFeature : CharacteristicFeature<AttackRangeEcsFeature,AttackRangeComponent>
     {
     }
     
     [Serializable]
-    public sealed class AttackRangeEcsFeature : CharacteristicEcsFeature
+    public sealed class AttackRangeEcsFeature : CharacteristicEcsFeature<AttackRangeComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            //register health characteristic
-            ecsSystems.AddCharacteristic<AttackRangeComponent>();
             //update attack speed value
             ecsSystems.Add(new UpdateAttackRangeChangedSystem());
-            
             return UniTask.CompletedTask;
         }
     }

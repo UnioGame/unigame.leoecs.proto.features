@@ -11,18 +11,16 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Dodge Feature")]
-    public sealed class DodgeFeature : CharacteristicFeature<DodgeEcsFeature>
+    public sealed class DodgeFeature : CharacteristicFeature<DodgeEcsFeature,DodgeComponent>
     {
     }
     
     [Serializable]
-    public sealed class DodgeEcsFeature : CharacteristicEcsFeature
+    public sealed class DodgeEcsFeature : CharacteristicEcsFeature<DodgeComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
-            ecsSystems.AddCharacteristic<DodgeComponent>();
             ecsSystems.Add(new RecalculateDodgeSystem());
-
             return UniTask.CompletedTask;
         }
     }

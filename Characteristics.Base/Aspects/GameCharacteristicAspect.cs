@@ -39,7 +39,6 @@
         public ProtoPool<ResetCharacteristicSelfRequest<TCharacteristic>> ResetValue;
         public ProtoPool<ResetCharacteristicModificationsSelfRequest<TCharacteristic>> ResetModifications;
         public ProtoPool<RecalculateCharacteristicSelfRequest<TCharacteristic>> Recalculate;
-        
         //events
         public ProtoPool<CharacteristicValueChangedEvent<TCharacteristic>> OnValueChanged;
         public ProtoPool<ResetCharacteristicsEvent> OnCharacteristicsReset;

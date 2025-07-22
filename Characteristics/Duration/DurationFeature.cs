@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.Duration
 {
     using System;
+    using Components;
     using Systems;
     using Components.Requests;
     using Cysharp.Threading.Tasks;
@@ -11,20 +12,18 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Duration Feature")]
-    public sealed class DurationFeature : CharacteristicFeature<DurationEcsFeature>
+    public sealed class DurationFeature : CharacteristicFeature<DurationEcsFeature,DurationComponent>
     {
     }
     
     [Serializable]
-    public sealed class DurationEcsFeature : CharacteristicEcsFeature
+    public sealed class DurationEcsFeature : CharacteristicEcsFeature<DurationComponent>
     {
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new RecalculateDurationSystem());
             ecsSystems.DelHere<RecalculateDurationRequest>();
-
             ecsSystems.Add(new ResetDurationSystem());
-            
             return UniTask.CompletedTask;
         }
     }

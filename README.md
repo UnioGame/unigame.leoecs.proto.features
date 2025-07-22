@@ -53,21 +53,26 @@ All characteristics inherits
     /// allows you to change the strength of abilities by AbilityPowerComponent
     /// </summary>
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/SomeNewCharacteristic Feature")]
-    public sealed class SomeNewCharacteristicAsset : CharacteristicFeature<SomeNewCharacteristic>
+    public sealed class SomeNewCharacteristicAsset : CharacteristicFeature<SomeNewCharacteristicFeature,SomeNewCharacteristicComponent>
     {
     }
     
+    //serializable feature to define custom characteristic component
     [Serializable]
-    public sealed class SomeNewCharacteristic : CharacteristicEcsFeature
+    public sealed class SomeNewCharacteristicFeature : CharacteristicEcsFeature<SomeNewCharacteristicComponent>
     {
         //allo to defin custom characteristic components and registation logic
-        protected override UniTask OnInitializeAsync(IProtoSystems ecsSystems)
+        protected override UniTask OnCharacteristicInitializeAsync(IProtoSystems ecsSystems)
         {
             //refister new characteristic and create all base logic
-            ecsSystems.AddCharacteristic<SomeNewCharacteristicComponent>();
-
             return UniTask.CompletedTask;
         }
+    }
+    
+    [Serializable]
+    public class SomeNewCharacteristicAspect : GameCharacteristicAspect<SomeNewCharacteristicComponent>
+    {
+        public ProtoPool<SomeNewCharacteristicComponent> Speed;
     }
 ```
 
