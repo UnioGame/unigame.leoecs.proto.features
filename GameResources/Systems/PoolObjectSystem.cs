@@ -13,9 +13,6 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    /// <summary>
-    /// ADD DESCRIPTION HERE
-    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -25,10 +22,9 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class PoolObjectSystem : IProtoInitSystem, IProtoRunSystem
+    public class PoolObjectSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
-        
         private UnityAspect _unityAspect;
 
         private ProtoIt _poolableFilter = It
@@ -36,11 +32,6 @@
             .Inc<GameObjectComponent>()
             .Inc<PrepareToDeathComponent>()
             .End();
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-        }
 
         public void Run()
         {
