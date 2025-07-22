@@ -39,7 +39,7 @@
         private ProtoPool<CharacteristicChangedComponent> _changedCharacteristicPool;
 
         private ProtoIt _filter = It
-            .Chain<CharacteristicChangedComponent<TCharacteristic>>()
+            .Chain<CharacteristicChangedComponent>()
             .Inc<CharacteristicOwnerComponent<TCharacteristic>>()
             .Inc<CharacteristicValueComponent>()
             .Inc<OwnerLinkComponent>()
