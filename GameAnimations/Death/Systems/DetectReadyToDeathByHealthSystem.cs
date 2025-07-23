@@ -35,7 +35,7 @@
             .Chain<CharacteristicChangedComponent<HealthComponent>>()
             .Inc<CharacteristicComponent<HealthComponent>>()
             .Inc<HealthComponent>()
-            .Exc<KillRequest>()
+            .Exc<KillSelfRequest>()
             .Exc<PrepareToDeathComponent>()
             .End();
         
