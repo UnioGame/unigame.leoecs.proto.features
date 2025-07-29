@@ -6,28 +6,32 @@
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using PrimeTween;
     using UnityEngine;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-    /// <summary>
-    /// Freezes time for gameplay. Await for FreezingTimeRequest.
-    /// </summary>
+#if LITMOTION
+    using LitMotion;
+#endif
+
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
+
     [Serializable]
     [ECSDI]
-    public class FreezingTimeSystem : IProtoRunSystem
+    public sealed class FreezingTimeByLitMotionSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private FreezingTimeAspect _aspect;
-        private Tween _tween;
         private bool _newTimeScale;
+
+#if LITMOTION
+        private MotionHandle _tween;
+#endif
+
 
         private ProtoIt _filter = It
             .Chain<FreezingTimeRequest>()
@@ -46,15 +50,19 @@
             foreach (var requestEntity in _filter)
             {
                 ref var request = ref _aspect.freezingTimeRequest.Get(requestEntity);
-                var oldScale = Time.timeScale;
-                var newScale = request.TimeScale;
-                newScale = Mathf.Clamp(newScale, 0f, 1f);
+                var newScale = Mathf.Clamp(request.TimeScale, 0f, 1f);
                 var duration = request.Duration;
 
-                if (_tween.isAlive) _tween.Stop();
+#if LITMOTION
+                if (_tween.IsActive())
+                    _tween.Cancel();
 
-                _tween = Tween.GlobalTimeScale(newScale, duration)
-                    .OnComplete(this, x => x._newTimeScale = true);
+                _tween = LMotion
+                    .Create(Time.timeScale, newScale, duration)
+                    .WithOnComplete(() => _newTimeScale = true)
+                    .WithScheduler(MotionScheduler.Update)
+                    .Bind(x => Time.timeScale = x);
+#endif
             }
         }
     }
