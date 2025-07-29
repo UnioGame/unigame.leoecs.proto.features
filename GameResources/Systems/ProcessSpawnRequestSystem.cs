@@ -44,7 +44,7 @@
                 var resourceLifeTime = spawnRequest.LifeTime ?? entityLifeTime.LifeTime;
                 
                 var loadResourceTask = _gameDatabase
-                    .LoadAsync<UnityEngine.Object>(spawnRequest.ResourceId, resourceLifeTime);
+                    .LoadAsync(spawnRequest.ResourceId, resourceLifeTime);
                 
                 ref var resourceSpawnComponent = ref _gameResourceAspect.SpawnResource.Add(entity);
                 resourceSpawnComponent.LocationData = spawnRequest.LocationData;
