@@ -38,6 +38,8 @@
 		public AssetReferenceAbility ability;
 		
 		public string Name => name;
+		
+		public string ResourcePath => name;
 
 		public string Id => name;
 		
