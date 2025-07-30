@@ -16,8 +16,7 @@
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.DelHere<FreezingTimeCompletedEvent>();
-
-            ecsSystems.Add(new DebugCreateFreezingRequestSystem());
+            
 #if PRIME_TWEEN
 			// Responsible for freezing time. Wait for the request FreezingTimeRequest
 			ecsSystems.Add(new FreezingTimeByPrimeTweenSystem());
