@@ -34,8 +34,11 @@
 		[ListDrawerSettings(ListElementLabelName = "@Label")]
 #endif
 		public List<AbilityRecord> abilities = new();
-
+		private IGameResourceProvider _resourceProvider = new AddressableResourceProvider();
 		private Dictionary<string, IGameResourceRecord> _map = new();
+		private IGameResourceProvider _resourceProvider1;
+
+		public override IGameResourceProvider ResourceProvider => _resourceProvider1;
 
 		public override IReadOnlyList<IGameResourceRecord> Records => abilities;
 
