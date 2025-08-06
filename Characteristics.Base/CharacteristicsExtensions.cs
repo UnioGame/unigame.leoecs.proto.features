@@ -25,9 +25,12 @@
             ecsSystems.DelHere<CharacteristicChangedComponent<TCharacteristic>>();
             //update characteristic value by source event
             ecsSystems.DelHere<CharacteristicValueChangedEvent<TCharacteristic>>();
+            ecsSystems.DelHere<OwnerCharacteristicChangedSelfEvent<TCharacteristic>>();
 
             ecsSystems.AddSystem(new CreateCharacteristicModificationSystem<TCharacteristic>());
             ecsSystems.AddSystem(new DetectCharacteristicChangedSystem<TCharacteristic>());
+            //add owner characteristic changed event
+            ecsSystems.AddSystem(new MarkOwnerCharacteristicChangedSystem<TCharacteristic>());
 
             //create health characteristic
             ecsSystems.AddSystem(new ChangeTargetCharacteristicMaxLimitationSystem<TCharacteristic>());

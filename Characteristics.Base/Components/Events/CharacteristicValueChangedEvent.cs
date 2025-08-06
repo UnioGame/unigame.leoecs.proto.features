@@ -41,4 +41,21 @@
         public float PreviousValue;
         public float Value;
     }
+    
+    /// <summary>
+    /// characteristic changed, marked owner as changed 
+    /// </summary>
+    [Serializable]
+#if ENABLE_IL2CPP
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    public struct OwnerCharacteristicChangedSelfEvent<TCharacteristic>
+        where TCharacteristic : struct
+    {
+        public ProtoPackedEntity Characteristic;
+        public float PreviousValue;
+        public float Value;
+    }
 }

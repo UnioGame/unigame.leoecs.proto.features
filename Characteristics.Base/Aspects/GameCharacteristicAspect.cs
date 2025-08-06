@@ -41,6 +41,7 @@
         public ProtoPool<RecalculateCharacteristicSelfRequest<TCharacteristic>> Recalculate;
         //events
         public ProtoPool<CharacteristicValueChangedEvent<TCharacteristic>> OnValueChanged;
+        public ProtoPool<OwnerCharacteristicChangedSelfEvent<TCharacteristic>> OnOwnerCharacteristicChanged;
         public ProtoPool<ResetCharacteristicsEvent> OnCharacteristicsReset;
         
         //modifications requests
