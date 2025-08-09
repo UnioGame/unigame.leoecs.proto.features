@@ -5,9 +5,9 @@
 	using System.Linq;
 	using Cysharp.Threading.Tasks;
 	using DataBase.Runtime;
-	using DataBase.Runtime.Abstract;
 
 	using UniGame.Core.Runtime;
+	using UniGame.GameDb.Runtime;
 
 #if ODIN_INSPECTOR
 	using Sirenix.OdinInspector;

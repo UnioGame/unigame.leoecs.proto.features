@@ -2,16 +2,15 @@
 {
     using Components;
     using Cysharp.Threading.Tasks;
-    using Game.Code.DataBase.Runtime.Abstract;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Systems;
     using Context.Runtime;
+    using GameDb.Runtime;
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-    using UnityEngine.AddressableAssets;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Resources/Game Resources Feature", 
         fileName = "Game Resources Feature")]

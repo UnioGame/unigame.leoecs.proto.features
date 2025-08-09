@@ -3,7 +3,7 @@
     using System;
     using Aspects;
     using Components;
-    using Game.Code.DataBase.Runtime.Abstract;
+    using GameDb.Runtime;
     using UniGame.Proto.Ownership;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;

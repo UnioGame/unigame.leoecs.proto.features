@@ -1,8 +1,7 @@
 ﻿namespace Game.Code.Services.AbilityLoadout.Data
 {
 	using System;
-	using DataBase.Runtime.Abstract;
-
+	using UniGame.GameDb.Runtime;
 	using UniGame.Runtime.Utils;
 
 #if ODIN_INSPECTOR
