@@ -38,21 +38,9 @@ namespace UniGame.Ecs.Proto.Characteristics.Base
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
-#if DEBUG
-            var timer = Stopwatch.StartNew();   
-            timer.Restart();
-#endif
             foreach (var feature in characteristicFeatures)
             {
-#if DEBUG
-                timer.Restart();
-#endif
                 await feature.InitializeAsync(ecsSystems);
-#if DEBUG
-                var elapsed = timer.ElapsedMilliseconds;
-                timer.Stop();
-                GameLog.Log($"\tSOURCE: LOAD TIME Characteristic {feature.FeatureName}|{feature.GetType().Name} = {elapsed} ms");
-#endif
             }
             
             //remove value changed event

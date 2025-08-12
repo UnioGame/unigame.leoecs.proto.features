@@ -23,26 +23,36 @@
 #endif
     [Serializable]
     [ECSDI]
-    public class MarkOwnerCharacteristicChangedSystem<TCharacteristic> : IProtoRunSystem
+    public class MarkOwnerCharacteristicChangedSystem<TCharacteristic> : IProtoRunSystem, IProtoInitSystem
         where TCharacteristic : struct
     {
         private ProtoWorld _world;
         private OwnershipAspect _ownershipAspect;
-        private GameCharacteristicAspect<TCharacteristic> _characteristicAspect;
-
+        
+        private ProtoPool<CharacteristicValueChangedEvent<TCharacteristic>> _eventPool;
+        private ProtoPool<OwnerCharacteristicChangedSelfEvent<TCharacteristic>> _ownerEventPool;
+        
         private ProtoIt _filter = It
             .Chain<CharacteristicValueChangedEvent<TCharacteristic>>()
             .End();
 
+        
+        public void Init(IProtoSystems systems)
+        {
+            _world = systems.GetWorld();
+
+            _eventPool = _world.GetPool<CharacteristicValueChangedEvent<TCharacteristic>>();
+            _ownerEventPool = _world.GetPool<OwnerCharacteristicChangedSelfEvent<TCharacteristic>>();
+        }
+        
         public void Run()
         {
             foreach (var entity in _filter)
             {
-                ref var changedEvent = ref _characteristicAspect.OnValueChanged.Get(entity);
+                ref var changedEvent = ref _eventPool.Get(entity);
                 if(!_world.Unpack(changedEvent.Owner,out var ownerEntity)) continue;
 
-                ref var ownerCharacteristic = ref _characteristicAspect
-                    .OnOwnerCharacteristicChanged
+                ref var ownerCharacteristic = ref _ownerEventPool
                     .GetOrAddComponent(ownerEntity);
                 
                 ownerCharacteristic.Characteristic = changedEvent.Characteristic;
@@ -50,5 +60,6 @@
                 ownerCharacteristic.PreviousValue = changedEvent.PreviousValue;
             }
         }
+
     }
 }

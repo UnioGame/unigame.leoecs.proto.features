@@ -1,12 +1,14 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.Base.Aspects
 {
     using System;
+    using System.Runtime.CompilerServices;
     using Components;
     using Components.Events;
     using Components.Requests;
     using Base;
     using Leopotam.EcsProto;
     using LeoEcs.Bootstrap;
+    using LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// new characteristic aspect
@@ -19,7 +21,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public abstract class GameCharacteristicAspect<TCharacteristic> : EcsAspect 
+    public class GameCharacteristicAspect<TCharacteristic> : EcsAspect 
         where TCharacteristic : struct
     {
         //components
@@ -49,5 +51,36 @@
         public ProtoPool<RemoveCharacteristicModificationRequest<TCharacteristic>> RemoveModification;
         public ProtoPool<ResetCharacteristicModificationsSelfRequest<TCharacteristic>> RemoveSelfModifications;
         public ProtoPool<CreateModificationRequest<TCharacteristic>> CreateModification;
+        
+        
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ApplyModification(ProtoEntity sourceEntity,
+            ProtoEntity destinationEntity, 
+            Modification modification)
+        {
+            if(!world.HasComponent<CharacteristicComponent<TCharacteristic>>(destinationEntity))
+                return;
+            
+            var entity = world.NewEntity();
+            ref var request = ref world.AddComponent<AddModificationRequest<TCharacteristic>>(entity);
+            
+            request.ModificationSource = sourceEntity.PackEntity(world);
+            request.Target = destinationEntity.PackEntity(world);
+            request.Modification = modification;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DeleteModification(ProtoEntity source, ProtoEntity destinationEntity)
+        {
+            if(!world.HasComponent<TCharacteristic>(destinationEntity))
+                return;
+            
+            var entity = world.NewEntity();
+            ref var removeRequest = ref world
+                .AddComponent<RemoveCharacteristicModificationRequest<TCharacteristic>>(entity);
+            removeRequest.Source = source.PackEntity(world);
+            removeRequest.Target = destinationEntity.PackEntity(world);
+        }
     }
 }
