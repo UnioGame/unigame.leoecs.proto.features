@@ -27,4 +27,4 @@ It's will generate a new file with all states ids in "Assets/UniGame.Generated/E
 ## ECS States
 
 - StateComponent - component with current state id 
-- ChangeStateSelfRequest - request to change state for entity if this action is allowed when StateChangedSelfEvent is fired on the entity
+- SetStateSelfRequest - request to change state for entity

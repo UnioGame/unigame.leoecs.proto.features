@@ -1,10 +1,7 @@
-﻿namespace Game.Ecs.State.Components
+﻿namespace Game.Ecs.State.Components.Requests
 {
     using System;
-
-    /// <summary>
-    /// Component that holds a state ID.
-    /// </summary>
+    
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -13,8 +10,8 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public struct StateComponent
+    public struct StopStateSelfRequest
     {
-        public int Value;
+        
     }
 }
