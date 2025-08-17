@@ -1,7 +1,7 @@
 {
   "name": "com.uniunigame.ecs.proto.game.features",
   "author": "UniGame",
-  "displayName": "UniGame Ecs Proto Game Features",
+  "displayName": "UniGame Ecs Proto Features",
   "description": "Collection game related ecs features",
   "unity": "2023.1",
   "version": "2025.0.7",
