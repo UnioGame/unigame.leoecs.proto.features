@@ -1,17 +1,17 @@
 {
   "name": "com.uniunigame.ecs.proto.game.features",
   "author": "UniGame",
-  "displayName": "Leo Ecs Proto Game Features",
+  "displayName": "UniGame Ecs Proto Game Features",
   "description": "Collection game related ecs features",
   "unity": "2023.1",
-  "version": "2025.0.6",
+  "version": "2025.0.7",
   "keywords": [
     "UniGame",
     "Modules",
     "Tools",
     "ECS"
   ],
-  "homepage": "https://github.com/UniGameTeam/UniModules#readme",
+  "homepage": "https://github.com/UnioGame/unigame.leoecs.proto.features#readme",
   "dependencies": {
     "com.unity.addressables": "2.6.0",
     "com.unity.editorcoroutines": "1.0.0",
