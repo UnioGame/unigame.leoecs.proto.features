@@ -3,9 +3,12 @@ namespace Game.Ecs.State.Systems
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Aspects;
     using Components;
     using Components.Requests;
+    using Data;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
@@ -20,16 +23,26 @@ namespace Game.Ecs.State.Systems
 #endif
     [Serializable]
     [ECSDI]
-    public class SetStateSystem : IProtoRunSystem
+    public class SetStateSystem : IProtoRunSystem, IProtoInitSystem
     {
         private ProtoWorld _world;
+        private StatesMap _statesMap;
+        
         private StatesAspect _stateAspect;
 
         private ProtoIt _stateFilter = It
             .Chain<SetStateSelfRequest>()
             .Inc<StateComponent>()
             .End();
-
+        
+        public void Init(IProtoSystems systems)
+        {
+            _stateAspect.StatesMap = _statesMap;
+            _stateAspect.TypeStates = _statesMap.states.ToDictionary(x => (Type)x.stateType);
+            _stateAspect.IntStates = _statesMap.states.ToDictionary(x => x.id);
+            _stateAspect.NameStates = _statesMap.states.ToDictionary(x => x.name);
+        }
+        
         public void Run()
         {
             foreach (var stateEntity in _stateFilter)
@@ -37,7 +50,7 @@ namespace Game.Ecs.State.Systems
                 ref var stateComponent = ref _stateAspect.State.Get(stateEntity);
                 ref var changeState = ref _stateAspect.SetSelfState.Get(stateEntity);
                 
-                var newStateId = changeState.Value;
+                var newStateId = changeState.Id;
                 var activeStateId = stateComponent.Value;
                 
                 var currentStateId = stateComponent.Value;
@@ -50,5 +63,6 @@ namespace Game.Ecs.State.Systems
                 stateChangedEvent.FromStateId = activeStateId;
             }
         }
+
     }
 }

@@ -1,10 +1,10 @@
-namespace Game.Ecs.State.Aspects
+﻿namespace Game.Ecs.State.Components.Requests
 {
     using System;
-    using Data;
-    using UniGame.LeoEcs.Bootstrap;
-    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Request to change the state of an entity.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -13,10 +13,8 @@ namespace Game.Ecs.State.Aspects
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    [ECSDI]
-    public class StatesAspectT<TStateComponent> : EcsAspect
-        where TStateComponent : struct, IStateComponent
+    public struct SetStateByTypeSelfRequest
     {
-        
+        public Type Id;
     }
 }

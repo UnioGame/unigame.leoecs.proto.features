@@ -2,9 +2,11 @@ namespace Game.Ecs.State.Aspects
 {
     using Leopotam.EcsProto;
     using System;
+    using System.Collections.Generic;
     using Components;
     using Components.Events;
     using Components.Requests;
+    using Data;
     using UniGame.LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
@@ -21,6 +23,11 @@ namespace Game.Ecs.State.Aspects
     {
         public ProtoWorld World;
         
+        public Dictionary<Type, StateData> TypeStates = new();
+        public Dictionary<int, StateData> IntStates = new();
+        public Dictionary<string, StateData> NameStates = new();
+        public StatesMap StatesMap;
+        
         /// <summary>
         /// Active state of entity
         /// </summary>
@@ -32,6 +39,7 @@ namespace Game.Ecs.State.Aspects
         /// Request to change the state of an entity.
         /// </summary>
         public ProtoPool<SetStateSelfRequest> SetSelfState;
+        public ProtoPool<SetStateByTypeSelfRequest> SetByTypeSelfState;
         
         /// <summary>
         /// Request to remove the state from entity.

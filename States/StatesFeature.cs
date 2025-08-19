@@ -6,6 +6,7 @@ namespace Game.Ecs.State
     using Components.Events;
     using Components.Requests;
     using Cysharp.Threading.Tasks;
+    using Data;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Systems;
@@ -22,25 +23,34 @@ namespace Game.Ecs.State
     using Sirenix.OdinInspector;
 #endif
 
-    [CreateAssetMenu(menuName = "ECS Proto/Features/States Feature",fileName = "StatesFeature")]
+    [CreateAssetMenu(menuName = "ECS Proto/Features/States/States Feature",fileName = "StatesFeature")]
     public class StatesFeature : BaseLeoEcsFeature
     {
+        public StatesMapAsset statesMap;
+        
         [SerializeReference]
         public List<BaseStateFeature> states = new();
         
         public sealed override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
-
+            var mapAsset = Instantiate(statesMap);
+            var map = mapAsset.map;
+            
+            var world = ecsSystems.GetWorld();
+            world.SetGlobal(map);
+            
             // Delete used StateChangedEvent
             ecsSystems.DelHere<StateChangedSelfEvent>();
             
             // System for changing the state of an entity.
             ecsSystems.Add(new StopStateSystem());
+            ecsSystems.Add(new SetStateByTypeSystem());
             ecsSystems.Add(new SetStateSystem());
             
             foreach (var stateSystem in states)
                 await stateSystem.InitializeAsync(ecsSystems);
             
+            ecsSystems.DelHere<SetStateByTypeSelfRequest>();
             ecsSystems.DelHere<SetStateSelfRequest>();
             ecsSystems.DelHere<StopStateSelfRequest>();
         }

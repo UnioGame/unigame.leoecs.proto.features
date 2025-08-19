@@ -1,4 +1,4 @@
-﻿namespace Vampire.Game.ECS.UI.GameActionsViews.Extensions
+﻿namespace Game.ECS.UI.GameActionsViews.Extensions
 {
     using global::Game.Ecs.GameActions.Data;
     using Leopotam.EcsProto;

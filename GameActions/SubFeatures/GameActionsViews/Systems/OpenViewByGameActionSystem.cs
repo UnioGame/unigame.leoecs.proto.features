@@ -1,4 +1,4 @@
-﻿namespace Vampire.Game.ECS.UI.GameActionsViews.Systems
+﻿namespace Game.ECS.UI.GameActionsViews.Systems
 {
     using System;
     using Data;

@@ -1,4 +1,4 @@
-﻿namespace Vampire.Game.ECS.UI.GameActionsViews
+﻿namespace Game.ECS.UI.GameActionsViews
 {
     using Cysharp.Threading.Tasks;
     using Data;

@@ -47,7 +47,7 @@ namespace Game.Ecs.State.Converters
             
             //set active state with request
             stateComponent.Value = 0;
-            request.Value = state;
+            request.Id = state;
         }
 
 #if ODIN_INSPECTOR
@@ -55,14 +55,15 @@ namespace Game.Ecs.State.Converters
         public IEnumerable<ValueDropdownItem<int>> GetStates()
         {
 #if UNITY_EDITOR
-            var stateTypes = TypeCache.GetTypesDerivedFrom(typeof(IStateComponent));
+            var stateTypes = StatesMapAsset.GetStates();
             
-            foreach (var stateType in stateTypes)
+            foreach (var stateValue in stateTypes)
             {
-                if(stateType.IsAbstract) continue;
-                if(stateType.IsInterface) continue;
-                
-                yield return new ValueDropdownItem<int>(stateType.Name,stateType.GetHashCode());
+                yield return new ValueDropdownItem<int>()
+                {
+                    Value = stateValue.id,
+                    Text = stateValue.name,
+                };
             }
 #endif
             yield break;

@@ -15,6 +15,6 @@
     [Serializable]
     public struct SetStateSelfRequest
     {
-        public int Value;
+        public int Id;
     }
 }
