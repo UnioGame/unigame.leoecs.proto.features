@@ -1,4 +1,4 @@
-﻿namespace Game.Ecs.State.Data
+﻿namespace Game.Ecs.State
 {
     using System;
     using System.Collections.Generic;
@@ -46,9 +46,9 @@
 #if UNITY_EDITOR
 
         [Button]
+        [ContextMenu("Update States")]
         public void UpdateStates()
         {
-
             var states = map.states;
             states.Clear();
             

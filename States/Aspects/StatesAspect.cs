@@ -6,7 +6,7 @@ namespace Game.Ecs.State.Aspects
     using Components;
     using Components.Events;
     using Components.Requests;
-    using Data;
+    using State;
     using UniGame.LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 

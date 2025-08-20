@@ -6,7 +6,7 @@ namespace Game.Ecs.State
     using Components.Events;
     using Components.Requests;
     using Cysharp.Threading.Tasks;
-    using Data;
+    using State;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Systems;
@@ -29,7 +29,7 @@ namespace Game.Ecs.State
         public StatesMapAsset statesMap;
         
         [SerializeReference]
-        public List<BaseStateFeature> states = new();
+        public List<IStateFeature> states = new();
         
         public sealed override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
@@ -45,9 +45,13 @@ namespace Game.Ecs.State
             // System for changing the state of an entity.
             ecsSystems.Add(new StopStateSystem());
             ecsSystems.Add(new SetStateSystem());
-            
-            foreach (var stateSystem in states)
-                await stateSystem.InitializeAsync(ecsSystems);
+
+            foreach (var stateFeature in states)
+            {
+                if(stateFeature.IsFeatureEnabled == false)
+                    continue;
+                await stateFeature.InitializeAsync(ecsSystems);
+            }
             
             ecsSystems.DelHere<SetStateSelfRequest>();
             ecsSystems.DelHere<StopStateSelfRequest>();
@@ -58,20 +62,22 @@ namespace Game.Ecs.State
 #if ODIN_INSPECTOR
         [Button]
 #endif
+        [ContextMenu("Fill States")]
         public void FillStates()
         {
-            var stateTypes = TypeCache.GetTypesDerivedFrom(typeof(BaseStateFeature));
+            var stateTypes = TypeCache.GetTypesDerivedFrom(typeof(IStateFeature));
 
             foreach (var stateType in stateTypes)
             {
                 if (stateType.IsAbstract) continue;
                 if(stateType.IsInterface) continue;
                 if(states.Any(x => x.GetType() == stateType)) continue;
-                var stateFeature = (BaseStateFeature)Activator.CreateInstance(stateType);
+                var stateFeature = (IStateFeature)Activator.CreateInstance(stateType);
                 
                 states.Add(stateFeature);
             }
             
+            statesMap.UpdateStates();
         }
 #endif
 

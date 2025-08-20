@@ -22,8 +22,9 @@ namespace Game.Ecs.State.Systems
 #endif
     [Serializable]
     [ECSDI]
-    public class SetStateSystemT<TState> : IProtoRunSystem,IProtoInitSystem
+    public class StateFinishedEventSystemT<TState,TStateFinished> : IProtoRunSystem,IProtoInitSystem
         where TState : struct, IStateComponent
+        where TStateFinished : struct
     {
         private ProtoWorld _world;
         private StatesAspect _stateAspect;
@@ -44,10 +45,9 @@ namespace Game.Ecs.State.Systems
             foreach (var stateEntity in _stateFilter)
             {
                 ref var changedSelfEvent = ref _stateAspect.StateSelfChanged.Get(stateEntity);
-                if(_stateId != changedSelfEvent.NewId) continue;
-
-                ref var stateTComponent = ref _world
-                    .GetOrAddComponent<TState>(stateEntity);
+                if (changedSelfEvent.FromStateId != _stateId) continue;
+                
+                _world.AddComponent<TStateFinished>(stateEntity);
             }
         }
 

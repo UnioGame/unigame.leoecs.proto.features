@@ -1,4 +1,4 @@
-﻿namespace Game.Ecs.State.Data
+﻿namespace Game.Ecs.State
 {
     /// <summary>
     /// interface marker for state.

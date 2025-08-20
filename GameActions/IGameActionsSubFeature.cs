@@ -2,7 +2,7 @@
 {
     using UniGame.LeoEcs.Bootstrap;
 
-    public interface IGameActionsSubFeature : ILeoEcsFeature
+    public interface IGameActionsSubFeature : IEcsFeature
     {
     }
 }

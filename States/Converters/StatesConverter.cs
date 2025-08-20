@@ -5,7 +5,7 @@ namespace Game.Ecs.State.Converters
     using Aspects;
     using Components;
     using Components.Requests;
-    using Data;
+    using State;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Converter.Runtime;

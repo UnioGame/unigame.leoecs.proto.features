@@ -1,7 +1,7 @@
 namespace Game.Ecs.State.Aspects
 {
     using System;
-    using Data;
+    using State;
     using UniGame.LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
