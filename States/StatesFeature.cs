@@ -38,13 +38,8 @@ namespace Game.Ecs.State
             
             var world = ecsSystems.GetWorld();
             world.SetGlobal(map);
-            
-            // Delete used StateChangedEvent
-            ecsSystems.DelHere<StateChangedSelfEvent>();
-            
-            // System for changing the state of an entity.
-            ecsSystems.Add(new StopStateSystem());
-            ecsSystems.Add(new SetStateSystem());
+
+            ecsSystems.Add(new InitializeStateSystem());
 
             foreach (var stateFeature in states)
             {
@@ -53,6 +48,14 @@ namespace Game.Ecs.State
                 await stateFeature.InitializeAsync(ecsSystems);
             }
             
+                        
+            // Delete used StateChangedEvent
+            ecsSystems.DelHere<StateChangedSelfEvent>();
+
+            // System for changing the state of an entity.
+            ecsSystems.Add(new StopStateSystem());
+            ecsSystems.Add(new SetStateSystem());
+
             ecsSystems.DelHere<SetStateSelfRequest>();
             ecsSystems.DelHere<StopStateSelfRequest>();
         }

@@ -3,8 +3,6 @@ namespace Game.Ecs.State.Systems
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Aspects;
     using Components;
     using Components.Requests;
@@ -23,7 +21,7 @@ namespace Game.Ecs.State.Systems
 #endif
     [Serializable]
     [ECSDI]
-    public class SetStateSystem : IProtoRunSystem, IProtoInitSystem
+    public class SetStateSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
         private StatesMap _statesMap;
@@ -34,14 +32,6 @@ namespace Game.Ecs.State.Systems
             .Chain<SetStateSelfRequest>()
             .Inc<StateComponent>()
             .End();
-        
-        public void Init(IProtoSystems systems)
-        {
-            _stateAspect.StatesMap = _statesMap;
-            _stateAspect.TypeStates = _statesMap.states.ToDictionary(x => (Type)x.stateType);
-            _stateAspect.IntStates = _statesMap.states.ToDictionary(x => x.id);
-            _stateAspect.NameStates = _statesMap.states.ToDictionary(x => x.name);
-        }
         
         public void Run()
         {
