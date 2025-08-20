@@ -39,7 +39,6 @@ namespace Game.Ecs.State.Aspects
         /// Request to change the state of an entity.
         /// </summary>
         public ProtoPool<SetStateSelfRequest> SetSelfState;
-        public ProtoPool<SetStateByTypeSelfRequest> SetByTypeSelfState;
         
         /// <summary>
         /// Request to remove the state from entity.
@@ -52,6 +51,13 @@ namespace Game.Ecs.State.Aspects
         /// Event indicating a state change.
         /// </summary>
         public ProtoPool<StateChangedSelfEvent> StateSelfChanged;
+
+        //tools
+        public int GetStateId(Type stateType)
+        {
+            TypeStates.TryGetValue(stateType, out var stateData);
+            return stateData?.id ?? 0;
+        }
 
     }
 }

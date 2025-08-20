@@ -44,13 +44,11 @@ namespace Game.Ecs.State
             
             // System for changing the state of an entity.
             ecsSystems.Add(new StopStateSystem());
-            ecsSystems.Add(new SetStateByTypeSystem());
             ecsSystems.Add(new SetStateSystem());
             
             foreach (var stateSystem in states)
                 await stateSystem.InitializeAsync(ecsSystems);
             
-            ecsSystems.DelHere<SetStateByTypeSelfRequest>();
             ecsSystems.DelHere<SetStateSelfRequest>();
             ecsSystems.DelHere<StopStateSelfRequest>();
         }
