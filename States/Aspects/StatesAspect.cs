@@ -32,7 +32,6 @@ namespace Game.Ecs.State.Aspects
         /// Active state of entity
         /// </summary>
         public ProtoPool<StateComponent> State;
-        public ProtoPool<StateMarkerComponent> StateMarker;
 
         //REQUESTS
         /// <summary>

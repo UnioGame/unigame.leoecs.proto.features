@@ -43,7 +43,6 @@ namespace Game.Ecs.State.Converters
         {
             ref var stateComponent = ref world.GetOrAddComponent<StateComponent>(entity);
             ref var request = ref world.GetOrAddComponent<SetStateSelfRequest>(entity);
-            ref var markerComponent = ref world.GetOrAddComponent<StateMarkerComponent>(entity);
             
             //set active state with request
             stateComponent.Value = 0;

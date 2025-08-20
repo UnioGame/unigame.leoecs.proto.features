@@ -7,6 +7,7 @@ namespace Game.Ecs.State.Systems
     using Components;
     using Components.Requests;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+    using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
     /// System for changing the state of an entity.
@@ -34,7 +35,8 @@ namespace Game.Ecs.State.Systems
         {
             foreach (var stateEntity in _stateFilter)
             {
-                _stateAspect.State.Del(stateEntity);
+                ref var setStateRequest = ref _stateAspect.SetSelfState.GetOrAddComponent(stateEntity);
+                setStateRequest.Id = 0;
             }
         }
     }
