@@ -15,7 +15,7 @@
     [Serializable]
     [ECSDI]
     public abstract class StateComponentSystem<TComponent> : IProtoRunSystem
-        where TComponent : struct, IStateComponent
+        where TComponent : struct,IStateComponent
     {
         protected  ProtoIt _stateFilter = It
             .Chain<TComponent>()
@@ -23,7 +23,7 @@
 
         public void Run()
         {
-            foreach (var entity in StateFilter)
+            foreach (var entity in _stateFilter)
             {
                 OnStateRun();
                 break;
