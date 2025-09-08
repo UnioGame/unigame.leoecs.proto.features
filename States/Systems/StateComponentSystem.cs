@@ -15,17 +15,17 @@
     [Serializable]
     [ECSDI]
     public abstract class StateComponentSystem<TComponent> : IProtoRunSystem
-        where TComponent : struct,IStateComponent
+        where TComponent : struct, IStateComponent
     {
-        private ProtoWorld _world;
+        protected ProtoWorld World;
         
-        private ProtoIt _stateFilter = It
+        protected ProtoIt StateFilter = It
             .Chain<TComponent>()
             .End();
 
         public void Run()
         {
-            foreach (var entity in _stateFilter)
+            foreach (var entity in StateFilter)
             {
                 OnStateRun();
                 break;
