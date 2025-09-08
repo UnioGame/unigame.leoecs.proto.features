@@ -1,9 +1,8 @@
-﻿namespace UniGame.Ecs.Proto.Characteristics.Shield.Aspects
+﻿namespace UniGame.Ecs.Proto.Characteristics.Stun.Aspects
 {
     using System;
     using Base.Aspects;
     using Components;
-    using Components.Requests;
     using Leopotam.EcsProto;
     
 #if ENABLE_IL2CPP
@@ -14,12 +13,9 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public sealed class ShieldCharacteristicAspect : GameCharacteristicAspect<ShieldComponent>
+    public class StunAspect : GameCharacteristicAspect<StunComponent>
     {
-        // Components
-        public ProtoPool<ShieldComponent> Shield;
-        
-        // Requests
-        public ProtoPool<ChangeShieldRequest> ChangeShield;
+        public ProtoPool<StunComponent> Stun;
+        public ProtoPool<StunSourcesCounterComponent> SourceCounter;
     }
 }

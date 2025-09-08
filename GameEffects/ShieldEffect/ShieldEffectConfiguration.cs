@@ -17,7 +17,7 @@
         {
             var shieldPool = world.GetPool<ShieldEffectComponent>();
             ref var shield = ref shieldPool.Add(effectEntity);
-            shield.MaxValue = shieldValue;
+            shield.maxValue = shieldValue;
         }
     }
 }

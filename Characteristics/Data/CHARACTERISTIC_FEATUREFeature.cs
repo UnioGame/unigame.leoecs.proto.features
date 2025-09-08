@@ -2,7 +2,6 @@
 {
     using System;
     using Cysharp.Threading.Tasks;
-    using Ecs.Proto.Characteristics.Base;
     using Ecs.Proto.Characteristics.Base.Aspects;
     using Leopotam.EcsProto;
     using UniGame.Ecs.Proto.Characteristics.Feature;

@@ -4,9 +4,7 @@
 	using Aspects;
 	using Characteristics.Health.Components;
 	using Components;
-	using Game.Code.Configuration.Runtime.Effects;
 	using Game.Ecs.Core.Components;
-	using GameEffects.HealingEffect;
 	using Leopotam.EcsProto;
 	using Leopotam.EcsProto.QoL;
 	using UnityEngine;
@@ -29,7 +27,7 @@
 	{
 		private ProtoWorld _world;
 		private HealingChampionActionAspect _aspect;
-		private HealingEffectConfiguration _healingEffectConfiguration;
+		//private HealingEffectConfiguration _healingEffectConfiguration;
 
 		private ProtoIt _championFilter = It
 			.Chain<ChampionComponent>()
@@ -57,13 +55,13 @@
 				var healDuration = healingActionComponent.HealDuration;
 				var healPeriod = healingActionComponent.HealPeriod;
 				
-				_healingEffectConfiguration = new HealingEffectConfiguration()
-				{
-					duration = healDuration,
-					periodicity = healPeriod,
-					healingValue = 0.3f,
-					targetType = TargetType.Target,
-				};
+				//_healingEffectConfiguration = new HealingEffectConfiguration()
+				//{
+				//	duration = healDuration,
+				//	periodicity = healPeriod,
+				//	healingValue = 0.3f,
+				//	targetType = TargetType.Target,
+				//};
 
 				if(Mathf.Approximately(maxHealth,currentHealth)) continue;
 
@@ -74,9 +72,9 @@
 				var healAtTick = healDuration / healPeriod;
 				var healValue = difference / healAtTick;
 
-				_healingEffectConfiguration.healingValue = healValue;
-				_healingEffectConfiguration.duration = healDuration;
-				_healingEffectConfiguration.ComposeEntity(_world,healingEntity);
+				//_healingEffectConfiguration.healingValue = healValue;
+				//_healingEffectConfiguration.duration = healDuration;
+				//_healingEffectConfiguration.ComposeEntity(_world,healingEntity);
                 
 				_aspect.ApplyEffectRequest.Add(healingEntity);
                 
