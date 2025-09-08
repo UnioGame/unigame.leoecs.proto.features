@@ -37,10 +37,25 @@ public struct MenuStateComponent : IStateComponent {}
 public class MenuStateFeature : BaseStateFeature<MenuStateComponent,
     MenuStateFinishedSelfEvent, MenuStateStartedSelfEvent> {}
 ```
+### State System
 
-The base registers the typical systems (adding/removing the typed component on change, start/finish events)
+If you need to execute your logic only when the entity is in a specific state, you can use
 
-### Switching state at runtime
+`StateComponentSystem<TState>`
+
+```csharp
+
+public class ExecuteMenuStateSystem : StateComponentSystem<MenuStateComponent>
+{
+    public override void OnStateRun()
+    {
+        // This will run only for entities in MenuStateComponent state
+    }
+}
+
+```
+
+### Switching state at runtime 
 
 At minimum, add a `SetStateSelfRequest` with the desired `Id` to the entity. `SetStateSystem` will set `StateComponent.Value` and emit `StateChangedSelfEvent`.
 
