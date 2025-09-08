@@ -1,42 +1,45 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ShieldEffect.Systems
 {
-    using Characteristics.Shield.Components;
+    using System;
+    using Characteristics.Shield.Aspects;
     using Components;
+    using Effects.Aspects;
     using Effects.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Aspects;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    public sealed class ProcessShieldEffectSystem : IProtoRunSystem,IProtoInitSystem
+    [Serializable]
+    [ECSDI]
+    public sealed class ProcessShieldEffectSystem : IProtoRunSystem
     {
-        private ProtoIt _filter;
         private ProtoWorld _world;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<ShieldEffectComponent>()
-                .Inc<EffectComponent>()
-                .Inc<ApplyEffectSelfRequest>()
-                .End();
-        }
+        private EffectAspect _effectAspect;
+        private ShieldEffectAspect _shieldEffectAspect;
+        private ShieldCharacteristicAspect _shieldCharacteristicAspect;
+        
+        private ProtoIt _effectFilter = It
+            .Chain<ShieldEffectComponent>()
+            .Inc<EffectComponent>()
+            .Inc<ApplyEffectSelfRequest>()
+            .End();
 
         public void Run()
         {
-            var effectPool = _world.GetPool<EffectComponent>();
-            var shieldEffectPool = _world.GetPool<ShieldEffectComponent>();
-            var shieldPool = _world.GetPool<ShieldComponent>();
-
-            foreach (var entity in _filter)
+            foreach (var effectEntity in _effectFilter)
             {
-                ref var effect = ref effectPool.Get(entity);
-                if (!effect.Destination.Unpack(_world, out var destinationEntity))
+                ref var effectComponent = ref _effectAspect.Effect.Get(effectEntity);
+                if (!effectComponent.Destination.Unpack(_world, out var destinationEntity))
+                {
                     continue;
+                }
 
-                ref var shieldEffect = ref shieldEffectPool.Get(entity);
-                ref var shield = ref shieldPool.GetOrAddComponent(destinationEntity);
-                shield.Value += shieldEffect.MaxValue;
+                ref var shieldEffectComponent = ref _shieldEffectAspect.ShieldEffect.Get(effectEntity);
+                ref var shieldComponent = ref _shieldCharacteristicAspect.Shield.GetOrAddComponent(destinationEntity);
+                shieldComponent.Value += shieldEffectComponent.maxValue;
             }
         }
     }

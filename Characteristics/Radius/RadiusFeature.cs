@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.Radius
 {
     using System;
-    using Base;
     using Systems;
     using Component;
     using Cysharp.Threading.Tasks;

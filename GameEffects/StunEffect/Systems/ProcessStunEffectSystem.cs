@@ -1,30 +1,35 @@
-﻿namespace UniGame.Ecs.Proto.GameEffects.ShieldEffect.Systems
+﻿namespace UniGame.Ecs.Proto.GameEffects.StunEffect.Systems
 {
     using System;
+    using Characteristics.Stun.Aspects;
+    using Components;
     using Effects.Aspects;
     using Effects.Components;
-    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Aspects;
-    using Characteristics.Shield.Aspects;
-    using Components;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
+    
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     [ECSDI]
-    public sealed class ProcessDestroyedShieldEffectSystem : IProtoRunSystem
+    public class ProcessStunEffectSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
 
+        private StunAspect _stunAspect;
         private EffectAspect _effectAspect;
-        private ShieldEffectAspect _shieldEffectAspect;
-        private ShieldCharacteristicAspect _shieldCharacteristicAspect;
         
-        private ProtoIt _effectFilter = It 
-            .Chain<ShieldEffectComponent>()
+        private ProtoIt _effectFilter = It
+            .Chain<StunEffectComponent>()
             .Inc<EffectComponent>()
-            .Inc<DestroyEffectSelfRequest>()
+            .Inc<ApplyEffectSelfRequest>()
             .End();
 
         public void Run()
@@ -37,10 +42,7 @@
                     continue;
                 }
 
-                if (_shieldCharacteristicAspect.Shield.Has(destinationEntity))
-                {
-                    _shieldCharacteristicAspect.Shield.Del(destinationEntity);
-                }
+                _stunAspect.Stun.GetOrAddComponent(destinationEntity);
             }
         }
     }

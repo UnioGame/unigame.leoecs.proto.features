@@ -1,43 +1,45 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ShieldEffect.Systems
 {
-    using Characteristics.Shield.Components;
+    using System;
+    using Aspects;
+    using Characteristics.Shield.Aspects;
     using Components;
+    using Effects.Aspects;
     using Effects.Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    [Serializable]
     [ECSDI]
     public sealed class ProcessShieldValueEffectSystem : IProtoRunSystem
     {
-        private ProtoItExc _filter = It.Chain<ShieldEffectComponent>()
+        private ProtoWorld _world;
+        
+        private ShieldEffectAspect _stunEffectAspect;
+        private EffectAspect _effectAspect;
+        private ShieldCharacteristicAspect _shieldCharacteristicAspect;
+        
+        private ProtoItExc _effectFilter = It
+            .Chain<ShieldEffectComponent>()
             .Inc<EffectComponent>()
             .Exc<DestroyEffectSelfRequest>()
             .End();
         
-        private ProtoPool<EffectComponent> _effectPool;
-        private ProtoPool<ShieldComponent> _shieldPool;
-        private ProtoPool<DestroyEffectSelfRequest> _destroyRequestPool;
-        
-        private ProtoWorld _world;
-        
         public void Run()
         {
-            var effectPool = _effectPool;
-            var shieldPool = _shieldPool;
-            var destroyRequestPool = _destroyRequestPool;
-
-            foreach (var entity in _filter)
+            foreach (var effectEntity in _effectFilter)
             {
-                ref var effect = ref effectPool.Get(entity);
-                if (!effect.Destination.Unpack(_world, out var destinationEntity))
-                    continue;
-
-                if (!shieldPool.Has(destinationEntity))
+                ref var effectComponent = ref _effectAspect.Effect.Get(effectEntity);
+                if (!effectComponent.Destination.Unpack(_world, out var destinationEntity))
                 {
-                    destroyRequestPool.Add(entity);
+                    continue;
+                }
+
+                if (!_shieldCharacteristicAspect.Shield.Has(destinationEntity))
+                {
+                    _effectAspect.DestroyEffectSelfRequest.Add(effectEntity);
                 }
             }
         }

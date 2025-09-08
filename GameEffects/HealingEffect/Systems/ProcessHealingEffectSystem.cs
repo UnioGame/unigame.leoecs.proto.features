@@ -11,9 +11,6 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-    /// <summary>
-    /// System that processes healing effect.
-    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -26,11 +23,12 @@
     public sealed class ProcessHealingEffectSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
+        
         private HealthAspect _healthAspect;
         private EffectAspect _effectAspect;
         private HealingEffectAspect _healingEffectAspect;
 
-        private ProtoIt _filter = It
+        private ProtoIt _effectFilter = It
             .Chain<EffectComponent>()
             .Inc<ApplyEffectSelfRequest>()
             .Inc<HealingEffectComponent>()
@@ -38,22 +36,22 @@
 
         public void Run()
         {
-            foreach (var entity in _filter)
+            foreach (var effectEntity in _effectFilter)
             {
-                ref var effect = ref _effectAspect.Effect.Get(entity);
-                ref var healing = ref _healingEffectAspect.HealingEffect.Get(entity);
+                ref var effectComponent = ref _effectAspect.Effect.Get(effectEntity);
+                ref var healingEffectComponent = ref _healingEffectAspect.HealingEffect.Get(effectEntity);
 
                 var healthRequestEntity = _world.NewEntity();
                 ref var healthRequest = ref _healthAspect.ChangeBase.Add(healthRequestEntity);
-                healthRequest.Source = effect.Source;
-                healthRequest.Target = effect.Destination;
-                healthRequest.Value = healing.Value;
+                healthRequest.Source = effectComponent.Source;
+                healthRequest.Target = effectComponent.Destination;
+                healthRequest.Value = healingEffectComponent.Value;
 
                 var madeHealEntity = _world.NewEntity();
                 ref var madeHealEvent = ref _healingEffectAspect.Made.Add(madeHealEntity);
-                madeHealEvent.Source = effect.Source;
-                madeHealEvent.Destination = effect.Destination;
-                madeHealEvent.Value = healing.Value;
+                madeHealEvent.Source = effectComponent.Source;
+                madeHealEvent.Destination = effectComponent.Destination;
+                madeHealEvent.Value = healingEffectComponent.Value;
             }
         }
     }

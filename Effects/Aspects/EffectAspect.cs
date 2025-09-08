@@ -60,7 +60,6 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
 
         // Requests
         //---Generated Begin---
-        public ProtoPool<ApplyEffectSelfRequest> ApplyEffectSelfRequest;
         public ProtoPool<DestroyEffectSelfRequest> DestroyEffectSelfRequest;
         public ProtoPool<DestroyEffectViewSelfRequest> DestroyEffectViewSelfRequest;
         public ProtoPool<RemoveEffectRequest> RemoveEffectRequest;

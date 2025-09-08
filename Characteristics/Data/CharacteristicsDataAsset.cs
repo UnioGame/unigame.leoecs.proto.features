@@ -2,13 +2,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-
-using System;
-using System.Collections.Generic;
-
-using UnityEngine;
 using System.Linq;
-using UnityEngine.Serialization;
 
 #if ODIN_INSPECTOR
 using Sirenix.OdinInspector;
@@ -28,7 +22,6 @@ using UnityEditor;
 
 namespace UniGame.Proto.Features.Characteristics
 {
-    using Core.Runtime;
     using UniModules;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Characteristics/Characteristics Data Asset", fileName = "Characteristics Data Asset")]
