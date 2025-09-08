@@ -17,9 +17,7 @@
     public abstract class StateComponentSystem<TComponent> : IProtoRunSystem
         where TComponent : struct,IStateComponent
     {
-        private ProtoWorld _world;
-        
-        private ProtoIt _stateFilter = It
+        protected  ProtoIt _stateFilter = It
             .Chain<TComponent>()
             .End();
 
