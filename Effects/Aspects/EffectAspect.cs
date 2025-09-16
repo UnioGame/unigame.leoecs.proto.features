@@ -1,12 +1,19 @@
 namespace UniGame.Ecs.Proto.Effects.Aspects
 {
     using System;
+    using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using Characteristics.AbilityPower.Components;
     using Components;
+    using Game.Code.Configuration.Runtime.Effects;
+    using Game.Code.Configuration.Runtime.Effects.Abstract;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Components;
     using LeoEcs.Bootstrap;
+    using LeoEcs.Shared.Extensions;
+    using Leopotam.EcsProto.QoL;
+    using UnityEngine;
 
     [Serializable]
     public class EffectAspect : EcsAspect
@@ -69,6 +76,30 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
         public ProtoPool<DestroyEffectViewSelfRequest> DestroyView;
         public ProtoPool<DestroyEffectSelfRequest> DestroyEffect;
         public ProtoPool<ApplyEffectSelfRequest> Apply;
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void CreateRequests(
+            List<IEffectConfiguration> effects, 
+            ProtoPackedEntity source,
+            ProtoPackedEntity destination)
+        {
+            effects.CreateRequests(world, source, destination);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ProtoEntity CreateRequest(IEffectConfiguration effect,
+            ref ProtoPackedEntity source,
+            ref ProtoPackedEntity destination)
+        {
+            return effect.CreateRequest(world, ref source, ref destination);
+        }
+        
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Transform GetViewInstance(ProtoEntity entity, int viewInstanceId)
+        {
+            return entity.GetViewInstance(world, viewInstanceId);
+        }
         
     }
 }

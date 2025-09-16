@@ -48,6 +48,8 @@
             var converter = target.GetComponent<EffectRootMonoConverter>();
             converter = converter == null ? target.AddComponent<EffectRootMonoConverter>() : converter;
                 
+            if(converter == null) return;
+            
             converter.BakeActive();
             converter.MarkDirty();
             target.MarkDirty();

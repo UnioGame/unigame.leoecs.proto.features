@@ -1,12 +1,13 @@
 namespace UniGame.Ecs.Proto.Gameplay.Damage
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Components.Events;
     using Components.Request;
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-
+    using Runtime.Utils;
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -18,12 +19,14 @@ namespace UniGame.Ecs.Proto.Gameplay.Damage
     
 #if UNITY_EDITOR
     using UniModules.Editor;
+    using UnityEditor;
 #endif
     
     [CreateAssetMenu(menuName = "ECS Proto/Features/Gameplay/Damage Feature",fileName = "Damage Feature")]
     public class DamageFeature  : BaseLeoEcsFeature
     {
-        public List<DamageSubFeature> damageFeatures = new List<DamageSubFeature>();
+        [SerializeReference]
+        public List<DamageSubFeature> damageFeatures = new();
         
         public override async UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
@@ -54,9 +57,16 @@ namespace UniGame.Ecs.Proto.Gameplay.Damage
         public void FillFeatures()
         {
 #if UNITY_EDITOR
-            var features = AssetEditorTools.GetAssets<DamageSubFeature>();
-            damageFeatures.Clear();
-            damageFeatures.AddRange(features);
+            damageFeatures.RemoveAll(x => x == null);
+            var types = TypeCache.GetTypesDerivedFrom(typeof(DamageSubFeature));
+            foreach (var type in  types)
+            {
+                if(type.IsInterface || type.IsAbstract)continue;
+                if(damageFeatures.FirstOrDefault(x => x.GetType() == type) != null) continue;
+
+                var instance = type.CreateWithDefaultConstructor();
+                damageFeatures.Add((DamageSubFeature)instance);
+            }
             this.MarkDirty();
 #endif
         }
