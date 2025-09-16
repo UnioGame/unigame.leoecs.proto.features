@@ -8,9 +8,9 @@
 	using UnityEngine;
 
 	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Block Auto Attack Effect Feature")]
-	public class BlockAutoAttackEffectFeature : EffectFeatureAsset
+	public class BlockAutoAttackEffectFeature : EffectFeature
 	{
-		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+		public override UniTask InitializeAsync(IProtoSystems ecsSystems)
 		{
 			// Adds the effect of blocking auto attack on an ability.
 			ecsSystems.Add(new ProcessBlockAutoAttackEffectSystem());

@@ -10,9 +10,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Freeze Effect Feature")]
-    public class FreezeEffectFeature : EffectFeatureAsset
+    public class FreezeEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new CreateFreezeEffectSystem());
             ecsSystems.Add(new ApplyFreezeEffectSystem());

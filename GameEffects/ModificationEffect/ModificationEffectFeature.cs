@@ -8,9 +8,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Modification Effect Feature")]
-    public sealed class ModificationEffectFeature : EffectFeatureAsset
+    public sealed class ModificationEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new ProcessDestroyedModificationEffectSystem());
             ecsSystems.Add(new ProcessRemoveModificationEffectSystem());

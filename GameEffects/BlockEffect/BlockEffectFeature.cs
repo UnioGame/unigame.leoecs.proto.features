@@ -6,9 +6,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Block Effect Feature")]
-    public sealed class BlockEffectFeature : EffectFeatureAsset
+    public sealed class BlockEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             return UniTask.CompletedTask;
         }

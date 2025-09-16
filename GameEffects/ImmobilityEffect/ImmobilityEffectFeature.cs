@@ -8,9 +8,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Immobility Effect Feature")]
-    public sealed class ImmobilityEffectFeature : EffectFeatureAsset
+    public sealed class ImmobilityEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new ProcessImmobilityEffectSystem());
             ecsSystems.Add(new ProcessDestroyedBlockMovementEffectSystem());

@@ -1,8 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Feature
 {
+    using System;
     using UniGame.LeoEcs.Bootstrap.Runtime;
 
-    public abstract class EffectFeatureAsset : LeoEcsFeatureAsset
+    [Serializable]
+    public abstract class EffectFeature : BaseLeoEcsFeature
     {
         
     }

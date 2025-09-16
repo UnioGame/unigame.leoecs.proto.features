@@ -8,9 +8,9 @@
 	using UnityEngine;
 
 	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Retarget Effect Feature", fileName = "Retarget Effect Feature")]
-	public class RetargetEffectFeature : EffectFeatureAsset
+	public class RetargetEffectFeature : EffectFeature
 	{
-		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+		public override UniTask InitializeAsync(IProtoSystems ecsSystems)
 		{
 			ecsSystems.Add(new RetargetEffectSystem());
 			return UniTask.CompletedTask;

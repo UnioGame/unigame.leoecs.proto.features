@@ -6,9 +6,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Ability Radius Effect Feature")]
-    public sealed class AbilityRadiusEffectFeature : EffectFeatureAsset
+    public sealed class AbilityRadiusEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
 
             return UniTask.CompletedTask;

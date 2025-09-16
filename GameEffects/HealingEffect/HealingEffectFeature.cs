@@ -10,9 +10,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Healing Effect Feature")]
-    public sealed class HealingEffectFeature : EffectFeatureAsset
+    public sealed class HealingEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.DelHere<MadeHealEvent>();
             ecsSystems.Add(new ProcessHealingEffectSystem());

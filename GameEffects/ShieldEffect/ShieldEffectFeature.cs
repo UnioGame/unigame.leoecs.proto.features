@@ -8,9 +8,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Shield Effect Feature")]
-    public sealed class ShieldEffectFeature : EffectFeatureAsset
+    public sealed class ShieldEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new ProcessShieldEffectSystem());
             ecsSystems.Add(new ProcessShieldValueEffectSystem());

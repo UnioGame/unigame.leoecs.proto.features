@@ -21,7 +21,8 @@
     public static class EffectsExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CreateRequests(this List<IEffectConfiguration> effects, 
+        public static void CreateRequests(
+            this List<IEffectConfiguration> effects, 
             ProtoWorld world, 
             ProtoPackedEntity source,
             ProtoPackedEntity destination)

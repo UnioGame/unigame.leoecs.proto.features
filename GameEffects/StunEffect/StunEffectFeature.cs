@@ -8,9 +8,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Stun Effect Feature")]
-    public sealed class StunEffectFeature : EffectFeatureAsset
+    public sealed class StunEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new ProcessStunEffectSystem());
             ecsSystems.Add(new ProcessDestroyedStunEffectSystem());

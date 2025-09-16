@@ -9,9 +9,9 @@
 	using UnityEngine;
 
 	[CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Critical Effect Feature", fileName = "Critical Effect Feature")]
-	public class CriticalEffectFeature : EffectFeatureAsset
+	public class CriticalEffectFeature : EffectFeature
 	{
-		protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+		public override UniTask InitializeAsync(IProtoSystems ecsSystems)
 		{
 			ecsSystems.Add(new CriticalEffectSystem());
 			return UniTask.CompletedTask;

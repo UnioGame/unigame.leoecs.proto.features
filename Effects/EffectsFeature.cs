@@ -30,10 +30,11 @@
         public int maxEffectsCount = EcsEffectsConfiguration.MAX_EFFECTS_COUNT;
         
 #if ODIN_INSPECTOR
+        [Header("Effects")]
         [Searchable(FilterOptions = SearchFilterOptions.ISearchFilterableInterface)]
+        [InlineEditor]
 #endif
-        [SerializeReference]
-        public List<EffectFeatureAsset> effectFeatures = new List<EffectFeatureAsset>();
+        public List<EffectFeature> effectFeatures = new();
 
         public AddressableValue<EffectsRootConfiguration> effectsRootValue;
         
@@ -63,7 +64,10 @@
             ecsSystems.Add(new ProcessEffectPeriodicitySystem());
 
             foreach (var feature in effectFeatures)
+            {
+                if(feature.isEnabled == false) continue;
                 await feature.InitializeAsync(ecsSystems);
+            }
 
             ecsSystems.DelHere<EffectAppliedSelfEvent>();
             ecsSystems.Add(new ProcessAppliedEffectsSystem());
@@ -100,7 +104,7 @@
         public void FillEffects()
         {
 #if UNITY_EDITOR
-            var assets = AssetEditorTools.GetAssets<EffectFeatureAsset>();
+            var assets = AssetEditorTools.GetAssets<EffectFeature>();
             foreach (var effect in assets)
             {
                 if(effectFeatures.Contains(effect))continue;

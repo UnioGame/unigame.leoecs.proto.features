@@ -8,9 +8,9 @@
     using UnityEngine;
 
     [CreateAssetMenu(menuName = "ECS Proto/Features/Effects/Damage Effect Feature")]
-    public sealed class DamageEffectFeature : EffectFeatureAsset
+    public sealed class DamageEffectFeature : EffectFeature
     {
-        protected override UniTask OnInitializeFeatureAsync(IProtoSystems ecsSystems)
+        public override UniTask InitializeAsync(IProtoSystems ecsSystems)
         {
             ecsSystems.Add(new ProcessDamageEffectSystem());
             ecsSystems.Add(new ProcessAttackDamageEffectSystem());
