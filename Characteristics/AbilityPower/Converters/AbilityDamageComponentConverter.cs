@@ -9,21 +9,8 @@
 	using UnityEngine;
 
 	[Serializable]
-	public class AbilityPowerConverter : LeoEcsConverter
+	public class AbilityPowerConverter : GameCharacteristicConverter<AbilityPowerComponent>
 	{
-		public float abilityPower;
-		
-		public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
-		{
-			ref var attackDamageComponent = ref world.GetOrAddComponent<AbilityPowerComponent>(entity);
-			attackDamageComponent.Value = abilityPower;
-            
-			ref var createCharacteristicRequest = ref world
-				.GetOrAddComponent<CreateCharacteristicRequest<AbilityPowerComponent>>(entity);
-			createCharacteristicRequest.Value = abilityPower;
-			createCharacteristicRequest.MaxValue = 1000;
-			createCharacteristicRequest.MinValue = 0;
-			createCharacteristicRequest.Owner = entity.PackEntity(world);
-		}
+
 	}
 }

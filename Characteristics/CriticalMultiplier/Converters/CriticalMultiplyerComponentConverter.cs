@@ -19,24 +19,8 @@ namespace UniGame.Ecs.Proto.Characteristics.CriticalMultiplier.Converters
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class CriticalMultiplierConverter : LeoEcsConverter
+    public class CriticalMultiplierConverter: GameCharacteristicConverter<CriticalMultiplierComponent>
     {
-        public float criticalMultiplier = 100;
         
-        public float minLimitValue = 0f;
-        public float maxLimitValue = 1000f;
-        
-        public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
-        {
-            ref var createCharacteristicRequest = ref world
-                .GetOrAddComponent<CreateCharacteristicRequest<CriticalMultiplierComponent>>(entity);
-            createCharacteristicRequest.Value = criticalMultiplier;
-            createCharacteristicRequest.MaxValue = maxLimitValue;
-            createCharacteristicRequest.MinValue = minLimitValue;
-            createCharacteristicRequest.Owner = entity.PackEntity(world);
-
-            ref var valueComponent = ref world.GetOrAddComponent<CriticalMultiplierComponent>(entity);
-            valueComponent.Value = criticalMultiplier;
-        }
     }
 }

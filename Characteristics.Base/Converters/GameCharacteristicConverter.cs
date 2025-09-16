@@ -21,6 +21,7 @@ namespace UniGame.Ecs.Proto.Characteristics
         {
             ref var createCharacteristicRequest = ref world
                 .AddComponent<CreateCharacteristicRequest<TCharacteristic>>(entity);
+            
             createCharacteristicRequest.Value = value;
             createCharacteristicRequest.MaxValue = maxValue;
             createCharacteristicRequest.MinValue = minValue;

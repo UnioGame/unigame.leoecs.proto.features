@@ -14,7 +14,7 @@
 #endif
 	
 	[Serializable]
-	public class ArmorResistConverter : LeoEcsConverter
+	public class ArmorResistConverter : LeoEcsConverter,ICharacteristicConverter
 	{
 		#region Inspector
 		

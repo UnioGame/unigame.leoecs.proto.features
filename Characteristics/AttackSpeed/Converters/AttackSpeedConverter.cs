@@ -20,7 +20,7 @@ namespace UniGame.Ecs.Proto.Characteristics.AttackSpeed.Converters
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class AttackSpeedConverter : LeoEcsConverter
+    public class AttackSpeedConverter : LeoEcsConverter,ICharacteristicConverter
     {
         public CooldownType cooldownType = CooldownType.Speed;
         public int abilitySlotId = 0;

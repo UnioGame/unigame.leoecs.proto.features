@@ -24,7 +24,7 @@ namespace UniGame.Ecs.Proto.Characteristics.Block.Converters
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class BlockComponentConverter : LeoEcsConverter
+    public class BlockComponentConverter : LeoEcsConverter,ICharacteristicConverter
     {
         public float block = 0f;
 

@@ -33,10 +33,9 @@
                 effect.CreateRequest(world,ref source,ref destination);
         }
 
-#if ENABLE_IL2CPP
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-#endif
-        public static ProtoEntity CreateRequest(this IEffectConfiguration effect,
+        public static ProtoEntity CreateRequest(
+            this IEffectConfiguration effect,
             ProtoWorld world,
             ref ProtoPackedEntity source,
             ref ProtoPackedEntity destination)

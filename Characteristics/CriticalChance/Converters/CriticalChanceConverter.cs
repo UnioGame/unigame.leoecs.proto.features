@@ -19,23 +19,8 @@ namespace UniGame.Ecs.Proto.Characteristics.CriticalChance.Converters
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
-    public class CriticalChanceConverter : LeoEcsConverter
+    public class CriticalChanceConverter : GameCharacteristicConverter<CriticalChanceComponent>
     {
-        public float criticalChance;
-        
-        public float minLimitValue = 0f;
-        public float maxLimitValue = 1000f;
-        
-        public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
-        {
-            ref var createCharacteristicRequest = ref world
-                .GetOrAddComponent<CreateCharacteristicRequest<CriticalChanceComponent>>(entity);
-            createCharacteristicRequest.Value = criticalChance;
-            createCharacteristicRequest.MaxValue = maxLimitValue;
-            createCharacteristicRequest.MinValue = minLimitValue;
-            createCharacteristicRequest.Owner = entity.PackEntity(world);
-
-            ref var criticalChanceComponent = ref world.GetOrAddComponent<CriticalChanceComponent>(entity);
-        }
+       
     }
 }

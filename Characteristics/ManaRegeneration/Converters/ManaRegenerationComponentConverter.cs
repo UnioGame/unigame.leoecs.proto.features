@@ -30,9 +30,13 @@
 
         public override void Apply(GameObject target, ProtoWorld world, ProtoEntity entity)
         {
-            ref var manaRegenerationTimerComponent = ref world.AddComponent<ManaRegenerationTimerComponent>(entity);
+            base.Apply(target, world, entity);
+            ref var manaRegenerationTimerComponent = ref world
+                .AddComponent<ManaRegenerationTimerComponent>(entity);
+            
             manaRegenerationTimerComponent.TickTime = tickTime;
             manaRegenerationTimerComponent.LastTickTime = Time.time;
         }
+
     }
 }

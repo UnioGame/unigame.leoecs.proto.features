@@ -39,7 +39,7 @@
 
                 ref var shieldEffectComponent = ref _shieldEffectAspect.ShieldEffect.Get(effectEntity);
                 ref var shieldComponent = ref _shieldCharacteristicAspect.Shield.GetOrAddComponent(destinationEntity);
-                shieldComponent.Value += shieldEffectComponent.maxValue;
+                shieldComponent.Value += shieldEffectComponent.Value;
             }
         }
     }

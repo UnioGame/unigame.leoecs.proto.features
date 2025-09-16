@@ -2,6 +2,6 @@
 {
     public struct ShieldEffectComponent
     {
-        public float maxValue;
+        public float Value;
     }
 }
