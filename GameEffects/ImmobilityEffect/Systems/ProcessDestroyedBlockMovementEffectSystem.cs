@@ -1,42 +1,43 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ImmobilityEffect.Systems
 {
     using Components;
+    using Effects.Aspects;
     using Effects.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using Movement.Aspect;
     using Movement.Components;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    public sealed class ProcessDestroyedBlockMovementEffectSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public sealed class ProcessDestroyedBlockMovementEffectSystem : IProtoRunSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<ImmobilityEffectComponent>()
+            .Inc<EffectComponent>()
+            .Inc<DestroyEffectSelfRequest>()
+            .End();
+
+        private EffectAspect _effectAspect;
+        private NavMeshAgentAspect _navMeshAgentAspect;
+        
         private ProtoWorld _world;
 
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<ImmobilityEffectComponent>()
-                .Inc<EffectComponent>()
-                .Inc<DestroyEffectSelfRequest>()
-                .End();
-        }
-        
         public void Run()
         {
-            var effectPool = _world.GetPool<EffectComponent>();
-            var blockMovementPool = _world.GetPool<ImmobilityComponent>();
-            
             foreach (var entity in _filter)
             {
-                ref var effect = ref effectPool.Get(entity);
+                ref var effect = ref _effectAspect.Effect.Get(entity);
+                
                 if(!effect.Destination.Unpack(_world, out var destinationEntity))
                     continue;
 
-                if (!blockMovementPool.Has(destinationEntity))
+                if (!_navMeshAgentAspect.Immobility.Has(destinationEntity))
                     continue;
 
-                ref var block = ref blockMovementPool.Get(destinationEntity);
+                ref var block = ref _navMeshAgentAspect.Immobility
+                    .Get(destinationEntity);
                 block.BlockSourceCounter--;
             }
         }

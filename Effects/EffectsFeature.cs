@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Systems;
     using Components;
     using Cysharp.Threading.Tasks;
@@ -13,6 +14,7 @@
     using UniGame.AddressableTools.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;
+    using UniModules;
     using UnityEngine;
 
 #if ODIN_INSPECTOR
@@ -21,6 +23,7 @@
     
 #if UNITY_EDITOR
     using UniModules.Editor;
+    using UnityEditor;
 #endif
 
     [Serializable]
@@ -109,6 +112,28 @@
             {
                 if(effectFeatures.Contains(effect))continue;
                 effectFeatures.Add(effect);
+            }
+            this.MarkDirty();
+#endif
+        }
+        
+#if ODIN_INSPECTOR
+        [Button]
+#endif
+        public void CreateEffects()
+        {
+#if UNITY_EDITOR
+            var path = AssetDatabase.GetAssetPath(this);
+            var directory = System.IO.Path.GetDirectoryName(path);
+            var types = TypeCache.GetTypesDerivedFrom<EffectFeature>();
+            foreach (var type in types)
+            {
+                if(type.IsAbstract) continue;
+                if(effectFeatures.FirstOrDefault(x => x.GetType() == type) != null) continue;
+                var instance = CreateInstance(type) as EffectFeature;
+                instance.name = type.Name;
+                instance = instance.SaveAsset(directory);
+                effectFeatures.Add(instance);
             }
             this.MarkDirty();
 #endif

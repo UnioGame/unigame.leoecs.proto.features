@@ -5,13 +5,11 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
     using System.Runtime.CompilerServices;
     using Characteristics.AbilityPower.Components;
     using Components;
-    using Game.Code.Configuration.Runtime.Effects;
     using Game.Code.Configuration.Runtime.Effects.Abstract;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Shared.Components;
     using LeoEcs.Bootstrap;
-    using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto.QoL;
     using UnityEngine;
 

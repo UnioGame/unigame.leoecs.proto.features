@@ -1,39 +1,43 @@
 ﻿namespace UniGame.Ecs.Proto.GameEffects.ImmobilityEffect.Systems
 {
     using Components;
+    using Effects.Aspects;
     using Effects.Components;
-    using Leopotam.EcsLite;
+    using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
-    using Movement.Components;
+    using Movement.Aspect;
     using UniGame.LeoEcs.Shared.Extensions;
 
-    public sealed class ProcessImmobilityEffectSystem : IProtoRunSystem,IProtoInitSystem
+    [ECSDI]
+    public sealed class ProcessImmobilityEffectSystem : IProtoRunSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<ImmobilityEffectComponent>()
+            .Inc<EffectComponent>()
+            .Inc<ApplyEffectSelfRequest>()
+            .End();
+        
+        private NavMeshAgentAspect _navMeshAgentAspect; 
+        private EffectAspect _effectAspect;
+        
         private ProtoWorld _world;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            _filter = _world.Filter<ImmobilityEffectComponent>()
-                .Inc<EffectComponent>()
-                .Inc<ApplyEffectSelfRequest>()
-                .End();
-        }
+        
         
         public void Run()
         {
-            var effectPool = _world.GetPool<EffectComponent>();
-            var blockMovementPool = _world.GetPool<ImmobilityComponent>();
 
             foreach (var entity in _filter)
             {
-                ref var effect = ref effectPool.Get(entity);
+                ref var effect = ref _effectAspect.Effect.Get(entity);
+                
                 if(!effect.Destination.Unpack(_world, out var destinationEntity))
                     continue;
 
-                ref var block = ref blockMovementPool.GetOrAddComponent(destinationEntity);
+                ref var block = ref _navMeshAgentAspect
+                    .Immobility
+                    .GetOrAddComponent(destinationEntity);
+                
                 block.BlockSourceCounter++;
             }
         }

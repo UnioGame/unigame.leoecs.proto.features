@@ -22,25 +22,19 @@
 #endif
     [Serializable]
     [ECSDI]
-    public sealed class ProcessTeleportEffectSystem : IProtoRunSystem,IProtoInitSystem
+    public sealed class ProcessTeleportEffectSystem : IProtoRunSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<TeleportEffectComponent>()
+            .Inc<EffectComponent>()
+            .Inc<ApplyEffectSelfRequest>()
+            .End();
+        
         private ProtoWorld _world;
         
         private ProtoPool<EffectComponent> _effectPool;
         private ProtoPool<TransformComponent> _transformPool;
         private ProtoPool<EntityAvatarComponent> _avatarPool;
-
-        public void Init(IProtoSystems systems)
-        {
-            _world = systems.GetWorld();
-            
-            _filter = _world
-                .Filter<TeleportEffectComponent>()
-                .Inc<EffectComponent>()
-                .Inc<ApplyEffectSelfRequest>()
-                .End();
-        }
 
         public void Run()
         {
