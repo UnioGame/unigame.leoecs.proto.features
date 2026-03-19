@@ -1,6 +1,6 @@
 namespace UniGame.Ecs.Proto.TargetSelection.Systems
 {
-    using DataStructures.ViliWonka.KDTree;
+    using UnioGame.KDTree;
     using Components;
     using Unity.Mathematics;
     using System;

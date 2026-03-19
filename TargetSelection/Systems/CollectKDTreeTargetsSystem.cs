@@ -4,7 +4,7 @@
     using Aspects;
     using Characteristics.Health.Components;
     using Components;
-    using DataStructures.ViliWonka.KDTree;
+    using UnioGame.KDTree;
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
     using Leopotam.EcsProto;

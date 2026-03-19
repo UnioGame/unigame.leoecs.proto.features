@@ -1,7 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.TargetSelection.Components
 {
     using System;
-    using DataStructures.ViliWonka.KDTree;
+    using UnioGame.KDTree;
     /// <summary>
     /// radius query for KDTree
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.TargetSelection.Components
 {
     using System;
-    using DataStructures.ViliWonka.KDTree;
+    using UnioGame.KDTree;
     /// <summary>
     /// KD Tree component
     /// </summary>
