@@ -24,7 +24,7 @@
 
         private async UniTask LoadHighlightAsync(ProtoWorld world,ProtoEntity entity,ILifeTime lifeTime)
         {
-            var asset = await highlight.LoadAssetInstanceTaskAsync<GameObject>(lifeTime,true);
+            var asset = await highlight.SpawnByReference(lifeTime,true);
             ApplyComponent(world, entity, asset);
         }
 

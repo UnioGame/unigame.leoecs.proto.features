@@ -22,11 +22,11 @@
 			var data = new AbilityLoadoutData();
 			
 			var abilityDataBase = await abilityDatabase
-				.LoadAssetInstanceTaskAsync(context.LifeTime, true);
+				.SpawnByReference(context.LifeTime, true);
 			var slotMap = await abilitySlotMap
-				.LoadAssetInstanceTaskAsync(context.LifeTime, true);
+				.SpawnByReference(context.LifeTime, true);
 			var rarityMap = await abilityRarityData
-				.LoadAssetInstanceTaskAsync(context.LifeTime, true);
+				.SpawnByReference(context.LifeTime, true);
 			
 			data.abilityDataBase = abilityDataBase;
 			data.abilitySlotMap = slotMap;

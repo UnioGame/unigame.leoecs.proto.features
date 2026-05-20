@@ -70,7 +70,7 @@ namespace UniGame.Ecs.Proto.AI.Converters
         {
             var lifeTime = target.GetAssetLifeTime();
             var aiData = await configuration
-                .LoadAssetInstanceTaskAsync(lifeTime,true);
+                .SpawnByReference(lifeTime,true);
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             ApplyAiData(target, world, entity, aiData);

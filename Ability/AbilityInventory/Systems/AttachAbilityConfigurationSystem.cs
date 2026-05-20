@@ -94,7 +94,7 @@
             AssetReferenceT<AbilityConfiguration> referenceComponent)
         {
             var configuration = await referenceComponent
-                .LoadAssetInstanceTaskAsync(_lifeTime,true);
+                .SpawnByReference(_lifeTime,true);
             
             _configurationLoading.Add(new MetaConfigurationValue()
             {

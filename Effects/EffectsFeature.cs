@@ -48,7 +48,7 @@
             var world = ecsSystems.GetWorld();
             var worldLifeTime = world.GetWorldLifeTime();
             var configuration = await effectsRootValue.reference
-                .LoadAssetInstanceTaskAsync(worldLifeTime,true);
+                .SpawnByReference(worldLifeTime,true);
             
             world.SetGlobal(configuration.data);
             

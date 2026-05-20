@@ -48,9 +48,9 @@
         
         private async UniTask LoadViewAsync(ILifeTime lifeTime)
         {
-            _noTargetRadiusView  = await noTargetView.LoadAssetInstanceTaskAsync(lifeTime,true);
-            _targetCloseRadiusView = await targetCloseView.LoadAssetInstanceTaskAsync(lifeTime,true);
-            _hasTargetRadiusView = await hasTargetView.LoadAssetInstanceTaskAsync(lifeTime,true);
+            _noTargetRadiusView  = await noTargetView.SpawnByReference(lifeTime,true);
+            _targetCloseRadiusView = await targetCloseView.SpawnByReference(lifeTime,true);
+            _hasTargetRadiusView = await hasTargetView.SpawnByReference(lifeTime,true);
             OnApply();
         }
 
