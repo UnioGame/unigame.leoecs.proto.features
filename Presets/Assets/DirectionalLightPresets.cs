@@ -67,7 +67,7 @@ namespace UniGame.Ecs.Proto.Presets.Assets
         
         private Light SearchFirstLight()
         {
-            var directionalLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var directionalLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include);
             
             foreach (var light in directionalLights)
             {

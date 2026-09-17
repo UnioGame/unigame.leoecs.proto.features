@@ -58,7 +58,7 @@ namespace UniGame.Ecs.Proto.Presets.SpotLightSettings.Converters
         private void SearchTarget(bool apply)
         {
             var spotLightsTargets =
-                UnityEngine.Object.FindObjectsByType<MonoSpotLightSettingsTargetConverter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+                UnityEngine.Object.FindObjectsByType<MonoSpotLightSettingsTargetConverter>(FindObjectsInactive.Include);
 
             var generalLightTargets =
                 UnityEngine.Object.FindObjectsOfType<MonoGeneralLightSettingsPresetTargetConverter>(
