@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Presets.Assets
+namespace UniGame.Ecs.Proto.Presets.Assets
 {
     using System;
 
@@ -67,7 +67,7 @@
         
         private Light SearchFirstLight()
         {
-            var directionalLights = UnityEngine.Object.FindObjectsOfType<Light>(includeInactive: true);
+            var directionalLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             
             foreach (var light in directionalLights)
             {

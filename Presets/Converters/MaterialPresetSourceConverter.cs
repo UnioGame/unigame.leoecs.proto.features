@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Presets.Converters
+namespace UniGame.Ecs.Proto.Presets.Converters
 {
     using System;
     using System.Collections.Generic;
@@ -107,7 +107,7 @@
 #if UNITY_EDITOR
             
             var assets = Object
-                .FindObjectsOfType<MonoMaterialPresetTargetConverter>()
+                .FindObjectsByType<MonoMaterialPresetTargetConverter>(FindObjectsSortMode.None)
                 .Where(x => x.Converter.targetId == targetId)
                 .ToList();
 

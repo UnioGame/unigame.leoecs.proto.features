@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Presets.Assets
+namespace UniGame.Ecs.Proto.Presets.Assets
 {
     using System;
     using UnityEngine;
@@ -99,7 +99,7 @@
         
         private void SearchFirstLight()
         {
-            var spotLights = UnityEngine.Object.FindObjectsOfType<Light>(includeInactive: true);
+            var spotLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             foreach (var light in spotLights)
             {

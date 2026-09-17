@@ -1,4 +1,4 @@
-﻿namespace UniGame.Ecs.Proto.Presets.DirectionalLight.Converters
+namespace UniGame.Ecs.Proto.Presets.DirectionalLight.Converters
 {
     using Assets;
     using System;
@@ -60,7 +60,7 @@
         private void SearchTarget(bool apply)
         {
             var directionalLightsTargets =
-                UnityEngine.Object.FindObjectsOfType<MonoDirectionalLightSettingsTargetConverter>(includeInactive: true);
+                UnityEngine.Object.FindObjectsByType<MonoDirectionalLightSettingsTargetConverter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             var generalLightTargets =
                 UnityEngine.Object.FindObjectsOfType<MonoGeneralLightSettingsPresetTargetConverter>(
