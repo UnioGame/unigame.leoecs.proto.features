@@ -1,5 +1,5 @@
 {
-    "name": "game.ecs.state",
+    "name": "unigame.ecs.state",
     "rootNamespace": "",
     "references": [
         "GUID:f51ebe6a0ceec4240a699833d6309b23",
@@ -26,7 +26,9 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNIGAME_STATE_FEATURE_ENABLED"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
