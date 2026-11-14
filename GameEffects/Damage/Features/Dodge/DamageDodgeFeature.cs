@@ -1,5 +1,6 @@
 namespace UniGame.Ecs.Proto.Gameplay.Dodge
 {
+    using System;
     using Cysharp.Threading.Tasks;
     using Damage;
     using Events;
@@ -7,9 +8,8 @@ namespace UniGame.Ecs.Proto.Gameplay.Dodge
     using Leopotam.EcsProto.QoL;
     using Systems;
     using UniGame.LeoEcs.Shared.Extensions;
-    using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ECS Proto/Features/Damage/Damage Dodge Feature", fileName = "Damage Dodge Feature")]
+    [Serializable]
     public class DamageDodgeFeature : DamageSubFeature
     {
         public sealed override UniTask BeforeDamageSystem(IProtoSystems ecsSystems)
