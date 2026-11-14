@@ -62,8 +62,9 @@
                 .FirstOrDefault(x => x.Value == slotId);
             var slotName = filteredTypes.Text;
             return string.IsNullOrEmpty(slotName) ? string.Empty : slotName;
-#endif
+#else
             return string.Empty;
+#endif
         }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
