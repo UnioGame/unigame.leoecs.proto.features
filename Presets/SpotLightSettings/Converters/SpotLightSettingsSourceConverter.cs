@@ -10,6 +10,7 @@ namespace UniGame.Ecs.Proto.Presets.SpotLightSettings.Converters
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.Ecs.Proto.Presets.Converters;
     using UniGame.LeoEcs.Converter.Runtime;
+    using UnityEngine;
 
 #if ODIN_INSPECTOR
     using Sirenix.OdinInspector;
@@ -58,11 +59,18 @@ namespace UniGame.Ecs.Proto.Presets.SpotLightSettings.Converters
         private void SearchTarget(bool apply)
         {
             var spotLightsTargets =
+#if UNITY_6000_6_OR_NEWER
                 UnityEngine.Object.FindObjectsByType<MonoSpotLightSettingsTargetConverter>(FindObjectsInactive.Include);
+#else
+                UnityEngine.Object.FindObjectsByType<MonoSpotLightSettingsTargetConverter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+#endif
 
             var generalLightTargets =
-                UnityEngine.Object.FindObjectsOfType<MonoGeneralLightSettingsPresetTargetConverter>(
-                    includeInactive: true);
+#if UNITY_6000_6_OR_NEWER
+                UnityEngine.Object.FindObjectsByType<MonoGeneralLightSettingsPresetTargetConverter>(FindObjectsInactive.Include);
+#else
+                UnityEngine.Object.FindObjectsByType<MonoGeneralLightSettingsPresetTargetConverter>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+#endif
 
             foreach (var spotLightTarget in spotLightsTargets)
             {

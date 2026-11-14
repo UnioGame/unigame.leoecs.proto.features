@@ -99,7 +99,11 @@ namespace UniGame.Ecs.Proto.Presets.Assets
         
         private void SearchFirstLight()
         {
+#if UNITY_6000_6_OR_NEWER
             var spotLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include);
+#else
+            var spotLights = UnityEngine.Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+#endif
 
             foreach (var light in spotLights)
             {
