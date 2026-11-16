@@ -1,5 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.Components
 {
+    using System;
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -7,6 +8,14 @@
     /// <summary>
     /// Цели для применения умения.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
     public struct AbilityTargetsComponent : IProtoAutoReset<AbilityTargetsComponent>
     {
         public static readonly ProtoPackedEntity Empty = default;

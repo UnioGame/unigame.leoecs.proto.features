@@ -3,6 +3,9 @@
     using System;
     using UnityEngine.Serialization;
 
+    /// <summary>
+    ///
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

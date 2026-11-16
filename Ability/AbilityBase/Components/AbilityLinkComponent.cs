@@ -3,7 +3,6 @@
     using System;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
     ///  link to ability entity
     /// </summary>

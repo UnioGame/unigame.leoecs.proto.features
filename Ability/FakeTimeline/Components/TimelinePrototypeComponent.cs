@@ -6,6 +6,9 @@
     using Leopotam.EcsProto.QoL;
     using Unity.Collections;
 
+    /// <summary>
+    ///
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

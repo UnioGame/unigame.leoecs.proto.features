@@ -18,5 +18,6 @@
         public ProtoPool<ApplyAbilitySelfRequest> ApplyAbility;
         public ProtoPool<SetInHandAbilitySelfRequest> SetInHandAbility;
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityBySlot;
+        public ProtoPool<EquipAbilityConfigurationSelfRequest> EquipConfiguration;
     }
 }

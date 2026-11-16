@@ -49,6 +49,10 @@
             
             ecsSystems.DelHere<AbilityVelocityEvent>();
 
+            // build abilities given by AbilityConfigurationConverter
+            ecsSystems.Add(new EquipAbilityConfigurationSystem());
+            ecsSystems.DelHere<EquipAbilityConfigurationSelfRequest>();
+
             foreach (var feature in subFeatures)
             {
                 await feature.OnInitializeSystems(ecsSystems);

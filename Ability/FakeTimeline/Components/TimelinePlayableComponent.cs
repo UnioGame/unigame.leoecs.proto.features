@@ -1,7 +1,10 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components
 {
     using System;
-    
+
+    /// <summary>
+    ///
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

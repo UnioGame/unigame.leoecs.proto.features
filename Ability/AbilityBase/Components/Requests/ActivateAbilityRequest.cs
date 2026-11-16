@@ -3,7 +3,6 @@
     using System;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
     /// request to take ability in hand and activate it
     /// </summary>
