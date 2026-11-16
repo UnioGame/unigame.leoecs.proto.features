@@ -8,8 +8,9 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+
     /// <summary>
-    /// Activate ability by id
+    /// По запросу берёт конкретную способность владельца в руку и применяет её.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

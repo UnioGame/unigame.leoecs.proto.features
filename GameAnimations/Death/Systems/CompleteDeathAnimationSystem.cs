@@ -8,7 +8,11 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
+    /// <summary>
+    /// Анимация смерти доиграла: останавливает её и снимает ожидание смерти, чтобы сущность можно было
+    /// убрать.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

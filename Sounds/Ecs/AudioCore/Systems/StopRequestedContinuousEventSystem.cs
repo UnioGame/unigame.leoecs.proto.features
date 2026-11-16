@@ -3,6 +3,7 @@ using Game.Ecs.Audio.AudioCore.Aspects;
 using Game.Ecs.Audio.AudioCore.Components;
 using Game.Ecs.Audio.AudioCore.Components.Requests;
 using Leopotam.EcsProto;
+using Leopotam.EcsProto.QoL;
 using UniGame.LeoEcs.Shared.Extensions;
 
 namespace Game.Ecs.Audio.AudioCore.Systems
@@ -31,21 +32,18 @@ namespace Game.Ecs.Audio.AudioCore.Systems
     public class StopRequestedContinuousEventSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _requestedEventsFilter;
-        private EcsFilter _continuousAudioFilter;
+        private EcsFilter _requestedEventsFilter = It
+            .Chain<StopFMODEventRequest>()
+            .End();
+        private EcsFilter _continuousAudioFilter = It
+            .Chain<ContinuousAudioComponent>()
+            .End();
         private AudioCoreAspect _audioCoreAspect;
         
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            
-            _requestedEventsFilter = _world
-                .Filter<StopFMODEventRequest>()
-                .End();
 
-            _continuousAudioFilter = _world
-                .Filter<ContinuousAudioComponent>()
-                .End();
         }
 
         public void Run()

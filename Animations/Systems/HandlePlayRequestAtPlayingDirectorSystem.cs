@@ -7,6 +7,7 @@
     using Game.Ecs.Core.Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     
@@ -21,7 +22,11 @@
     [ECSDI]
     public sealed class HandlePlayRequestAtPlayingDirectorSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<PlayOnDirectorSelfRequest>()
+            .Inc<AnimatorPlayingComponent>()
+            .Inc<PlayableDirectorComponent>()
+            .End();
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;
@@ -31,11 +36,6 @@
         {
             _world = systems.GetWorld();
             
-            _filter = _world
-                .Filter<PlayOnDirectorSelfRequest>()
-                .Inc<AnimatorPlayingComponent>()
-                .Inc<PlayableDirectorComponent>()
-                .End();
         }
         
         public void Run()

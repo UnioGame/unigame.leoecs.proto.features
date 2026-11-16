@@ -1,8 +1,8 @@
 namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 {
     using System;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
     using Ability.Aspects;
-    using Characteristics.Radius.Component;
     using Components;
     using Data;
     using Game.Code.GameLayers.Relationship;
@@ -17,6 +17,10 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Ищет врагов нужных категорий в поле зрения агента и добавляет лучшую цель в список целей движения.
+    /// Ближние цели важнее дальних.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -32,11 +36,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
         private ProtoWorld _world;
         private TargetSelectionSystem _targetSelection;
         
-        private ProtoPool<MoveByCategoryComponent> _moveToTargetPlannerPool;
-        private ProtoPool<MoveToGoalComponent> _goalPool;
-        private ProtoPool<RadiusComponent> _radiusPool;
-        private ProtoPool<TransformPositionComponent> _positionPool;
-        private ProtoPool<LayerIdComponent> _layerPool;
+        private MoveToTargetAspect _moveToTargetAspect;
 
         private ProtoItExc _filter= It
             .Chain<MoveByCategoryComponent>()
@@ -53,13 +53,13 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var plannerComponent = ref _moveToTargetPlannerPool.Get(entity);
+                ref var plannerComponent = ref _moveToTargetAspect.ByCategory.Get(entity);
 
                 if (!_abilityTools.TryGetInHandAbility(entity, out var ability))
                     continue;
 
-                ref var transformComponent = ref _positionPool.Get(entity);
-                ref var layerComponent = ref _layerPool.Get(entity);
+                ref var transformComponent = ref _moveToTargetAspect.Position.Get(entity);
+                ref var layerComponent = ref _moveToTargetAspect.Layer.Get(entity);
            
                 var layer = layerComponent.Value;
 
@@ -91,7 +91,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
                         var selectionEntity = _selection[i];
                         var priority = minPriority + count - i;
 
-                        ref var selectionTransformComponent = ref _positionPool.Get(selectionEntity);
+                        ref var selectionTransformComponent = ref _moveToTargetAspect.Position.Get(selectionEntity);
                         ref var selectionPosition = ref selectionTransformComponent.Position;
                         
                         var distance = math.distancesq(selectionPosition, position);
@@ -114,14 +114,14 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
                 if (targetEntity.Equals(TargetSelectionData.EmptyResult))
                     continue;
 
-                ref var abilityRadiusComponent = ref _radiusPool.Get(ability);
+                ref var abilityRadiusComponent = ref _moveToTargetAspect.Radius.Get(ability);
                 var radius = abilityRadiusComponent.Value;
                 var complete = distanceToTarget < radius * radius; // distanceToTarget is squared
                 targetPriority = complete ? -1 : targetPriority;
             
                 if(targetPriority < 0) continue;
                 
-                ref var component = ref _goalPool.Get(entity);
+                ref var component = ref _moveToTargetAspect.ToGoal.Get(entity);
 
                 var value = new MoveToGoalData()
                 {

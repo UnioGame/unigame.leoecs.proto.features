@@ -2,7 +2,6 @@
 {
     using System;
     using Aspects;
-    using Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using SubFeatures.FakeTimeline.Components.Events;
@@ -11,8 +10,7 @@
     using UniGame.Proto.Ability;
 
     /// <summary>
-    /// When an ability timeline ends, asks to complete its ability (CompleteAbilitySelfRequest);
-    /// CompleteAbilitySystem then removes AbilityUsingComponent and fires AbilityCompleteSelfEvent.
+    /// Таймлайн способности доиграл: просит завершить способность.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -20,6 +20,10 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
     using Unity.Mathematics;
     using UnityEngine;
 
+    /// <summary>
+    /// Ищет цель для способности по дистанции: враги в заданном радиусе, но не ближе минимальной дистанции.
+    /// Пока у агента идёт другая (не основная) способность, не ищет.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -39,7 +43,6 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
         
         private ProtoWorld _world;
         
-        private ProtoPool<AbilityAiActionTargetComponent> _targetPool;
 
         private ProtoEntity[] _selection = new ProtoEntity[TargetSelectionData.MaxTargets];
 
@@ -115,7 +118,7 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                     activeTargetComponent.Value = packedTarget;
                     
                     targetFound = true;
-                    ref var targetComponent = ref _targetPool.Add(entity);
+                    ref var targetComponent = ref _targetAspect.AiTarget.Add(entity);
                         
                     targetComponent.Ability = targetAbility.PackEntity(_world);
                     targetComponent.AbilityCellId = abilitySlot;

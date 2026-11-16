@@ -8,6 +8,9 @@ namespace UniGame.Ecs.Proto.AI.Systems
     using Leopotam.EcsProto.QoL;
     using Service;
 
+    /// <summary>
+    /// Собирает план агента: включает все действия, у которых приоритет больше нуля.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

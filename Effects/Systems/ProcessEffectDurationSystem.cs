@@ -9,6 +9,10 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
+    /// <summary>
+    /// Следит за временем жизни эффекта: истекло — просит его удалить. Эффекты с длительностью -1 живут,
+    /// пока их не снимут.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

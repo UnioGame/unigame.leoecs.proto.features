@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Movement.Systems.Rigidbody
 {
     using System;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Aspect;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
@@ -9,7 +10,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// Система отвечающая за пермещени через физическую систему Unity.
+    /// Двигает сущность через Rigidbody со скоростью из VelocityComponent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -19,6 +20,7 @@
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
+    [ECSDI]
     public sealed class RigidbodyMovementSystem : IProtoRunSystem
     {
         private ProtoWorld _world;

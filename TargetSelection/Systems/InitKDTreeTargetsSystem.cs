@@ -10,7 +10,9 @@ namespace UniGame.Ecs.Proto.TargetSelection.Systems
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-
+    /// <summary>
+    /// Один раз создаёт сущность с kd-деревом целей и запросом к нему.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

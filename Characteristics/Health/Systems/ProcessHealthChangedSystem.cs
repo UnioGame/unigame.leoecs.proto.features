@@ -9,7 +9,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// System for processing changes in the health characteristic of entities.
+    /// Характеристика здоровья изменилась: переносит новые значения в HealthComponent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -8,9 +8,10 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// Система отвечающая за остановку симуляции NavMesh при наличии запроса на остановку <see cref="UniGame.Ecs.Proto.Movement.Components.MovementStopSelfRequest"/>.
+    /// Система отвечающая за остановку симуляции NavMesh при наличии запроса на остановку <see
+    /// cref="UniGame.Ecs.Proto.Movement.Components.MovementStopSelfRequest"/>.
     /// </summary>
-    #if ENABLE_IL2CPP
+#if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
     [Il2CppSetOption(Option.NullChecks, false)]

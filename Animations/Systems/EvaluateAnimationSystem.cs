@@ -22,7 +22,10 @@
     [ECSDI]
     public sealed class EvaluateAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<AnimatorPlayingComponent>()
+            .Inc<PlayableDirectorComponent>()
+            .End();
         private ProtoWorld _world;
         private AnimationToolSystem _animationTool;
         
@@ -34,10 +37,6 @@
             _world = systems.GetWorld();
             _animationTool = _world.GetGlobal<AnimationToolSystem>();
             
-            _filter = _world
-                .Filter<AnimatorPlayingComponent>()
-                .Inc<PlayableDirectorComponent>()
-                .End();
         }
         
         public void Run()

@@ -5,18 +5,15 @@
     using Components;
     using FakeTimeline.Components.Requests;
     using Game.Ecs.Core.Components;
-    
     using UniGame.Proto.Ownership;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
-#if SPINE_ENABLED
-    using Game.Ecs.SpineAnimation.Aspects;
-    using Game.Ecs.SpineAnimation.Data.AnimationType;
-#endif
-    
+
+    /// <summary>
+    /// Шаг способности «анимация»: запускает нужную анимацию у цели шага.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -34,7 +31,7 @@
         private OwnershipAspect _ownershipAspect;
         
 #if SPINE_ENABLED
-        private SpineAnimationAspect _spineAnimationAspect;
+        private Game.Ecs.SpineAnimation.Aspects.SpineAnimationAspect _spineAnimationAspect;
 #endif
         
         private ProtoItExc _behaviourFilter = It
@@ -63,8 +60,8 @@
 
 #if SPINE_ENABLED
                 ref var playAnimationSelfRequest = ref _spineAnimationAspect.Play.GetOrAdd(unpackedTargetEntity);
-                playAnimationSelfRequest.AnimationTypeId = (AnimationTypeId)playAnimId;
-                playAnimationSelfRequest.NextAnimationTypeId = (AnimationTypeId)nextPlayAnimId;
+                playAnimationSelfRequest.AnimationTypeId = (Game.Ecs.SpineAnimation.Data.AnimationType.AnimationTypeId)playAnimId;
+                playAnimationSelfRequest.NextAnimationTypeId = (Game.Ecs.SpineAnimation.Data.AnimationType.AnimationTypeId)nextPlayAnimId;
                 playAnimationSelfRequest.TimeScale = timeScale;
 #endif
             }

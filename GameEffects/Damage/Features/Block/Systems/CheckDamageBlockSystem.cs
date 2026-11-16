@@ -12,7 +12,7 @@
     using Random = UnityEngine.Random;
 
     /// <summary>
-    /// Add an empty target to an ability
+    /// Бросает шанс блока: заблокировал — урон отменяется и кидается событие BlockedDamageEvent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

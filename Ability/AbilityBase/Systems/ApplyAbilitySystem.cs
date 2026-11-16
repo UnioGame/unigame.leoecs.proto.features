@@ -13,6 +13,10 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Timer.Components;
 
+    /// <summary>
+    /// Применяет способность: создаёт её таймлайн с целями, снимает готовность, перезапускает кулдаун и
+    /// помечает «используется». Пока таймлайн играет, повторно не применяется.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

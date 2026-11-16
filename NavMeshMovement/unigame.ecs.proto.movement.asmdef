@@ -2,6 +2,7 @@
     "name": "unigame.ecs.proto.Movement",
     "rootNamespace": "",
     "references": [
+        "GUID:18e001e7783f9fa4f91ffb0f7d0ecfc5",
         "GUID:b10aac27e5bc3d74f9892b100a74487f",
         "GUID:c1d53fc1b1b71c647b00626be502b7b1",
         "GUID:966f01aff3301cb449a4595679577a3a",

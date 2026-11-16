@@ -7,17 +7,16 @@
     using Game.Ecs.Core.Components;
     using Game.Ecs.Core.Death.Components;
     using UniGame.Proto.Ownership;
-    using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
     /// <summary>
-    /// Detects when a character is ready to die based on its health value.
+    /// Здоровье упало до нуля — сущность начинает умирать (PrepareToDeath).
     /// </summary>
 #if ENABLE_IL2CPP
-	using Unity.IL2CPP.CompilerServices;
+    using Unity.IL2CPP.CompilerServices;
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]

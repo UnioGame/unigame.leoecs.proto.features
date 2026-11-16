@@ -26,8 +26,7 @@
         
         protected override void Compose(ProtoWorld world, ProtoEntity effectEntity)
         {
-            var damagePool = world.GetPool<DamageEffectComponent>();
-            ref var damage = ref damagePool.Add(effectEntity);
+            ref var damage = ref world.AddComponent<DamageEffectComponent>(effectEntity);
             damage.Value = damageValue;
             DamageType.Compose(world, effectEntity);
         }

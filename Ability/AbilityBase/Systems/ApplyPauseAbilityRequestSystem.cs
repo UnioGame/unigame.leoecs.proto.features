@@ -4,36 +4,34 @@
     using Aspects;
     using Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
-    /// Add the ability suspension component to the ability
+    /// Ставит способность на паузу по запросу.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
-
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]
     public class ApplyPauseAbilityRequestSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<PauseAbilityRequest>()
+            .End();
 
         private AbilityAspect _abilityAspect;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<PauseAbilityRequest>()
-                .End();
         }
 
         public void Run()

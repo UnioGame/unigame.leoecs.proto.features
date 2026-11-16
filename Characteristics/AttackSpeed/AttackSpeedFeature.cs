@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.AttackSpeed
 {
     using System;
-    using Base;
     using Components;
     using Cysharp.Threading.Tasks;
     using Feature;

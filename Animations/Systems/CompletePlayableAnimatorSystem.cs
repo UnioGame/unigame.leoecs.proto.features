@@ -23,7 +23,11 @@
     [ECSDI]
     public sealed class CompletePlayableAnimatorSystem : IProtoRunSystem, IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<StopAnimationSelfRequest>()
+            .Inc<AnimatorPlayingComponent>()
+            .Inc<PlayableDirectorComponent>()
+            .End();
         private ProtoWorld _world;
 
         private AnimationTimelineAspect _animationAspect;
@@ -33,11 +37,6 @@
         {
             _world = systems.GetWorld();
 
-            _filter = _world
-                .Filter<StopAnimationSelfRequest>()
-                .Inc<AnimatorPlayingComponent>()
-                .Inc<PlayableDirectorComponent>()
-                .End();
         }
 
         public void Run()

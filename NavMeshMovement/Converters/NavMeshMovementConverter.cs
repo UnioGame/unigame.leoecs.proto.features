@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Movement.Converters
 {
     using System;
+    using UniCore.Runtime.ProfilerTools;
     using Components;
     using Game.Code.Configuration.Runtime.Entity.Movement;
     using Game.Ecs.Core.Components;
@@ -28,7 +29,7 @@
         {
             if (!target.TryGetComponent<NavMeshAgent>(out var navMeshAgent))
             {
-                Debug.LogWarning($"Character {target} {target.name} must contains {nameof(NavMeshAgent)} component!",target);
+                GameLog.LogWarning($"Character {target} {target.name} must contains {nameof(NavMeshAgent)} component!",target);
                 return;
             }
             

@@ -41,15 +41,10 @@
         
         // Components
         //---Generated Begin---
-        public ProtoPool<AbilityActiveTimeComponent> AbilityActiveTimeComponent;
-        public ProtoPool<AbilityBlockedComponent> AbilityBlockedComponent;
         public ProtoPool<AbilityIdComponent> AbilityIdComponent;
         public ProtoPool<AbilityInHandComponent> AbilityInHandComponent;
         public ProtoPool<AbilityInHandLinkComponent> AbilityInHandLinkComponent;
         public ProtoPool<AbilityInProcessingComponent> AbilityInProcessingComponent;
-        public ProtoPool<AbilityInputComponent> AbilityInputComponent;
-        public ProtoPool<AbilityLevelComponent> AbilityLevelComponent;
-        public ProtoPool<AbilityLinkComponent> AbilityLinkComponent;
         public ProtoPool<AbilityMapComponent> AbilityMapComponent;
         public ProtoPool<AbilityMetaComponent> AbilityMetaComponent;
         public ProtoPool<AbilityPauseComponent> AbilityPauseComponent;
@@ -57,7 +52,6 @@
         public ProtoPool<AbilityUnlockComponent> AbilityUnlockComponent;
         public ProtoPool<DefaultAbilityComponent> DefaultAbilityComponent;
         public ProtoPool<DefaultAbilityTargetSlotComponent> DefaultAbilityTargetSlotComponent;
-        public ProtoPool<PassiveAbilityComponent> PassiveAbilityComponent;
         public ProtoPool<AbilityContextComponent> AbilityContext;
         
         public ProtoPool<AbilityUnlockComponent> Unlock;
@@ -81,7 +75,6 @@
         public ProtoPool<AbilityPauseComponent> Pause;
         public ProtoPool<EntityAvatarComponent> Avatar;
         public ProtoPool<AbilityMapComponent> AbilityMap;
-        public ProtoPool<AbilityBlockedComponent> Blocked;
         public ProtoPool<AbilityTargetsComponent> Targets;
         
         
@@ -93,15 +86,10 @@
         public ProtoPool<AbilityValidationSelfRequest> AbilityValidationSelfRequest;
         public ProtoPool<ActivateAbilityByIdRequest> ActivateAbilityByIdRequest;
         public ProtoPool<ActivateAbilityRequest> ActivateAbilityRequest;
-        public ProtoPool<ActivateAbilitySelfRequest> ActivateAbilitySelfRequest;
-        public ProtoPool<ApplyAbilityByIdSelfRequest> ApplyAbilityByIdSelfRequest;
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityBySlotSelfRequest;
         public ProtoPool<ApplyAbilitySelfRequest> ApplyAbilitySelfRequest;
         public ProtoPool<PauseAbilityRequest> PauseAbilityRequest;
         public ProtoPool<RemovePauseAbilityRequest> RemovePauseAbilityRequest;
-        public ProtoPool<ResetAbilityCooldownSelfRequest> ResetAbilityCooldownSelfRequest;
-        public ProtoPool<RestartAbilityCooldownSelfRequest> RestartAbilityCooldownSelfRequest;
-        public ProtoPool<SetAbilityBaseCooldownSelfRequest> SetAbilityBaseCooldownSelfRequest;
         public ProtoPool<SetInHandAbilityBySlotSelfRequest> SetInHandAbilityBySlotSelfRequest;
         public ProtoPool<SetInHandAbilitySelfRequest> SetInHandAbilitySelfRequest;
 
@@ -113,7 +101,6 @@
         public ProtoPool<CompleteAbilitySelfRequest> CompleteAbility;
         
         public ProtoPool<AbilityValidationSelfRequest> Validate;
-        public ProtoPool<SetAbilityBaseCooldownSelfRequest> SetBaseCooldown;
         public ProtoPool<RecalculateCooldownSelfRequest> RecalculateCooldown;
         
         //activate ability
@@ -172,7 +159,7 @@
             ref var abilityIdComponent = ref AbilityId.GetOrAddComponent(abilityEntity);
             ref var cooldownComponent = ref Cooldown.GetOrAddComponent(abilityEntity);
             ref var cooldownStateComponent = ref CooldownState.GetOrAddComponent(abilityEntity);
-            ref var durationComponent = ref world.GetOrAddComponent<DurationComponent>(abilityEntity);
+            ref var durationComponent = ref Duration.GetOrAddComponent(abilityEntity);
 
             ownerEntity.AddChild(abilityEntity, world);
             
@@ -291,11 +278,11 @@
         public bool IsAbilityCooldownPassed(ProtoEntity abilityEntity)
         {
             //проверяем кулдаун абилки, если он не прошел - игнорируем
-            if (!World.EntityHasAll<CooldownComponent, CooldownStateComponent>(abilityEntity))
+            if (!Cooldown.Has(abilityEntity) || !CooldownState.Has(abilityEntity))
                 return true;
 
             ref var coolDownComponent = ref Cooldown.Get(abilityEntity);
-            ref var coolDownStateComponent = ref World.GetComponent<CooldownStateComponent>(abilityEntity);
+            ref var coolDownStateComponent = ref CooldownState.Get(abilityEntity);
             var timePassed = (GameTime.Time - coolDownStateComponent.LastTime) - coolDownComponent.Value;
             return timePassed > 0;
         }
@@ -466,10 +453,10 @@
         public void ActivateAbility(ProtoEntity entity, ProtoEntity abilityEntity)
         {
             var packedAbilityEntity = World.PackEntity(abilityEntity);
-            ref var setInHand = ref World.GetOrAddComponent<SetInHandAbilitySelfRequest>(entity);
+            ref var setInHand = ref SetInHandAbilitySelfRequest.GetOrAddComponent(entity);
             setInHand.Value = packedAbilityEntity;
 
-            ref var abilityUseRequest = ref World.GetOrAddComponent<ApplyAbilitySelfRequest>(entity);
+            ref var abilityUseRequest = ref ApplyAbilitySelfRequest.GetOrAddComponent(entity);
             abilityUseRequest.Value = packedAbilityEntity;
         }
 
@@ -513,7 +500,7 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ActivateAbility( ProtoEntity abilityEntity)
         {
-            if (!World.HasComponent<OwnerComponent>(abilityEntity)) return;
+            if (!ownershipAspect.Owner.Has(abilityEntity)) return;
 
             ref var ownerLinkComponent = ref ownershipAspect.OwnerLink.Get(abilityEntity);
             if (!ownerLinkComponent.Value.Unpack(World, out var ownerEntity))
@@ -532,11 +519,10 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ActivateAbilitySlot( int entity, int slot)
         {
-            ref var setInHand = ref World.GetOrAddComponent<SetInHandAbilityBySlotSelfRequest>(entity);
+            ref var setInHand = ref SetInHandAbilityBySlot.GetOrAddComponent((ProtoEntity)entity);
             setInHand.AbilityCellId = slot;
 
-            var abilityInputPool = World.GetPool<ApplyAbilityBySlotSelfRequest>();
-            ref var abilityUseRequest = ref abilityInputPool.GetOrAddComponent(entity);
+            ref var abilityUseRequest = ref ActivateAbilityBySlot.GetOrAddComponent((ProtoEntity)entity);
             abilityUseRequest.AbilitySlot = slot;
         }
 
@@ -549,7 +535,7 @@
         public void ActivateAbilityId(ref ProtoPackedEntity entity, int abilityId)
         {
             var requestEntity = World.NewEntity();
-            ref var activateRequest = ref World.GetOrAddComponent<ActivateAbilityByIdRequest>(requestEntity);
+            ref var activateRequest = ref ActivateAbilityById.Add(requestEntity);
             activateRequest.AbilityId = abilityId;
             activateRequest.Target = entity;
         }
@@ -562,11 +548,10 @@
         public bool TryGetInHandAbility( ProtoEntity entity, out ProtoEntity abilityEntity)
         {
             abilityEntity = _invalidEntity;
-            var abilityInHandPool = World.GetPool<AbilityInHandLinkComponent>();
-            if (!abilityInHandPool.Has(entity))
+            if (!AbilityInHandLink.Has(entity))
                 return false;
 
-            ref var inHandAbility = ref abilityInHandPool.Get(entity);
+            ref var inHandAbility = ref AbilityInHandLink.Get(entity);
             if (!inHandAbility.AbilityEntity.Unpack(World, out var ability))
                 return false;
 
@@ -582,18 +567,15 @@
         public bool TryGetDefaultAbility(ProtoEntity entity, out ProtoEntity abilityEntity)
         {
             abilityEntity = _invalidEntity;
-            var abilityMapPool = World.GetPool<AbilityMapComponent>();
-            var defaultPool = World.GetPool<DefaultAbilityComponent>();
+            if (!AbilityMap.Has(entity)) return false;
 
-            if (!abilityMapPool.Has(entity)) return false;
-
-            ref var map = ref abilityMapPool.Get(entity);
+            ref var map = ref AbilityMap.Get(entity);
 
             foreach (var abilityPair in map.AbilitySlots)
             {
                 ref var mapAbilityEntity = ref abilityPair.Value;
                 if (!mapAbilityEntity.Unpack(World, out var abilityEntityValue)) continue;
-                if (!defaultPool.Has(abilityEntityValue)) continue;
+                if (!Default.Has(abilityEntityValue)) continue;
                 abilityEntity = abilityEntityValue;
                 return true;
             }

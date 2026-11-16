@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using FakeTimeline.Data;
-    using Game.Code.Configuration.Runtime.Ability.Description;
     using Game.Code.Configuration.Runtime.Effects.Abstract;
     using Leopotam.EcsProto;
     using Proto.Effects.Components;

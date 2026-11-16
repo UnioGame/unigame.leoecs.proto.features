@@ -6,6 +6,7 @@
     using Data;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.Core.Runtime;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
@@ -21,7 +22,9 @@
     [ECSDI]
     public sealed class CreateAnimationLinkDataSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<CreateAnimationLinkSelfRequest>()
+            .End();
         private ProtoWorld _world;
         private ILifeTime _worldLifeTime;
         private AnimationToolSystem _animationTool;
@@ -34,9 +37,6 @@
             _worldLifeTime = _world.GetWorldLifeTime();
             _animationTool = _world.GetGlobal<AnimationToolSystem>();
             
-            _filter = _world
-                .Filter<CreateAnimationLinkSelfRequest>()
-                .End();
         }
         
         public void Run()

@@ -4,6 +4,10 @@
     using Leopotam.EcsProto;
     using Service;
 
+    /// <summary>
+    /// Планировщик ИИ: оценивает, насколько агенту сейчас нужно своё действие, и записывает приоритет в
+    /// план агента.
+    /// </summary>
     public interface IAiPlannerSystem : IAiPlannerSwitched
     {
         public UniTask Initialize(int id,IProtoSystems ecsSystems);

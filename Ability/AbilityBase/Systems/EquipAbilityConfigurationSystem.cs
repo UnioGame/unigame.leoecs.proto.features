@@ -11,11 +11,8 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// Builds an ability from EquipAbilityConfigurationSelfRequest on the request entity:
-    /// composes its behaviours, registers it in the owner's ability map and slot,
-    /// makes it active and, for the default ability, puts it in hand.
-    /// An ability already in the same slot is replaced.
-    /// The request itself is removed by DelHere in AbilityFeature right after this system.
+    /// Выдаёт способность прямо из конфига: собирает её по шагам, кладёт владельцу в слот и делает готовой.
+    /// Основную сразу берёт в руку.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

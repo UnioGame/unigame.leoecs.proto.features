@@ -89,23 +89,20 @@
 
         public void ComposeEntity(ProtoWorld world, ProtoEntity effectEntity)
         {
-            var delayedPool = world.GetPool<DelayedEffectComponent>();
-            if (delay > 0f && !delayedPool.Has(effectEntity))
+            if (delay > 0f && !world.HasComponent<DelayedEffectComponent>(effectEntity))
             {
-                ref var delayed = ref delayedPool.Add(effectEntity);
+                ref var delayed = ref world.AddComponent<DelayedEffectComponent>(effectEntity);
                 delayed.Delay = delay;
                 delayed.LastApplyingTime = GameTime.Time;
                 delayed.Configuration = this;
                 return;
             }
             
-            var durationPool = world.GetPool<EffectDurationComponent>();
-            ref var durationComponent = ref durationPool.Add(effectEntity);
+            ref var durationComponent = ref world.AddComponent<EffectDurationComponent>(effectEntity);
             durationComponent.Duration = this.duration;
             durationComponent.CreatingTime = Time.time;
 
-            var periodicityPool = world.GetPool<EffectPeriodicityComponent>();
-            ref var periodicityComponent = ref periodicityPool.Add(effectEntity);
+            ref var periodicityComponent = ref world.AddComponent<EffectPeriodicityComponent>(effectEntity);
             periodicityComponent.Periodicity = this.periodicity;
             
             var isValidEffectView = view != null && view.RuntimeKeyIsValid();

@@ -9,6 +9,10 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
+    /// <summary>
+    /// Когда агента отключают, сбрасывает отметки о посещённых точках интереса, чтобы после включения он
+    /// мог пройти их заново.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

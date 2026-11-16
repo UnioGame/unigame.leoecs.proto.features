@@ -11,6 +11,10 @@
     using UniGame.LeoEcs.Shared.Components;
     using UnityEngine;
 
+    /// <summary>
+    /// Передаёт в Animator параметры движения (Forward, Turn) по реальной скорости NavMeshAgent, чтобы бег
+    /// и повороты совпадали с перемещением.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

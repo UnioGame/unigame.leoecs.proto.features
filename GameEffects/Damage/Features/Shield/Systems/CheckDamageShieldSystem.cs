@@ -11,7 +11,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// reduce damage by shield value
+    /// Сначала урон снимает щит цели, остаток идёт в здоровье.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

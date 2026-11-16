@@ -18,10 +18,8 @@
     [Serializable]
     public class DamageEffectAspect : EcsAspect
     {
-        public ProtoPool<AttackDamageCriticalEffectComponent> AttackDamageCriticalEffect;
         public ProtoPool<AttackDamageEffectComponent> AttackDamageEffect;
         public ProtoPool<DamageEffectComponent> DamageEffect;
-        public ProtoPool<DamageEffectRequestCompleteComponent> DamageEffectRequestComplete;
         public ProtoPool<SplashAttackDamageEffectComponent> SplashAttackDamageEffect;
     }
 }

@@ -8,7 +8,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// disable navigation system
+    /// Включает или выключает NavMeshAgent по запросу SetNavigationStatusSelfRequest.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -37,8 +37,6 @@
                 ref var request = ref _navigationAspect.SetNavigationStatus.Get(entity);
                 ref var navMeshAgentComponent = ref _navigationAspect.Agent.Get(entity);
                 navMeshAgentComponent.Value.enabled = request.Value;
-                
-                _navigationAspect.SetNavigationStatus.Del(entity);
             }
         }
     }

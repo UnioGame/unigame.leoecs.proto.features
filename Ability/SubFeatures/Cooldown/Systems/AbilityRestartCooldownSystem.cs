@@ -10,7 +10,10 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
+    /// <summary>
+    /// Шаг способности «запустить кулдаун»: с этого момента пошёл отсчёт.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

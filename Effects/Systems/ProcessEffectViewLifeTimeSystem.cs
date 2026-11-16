@@ -10,7 +10,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// Send destroy request to effect view when lifetime is over.
+    /// Время показа визуала эффекта вышло: просит его убрать.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

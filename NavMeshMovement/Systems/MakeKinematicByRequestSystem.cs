@@ -9,7 +9,7 @@
     using UniGame.LeoEcs.Shared.Components;
 
     /// <summary>
-    /// disable navigation system
+    /// Включает или выключает кинематику у Rigidbody по запросу SetKinematicSelfRequest.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -37,7 +37,6 @@
                 ref var request = ref _navigationAspect.SetKinematicStatus.Get(entity);
                 ref var navMeshAgentComponent = ref _navigationAspect.Rigidbody.Get(entity);
                 navMeshAgentComponent.Value.isKinematic = request.Value;
-                _navigationAspect.SetKinematicStatus.Del(entity);
             }
         }
     }

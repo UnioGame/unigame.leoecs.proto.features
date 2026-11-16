@@ -9,7 +9,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// System that processes the change in attack damage characteristic.
+    /// Характеристика урона атаки изменилась: переносит новые значения в AttackDamageComponent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -10,14 +10,15 @@
 	using UnityEngine;
 
 	/// <summary>
-	/// Delayed effect system. Trigger effect after delay
+	/// Эффект с задержкой: когда время ожидания прошло, собирает его по конфигу, и дальше он работает как
+	/// обычный.
 	/// </summary>
 #if ENABLE_IL2CPP
-    using Unity.IL2CPP.CompilerServices;
+	using Unity.IL2CPP.CompilerServices;
 
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+	[Il2CppSetOption(Option.NullChecks, false)]
+	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
 	[Serializable]
 	[ECSDI]

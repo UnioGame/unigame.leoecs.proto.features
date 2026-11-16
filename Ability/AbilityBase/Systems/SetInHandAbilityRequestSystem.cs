@@ -9,6 +9,9 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Берёт в руку указанную способность, если она готова к применению.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

@@ -28,7 +28,6 @@
         public ProtoPool<AbilityAiActionTargetComponent> AiTarget;
         public ProtoPool<AbilityByDefaultComponent> DefaultAbility;
         public ProtoPool<AbilityByRangeComponent> ByRangeAbility;
-        public ProtoPool<AbilityRangeActionDataComponent> AbilityRangeData;
         
         //request
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityFromSlot;

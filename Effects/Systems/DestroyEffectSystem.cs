@@ -6,14 +6,16 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-#if ENABLE_IL2CP
+    /// <summary>
+    /// Удаляет сущность эффекта по запросу DestroyEffectSelfRequest.
+    /// </summary>
+#if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-
     [Serializable]
     [ECSDI]
     public sealed class DestroyEffectSystem : IProtoRunSystem

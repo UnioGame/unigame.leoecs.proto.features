@@ -1,7 +1,7 @@
 ﻿namespace Game.Code.Ai.ActivateAbility
 {
     using System;
-    using Ecs.Core.Components;
+    using Game.Code.Ai.ActivateAbility.Aspects;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.Ecs.Proto.Ability.Aspects;
@@ -9,8 +9,10 @@
     using UniGame.Ecs.Proto.AI.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
+
     /// <summary>
-    /// AI action: applies the planned ability to the planned target when the ability is ready (Active and cooldown passed).
+    /// Действие ИИ «применить способность»: если способность готова (активна и кулдаун прошёл), применяет
+    /// её по выбранной цели.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -19,14 +21,14 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-    [ECSDI]
     [Serializable]
+    [ECSDI]
     public sealed class ActivateAbilityActionSystem : IAiActionSystem
     {
         private AbilityAspect _abilityTools;
         private ProtoWorld _world;
         
-        private ProtoPool<ActivateAbilityActionComponent> _activateAbilityPool;
+        private AbilityAiActionAspect _aiActionAspect;
 
         private ProtoIt _filter= It
             .Chain<AiAgentComponent>()
@@ -37,7 +39,7 @@
         {
             foreach (var entity in _filter)
             {
-                ref var activateAbilityComponent = ref _activateAbilityPool.Get(entity);
+                ref var activateAbilityComponent = ref _aiActionAspect.ActivateAbilityAction.Get(entity);
                 if (!activateAbilityComponent.Ability.Unpack(_world, out var abilityEntity))
                     continue;
 

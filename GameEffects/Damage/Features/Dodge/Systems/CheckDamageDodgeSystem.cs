@@ -12,7 +12,7 @@
     using Random = UnityEngine.Random;
 
     /// <summary>
-    /// Add an empty target to an ability
+    /// Бросает шанс уклонения: увернулся — урон отменяется и кидается событие промаха.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

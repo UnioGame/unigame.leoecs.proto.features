@@ -1,6 +1,7 @@
 using Game.Ecs.Audio.AudioCore.Aspects;
 using Game.Ecs.Audio.AudioCore.Components;
 using Leopotam.EcsProto;
+using Leopotam.EcsProto.QoL;
 using UniGame.LeoEcs.Shared.Extensions;
 
 namespace Game.Ecs.Audio.AudioCore.Systems
@@ -29,22 +30,19 @@ namespace Game.Ecs.Audio.AudioCore.Systems
     public class UpdateAudioListenerPositionSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private EcsFilter _audioListenerRootFilter;
-        private EcsFilter _audioListenerTransformFilter;
+        private EcsFilter _audioListenerRootFilter = It
+            .Chain<AudioListenerRootComponent>()
+            .End();
+        private EcsFilter _audioListenerTransformFilter = It
+            .Chain<AudioListenerTransformComponent>()
+            .End();
         
         public AudioCoreAspect _audioCoreAspect;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-              
-            _audioListenerRootFilter = _world
-                .Filter<AudioListenerRootComponent>()
-                .End();
 
-            _audioListenerTransformFilter = _world
-                .Filter<AudioListenerTransformComponent>()
-                .End();
         }
 
         public void Run()

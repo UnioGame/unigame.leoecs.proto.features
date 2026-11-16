@@ -9,7 +9,7 @@
     using UniGame.Ecs.Proto.Characteristics.Base.Components;
 
     /// <summary>
-    /// update value of attack speed characteristic
+    /// Характеристика скорости атаки изменилась: переносит новое значение в AttackSpeedComponent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

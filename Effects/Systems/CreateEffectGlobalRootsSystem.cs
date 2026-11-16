@@ -9,12 +9,15 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UnityEngine;
 
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
+    /// <summary>
+    /// Один раз создаёт общий контейнер для визуалов эффектов, у которых нет своей точки на цели.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

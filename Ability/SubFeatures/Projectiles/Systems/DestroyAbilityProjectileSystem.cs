@@ -11,6 +11,9 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Время полёта снаряда вышло: уничтожает его.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

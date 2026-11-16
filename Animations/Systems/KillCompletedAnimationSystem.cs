@@ -5,6 +5,7 @@
     using Components;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -19,7 +20,10 @@
     [ECSDI]
     public sealed class KillCompletedAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<AnimationCompleteComponent>()
+            .Inc<AnimationKillOnComplete>()
+            .End();
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;
@@ -27,10 +31,6 @@
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world
-                .Filter<AnimationCompleteComponent>()
-                .Inc<AnimationKillOnComplete>()
-                .End();
         }
         
         public void Run()

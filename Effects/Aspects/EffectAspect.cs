@@ -44,7 +44,6 @@ namespace UniGame.Ecs.Proto.Effects.Aspects
         public ProtoPool<EffectsComponent> EffectsComponent;
         public ProtoPool<EffectShowCompleteComponent> EffectShowCompleteComponent;
         public ProtoPool<EffectsListComponent> EffectsListComponent;
-        public ProtoPool<EffectsRootDataComponent> EffectsRootDataComponent;
         public ProtoPool<EffectViewComponent> EffectViewComponent;
         public ProtoPool<EffectViewDataComponent> EffectViewDataComponent;
         public ProtoPool<SelfEffectsComponent> SelfEffectsComponent;

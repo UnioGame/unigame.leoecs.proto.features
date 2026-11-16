@@ -1,9 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.Movement.Systems.Converters
 {
     using System;
+    using UniGame.LeoEcs.Shared.Extensions;
     using Aspect;
     using Components;
-    using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
@@ -25,8 +25,8 @@
         private ProtoWorld _world;
         private NavMeshAgentAspect _navigationAspect;
 
-        private ProtoIt _filter = It.Chain<SetNavAgentVelocitySelfRequest>()
-            .Inc<VelocityComponent>()
+        private ProtoIt _filter = It
+            .Chain<SetNavAgentVelocitySelfRequest>()
             .End();
 
         public void Run()
@@ -34,7 +34,7 @@
             foreach (var entity in _filter)
             {
                 ref var direction = ref _navigationAspect.SetNavAgentVelocity.Get(entity);
-                ref var velocity = ref _navigationAspect.Velocity.Add(entity);
+                ref var velocity = ref _navigationAspect.Velocity.GetOrAddComponent(entity);
                 
                 velocity.Value = direction.Value;
             }

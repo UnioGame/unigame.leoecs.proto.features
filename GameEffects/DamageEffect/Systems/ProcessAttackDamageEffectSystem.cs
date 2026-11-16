@@ -12,9 +12,13 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Эффект «урон от атаки» сработал: бьёт цель на величину AttackDamage того, кто наложил эффект.
+    /// Учитывает шанс крита.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-    
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

@@ -16,14 +16,15 @@
     using UnityEngine.AddressableAssets;
 
     /// <summary>
-    /// Show view effect by effect data
+    /// Показывает визуал эффекта при срабатывании: спавнит префаб, подгоняет его под размер цели и задаёт
+    /// время показа.
     /// </summary>
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
- 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

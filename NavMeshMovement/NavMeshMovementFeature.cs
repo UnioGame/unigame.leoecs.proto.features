@@ -23,6 +23,7 @@
             
             ecsSystems.DelHere<VelocityComponent>();
             ecsSystems.Add(new DirectionVelocityConvertSystem());
+            ecsSystems.DelHere<SetNavAgentVelocitySelfRequest>();
             
             ecsSystems.Add(new VelocityNavMeshTargetConvertSystem());
 
@@ -43,7 +44,10 @@
 
             ecsSystems.Add(new DisableNavMeshAgentSystem());
             ecsSystems.Add(new SetNavigationStatusByRequestSystem());
+            ecsSystems.DelHere<SetNavigationStatusSelfRequest>();
+            
             ecsSystems.Add(new MakeKinematicByRequestSystem());
+            ecsSystems.DelHere<SetKinematicSelfRequest>();
             
             return UniTask.CompletedTask;
         }

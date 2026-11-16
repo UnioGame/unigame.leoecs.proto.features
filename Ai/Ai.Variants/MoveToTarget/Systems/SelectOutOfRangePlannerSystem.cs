@@ -12,6 +12,10 @@
     using UniGame.LeoEcs.Shared.Components;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Агент за своим радиусом: добавляет цель «вернуться к центру». Вернулся достаточно близко — снимает
+    /// метку MoveOutOfRange.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

@@ -40,10 +40,8 @@
             ref ProtoPackedEntity source,
             ref ProtoPackedEntity destination)
         {
-            var requestPool = world.GetPool<CreateEffectSelfRequest>();
             var effectsEntity = world.NewEntity();
-                
-            ref var request = ref requestPool.Add(effectsEntity);
+            ref var request = ref world.AddComponent<CreateEffectSelfRequest>(effectsEntity);
             request.Source = source;
             request.Destination = effect.TargetType == TargetType.Self ? source : destination;
             request.Effect = effect;
@@ -54,10 +52,9 @@
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Transform GetViewInstance(this ProtoEntity entity, ProtoWorld world, int viewInstanceId)
         {
-            var viewInstancePool = world.GetPool<ViewInstanceTypeComponent>();
-            if (viewInstancePool.Has(entity))
+            if (world.HasComponent<ViewInstanceTypeComponent>(entity))
             {
-                ref var viewInstanceComponent = ref viewInstancePool.Get(entity);
+                ref var viewInstanceComponent = ref world.GetComponent<ViewInstanceTypeComponent>(entity);
                 var viewInstances = viewInstanceComponent.value;
                 if (viewInstances != null)
                 {
@@ -66,10 +63,9 @@
                 }
             }
 
-            var transformPool = world.GetPool<TransformComponent>();
-            if (transformPool.Has(entity))
+            if (world.HasComponent<TransformComponent>(entity))
             {
-                ref var transformComponent = ref transformPool.Get(entity);
+                ref var transformComponent = ref world.GetComponent<TransformComponent>(entity);
                 return transformComponent.Value;
             }
 

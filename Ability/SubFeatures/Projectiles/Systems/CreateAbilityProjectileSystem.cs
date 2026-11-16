@@ -10,7 +10,6 @@
     using FakeTimeline.Components.Requests;
     using UniGame.Proto.Ownership;
     using GameResources.Aspects;
-    using GameResources.Systems;
     using LeoEcs.Bootstrap;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
@@ -18,6 +17,9 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Шаг способности «снаряд»: спавнит снаряд в нужной точке и запускает его к цели.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

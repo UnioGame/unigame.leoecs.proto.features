@@ -20,8 +20,7 @@
         #endregion
         protected override void Compose(ProtoWorld world, ProtoEntity effectEntity)
         {
-            var damagePool = world.GetPool<AttackDamageEffectComponent>();
-            damagePool.Add(effectEntity);
+            world.AddComponent<AttackDamageEffectComponent>(effectEntity);
             DamageType.Compose(world, effectEntity);
         }
     }

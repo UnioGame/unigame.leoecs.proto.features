@@ -8,6 +8,9 @@
     using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
     using Leopotam.EcsProto.QoL;
 
+    /// <summary>
+    /// Каждый кадр очищает список целей движения агента, чтобы планировщики набрали его заново.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

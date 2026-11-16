@@ -11,7 +11,11 @@
     using UniGame.Ecs.Proto.Effects.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
+    /// <summary>
+    /// Шаг способности «наложить эффекты»: накладывает эффекты шага на цели способности. Источник —
+    /// владелец способности.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

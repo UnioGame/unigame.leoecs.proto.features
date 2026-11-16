@@ -7,8 +7,9 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
+
     /// <summary>
-    /// initialize ui equip view with link to its data
+    /// Не даёт сменить способность в руке, пока идёт другая, не основная способность.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

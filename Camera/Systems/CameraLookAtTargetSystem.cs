@@ -4,6 +4,7 @@
     using JetBrains.Annotations;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Components;
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
@@ -15,15 +16,13 @@
     [UsedImplicitly]
     public sealed class CameraLookAtTargetSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
-        private ProtoIt _targetFilter;
+        private ProtoIt _filter = It.Chain<CameraLookTargetComponent>().End();
+        private ProtoIt _targetFilter = It.Chain<CameraFollowTargetComponent>().End();
         private ProtoWorld _world;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world.Filter<CameraLookTargetComponent>().End();
-            _targetFilter = _world.Filter<CameraFollowTargetComponent>().End();
         }
 
         public void Run()

@@ -20,6 +20,10 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Ищет цель для способности «бей при первой возможности»: перебирает слоты агента и берёт первого
+    /// подходящего врага в радиусе способности.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -39,8 +43,6 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
         private AbilityOwnerAspect _abilityOwnerAspect;
         private TargetSelectionSystem _targetSelection;
         
-        private ProtoPool<AbilityActionActiveTargetComponent> _activeTargetPool;
-        private ProtoPool<AbilityAiActionTargetComponent> _targetPool;
         private ProtoEntity[] _resultSelection = new ProtoEntity[TargetSelectionData.MaxTargets];
 
         private ProtoItExc _filter= It
@@ -98,11 +100,11 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                     //проверяем кулдаун абилки, если он не прошел - игнорируем
                     if (targetFound || !cooldownPassed) continue;
                     
-                    ref var activeTargetComponent = ref _activeTargetPool.GetOrAddComponent(abilityEntity);
+                    ref var activeTargetComponent = ref _targetAspect.ActiveTarget.GetOrAddComponent(abilityEntity);
                     activeTargetComponent.Value = packedTarget;
                     
                     targetFound = true;
-                    ref var targetComponent = ref _targetPool.Add(entity);
+                    ref var targetComponent = ref _targetAspect.AiTarget.Add(entity);
                         
                     targetComponent.Ability = _world.PackEntity(abilityEntity);
                     targetComponent.AbilityCellId = slot;

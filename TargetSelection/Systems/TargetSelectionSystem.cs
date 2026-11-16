@@ -15,6 +15,10 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Сервис поиска целей: по kd-дереву находит сущности в радиусе с нужным слоем и категорией. Его
+    /// используют ИИ и способности.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -22,9 +26,8 @@
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-
-    [ECSDI]
     [Serializable]
+    [ECSDI]
     public class TargetSelectionSystem : IProtoDestroySystem
     {
         private EntityFloat[] _selectionBuffer = new EntityFloat[TargetSelectionData.MaxTargets];
@@ -163,8 +166,10 @@
             if (!_targetSelectionAspect.Layer.Has(entity) || !_targetSelectionAspect.Category.Has(entity))
                 return false;
 
-            var layer = _targetSelectionAspect.Layer.Get(entity).Value;
-            var category = _targetSelectionAspect.Category.Get(entity).Value;
+            ref var layerComponent = ref _targetSelectionAspect.Layer.Get(entity);
+            ref var categoryComponent = ref _targetSelectionAspect.Category.Get(entity);
+            var layer = layerComponent.Value;
+            var category = categoryComponent.Value;
             return (layerId & layer) == layer && (categoryId & category) == category;
         }
 

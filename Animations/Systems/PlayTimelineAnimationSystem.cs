@@ -23,7 +23,12 @@
     [ECSDI]
     public sealed class PlayTimelineAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<PlayAnimationSelfRequest>()
+            .Inc<AnimationTargetComponent>()
+            .Inc<AnimationStartTimeComponent>()
+            .Inc<DurationComponent>()
+            .End();
         private ProtoWorld _world;
         private AnimationToolSystem _animationTool;
         
@@ -35,12 +40,6 @@
             _world = systems.GetWorld();
             _animationTool = _world.GetGlobal<AnimationToolSystem>();
             
-            _filter = _world
-                .Filter<PlayAnimationSelfRequest>()
-                .Inc<AnimationTargetComponent>()
-                .Inc<AnimationStartTimeComponent>()
-                .Inc<DurationComponent>()
-                .End();
         }
         
         public void Run()

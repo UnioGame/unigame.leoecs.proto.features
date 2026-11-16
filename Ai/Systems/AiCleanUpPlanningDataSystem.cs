@@ -11,6 +11,9 @@ namespace UniGame.Ecs.Proto.AI.Systems
     using Service;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Перед новым планированием сбрасывает приоритеты и снимает компоненты действий прошлого кадра.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

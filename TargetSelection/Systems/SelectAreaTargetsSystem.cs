@@ -10,7 +10,8 @@
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
-    /// select targets in area by radius
+    /// Для сущностей с поиском в радиусе находит цели вокруг (по слою, категории и отношению) и кладёт их в
+    /// результат.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -1,13 +1,14 @@
 namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 {
     using System;
+    using Movement.Aspect;
+    using Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects;
     using Ability.Aspects;
     using AI.Abstract;
     using AI.Components;
     using Components;
     using Effects;
     using Game.Ecs.Core.Death.Components;
-    using Gameplay.LevelProgress.Components;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Movement.Components;
@@ -16,6 +17,10 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Действие ИИ «идти к цели»: разворачивает агента к цели и отправляет NavMeshAgent туда. У цели (ближе
+    /// 0.5 м) останавливает.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -33,13 +38,8 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
         private ProtoWorld _world;
         private AbilityAspect _abilityTools;
         
-        private ProtoPool<TransformPositionComponent> _transformPool;
-        private ProtoPool<TransformDirectionComponent> _directionPool;
-        private ProtoPool<MoveToTargetActionComponent> _moveToTargetPool;
-        private ProtoPool<MovementPointSelfRequest> _movementPointPool;
-        private ProtoPool<RotateToPointSelfRequest> _rotateToPointPool;
-        private ProtoPool<ActiveGameViewComponent> _viewPool;
-        private ProtoPool<NavMeshAgentComponent> _agentPool;
+        private MoveToTargetAspect _moveToTargetAspect;
+        private NavMeshAgentAspect _navMeshAgentAspect;
 
         private ProtoItExc _filter = It
             .Chain<MoveToTargetActionComponent>()
@@ -54,29 +54,29 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
         {
             foreach (var entity in _filter)
             {
-                ref var moveToTargetComponent = ref _moveToTargetPool.Get(entity);
-                ref var directionComponent = ref _directionPool.Get(entity);
-                ref var transformComponent = ref _transformPool.Get(entity);
+                ref var moveToTargetComponent = ref _moveToTargetAspect.ToTargetAction.Get(entity);
+                ref var directionComponent = ref _moveToTargetAspect.Direction.Get(entity);
+                ref var transformComponent = ref _moveToTargetAspect.Position.Get(entity);
 
                 var position = transformComponent.Position;
                 var targetPosition = moveToTargetComponent.Position;
                 var sqrDistance = math.distancesq(targetPosition,position);
                 
                 ref var destination = ref moveToTargetComponent.Position;
-                ref var rotateToPoint = ref _rotateToPointPool.GetOrAddComponent(entity);
+                ref var rotateToPoint = ref _navMeshAgentAspect.RotateToPoint.GetOrAddComponent(entity);
                 rotateToPoint.Point = destination;
                 
-                if(_viewPool.Has(entity))
+                if(_moveToTargetAspect.ActiveView.Has(entity))
                     rotateToPoint.Point = directionComponent.Forward + position;
                 
                 if (sqrDistance < minSqrDistance)
                 {
-                    _world.GetOrAddComponent<MovementStopSelfRequest>(entity);
+                    _navMeshAgentAspect.NavMeshAgentStop.GetOrAddComponent(entity);
                     continue;
                 }
 
                 // only after the stop check: an added request with default Value would send the unit to (0, 0, 0)
-                ref var targetComponentRequest = ref _movementPointPool.GetOrAddComponent(entity);
+                ref var targetComponentRequest = ref _navMeshAgentAspect.MovementTargetPoint.GetOrAddComponent(entity);
                 targetComponentRequest.Value = destination;
                 var packedEntity = _world.PackEntity(entity);
                 moveToTargetComponent.Effects.CreateRequests(_world,packedEntity,packedEntity);

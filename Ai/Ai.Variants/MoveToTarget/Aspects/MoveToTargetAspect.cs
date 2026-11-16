@@ -1,6 +1,10 @@
 ﻿namespace Game.Modules.leoecs.proto.features.Ai.Ai.Variants.MoveToTarget.Aspects
 {
     using System;
+    using UniGame.LeoEcs.Shared.Components;
+    using UniGame.Ecs.Proto.Gameplay.LevelProgress.Components;
+    using UniGame.Ecs.Proto.GameLayers.Layer.Components;
+    using UniGame.Ecs.Proto.Characteristics.Radius.Component;
     using Leopotam.EcsProto;
     using UniGame.Ecs.Proto.GameAi.MoveToTarget.Components;
     using UniGame.Ecs.Proto.GameLayers.Category.Components;
@@ -28,5 +32,10 @@
         public ProtoPool<MoveToTargetActionComponent> ToTargetAction;
         public ProtoPool<MoveToTargetPlannerComponent> ToTargetPlanner;
         public ProtoPool<CategoryIdComponent> CategoryId;
+        public ProtoPool<LayerIdComponent> Layer;
+        public ProtoPool<RadiusComponent> Radius;
+        public ProtoPool<TransformPositionComponent> Position;
+        public ProtoPool<TransformDirectionComponent> Direction;
+        public ProtoPool<ActiveGameViewComponent> ActiveView;
     }
 }

@@ -14,9 +14,12 @@
     using UniGame.LeoEcs.Shared.Components;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Каждый кадр собирает позиции всех живых сущностей со здоровьем и перестраивает kd-дерево целей.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-    
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

@@ -11,7 +11,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// Activate ability by id
+    /// По запросу находит у владельца активную способность с нужным id и применяет её.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

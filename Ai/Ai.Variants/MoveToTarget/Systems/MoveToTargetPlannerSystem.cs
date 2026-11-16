@@ -15,6 +15,10 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Планировщик «идти»: из набранных целей движения выбирает самую приоритетную, готовит действие и
+    /// ставит его приоритет в план. Целей нет — действие не нужно.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

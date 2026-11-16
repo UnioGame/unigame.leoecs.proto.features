@@ -3,18 +3,17 @@
     using System;
     using Game.Code.GameLayers.Layer;
     using Game.Code.GameLayers.Relationship;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-#if ENABLE_IL2CPP
-    using Unity.IL2CPP.CompilerServices;
-#endif
-    
+
     /// <summary>
-    /// destroy releationship tools on ecs destroy
+    /// Поднимает матрицу отношений слоёв (кто кому союзник, кто враг) при старте и освобождает её при
+    /// уничтожении мира.
     /// </summary>
 #if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

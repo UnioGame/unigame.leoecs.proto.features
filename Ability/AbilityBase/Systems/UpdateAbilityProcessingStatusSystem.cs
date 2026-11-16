@@ -4,14 +4,14 @@
     using Aspects;
     using Common.Components;
     using UniGame.Proto.Ownership;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// mark ability ro as processing ability or not
+    /// Отмечает на владельце, какая способность у него сейчас идёт, в каком она слоте и основная ли. ИИ по
+    /// этому понимает, что перебивать нельзя.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -25,8 +25,15 @@
     public class UpdateAbilityProcessingStatusSystem : IProtoInitSystem, IProtoRunSystem
     {
         private ProtoWorld _world;
-        private ProtoIt _abilityRootFilter;
-        private ProtoIt _abilityInUseFilter;
+        private ProtoIt _abilityRootFilter = It
+            .Chain<AbilityMapComponent>()
+            .End();
+        private ProtoIt _abilityInUseFilter = It
+            .Chain<AbilityIdComponent>()
+            .Inc<AbilityUsingComponent>()
+            .Inc<ActiveAbilityComponent>()
+            .Inc<OwnerLinkComponent>()
+            .End();
         
         private AbilityAspect _abilityAspect;
         private AbilityOwnerAspect _abilityOwnerAspect;
@@ -35,16 +42,7 @@
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            _abilityRootFilter = _world
-                .Filter<AbilityMapComponent>()
-                .End();
             
-            _abilityInUseFilter = _world
-                .Filter<AbilityIdComponent>()
-                .Inc<AbilityUsingComponent>()
-                .Inc<ActiveAbilityComponent>()
-                .Inc<OwnerLinkComponent>()
-                .End();
         }
 
         public void Run()

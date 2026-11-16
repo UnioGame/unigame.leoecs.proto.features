@@ -8,7 +8,11 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
+    /// <summary>
+    /// Проверяет запрос на применение: способность принадлежит владельцу и лежит у него в руке. Всё
+    /// сходится — отправляет её на применение.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

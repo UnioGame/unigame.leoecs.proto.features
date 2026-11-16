@@ -1,10 +1,8 @@
 ﻿namespace UniGame.Ecs.Proto.AI
 {
-    using Components;
     using Configurations;
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
-    using Leopotam.EcsProto.QoL;
     using Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
     using UniGame.LeoEcs.Shared.Extensions;

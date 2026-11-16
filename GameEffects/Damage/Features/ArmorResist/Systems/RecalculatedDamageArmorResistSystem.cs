@@ -11,14 +11,14 @@
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 	/// <summary>
-	/// Recalculated damage value by armor resist.
+	/// Уменьшает физический урон на величину брони цели.
 	/// </summary>
 #if ENABLE_IL2CPP
-    using Unity.IL2CPP.CompilerServices;
+	using Unity.IL2CPP.CompilerServices;
 
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+	[Il2CppSetOption(Option.NullChecks, false)]
+	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
 	[Serializable]
 	[ECSDI]

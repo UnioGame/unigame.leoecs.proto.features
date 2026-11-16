@@ -11,14 +11,14 @@
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
-    /// select parent from global effect targets
+    /// Если на цели нет нужной точки, цепляет визуал эффекта к общему контейнеру.
     /// </summary>
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
- 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

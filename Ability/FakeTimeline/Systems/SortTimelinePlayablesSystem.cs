@@ -9,6 +9,9 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Unity.Collections;
 
+    /// <summary>
+    /// Один раз сортирует шаги таймлайна способности по времени, чтобы играть их по порядку.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

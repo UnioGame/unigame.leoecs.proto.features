@@ -11,8 +11,8 @@ namespace UniGame.Ecs.Proto.AI.Systems
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
-    /// Система удаляет для система экшенов их компоненты с данными,
-    /// тем самым включая/выключая логику для сущности агента.
+    /// Система удаляет для система экшенов их компоненты с данными, тем самым включая/выключая логику для
+    /// сущности агента.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

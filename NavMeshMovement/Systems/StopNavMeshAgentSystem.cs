@@ -8,6 +8,9 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Останавливает агентов, которые отключены или уже уничтожаются, чтобы они не продолжали идти.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

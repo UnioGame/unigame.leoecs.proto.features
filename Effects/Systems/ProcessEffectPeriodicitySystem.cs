@@ -9,9 +9,9 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
-    
+
     /// <summary>
-    /// System for processing periodicity of effects
+    /// Решает, когда эффект срабатывает: разовые — один раз, периодические — каждые N секунд.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

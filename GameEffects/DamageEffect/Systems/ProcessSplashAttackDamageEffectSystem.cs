@@ -15,7 +15,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// deal part of attack damage based on SplashDamageComponent
+    /// Эффект «урон по площади» сработал: наносит долю урона от атаки по цели, с учётом крита.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -64,9 +64,12 @@
                 request.Source = effect.Source;
                 request.Effector = _world.PackEntity(entity);
                 request.Destination = effect.Destination;
-                var criticalMultiplier = _criticalAttackChanceAspect.CriticalAttackMarker.Has(sourceEntity)
-                    ? 1 + _criticalMultiplierCharacteristicAspect.CriticalMultiplier.Get(sourceEntity).Value / 100
-                    : 1;
+                var criticalMultiplier = 1f;
+                if (_criticalAttackChanceAspect.CriticalAttackMarker.Has(sourceEntity))
+                {
+                    ref var criticalMultiplierComponent = ref _criticalMultiplierCharacteristicAspect.CriticalMultiplier.Get(sourceEntity);
+                    criticalMultiplier = 1 + criticalMultiplierComponent.Value / 100;
+                }
                 request.Value = damage * criticalMultiplier * splashDamage.Value / 100;
             }
         }

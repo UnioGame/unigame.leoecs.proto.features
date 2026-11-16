@@ -4,11 +4,15 @@
     using Aspect;
     using Components;
     using Game.Ecs.Core.Death.Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Выключает NavMeshAgent у отключённых сущностей (DisabledComponent) и включает обратно, когда метка
+    /// снята.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -22,23 +26,21 @@
     {
         private ProtoWorld _world;
         
-        private ProtoIt _filter;
-        private ProtoItExc _excFilter;
+        private ProtoIt _filter = It
+            .Chain<NavMeshAgentComponent>()
+            .Inc<DisabledComponent>()
+            .End();
+        private ProtoItExc _excFilter = It
+            .Chain<NavMeshAgentComponent>()
+            .Exc<DisabledComponent>()
+            .End();
         
         private NavMeshAspect _navigationAspect;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
-            _filter = _world
-                .Filter<NavMeshAgentComponent>()
-                .Inc<DisabledComponent>()
-                .End();
             
-            _excFilter = _world
-                .Filter<NavMeshAgentComponent>()
-                .Exc<DisabledComponent>()
-                .End();
         }
         
         public void Run()

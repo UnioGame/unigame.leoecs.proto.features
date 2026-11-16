@@ -7,6 +7,7 @@
     using UniGame.Proto.Ownership;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
@@ -21,7 +22,9 @@
     [ECSDI]
     public sealed class CreateTimeLineAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<CreateAnimationPlayableSelfRequest>()
+            .End();
         private ProtoWorld _world;
         private AnimationToolSystem _animationTool;
         
@@ -33,9 +36,6 @@
             _world = systems.GetWorld();
             _animationTool = _world.GetGlobal<AnimationToolSystem>();
             
-            _filter = _world
-                .Filter<CreateAnimationPlayableSelfRequest>()
-                .End();
         }
         
         public void Run()

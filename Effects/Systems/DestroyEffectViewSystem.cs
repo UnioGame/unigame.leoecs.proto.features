@@ -7,13 +7,16 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Runtime.ObjectPool.Extensions;
-    
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    /// <summary>
+    /// Убирает визуал эффекта и удаляет его сущность.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

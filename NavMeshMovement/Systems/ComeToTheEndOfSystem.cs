@@ -11,9 +11,13 @@
     using Unity.Mathematics;
     using UnityEngine;
 
+    /// <summary>
+    /// Ведёт агента к точке «до упора»: каждый кадр заново отправляет его в ComePoint, пока он не подойдёт
+    /// ближе 0.1 м. Дошёл — компонент снимается.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-    
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

@@ -7,6 +7,9 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Отменяет движение «до упора»: убирает ComePoint и текущую точку движения, останавливает агента.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

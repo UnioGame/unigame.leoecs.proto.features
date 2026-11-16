@@ -9,9 +9,12 @@
     using UniGame.LeoEcs.Shared.Components;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Разворачивает сущность к точке из запроса. Поворот только по горизонтали, вокруг оси Y.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
-    
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]

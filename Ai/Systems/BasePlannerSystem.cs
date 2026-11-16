@@ -1,16 +1,19 @@
 namespace UniGame.Ecs.Proto.AI.Systems
 {
     using System;
-    using Components;
     using Abstract;
+    using Aspects;
     using Cysharp.Threading.Tasks;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Service;
      
-    using Tools;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Основа для планировщиков ИИ: знает свой id в плане, проверяет, доступен ли планировщик агенту, и
+    /// записывает результат планирования.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -25,6 +28,7 @@ namespace UniGame.Ecs.Proto.AI.Systems
         where TComponent : struct
     {
         protected int _id;
+        protected AiAspect _aiAspect;
 
         public int Id => _id;
         
@@ -37,15 +41,16 @@ namespace UniGame.Ecs.Proto.AI.Systems
 
         public abstract void Run();
 
-        public bool IsPlannerEnabledForEntity(ProtoWorld world, ProtoEntity entity) => 
-            AiSystemsTools.IsPlannerEnabledForEntity(world, entity, _id);
+        public bool IsPlannerEnabledForEntity(ProtoEntity entity)
+        {
+            ref var aiAgentComponent = ref _aiAspect.AiAgent.Get(entity);
+            var availableActions = aiAgentComponent.AvailableActions;
+            return availableActions.Length > _id && availableActions[_id];
+        }
         
         public void ApplyPlanningResult(IProtoSystems systems, ProtoEntity entity, AiPlannerData data)
         {
-            var world = systems.GetWorld();
-            var aiAgentPool = world.GetPool<AiAgentComponent>();
-            
-            ref var aiAgentComponent = ref aiAgentPool.Get(entity);
+            ref var aiAgentComponent = ref _aiAspect.AiAgent.Get(entity);
             
             var resultData = aiAgentComponent.PlannerData;
             resultData[_id] = data;

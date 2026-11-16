@@ -20,7 +20,11 @@
     [ECSDI]
     public sealed class HandlePlayOnPlayableSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<PlayAnimationSelfRequest>()
+            .Inc<AnimationPlayableComponent>()
+            .Inc<AnimationTargetComponent>()
+            .End();
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;
@@ -30,11 +34,6 @@
         {
             _world = systems.GetWorld();
             
-            _filter = _world
-                .Filter<PlayAnimationSelfRequest>()
-                .Inc<AnimationPlayableComponent>()
-                .Inc<AnimationTargetComponent>()
-                .End();
         }
         
         public void Run()

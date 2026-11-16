@@ -11,6 +11,9 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     using UniGame.LeoEcs.Shared.Components;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Проверяет, не ушёл ли агент за свой радиус. Ушёл — ставит метку MoveOutOfRange.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -18,7 +21,6 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
-
     [Serializable]
     [ECSDI]
     public class SelectByRangePlannerSystem : IProtoRunSystem

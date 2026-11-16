@@ -30,11 +30,10 @@
 
         public override void AddModification(ProtoWorld world,ProtoEntity source, ProtoEntity destinationEntity)
         {
-            var abilityMapPool = world.GetPool<AbilityMapComponent>();
-            if(!abilityMapPool.Has(destinationEntity))
+            if(!world.HasComponent<AbilityMapComponent>(destinationEntity))
                 return;
 
-            ref var abilityMap = ref abilityMapPool.Get(destinationEntity); 
+            ref var abilityMap = ref world.GetComponent<AbilityMapComponent>(destinationEntity);
             var abilitiesCount = abilityMap.Abilities.Count;
             if(abilityId < 0 || abilityId >= abilitiesCount)
                 return;
@@ -43,11 +42,10 @@
             if(!ability.Unpack(world, out var abilityEntity))
                 return;
             
-            var baseCooldownPool = world.GetPool<BaseCooldownComponent>();
-            if(!baseCooldownPool.Has(abilityEntity))
+            if(!world.HasComponent<BaseCooldownComponent>(abilityEntity))
                 return;
 
-            ref var baseCooldown = ref baseCooldownPool.Get(abilityEntity);
+            ref var baseCooldown = ref world.GetComponent<BaseCooldownComponent>(abilityEntity);
             baseCooldown.Modifications.AddModification(Modification);
 
             world.GetOrAddComponent<RecalculateCooldownSelfRequest>(abilityEntity);
@@ -55,11 +53,10 @@
 
         public override void RemoveModification(ProtoWorld world,ProtoEntity source, ProtoEntity destinationEntity)
         {
-            var abilityMapPool = world.GetPool<AbilityMapComponent>();
-            if(!abilityMapPool.Has(destinationEntity))
+            if(!world.HasComponent<AbilityMapComponent>(destinationEntity))
                 return;
 
-            ref var abilityMap = ref abilityMapPool.Get(destinationEntity);
+            ref var abilityMap = ref world.GetComponent<AbilityMapComponent>(destinationEntity);
             var abilitiesCount = abilityMap.Abilities.Count;
             if(abilityId < 0 || abilityId >= abilitiesCount)
                 return;
@@ -68,16 +65,13 @@
             if(!ability.Unpack(world, out var abilityEntity))
                 return;
             
-            var baseCooldownPool = world.GetPool<BaseCooldownComponent>();
-            if(!baseCooldownPool.Has(abilityEntity))
+            if(!world.HasComponent<BaseCooldownComponent>(abilityEntity))
                 return;
 
-            ref var baseCooldown = ref baseCooldownPool.Get(abilityEntity);
+            ref var baseCooldown = ref world.GetComponent<BaseCooldownComponent>(abilityEntity);
             baseCooldown.Modifications.RemoveModification(Modification);
             
-            var requestPool = world.GetPool<RecalculateCooldownSelfRequest>();
-            if (!requestPool.Has(abilityEntity))
-                requestPool.Add(abilityEntity);
+            world.GetOrAddComponent<RecalculateCooldownSelfRequest>(abilityEntity);
         }
     }
 }

@@ -8,12 +8,15 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
+    /// <summary>
+    /// Отменяет создание эффекта, если цели уже нет.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

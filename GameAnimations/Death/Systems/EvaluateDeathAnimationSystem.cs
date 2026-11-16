@@ -10,6 +10,9 @@
     using UniGame.Ecs.Proto.Core.Death.Components;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
+    /// <summary>
+    /// Следит за анимацией смерти и отмечает, когда она закончилась.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

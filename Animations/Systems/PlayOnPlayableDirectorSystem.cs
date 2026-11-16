@@ -25,7 +25,10 @@
     {
         private float _minPlayableSpeed;
         
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<PlayOnDirectorSelfRequest>()
+            .Inc<PlayableDirectorComponent>()
+            .End();
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;
@@ -40,10 +43,6 @@
         {
             _world = systems.GetWorld();
             
-            _filter = _world
-                .Filter<PlayOnDirectorSelfRequest>()
-                .Inc<PlayableDirectorComponent>()
-                .End();
         }
         
         public void Run()

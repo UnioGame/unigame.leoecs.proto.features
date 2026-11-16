@@ -12,7 +12,8 @@
     using UnityEngine.Playables;
 
     /// <summary>
-    /// Add an empty target to an ability
+    /// Сущность начинает умирать: запускает анимацию смерти, отключает сущность и ставит ожидание, пока
+    /// анимация не доиграет.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

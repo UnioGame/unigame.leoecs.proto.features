@@ -11,7 +11,11 @@
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
-    
+
+    /// <summary>
+    /// Проигрывает таймлайн способности: когда приходит время шага, просит его выполнить. Последний шаг
+    /// сыгран — кидает TimelineEndEvent и удаляет таймлайн.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

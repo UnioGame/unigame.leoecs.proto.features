@@ -16,6 +16,9 @@
     using UniGame.LeoEcs.Shared.Extensions;
     using Unity.Mathematics;
 
+    /// <summary>
+    /// Если других целей нет, ведёт агента к ближайшей непосещённой точке интереса своей категории.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

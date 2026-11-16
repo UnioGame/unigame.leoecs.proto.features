@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// apply damage to target
+    /// Для критического удара умножает урон на крит-множитель атакующего.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

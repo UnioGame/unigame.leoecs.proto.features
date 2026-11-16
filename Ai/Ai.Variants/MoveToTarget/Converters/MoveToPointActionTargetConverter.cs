@@ -27,8 +27,7 @@
                 ? target.transform
                 : _point;
 
-            var poiPool = world.GetPool<MoveToPoiComponent>();
-            ref var component = ref poiPool.Add(entity);
+            ref var component = ref world.AddComponent<MoveToPoiComponent>(entity);
             component.Position = point.position;
             component.Priority = _priority;
             component.CategoryId = _category;

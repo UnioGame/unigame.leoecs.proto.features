@@ -6,9 +6,9 @@
     using Components.Requests;
     using Leopotam.EcsLite;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -21,7 +21,10 @@
     [ECSDI]
     public sealed class CompletePlayableAnimationSystem : IProtoRunSystem,IProtoInitSystem
     {
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<StopAnimationSelfRequest>()
+            .Inc<AnimationTargetComponent>()
+            .End();
         private ProtoWorld _world;
         
         private AnimationTimelineAspect _animationAspect;
@@ -30,10 +33,6 @@
         {
             _world = systems.GetWorld();
             
-            _filter = _world
-                .Filter<StopAnimationSelfRequest>()
-                .Inc<AnimationTargetComponent>()
-                .End();
         } 
         
         public void Run()

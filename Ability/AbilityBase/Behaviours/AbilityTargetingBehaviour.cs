@@ -27,9 +27,13 @@
 
         public void Compose(ProtoWorld world, ProtoEntity abilityEntity)
         {
-            world.GetOrAddComponent<RadiusComponent>(abilityEntity).Value = radius;
-            world.GetOrAddComponent<RelationshipIdComponent>(abilityEntity).Value = relationship;
-            world.GetOrAddComponent<CategoryIdComponent>(abilityEntity).Value = category;
+            ref var radiusComponent = ref world.GetOrAddComponent<RadiusComponent>(abilityEntity);
+            ref var relationshipComponent = ref world.GetOrAddComponent<RelationshipIdComponent>(abilityEntity);
+            ref var categoryComponent = ref world.GetOrAddComponent<CategoryIdComponent>(abilityEntity);
+
+            radiusComponent.Value = radius;
+            relationshipComponent.Value = relationship;
+            categoryComponent.Value = category;
         }
     }
 }

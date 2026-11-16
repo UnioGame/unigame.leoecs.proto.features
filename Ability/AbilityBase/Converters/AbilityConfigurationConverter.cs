@@ -1,6 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Ability.Converters
 {
     using System;
+    using UniCore.Runtime.ProfilerTools;
     using System.Collections.Generic;
     using Common.Components;
     using Components;
@@ -39,7 +40,7 @@
             {
                 if (setup.configuration == null)
                 {
-                    Debug.LogError($"[Ability] {target.name}: empty ability configuration in {nameof(AbilityConfigurationConverter)}.", target);
+                    GameLog.LogError($"[Ability] {target.name}: empty ability configuration in {nameof(AbilityConfigurationConverter)}.", target);
                     continue;
                 }
 

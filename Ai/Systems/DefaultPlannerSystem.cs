@@ -1,20 +1,18 @@
 namespace UniGame.Ecs.Proto.AI.Systems
 {
     using System;
-    using Aspects;
     using Components;
     using LeoEcs.Bootstrap.Runtime.Attributes;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using Service;
-
     using UniGame.LeoEcs.Shared.Extensions;
     using UnityEngine;
 
-#if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
-#endif
-    
+    /// <summary>
+    /// Планировщик действия по умолчанию: всегда предлагает агенту запасное действие с заданным
+    /// приоритетом.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -27,15 +25,14 @@ namespace UniGame.Ecs.Proto.AI.Systems
     public class DefaultPlannerSystem : BasePlannerSystem<AiDefaultActionComponent>, IProtoInitSystem
     {
 #if ODIN_INSPECTOR
-        [InlineProperty]
-        [HideLabel]
+        [Sirenix.OdinInspector.InlineProperty]
+        [Sirenix.OdinInspector.HideLabel]
 #endif
         [SerializeField]
         private AiPlannerData _plannerData;
 
         private ProtoWorld _world;
         private IProtoSystems _systems;
-        private AiAspect _aiAspect;
 
         private ProtoIt _filter = It
             .Chain<AiAgentComponent>()
@@ -51,7 +48,7 @@ namespace UniGame.Ecs.Proto.AI.Systems
         {
             foreach (var entity in _filter)
             {
-                if (!IsPlannerEnabledForEntity(_world, entity))
+                if (!IsPlannerEnabledForEntity(entity))
                     continue;
 
                 _aiAspect.AiDefaultAction.GetOrAddComponent(entity);

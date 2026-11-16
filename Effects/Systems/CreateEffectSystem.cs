@@ -10,12 +10,16 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
+    /// <summary>
+    /// Превращает запрос CreateEffectSelfRequest в эффект: запоминает, кто и на кого его наложил, собирает
+    /// компоненты из конфига и добавляет эффект в список эффектов цели.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

@@ -11,8 +11,7 @@
     {
         protected override void Compose(ProtoWorld world, ProtoEntity effectEntity)
         {
-            var damagePool = world.GetPool<SplashAttackDamageEffectComponent>();
-            damagePool.Add(effectEntity);
+            world.AddComponent<SplashAttackDamageEffectComponent>(effectEntity);
         }
     }
 }

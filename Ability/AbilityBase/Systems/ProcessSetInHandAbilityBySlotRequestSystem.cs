@@ -3,12 +3,14 @@
     using System;
     using Aspects;
     using Components;
-    using Leopotam.EcsLite;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Берёт в руку способность из указанного слота.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 
@@ -21,18 +23,17 @@
     public sealed class ProcessSetInHandAbilityBySlotRequestSystem : IProtoInitSystem, IProtoRunSystem
     {
         private AbilityAspect _abilityAspect;
-        private ProtoIt _filter;
+        private ProtoIt _filter = It
+            .Chain<SetInHandAbilityBySlotSelfRequest>()
+            .Inc<AbilityMapComponent>()
+            .Inc<AbilityInHandLinkComponent>()
+            .End();
         private ProtoWorld _world;
 
         public void Init(IProtoSystems systems)
         {
             _world = systems.GetWorld();
             
-            _filter = _world
-                .Filter<SetInHandAbilityBySlotSelfRequest>()
-                .Inc<AbilityMapComponent>()
-                .Inc<AbilityInHandLinkComponent>()
-                .End();
         }
         
         public void Run()

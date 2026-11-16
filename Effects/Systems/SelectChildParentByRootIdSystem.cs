@@ -11,14 +11,14 @@
     using UniGame.LeoEcs.Shared.Extensions;
 
     /// <summary>
-    /// select parent by effect root id
+    /// Цепляет визуал эффекта к дочерней точке на цели, если точка помечена как дочерняя.
     /// </summary>
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
- 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     [ECSDI]

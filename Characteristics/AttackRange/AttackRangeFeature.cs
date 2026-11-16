@@ -4,7 +4,6 @@
     using Components;
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
-    using Base;
     using Feature;
     using Systems;
     using UniGame.LeoEcs.Shared.Extensions;

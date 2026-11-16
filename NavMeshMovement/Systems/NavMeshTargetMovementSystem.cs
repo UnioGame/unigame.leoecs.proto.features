@@ -10,7 +10,8 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// Система отвечающая за перемещение в целевую позицю при наличии компонента <see cref="MovementPointSelfRequest"/>.
+    /// Система отвечающая за перемещение в целевую позицю при наличии компонента <see
+    /// cref="MovementPointSelfRequest"/>.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

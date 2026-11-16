@@ -8,6 +8,9 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
+    /// <summary>
+    /// Запрос «примени способность из слота» превращает в запрос на применение конкретной способности.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

@@ -11,7 +11,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
     /// <summary>
-    /// apply damage to target
+    /// Списывает итоговый урон со здоровья цели и кидает событие MadeDamageEvent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

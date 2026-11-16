@@ -1,5 +1,7 @@
 ﻿namespace UniGame.Ecs.Proto.Movement.Systems.Rigidbody
 {
+    using System;
+    using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using Aspect;
     using Game.Ecs.Core.Components;
     using Leopotam.EcsProto;
@@ -8,8 +10,17 @@
     using UnityEngine;
 
     /// <summary>
-    /// Система отвечающая за поворот во время пермещения через физическую систему Unity.
+    /// Разворачивает Rigidbody сущности в сторону движения.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
+    [ECSDI]
     public sealed class RigidbodyRotationSystem : IProtoRunSystem
     {
         private ProtoWorld _world;
