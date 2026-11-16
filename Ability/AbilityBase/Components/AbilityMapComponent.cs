@@ -17,17 +17,17 @@
 
         public void SetHandlers(IProtoPool<AbilityMapComponent> pool) => pool.SetResetHandler(AutoReset);
         
-        public void AutoReset(ref AbilityMapComponent c)
+        // Disposes the native collections of the reset component (c), not of this handler instance.
+        public static void AutoReset(ref AbilityMapComponent c)
         {
-            if (AbilitySlots.IsCreated)
-            {
-                AbilitySlots.Dispose();
-            }
+            if (c.AbilitySlots.IsCreated)
+                c.AbilitySlots.Dispose();
 
-            if (Abilities.IsCreated)
-            {
-                Abilities.Dispose();
-            }
+            if (c.Abilities.IsCreated)
+                c.Abilities.Dispose();
+
+            c.AbilitySlots = default;
+            c.Abilities = default;
         }
     }
 }

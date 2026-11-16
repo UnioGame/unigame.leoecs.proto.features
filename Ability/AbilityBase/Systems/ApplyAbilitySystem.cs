@@ -44,22 +44,27 @@
         {
             foreach (var entity in _filter)
             {
-                ref var abilityCooldownComponent = ref _abilityAspect.CooldownState.Get(entity);
-                abilityCooldownComponent.LastTime = GameTime.Time;
-                
+                if (!_ownershipAspect.OwnerLink.Has(entity))
+                    continue;
+
                 ref var ownerLinkComponent = ref _ownershipAspect.OwnerLink.Get(entity);
                 if (!ownerLinkComponent.Value.Unpack(_world, out var ownerEntity))
-                {
                     continue;
-                }
-                
-                ref var targetsComponent = ref _abilityAspect.Targets.Get(ownerEntity);
-                var timelineEntity = _timelineAspect.CreateTimelineEntity(entity);
-                
+
+                if (!_timelineAspect.TryCreateTimelineEntity(entity, out var timelineEntity))
+                    continue;
+
+                ref var abilityCooldownComponent = ref _abilityAspect.CooldownState.Get(entity);
+                abilityCooldownComponent.LastTime = GameTime.Time;
+
                 ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Add(timelineEntity);
-                for (int i = 0; i < targetsComponent.Count; i++)
+
+                // Targets are optional: a self ability has none.
+                if (_abilityAspect.Targets.Has(ownerEntity))
                 {
-                    abilityContextComponent.targets.Add(targetsComponent.Entities[i]);
+                    ref var targetsComponent = ref _abilityAspect.Targets.Get(ownerEntity);
+                    for (var i = 0; i < targetsComponent.Count; i++)
+                        abilityContextComponent.targets.Add(targetsComponent.Entities[i]);
                 }
 
                 abilityContextComponent.abilityEntity = entity.PackEntity(_world);

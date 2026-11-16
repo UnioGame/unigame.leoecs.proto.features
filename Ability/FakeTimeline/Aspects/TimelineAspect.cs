@@ -6,6 +6,7 @@
     using Components.Events;
     using Components.Requests;
     using Game.Ecs.Time.Service;
+    using UniCore.Runtime.ProfilerTools;
     using UniGame.Proto.Ownership;
     using LeoEcs.Shared.Extensions;
     using Leopotam.EcsProto;
@@ -37,26 +38,25 @@
         public ProtoPool<TimelineEndEvent> TimelineEndedEvent;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity CreateTimelineEntity(ProtoEntity timelinePrototypeEntity)
+        public bool TryCreateTimelineEntity(ProtoEntity timelinePrototypeEntity, out ProtoEntity timelineEntity)
         {
+            timelineEntity = default;
             if (!TimelinePrototype.Has(timelinePrototypeEntity))
             {
-#if UNITY_EDITOR || DEBUG
-                Debug.LogError("TimelineAspect: Entity does not contain TimelinePrototype component.");
-#endif
-                return default;
+                GameLog.LogError("TimelineAspect: Entity does not contain TimelinePrototype component.");
+                return false;
             }
 
             ref var timelinePrototypeComponent = ref TimelinePrototype.Get(timelinePrototypeEntity);
             
-            var timelineEntity = world.NewEntity();
+            timelineEntity = world.NewEntity();
             ref var timelineComponent = ref Timeline.Add(timelineEntity);
             timelineComponent.playables.CopyFrom(timelinePrototypeComponent.playables);
             timelineComponent.playStartTime = GameTime.Time;
             
             _ownershipAspect.AddChild(timelinePrototypeEntity, timelineEntity);
 
-            return timelineEntity;
+            return true;
         }
     }
 }

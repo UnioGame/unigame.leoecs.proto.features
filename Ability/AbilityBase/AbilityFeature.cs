@@ -33,13 +33,13 @@
         [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
 #endif 
         [SerializeReference]
-        public List<AbilitySubFeature> abilityFeatures;
+        public List<AbilitySubFeature> abilityFeatures = new();
         
 #if ODIN_INSPECTOR
         [ListDrawerSettings(ListElementLabelName = "@FeatureName")]
 #endif 
         [SerializeReference]
-        public List<AbilityPluginFeature> abilityPlugins;
+        public List<AbilityPluginFeature> abilityPlugins = new();
 
         protected override async UniTask OnInitializeAsync(IProtoSystems ecsSystems)
         {

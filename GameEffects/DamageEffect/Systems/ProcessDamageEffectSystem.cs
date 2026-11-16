@@ -27,11 +27,10 @@
         private EffectAspect _effectAspect;
         private DamageAspect _damageAspect;
 
-        private ProtoItExc _filter = It
+        private ProtoIt _filter = It
             .Chain<EffectComponent>()
             .Inc<ApplyEffectSelfRequest>()
             .Inc<DamageEffectComponent>()
-            .Exc<DamageEffectRequestCompleteComponent>()
             .End();
 
         public void Run()
@@ -55,7 +54,6 @@
                 request.Source = effect.Source;
                 request.Destination = effect.Destination;
                 request.Value = damage.Value * abilityPower;
-                _damageEffectAspect.DamageEffectRequestComplete.Add(entity);
             }
         }
     }

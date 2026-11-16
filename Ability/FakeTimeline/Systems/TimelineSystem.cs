@@ -47,6 +47,12 @@
                 ref var timelineComponent = ref _timelineAspect.Timeline.Get(timelineEntity);
                 var playables = timelineComponent.playables;
                 var index = timelineComponent.index;
+
+                if (!playables.IsCreated || index >= playables.Length)
+                {
+                    _ownershipAspect.Kill(timelineEntity);
+                    continue;
+                }
                 
                 var timelineDelta = GameTime.Time - timelineComponent.playStartTime;
                 var currBehaviourEntity = playables[index];

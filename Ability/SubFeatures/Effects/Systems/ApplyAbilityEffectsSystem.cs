@@ -51,7 +51,7 @@
 
                 ref var abilityContextComponent = ref _abilityAspect.AbilityContext.Get(contextEntity);
                 var target = abilityContextComponent.FirstTarget();
-                var source = _world.PackEntity(applyEffectsRequest);
+                var source = abilityContextComponent.abilityOwner;
                 
                 ref var effectsComponent = ref _effectAspect.EffectsComponent.Get(applyEffectsRequest);
                 effectsComponent.Effects.CreateRequests(_world, source, target);
