@@ -38,15 +38,12 @@
         [SerializeField]
         public TComponent data;
     
-        protected override void OnApply(GameObject target, ProtoWorld world, ProtoEntity entity)
+        // Planner converters (MoveToTarget, ActivateAbility) call Apply(world, entity) on their nested converters,
+        // so the component must be added here, not only in the GameObject overload.
+        public override void Apply(ProtoWorld world, ProtoEntity entity)
         {
             ref var component = ref world.GetOrAddComponent<TComponent>(entity);
             data.Apply(ref component);
-        }
-
-        public override void Apply(ProtoWorld world, ProtoEntity entity)
-        {
-            
         }
     }
 }
