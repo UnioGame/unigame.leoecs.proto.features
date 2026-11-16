@@ -138,9 +138,6 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
             var maxPriority = float.MinValue;
             var distanceToTarget = float.MaxValue;
 
-            var checkActiveTarget = activeTargetComponent.
-                Value.Unpack(_world, out var activeTargetEntity);
-
             for (var j = 0; j < amount; j++)
             {
                 var selectionEntity = _resultSelection[j];
@@ -149,7 +146,8 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                 ref var transformComponent = ref _targetAspect.Position.Get(selectionEntity);
 
                 ref var position = ref transformComponent.Position;
-                var count = filter.Priorities.Length;
+                // Priorities is not serialized when UsePriority is off, so it can be null
+                var count = filter.UsePriority && filter.Priorities != null ? filter.Priorities.Length : 0;
                 var priorities = filter.Priorities;
                 var priority = 0f;
 
@@ -168,9 +166,10 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
 
                 var distance = math.distancesq(position, entityPosition);
                 
-                if (priority >= maxPriority && 
-                    distance >= distanceToTarget) continue;
+                // equal priority: the nearer target wins
+                if (priority <= maxPriority && distance >= distanceToTarget) continue;
 
+                maxPriority = priority;
                 distanceToTarget = distance;
                 target = selectionEntity;
             }

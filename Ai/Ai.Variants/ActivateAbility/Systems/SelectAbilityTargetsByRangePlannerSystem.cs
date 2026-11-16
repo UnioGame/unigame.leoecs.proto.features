@@ -163,7 +163,8 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                 if(distance < minDistance) continue;
                 
                 var priority = 0f;
-                var count = filter.Priorities.Length;
+                // Priorities is not serialized when UsePriority is off, so it can be null
+                var count = filter.UsePriority && filter.Priorities != null ? filter.Priorities.Length : 0;
                 var categories = filter.Priorities;
                 
                 for (var i = 0; i < count && filter.UsePriority; i++)

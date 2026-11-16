@@ -16,7 +16,6 @@
     public class AiAspect : EcsAspect
     {
         public ProtoPool<AiAgentComponent> AiAgent;
-        public ProtoPool<AiAgentPlanningComponent> AiAgentPlanning;
         public ProtoPool<AiAgentSelfControlComponent> AiAgentSelfControl;
         public ProtoPool<AiDefaultActionComponent> AiDefaultAction;
         public ProtoPool<AiSensorComponent> AiSensor;

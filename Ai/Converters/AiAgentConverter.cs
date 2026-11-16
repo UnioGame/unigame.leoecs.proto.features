@@ -5,6 +5,8 @@ namespace UniGame.Ecs.Proto.AI.Converters
     using Components;
     using Configurations;
     using Leopotam.EcsProto;
+    using Leopotam.EcsProto.QoL;
+    using UniCore.Runtime.ProfilerTools;
     using Service;
     using UniGame.AddressableTools.Runtime;
     using UniGame.LeoEcs.Converter.Runtime;
@@ -69,10 +71,16 @@ namespace UniGame.Ecs.Proto.AI.Converters
         private async UniTask ApplyAiDataAsync(GameObject target, ProtoWorld world, ProtoEntity entity)
         {
             var lifeTime = target.GetAssetLifeTime();
+            var packedEntity = entity.PackEntity(world);
             var aiData = await configuration
                 .SpawnByReference(lifeTime,true);
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+
+            // the unit may have died (or play mode stopped) while the configuration was loading
+            if (lifeTime.IsTerminated || aiData == null || !packedEntity.Unpack(world, out entity))
+                return;
+
             ApplyAiData(target, world, entity, aiData);
         }
 
@@ -85,12 +93,20 @@ namespace UniGame.Ecs.Proto.AI.Converters
             var aiConfiguration = aiData.agentConfiguration;
 
             foreach (var planner in aiConfiguration.planners)
+            {
+                if ((int)planner.id < 0 || (int)planner.id >= availableActions.Length)
+                {
+                    GameLog.LogError($"[Ai] {target.name}: planner {planner.GetType().Name} has action id {(int)planner.id}, but the AI configuration has {availableActions.Length} actions.");
+                    continue;
+                }
+
                 availableActions[planner.id] = true;
+            }
 
             foreach (var converter in aiConfiguration.planners)
                 converter.Apply(target, world, entity);
 
-            ref var aiAgent = ref world.AddComponent<AiAgentComponent>(entity);
+            ref var aiAgent = ref world.GetOrAddComponent<AiAgentComponent>(entity);
             aiAgent.Configuration = aiConfiguration;
             aiAgent.PlannedActions = activeActions;
             aiAgent.PlannerData = plannerData;

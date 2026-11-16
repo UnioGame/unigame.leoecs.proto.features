@@ -116,7 +116,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 
                 ref var abilityRadiusComponent = ref _radiusPool.Get(ability);
                 var radius = abilityRadiusComponent.Value;
-                var complete = distanceToTarget < radius;
+                var complete = distanceToTarget < radius * radius; // distanceToTarget is squared
                 targetPriority = complete ? -1 : targetPriority;
             
                 if(targetPriority < 0) continue;

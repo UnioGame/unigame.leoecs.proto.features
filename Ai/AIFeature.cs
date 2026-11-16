@@ -30,8 +30,6 @@
                 await planner.Initialize(index,ecsSystems);
             }
 
-            //collect ai agents info
-            //ecsSystems.Add(new AiCollectPlannerDataSystem(configuration));
             //make ai planning by ai agent data
             ecsSystems.Add(new AiPlanningSystem());
             //apply specific actions components
@@ -44,7 +42,6 @@
             ecsSystems.Add(new AiCleanUpPlanningDataSystem(actions));
             
             //remove remove plan data
-            ecsSystems.DelHere<AiAgentPlanningComponent>();
         }
     }
 }

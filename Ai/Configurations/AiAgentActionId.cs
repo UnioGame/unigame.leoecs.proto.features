@@ -14,7 +14,7 @@
 #endif
     
 #if ODIN_INSPECTOR
-    [ValueDropdown("@unigame.ecs.proto.AI.Configurations.AiAgentActionId.GetActionsId()",IsUniqueList = true)]
+    [ValueDropdown("@UniGame.Ecs.Proto.AI.Configurations.AiAgentActionId.GetActionsId()",IsUniqueList = true)]
 #endif
     [Serializable]
     public class AiAgentActionId

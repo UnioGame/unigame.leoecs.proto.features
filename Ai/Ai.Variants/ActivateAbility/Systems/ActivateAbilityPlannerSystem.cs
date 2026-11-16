@@ -68,7 +68,6 @@ namespace Game.Code.Ai.ActivateAbility
         protected override UniTask OnInitialize(int id, IProtoSystems systems)
         {
             systems.DelHere<AbilityAiActionTargetComponent>();
-            //systems.Add(new SelectAbilityTargetsDataPlannerSystem());
             systems.Add(new SelectAbilityTargetsByRangePlannerSystem());
             systems.Add(new SelectAbilityTargetsPlannerSystem());
             

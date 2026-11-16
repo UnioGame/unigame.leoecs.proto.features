@@ -2,6 +2,7 @@
     "name": "unigame.ecs.proto.AI",
     "rootNamespace": "",
     "references": [
+        "GUID:18e001e7783f9fa4f91ffb0f7d0ecfc5",
         "GUID:e59bf9fc7d5a44b18a819a92edd46163",
         "GUID:e06a58708b83247ca9dc984644f5b40b",
         "GUID:b10aac27e5bc3d74f9892b100a74487f",

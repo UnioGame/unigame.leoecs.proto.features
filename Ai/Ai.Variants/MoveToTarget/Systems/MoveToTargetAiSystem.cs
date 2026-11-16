@@ -27,7 +27,8 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
     [ECSDI]
     public class MoveToTargetAiSystem : IAiActionSystem
     {
-        public float minSqrDistance = 4f;
+        // Stop distance to the goal point (squared). Must be below the attack radius, otherwise a melee unit stops out of reach.
+        public float minSqrDistance = 0.25f;
         
         private ProtoWorld _world;
         private AbilityAspect _abilityTools;
@@ -42,7 +43,8 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
 
         private ProtoItExc _filter = It
             .Chain<MoveToTargetActionComponent>()
-            .Inc<TransformComponent>()
+            .Inc<TransformPositionComponent>()
+            .Inc<TransformDirectionComponent>()
             .Inc<AiAgentComponent>()
             .Exc<ImmobilityComponent>()
             .Exc<DisabledComponent>()
@@ -55,8 +57,7 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
                 ref var moveToTargetComponent = ref _moveToTargetPool.Get(entity);
                 ref var directionComponent = ref _directionPool.Get(entity);
                 ref var transformComponent = ref _transformPool.Get(entity);
-                ref var targetComponentRequest = ref _movementPointPool.GetOrAddComponent(entity);
-                
+
                 var position = transformComponent.Position;
                 var targetPosition = moveToTargetComponent.Position;
                 var sqrDistance = math.distancesq(targetPosition,position);
@@ -70,10 +71,12 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Systems
                 
                 if (sqrDistance < minSqrDistance)
                 {
-                    _world.AddComponent<MovementStopSelfRequest>(entity);
+                    _world.GetOrAddComponent<MovementStopSelfRequest>(entity);
                     continue;
                 }
-                
+
+                // only after the stop check: an added request with default Value would send the unit to (0, 0, 0)
+                ref var targetComponentRequest = ref _movementPointPool.GetOrAddComponent(entity);
                 targetComponentRequest.Value = destination;
                 var packedEntity = _world.PackEntity(entity);
                 moveToTargetComponent.Effects.CreateRequests(_world,packedEntity,packedEntity);

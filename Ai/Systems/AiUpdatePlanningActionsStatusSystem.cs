@@ -51,7 +51,7 @@ namespace UniGame.Ecs.Proto.AI.Systems
             {
                 ref var agentComponent = ref _aiAspect.AiAgent.Get(entity);
                 var actionsActions = agentComponent.PlannedActions;
-                var availableActions = agentComponent.PlannedActions;
+                var availableActions = agentComponent.AvailableActions;
 
                 for (var i = 0; i < actionsActions.Length; i++)
                 {
