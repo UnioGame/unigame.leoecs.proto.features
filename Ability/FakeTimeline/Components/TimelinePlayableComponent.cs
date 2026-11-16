@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Шаг таймлайна способности и через сколько секунд от старта он срабатывает.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

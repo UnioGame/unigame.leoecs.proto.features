@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Запрос завершить умение.
+    /// Запрос завершить способность: снять «используется» и кинуть событие завершения.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

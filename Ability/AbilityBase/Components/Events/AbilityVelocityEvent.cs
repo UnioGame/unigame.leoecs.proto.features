@@ -4,7 +4,7 @@
     using UnityEngine;
 
     /// <summary>
-    ///
+    /// Событие со скоростью, которую способность придаёт владельцу (рывок, прыжок).
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

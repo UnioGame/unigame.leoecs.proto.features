@@ -4,7 +4,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// Запрос применить целевое умение, умение должно принадлежать сущности.
+    /// Запрос на владельце: применить эту способность. Она должна принадлежать ему и лежать у него в руке.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

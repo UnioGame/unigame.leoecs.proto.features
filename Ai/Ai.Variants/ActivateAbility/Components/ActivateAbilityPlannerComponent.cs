@@ -1,7 +1,6 @@
 namespace Game.Code.Ai.ActivateAbility
 {
     using System;
-    using GameLayers.Category;
 
     using UniGame.Ecs.Proto.AI.Service;
     using UniGame.LeoEcs.Shared.Abstract;
@@ -11,12 +10,15 @@ namespace Game.Code.Ai.ActivateAbility
     using Sirenix.OdinInspector;
 #endif 
     
-#if ENABLE_IL2CP
-	using Unity.IL2CPP.CompilerServices;
+    /// <summary>
+    /// Приоритет действия «применить способность» у этого агента.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
 
-	[Il2CppSetOption(Option.NullChecks, false)]
-	[Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	[Il2CppSetOption(Option.DivideByZeroChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 #endif
     [Serializable]
     public struct ActivateAbilityPlannerComponent : IApplyableComponent<ActivateAbilityPlannerComponent>
@@ -35,15 +37,5 @@ namespace Game.Code.Ai.ActivateAbility
         {
             component.PlannerData = PlannerData;
         }
-    }
-
-    [Serializable]
-#if ODIN_INSPECTOR
-    [HorizontalGroup(nameof(CategoryPriority),LabelWidth = 40)]
-#endif 
-    public struct CategoryPriority
-    {
-        public CategoryId Category;
-        public float Value;
     }
 }

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// disable navigation self
+    /// Запрос включить или выключить навигацию по NavMesh у сущности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

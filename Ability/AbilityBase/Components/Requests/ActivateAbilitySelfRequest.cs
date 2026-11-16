@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// activate ability self
+    /// Запрос применить способность на самой способности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

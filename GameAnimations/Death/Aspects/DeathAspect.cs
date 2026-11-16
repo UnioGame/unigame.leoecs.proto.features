@@ -18,5 +18,6 @@
         public ProtoPool<DisabledComponent> Disabled;
         public ProtoPool<DeathCompletedComponent> Completed;
         public ProtoPool<ChampionComponent> Champion;
+        public ProtoPool<ArtificialDeathComponent> ArtificialDeath;
     }
 }

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Событие: способность закончила работу, её таймлайн доиграл.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

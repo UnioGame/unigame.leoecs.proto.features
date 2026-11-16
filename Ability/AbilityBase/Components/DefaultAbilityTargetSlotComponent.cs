@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// В каком слоте у владельца лежит основная способность.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -42,8 +42,12 @@
                 
                 if(transform == null) continue;
                 
-                var direction = math.normalize(pointRequest.Point - positionComponent.Position);
-                transform.forward = direction;
+                // turn only around Y; a zero vector (point at the unit itself) would give NaN
+                var offset = pointRequest.Point - positionComponent.Position;
+                offset.y = 0f;
+                if (math.lengthsq(offset) < 1e-6f) continue;
+
+                transform.forward = math.normalize(offset);
             }
         }
     }

@@ -4,7 +4,7 @@
     using Unity.Mathematics;
 
     /// <summary>
-    /// set velocity for nav agent
+    /// Запрос задать агенту скорость напрямую, мимо пункта назначения.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

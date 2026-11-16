@@ -7,7 +7,7 @@
     using Unity.Collections;
 
     /// <summary>
-    /// Компонент со ссылками на доступные умения у сущности.
+    /// Все способности владельца и что в каком слоте лежит.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

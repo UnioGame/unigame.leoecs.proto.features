@@ -4,7 +4,7 @@
 	using Leopotam.EcsProto.QoL;
 
 	/// <summary>
-	/// Unlock meta ability
+	/// Событие: способность открылась.
 	/// </summary>
 #if ENABLE_IL2CPP
 	using Unity.IL2CPP.CompilerServices;

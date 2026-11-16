@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Component that holds information about a damage effect.
+    /// Эффект «фиксированный урон»: бьёт на заданное число, умноженное на силу способности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

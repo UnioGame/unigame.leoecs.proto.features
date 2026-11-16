@@ -6,9 +6,8 @@
     using Game.Code.GameLayers.Relationship;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
-    /// mark entity as target for range selection
+    /// Параметры поиска целей вокруг сущности: радиус, слой, категория и отношение (кого ищем).
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -4,7 +4,7 @@
     using UnityEngine;
 
     /// <summary>
-    ///
+    /// Снаряд летит по прямой с этой скоростью.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

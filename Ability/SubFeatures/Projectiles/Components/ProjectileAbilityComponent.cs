@@ -4,7 +4,7 @@
     using UnityEngine.Serialization;
 
     /// <summary>
-    ///
+    /// Шаг способности «снаряд»: какой префаб, откуда вылетает, куда летит и сколько летит.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

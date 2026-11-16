@@ -5,8 +5,16 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility.Components
     using UniGame.LeoEcs.Shared.Abstract;
 
     /// <summary>
-    /// Stores the setting for the AI planner, allows you to use abilities when it possible without special conditions
+    /// Настройка ИИ «бей при первой возможности»: способность применяется, как только есть подходящая цель
+    /// в её радиусе.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     public struct AbilityByDefaultComponent : IApplyableComponent<AbilityByDefaultComponent>
     {

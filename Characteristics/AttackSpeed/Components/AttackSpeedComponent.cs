@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// attack speed characteristic
+    /// Скорость атаки: как часто сущность может бить.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

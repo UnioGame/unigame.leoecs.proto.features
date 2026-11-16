@@ -6,6 +6,16 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Components
     using UniGame.LeoEcs.Shared.Abstract;
     using UnityEngine;
 
+    /// <summary>
+    /// Настройка ИИ «держись рядом с точкой»: если агент ушёл за радиус, его тянет обратно.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     public struct MoveByRangeComponent : IApplyableComponent<MoveByRangeComponent>
     {

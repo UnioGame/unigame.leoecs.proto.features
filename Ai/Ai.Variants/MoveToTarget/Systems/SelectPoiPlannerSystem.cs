@@ -70,7 +70,7 @@
 
                 foreach (var key in _poiFilter)
                 {
-                    var poiComponent = _moveToTargetAspect.ToPoi.Get(key);
+                    ref var poiComponent = ref _moveToTargetAspect.ToPoi.Get(key);
 
                     if (poiComponent.Priority < 0)
                         continue;

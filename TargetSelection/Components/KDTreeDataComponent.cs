@@ -7,7 +7,8 @@
     using Unity.Mathematics;
 
     /// <summary>
-    /// points cound for KD Tree
+    /// Сырые данные для kd-дерева: позиции всех сущностей со здоровьем и ссылки на них. Собираются заново
+    /// каждый кадр.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

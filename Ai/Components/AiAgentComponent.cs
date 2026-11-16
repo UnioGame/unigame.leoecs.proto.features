@@ -7,8 +7,16 @@ namespace UniGame.Ecs.Proto.AI.Components
     using Service;
 
     /// <summary>
-    /// Компонент с данными агента необходимомыми для выполнения
+    /// Мозг агента: конфиг ИИ, какие действия ему доступны, какие выбраны на этот кадр и с каким
+    /// приоритетом.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     public struct AiAgentComponent : IProtoAutoReset<AiAgentComponent>
     {

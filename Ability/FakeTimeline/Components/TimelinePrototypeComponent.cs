@@ -7,7 +7,7 @@
     using Unity.Collections;
 
     /// <summary>
-    ///
+    /// Шаблон таймлайна на способности: из него при каждом применении создаётся новый играющий таймлайн.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

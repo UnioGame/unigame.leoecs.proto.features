@@ -22,6 +22,8 @@
     [ECSDI]
     public sealed class ComeToTheEndOfSystem : IProtoRunSystem,IProtoInitSystem
     {
+        private const float ArriveDistance = 0.1f;
+
         private ProtoWorld _world;
         private NavMeshAspect _navigationAspect;
         private ProtoIt _filter = It.Chain<ComePointComponent>()
@@ -43,7 +45,8 @@
                 var currentPosition = transform.Position;
                 var distance = math.distance(currentPosition, comePoint.Value);
 
-                if (Mathf.Approximately(distance, 0.0f))
+                // a NavMesh agent stops near the point (stopping distance), never exactly on it
+                if (distance < ArriveDistance)
                 {
                     _navigationAspect.ComePoint.Del(entity);
                     continue;

@@ -3,7 +3,7 @@
 	using System;
 
 	/// <summary>
-	/// Says that the entity is artificial death
+	/// Метка «ненастоящая» смерть: сущность считается умершей по сценарию, а не от потери здоровья.
 	/// </summary>
 #if ENABLE_IL2CPP
 	using Unity.IL2CPP.CompilerServices;

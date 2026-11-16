@@ -7,7 +7,8 @@
     using Unity.Collections;
 
     /// <summary>
-    ///
+    /// Контекст одного применения способности: чья она, какая именно и по каким целям. Живёт на сущности
+    /// таймлайна, пока он играет.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

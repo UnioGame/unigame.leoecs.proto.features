@@ -59,6 +59,7 @@
         public ProtoPool<SetNavAgentVelocitySelfRequest> SetNavAgentVelocity;
         public ProtoPool<SetNavigationStatusSelfRequest> SetNavigationStatus;
         public ProtoPool<SetKinematicSelfRequest> SetKinematicStatus;
+        public ProtoPool<RevokeComeToEndOfRequest> RevokeComeToEnd;
         
     }
 }

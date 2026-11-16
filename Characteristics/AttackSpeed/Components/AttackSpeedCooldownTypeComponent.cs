@@ -4,7 +4,7 @@
     using Cooldown;
 
     /// <summary>
-    /// attack speed cooldown type
+    /// Как трактовать скорость атаки: как кулдаун в секундах или как количество ударов в секунду.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

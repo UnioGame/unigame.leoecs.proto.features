@@ -7,7 +7,7 @@
     using TargetSelection;
 
     /// <summary>
-    /// data for ability range action
+    /// Буфер целей для действия ИИ по дальности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

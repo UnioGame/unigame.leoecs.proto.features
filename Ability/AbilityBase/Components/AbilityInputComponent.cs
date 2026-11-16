@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Способность управляется вводом игрока, а не ИИ.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

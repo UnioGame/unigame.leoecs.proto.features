@@ -2,10 +2,9 @@
 {
     using System;
     using Leopotam.EcsProto.QoL;
-    using Unity.IL2CPP.CompilerServices;
 
     /// <summary>
-    /// notify about block damage
+    /// Событие: урон заблокирован. Кто бил и по кому.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

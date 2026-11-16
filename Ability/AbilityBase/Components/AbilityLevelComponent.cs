@@ -3,7 +3,7 @@ namespace UniGame.Ecs.Proto.Ability.Components
     using System;
 
     /// <summary>
-    /// Arena specific ability level component
+    /// Уровень способности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

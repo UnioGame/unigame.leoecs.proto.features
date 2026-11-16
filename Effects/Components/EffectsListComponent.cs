@@ -1,15 +1,22 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
+    using System;
     using System.Collections.Generic;
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
-    /// Список эффектов на игровой сущности. При обработке эффектов, они добавляются в этот список или
-    /// убираются из него. Также список автоматически валидируется на момент мертвых эффектов.
+    /// Все эффекты, которые сейчас висят на сущности. Мёртвые эффекты из списка убираются автоматически.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
     public struct EffectsListComponent : IProtoAutoReset<EffectsListComponent>
     {
         public List<ProtoPackedEntity> Effects;

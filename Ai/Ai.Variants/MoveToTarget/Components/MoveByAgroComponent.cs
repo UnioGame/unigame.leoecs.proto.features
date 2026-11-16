@@ -1,11 +1,19 @@
 ﻿namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Components
 {
     using System;
-    using Game.Code.GameLayers.Category;
-    using Game.Code.GameLayers.Relationship;
     using UniGame.LeoEcs.Shared.Abstract;
     using UnityEngine;
 
+    /// <summary>
+    /// Настройка ИИ «иди за тем, кто тебя разозлил»: каких врагов и на каком расстоянии замечать.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     public struct MoveByAgroComponent : IApplyableComponent<MoveByAgroComponent>
     {
@@ -16,15 +24,5 @@
         {
             component.FilterData = FilterData;
         }
-    }
-    
-    [Serializable]
-    public struct MoveByAgroFilterData
-    {
-        [RelationshipIdMask]
-        public RelationshipId RelationshipId;
-        public CategoryId CategoryId;
-        public float SensorDistance;
-        public float AgroEffectMultiplier;
     }
 }

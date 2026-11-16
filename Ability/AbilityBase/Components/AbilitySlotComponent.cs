@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Ability slot component type
+    /// В каком слоте у владельца лежит способность.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -4,7 +4,8 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    ///
+    /// Запрос выполнить шаг таймлайна: время шага пришло, его система делает свою работу (урон, снаряд,
+    /// анимация…).
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

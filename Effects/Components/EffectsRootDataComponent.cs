@@ -4,7 +4,7 @@
     using Data;
 
     /// <summary>
-    /// config data for effects root
+    /// Настройки точек для визуалов эффектов.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

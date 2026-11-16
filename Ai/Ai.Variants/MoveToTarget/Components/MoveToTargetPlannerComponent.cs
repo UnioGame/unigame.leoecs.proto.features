@@ -10,6 +10,16 @@ namespace UniGame.Ecs.Proto.GameAi.MoveToTarget.Components
     using Sirenix.OdinInspector;
 #endif 
     
+    /// <summary>
+    /// Приоритет действия «идти к цели» у этого агента.
+    /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
     [Serializable]
     public struct MoveToTargetPlannerComponent : IApplyableComponent<MoveToTargetPlannerComponent>
     {

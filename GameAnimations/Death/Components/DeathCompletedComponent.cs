@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// death animation completed
+    /// Анимация смерти доиграла: можно убирать сущность.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

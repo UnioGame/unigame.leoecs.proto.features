@@ -2,8 +2,9 @@
 {
     using System;
     using UnioGame.KDTree;
+
     /// <summary>
-    /// radius query for KDTree
+    /// Переиспользуемый запрос «кто в радиусе» к kd-дереву, чтобы не создавать его на каждый поиск.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

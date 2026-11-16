@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Событие: способность только что применили.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

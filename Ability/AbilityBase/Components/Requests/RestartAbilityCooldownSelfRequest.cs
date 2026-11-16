@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// reset cooldown of ability at start
+    /// Запрос запустить кулдаун способности заново.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

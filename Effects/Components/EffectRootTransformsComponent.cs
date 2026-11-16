@@ -6,7 +6,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// target of effect root in the world
+    /// Transform-ы точек для визуалов эффектов на этой сущности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

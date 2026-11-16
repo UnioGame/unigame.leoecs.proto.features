@@ -5,8 +5,8 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// Equips an ability straight from its configuration, without inventory or catalog.
-    /// The request entity becomes the ability entity.
+    /// Запрос выдать способность прямо из конфига (AbilityConfiguration), без инвентаря и каталога.
+    /// Сущность запроса сама становится способностью.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
