@@ -3,7 +3,7 @@
     using System;
 
 	/// <summary>
-	///
+	/// Метка: способность заблокирована и не может применяться.
 	/// </summary>
 #if ENABLE_IL2CPP
 	using Unity.IL2CPP.CompilerServices;

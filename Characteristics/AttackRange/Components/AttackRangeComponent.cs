@@ -1,9 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.CriticalChance.Components
 {
     using System;
-    
+
     /// <summary>
-    /// attack speed characteristic
+    /// Дальность атаки.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

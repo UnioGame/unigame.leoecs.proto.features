@@ -4,7 +4,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// Текущее умение в руке.
+    /// Ссылка владельца на способность, которая сейчас у него «в руке».
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

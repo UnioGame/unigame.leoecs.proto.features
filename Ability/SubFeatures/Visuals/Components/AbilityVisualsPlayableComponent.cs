@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Шаг способности «визуал»: какой эффект заспавнить, в какой точке и прицепить ли к кости.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Компонент с запросом на применение умения.
+    /// Запрос проверить и применить способность: дальше ApplyAbilitySystem запускает её таймлайн.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Статус умения по умолчанию.
+    /// Метка: основная способность владельца, например обычная атака. Её он держит в руке по умолчанию.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

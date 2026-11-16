@@ -7,7 +7,7 @@
     using Unity.Collections;
 
     /// <summary>
-    ///
+    /// Таймлайн, который играет прямо сейчас: шаги, текущий шаг и время старта.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

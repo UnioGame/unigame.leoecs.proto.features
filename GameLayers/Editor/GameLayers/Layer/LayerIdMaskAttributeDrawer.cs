@@ -17,7 +17,7 @@
             
             EditorGUI.BeginProperty(position, label, property);
             
-            var propertyValue = property.FindPropertyRelative("_value");
+            var propertyValue = property.FindPropertyRelative(nameof(LayerId.value));
             var layers = _configuration == null ? Array.Empty<string>() : _configuration.LayerNames.Where(x=> !string.IsNullOrEmpty(x)).ToArray();
             
             propertyValue.intValue = EditorGUI.MaskField(position, label, propertyValue.intValue, layers);

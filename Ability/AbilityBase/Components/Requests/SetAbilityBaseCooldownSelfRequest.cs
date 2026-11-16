@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// set base value cooldown of default ability
+    /// Запрос поменять базовый кулдаун способности в слоте.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

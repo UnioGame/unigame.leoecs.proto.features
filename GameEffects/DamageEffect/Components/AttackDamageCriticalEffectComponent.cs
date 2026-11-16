@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Component that controls the critical effects of attack damage.
+    /// Метка эффекта: урон от атаки может быть критическим.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

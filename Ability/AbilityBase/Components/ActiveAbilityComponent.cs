@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Статус доступности умения.
+    /// Способность готова к применению. Снимается при применении и возвращается, когда пройдёт кулдаун.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

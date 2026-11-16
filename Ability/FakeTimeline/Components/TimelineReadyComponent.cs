@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Метка: шаги таймлайна отсортированы по времени, можно играть.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

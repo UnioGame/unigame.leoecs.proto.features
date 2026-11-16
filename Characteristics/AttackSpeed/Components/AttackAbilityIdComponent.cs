@@ -1,9 +1,9 @@
 ﻿namespace UniGame.Ecs.Proto.Characteristics.AttackSpeed.Components
 {
     using System;
-    
+
     /// <summary>
-    /// default is of character abilities
+    /// Id способности, которую считать атакой: на неё действует скорость атаки.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

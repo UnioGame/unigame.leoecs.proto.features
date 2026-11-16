@@ -2,8 +2,10 @@
 {
     using System;
     using UnioGame.KDTree;
+
     /// <summary>
-    /// KD Tree component
+    /// Само kd-дерево со всеми возможными целями. Перестраивается каждый кадр, по нему быстро ищутся цели в
+    /// радиусе.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

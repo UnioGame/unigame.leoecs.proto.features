@@ -6,6 +6,10 @@
     using Leopotam.EcsProto;
     using UnityEngine;
 
+    /// <summary>
+    /// Точки на модели (голова, тело, ноги, рука, оружие), откуда вылетают снаряды и куда цепляются
+    /// визуалы.
+    /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
 

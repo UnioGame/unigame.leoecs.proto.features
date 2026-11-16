@@ -4,7 +4,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    ///
+    /// Запрос поставить способность на паузу.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

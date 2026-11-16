@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Запрос применить умение в конкретной ячейке умений.
+    /// Запрос применить способность по её id.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

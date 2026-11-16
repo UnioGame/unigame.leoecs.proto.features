@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// movement speed of nav agent
+    /// Скорость движения, которую мы выставляем NavMeshAgent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

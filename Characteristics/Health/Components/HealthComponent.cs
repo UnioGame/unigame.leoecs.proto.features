@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// Health characteristic component
+    /// Здоровье сущности: текущее, базовое, минимум и максимум. Упало до нуля — сущность умирает. И только
+    /// сущности со здоровьем могут быть целями.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

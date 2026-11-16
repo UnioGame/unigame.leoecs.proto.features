@@ -2,9 +2,10 @@
 {
     using System;
     using Leopotam.EcsProto.QoL;
-    
+
     /// <summary>
-    /// Компонент эффекта на цели.
+    /// Эффект: кто его наложил (Source) и на кого (Destination). Всё остальное в своих компонентах,
+    /// например урон или лечение.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

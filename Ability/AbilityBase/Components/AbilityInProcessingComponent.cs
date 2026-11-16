@@ -4,7 +4,8 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// mark ability owner as processing ability
+    /// У владельца прямо сейчас идёт способность: какая, в каком слоте и основная ли она. ИИ по нему
+    /// понимает, что перебивать нельзя.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

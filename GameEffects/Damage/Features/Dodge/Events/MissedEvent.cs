@@ -2,10 +2,9 @@
 {
     using System;
     using Leopotam.EcsProto.QoL;
-    using Unity.IL2CPP.CompilerServices;
 
     /// <summary>
-    /// attack miss event
+    /// Событие: цель увернулась, удар промахнулся.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

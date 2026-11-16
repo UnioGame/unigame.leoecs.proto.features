@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Component representing a Splash Attack Damage Effect component.
+    /// Эффект «урон по площади»: бьёт всех вокруг цели.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

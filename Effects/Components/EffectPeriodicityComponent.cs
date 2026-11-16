@@ -1,12 +1,20 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
+    using System;
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
-
     /// <summary>
-    /// Компонент периодичности эффекта.
+    /// Как часто эффект срабатывает: -1 — один раз, иначе каждые N секунд.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
     public struct EffectPeriodicityComponent : IProtoAutoReset<EffectPeriodicityComponent>
     {
         /// <summary>

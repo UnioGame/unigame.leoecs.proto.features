@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Статус нахождения умения в руке.
+    /// Метка: эта способность сейчас «в руке» у владельца, именно её он применит.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -61,16 +61,9 @@
             for (var i = 0; i < amount; i++)
             {
                 var entity = _entitiesBuffer[i];
-                if (!_targetSelectionAspect.Layer.Has(entity)) continue;
-
-                ref var layerComponent = ref _targetSelectionAspect.Layer.Get(entity);
-                ref var categoryComponent = ref _targetSelectionAspect.Category.Get(entity);
-
-                var layer = layerComponent.Value;
-                var category = categoryComponent.Value;
-
-                if ((layerId & layer) != layer ||
-                    (categoryId & category) != category) continue;
+                if (!PassesMask(entity, ref layerId, ref categoryId)) continue;
+                // the caller's buffer may be older and smaller than MaxTargets
+                if (counter >= result.Length) break;
 
                 result[counter] = entity;
                 counter++;
@@ -97,16 +90,9 @@
                 var entity = _entitiesBuffer[i];
                 ref var packedEntity = ref _packedBuffer[i];
 
-                ref var layerComponent = ref _targetSelectionAspect.Layer.Get(entity);
-                ref var categoryComponent = ref _targetSelectionAspect.Category.Get(entity);
-
-                var layer = layerComponent.Value;
-                var category = categoryComponent.Value;
-
-                if ((layerId & layer) != layer ||
-                    (categoryId & category) != category) continue;
-
-                if ((int)entity < 0) continue;
+                if (!PassesMask(entity, ref layerId, ref categoryId)) continue;
+                // the caller's buffer may be older and smaller than MaxTargets
+                if (counter >= result.Length) break;
 
                 result[counter] = packedEntity;
                 counter++;
@@ -166,18 +152,21 @@
             if (!packedEntity.Unpack(_world, out var entity))
                 return -1;
 
-            ref var layerComponent = ref _targetSelectionAspect.Layer.Get(entity);
-            ref var categoryComponent = ref _targetSelectionAspect.Category.Get(entity);
-
-            var layer = layerComponent.Value;
-            var category = categoryComponent.Value;
-
-            if ((layerId & layer) != layer ||
-                (categoryId & category) != category) return -1;
-
-            return (int)entity;
+            return PassesMask(entity, ref layerId, ref categoryId) ? (int)entity : -1;
         }
 
+
+        // Every entity with Health is in the kd-tree; only those with both a layer and a category can be targeted.
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private bool PassesMask(ProtoEntity entity, ref LayerId layerId, ref CategoryId categoryId)
+        {
+            if (!_targetSelectionAspect.Layer.Has(entity) || !_targetSelectionAspect.Category.Has(entity))
+                return false;
+
+            var layer = _targetSelectionAspect.Layer.Get(entity).Value;
+            var category = _targetSelectionAspect.Category.Get(entity).Value;
+            return (layerId & layer) == layer && (categoryId & category) == category;
+        }
 
         public void Destroy()
         {

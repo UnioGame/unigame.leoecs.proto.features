@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// disable navigation self
+    /// Запрос включить или выключить кинематику у Rigidbody сущности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

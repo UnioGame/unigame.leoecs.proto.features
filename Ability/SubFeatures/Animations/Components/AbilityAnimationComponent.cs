@@ -4,7 +4,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    ///
+    /// Шаг способности «анимация»: какую анимацию проиграть, какая следующая и с какой скоростью.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

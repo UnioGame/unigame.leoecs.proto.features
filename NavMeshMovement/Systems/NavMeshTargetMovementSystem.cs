@@ -30,6 +30,8 @@
             .Chain<MovementPointSelfRequest>()
             .Inc<NavMeshAgentComponent>()
             .Inc<AngularSpeedComponent>()
+            .Inc<NavAgentSpeedComponent>()
+            .Inc<InstantRotateComponent>()
             .Exc<ImmobilityComponent>()
             .Exc<DisabledComponent>()
             .End();

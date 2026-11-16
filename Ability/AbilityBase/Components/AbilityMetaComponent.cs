@@ -4,7 +4,7 @@
 	using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
 
 	/// <summary>
-	/// Ability meta data
+	/// Служебные данные способности: id, слот, скрыта ли, заблокирована ли.
 	/// </summary>
 #if ENABLE_IL2CPP
 	using Unity.IL2CPP.CompilerServices;

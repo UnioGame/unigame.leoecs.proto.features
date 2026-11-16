@@ -3,7 +3,8 @@
     using System;
 
     /// <summary>
-    /// Параметр мгновенного вращения.
+    /// Если включено, при движении сущность сразу разворачивается к цели, а не поворачивается плавно силами
+    /// NavMeshAgent.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -38,7 +38,8 @@ namespace Game.Code.GameLayers.Relationship
 
         public static void Destroy()
         {
-            layerMaskCache.Dispose();
+            if (layerMaskCache.IsCreated)
+                layerMaskCache.Dispose();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -52,6 +53,10 @@ namespace Game.Code.GameLayers.Relationship
         {
             if (relationship.HasFlag(selfRelationship))
                 return self;
+
+            // RelationshipFeature is not in the game features: no relations are known, nothing can be targeted
+            if (!layerMaskCache.IsCreated)
+                return default;
             
             var data = new RelationLayerData(self, relationship);
             if(layerMaskCache.ContainsKey(data)) 

@@ -5,9 +5,8 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
-    /// cache for range selection
+    /// Результат поиска целей в радиусе: найденные сущности и их количество.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -4,7 +4,7 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    ///  link to ability entity
+    /// Ссылка на сущность способности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

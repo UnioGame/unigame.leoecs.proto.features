@@ -32,5 +32,7 @@
         
         //request
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityFromSlot;
+        public ProtoPool<ActivateAbilityActionComponent> ActivateAbilityAction;
+        public ProtoPool<ActivateAbilityPlannerComponent> ActivateAbilityPlanner;
     }
 }

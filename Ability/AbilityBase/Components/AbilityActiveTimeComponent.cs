@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Время активности умения.
+    /// Сколько времени способность уже активна.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

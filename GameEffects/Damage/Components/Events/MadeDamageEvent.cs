@@ -6,7 +6,8 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// Event that indicates a damage has been made.
+    /// Событие: урон нанесён. Сколько, был ли крит, кто бил и по кому. Удобно для цифр урона, звуков и
+    /// статистики.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

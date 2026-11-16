@@ -2,9 +2,9 @@
 {
     using System;
     using Leopotam.EcsProto.QoL;
-    
+
     /// <summary>
-    /// notify about critical damage
+    /// Событие: прошёл критический удар. Сколько урона, кто бил и по кому.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Suspend the use of the ability
+    /// Способность на паузе на Duration секунд.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

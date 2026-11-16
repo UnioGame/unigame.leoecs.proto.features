@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Запрос "положить" в руку умение из конкретной ячейки.
+    /// Запрос взять в руку способность из конкретного слота.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

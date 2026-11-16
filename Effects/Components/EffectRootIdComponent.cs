@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// target effect root
+    /// В какую точку на модели прицепить визуал этого эффекта.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

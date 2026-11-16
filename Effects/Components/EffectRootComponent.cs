@@ -5,9 +5,8 @@
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
-
     /// <summary>
-    /// effect root component
+    /// Точки на модели (голова, руки, оружие…), куда можно прицеплять визуалы эффектов.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

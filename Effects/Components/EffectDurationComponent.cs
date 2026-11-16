@@ -1,12 +1,20 @@
 ﻿namespace UniGame.Ecs.Proto.Effects.Components
 {
+    using System;
     using LeoEcs.Proto;
     using Leopotam.EcsProto;
 
-
     /// <summary>
-    /// Компонент длительности эффекта.
+    /// Сколько живёт эффект и когда его создали. 0 — один кадр, -1 — пока не снимут.
     /// </summary>
+#if ENABLE_IL2CPP
+    using Unity.IL2CPP.CompilerServices;
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+    [Serializable]
     public struct EffectDurationComponent : IProtoAutoReset<EffectDurationComponent>
     {
         /// <summary>

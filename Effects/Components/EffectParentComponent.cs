@@ -4,7 +4,7 @@
     using UnityEngine;
 
     /// <summary>
-    /// parent target for effect
+    /// Transform, к которому прицепить визуал эффекта.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

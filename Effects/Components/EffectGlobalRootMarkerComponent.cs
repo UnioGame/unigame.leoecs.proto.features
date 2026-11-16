@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// mark entity as global effect root container
+    /// Метка: сущность — общий контейнер, куда спавнятся визуалы эффектов, если у цели нет своего.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -6,7 +6,8 @@
     using Leopotam.EcsProto.QoL;
 
     /// <summary>
-    /// Цели для применения умения.
+    /// Цели для следующего применения способности. Их ставит тот, кто применяет: ИИ, ввод или игровая
+    /// система.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

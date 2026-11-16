@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    ///
+    /// Шаг способности «запустить кулдаун»: с этого момента пошёл отсчёт.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

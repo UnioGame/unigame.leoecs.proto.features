@@ -3,9 +3,8 @@
     using System;
     using Leopotam.EcsProto.QoL;
 
-
     /// <summary>
-    /// Current active target for ability
+    /// Цель, которую ИИ сейчас держит для этой способности.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Id умения.
+    /// Id способности. Для выданных из конфига он отрицательный: -1, -2…
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

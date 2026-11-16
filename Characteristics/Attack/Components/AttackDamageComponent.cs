@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// AttackDamage characteristic component
+    /// Урон атаки: сколько бьёт сущность. Его читает эффект урона от атаки.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;

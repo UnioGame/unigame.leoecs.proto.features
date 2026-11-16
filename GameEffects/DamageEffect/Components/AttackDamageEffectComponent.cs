@@ -3,7 +3,7 @@
     using System;
 
     /// <summary>
-    /// Component for attack damage effect.
+    /// Эффект «урон от атаки»: бьёт на величину AttackDamage того, кто применил эффект.
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
