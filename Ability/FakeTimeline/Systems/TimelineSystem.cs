@@ -50,7 +50,7 @@
 
                 if (!playables.IsCreated || index >= playables.Length)
                 {
-                    _ownershipAspect.Kill(timelineEntity);
+                    EndTimeline(timelineEntity, timelinePackedEntity);
                     continue;
                 }
                 
@@ -61,7 +61,7 @@
                     index++;
                     if (index >= playables.Length)
                     {
-                        _ownershipAspect.Kill(timelineEntity);
+                        EndTimeline(timelineEntity, timelinePackedEntity);
                         break;
                     }
                     
@@ -69,6 +69,14 @@
                     timelineComponent.index = index;
                 }
             }
+        }
+
+        // TimelineEndEvent lets the owner of the timeline (an ability) react to its end in the same frame.
+        private void EndTimeline(ProtoEntity timelineEntity, ProtoPackedEntity timelinePackedEntity)
+        {
+            ref var endEvent = ref _timelineAspect.TimelineEndedEvent.GetOrAddComponent(timelineEntity);
+            endEvent.ContextPackedEntity = timelinePackedEntity;
+            _ownershipAspect.Kill(timelineEntity);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

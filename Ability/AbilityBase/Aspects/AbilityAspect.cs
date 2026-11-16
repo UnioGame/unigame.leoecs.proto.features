@@ -473,6 +473,38 @@
             abilityUseRequest.Value = packedAbilityEntity;
         }
 
+        /// <summary>
+        /// Puts the ability in hand and applies it to the target. Any caller (AI, player input, game systems) uses this.
+        /// </summary>
+#if ENABLE_IL2CPP
+        [Il2CppSetOption(Option.NullChecks, false)]
+        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ActivateAbility(ProtoEntity entity, ProtoEntity abilityEntity, ProtoPackedEntity target)
+        {
+            SetTarget(entity, target);
+            ActivateAbility(entity, abilityEntity);
+        }
+
+        /// <summary>
+        /// Sets the single target the owner's next ability is applied to (copied into the ability context on apply).
+        /// </summary>
+#if ENABLE_IL2CPP
+        [Il2CppSetOption(Option.NullChecks, false)]
+        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
+#endif
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetTarget(ProtoEntity entity, ProtoPackedEntity target)
+        {
+            ref var targets = ref Targets.GetOrAddComponent(entity);
+            targets.Entities ??= new ProtoPackedEntity[12];
+            targets.Entities[0] = target;
+            targets.Count = 1;
+        }
+
 #if ENABLE_IL2CPP
         [Il2CppSetOption(Option.NullChecks, false)]
         [Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -85,6 +85,8 @@
 
             //remove event after whole loop
             ecsSystems.DelHere<AbilityCompleteSelfEvent>();
+            //timeline of the ability ended: request its completion
+            ecsSystems.Add(new CompleteAbilityOnTimelineEndSystem());
             //mark ability as completed and fire AbilityCompleteSelfEvent
             ecsSystems.Add(new CompleteAbilitySystem());
             ecsSystems.DelHere<CompleteAbilitySelfRequest>();

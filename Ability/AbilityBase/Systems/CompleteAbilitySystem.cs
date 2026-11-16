@@ -8,7 +8,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
 
-#if ENABLE_IL2CP
+#if ENABLE_IL2CPP
 	using Unity.IL2CPP.CompilerServices;
 
 	[Il2CppSetOption(Option.NullChecks, false)]

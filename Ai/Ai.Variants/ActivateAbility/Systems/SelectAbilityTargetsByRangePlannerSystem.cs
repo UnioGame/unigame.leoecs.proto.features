@@ -69,7 +69,8 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                 var abilityFilters = rangeComponent.FilterData;
                 var targetFound = false;
 
-                var sqrRadius = radiusComponent.Radius * radiusComponent.Radius;
+                // the kd-tree query takes a plain radius; only the min distance is compared squared
+                var radius = radiusComponent.Radius;
                 var sqrMinDistance = radiusComponent.MinDistance * radiusComponent.MinDistance;
                 
                 for (var index = 0; index < abilityFilters.Length; index++)
@@ -93,7 +94,7 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                         entity,
                         ref targetAbility,
                         ref abilityFilter,
-                        sqrRadius,sqrMinDistance);
+                        radius, sqrMinDistance);
 
                     if (abilityTargetEntity.Equals(TargetSelectionData.EmptyResult))
                     {
@@ -183,6 +184,7 @@ namespace UniGame.Ecs.Proto.GameAi.ActivateAbility
                     distance > distanceToTarget - 0.1f)
                     continue;
 
+                maxPriority = priority;
                 distanceToTarget = distance;
                 target = selectionEntity;
             }

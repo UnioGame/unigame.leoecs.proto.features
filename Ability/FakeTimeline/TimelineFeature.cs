@@ -4,6 +4,7 @@
     using Cysharp.Threading.Tasks;
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
+    using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components.Events;
     using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Components.Requests;
     using UniGame.Ecs.Proto.Ability.SubFeatures.FakeTimeline.Systems;
     using UniGame.LeoEcs.Bootstrap.Runtime;
@@ -29,6 +30,8 @@
             ecsSystems.Add(new SortTimelinePlayablesSystem());
 
             ecsSystems.DelHere<ExecuteTimelinePlayableRequest>();
+            // the end event lives one full frame, so features before and after the timeline see it
+            ecsSystems.DelHere<TimelineEndEvent>();
             ecsSystems.Add(new TimelineSystem());
             
             return UniTask.CompletedTask;

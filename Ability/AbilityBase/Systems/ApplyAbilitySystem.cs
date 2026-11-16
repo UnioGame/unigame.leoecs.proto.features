@@ -8,6 +8,7 @@
     using Leopotam.EcsProto;
     using Leopotam.EcsProto.QoL;
     using SubFeatures.FakeTimeline.Aspects;
+    using UniGame.LeoEcs.Bootstrap;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     using UniGame.LeoEcs.Timer.Components;
@@ -29,10 +30,14 @@
         private OwnershipAspect _ownershipAspect;
         private TimelineAspect _timelineAspect;
         
-        private ProtoIt _filter = It
+        private TimerAspect _timerAspect;
+
+        // An ability in use (its timeline is still running) cannot be applied again.
+        private ProtoItExc _filter = It
             .Chain<AbilityValidationSelfRequest>()
             .Inc<CooldownStateComponent>()
             .Inc<ActiveAbilityComponent>()
+            .Exc<AbilityUsingComponent>()
             .End();
 
         public void Init(IProtoSystems systems)
@@ -70,7 +75,14 @@
                 abilityContextComponent.abilityEntity = entity.PackEntity(_world);
                 abilityContextComponent.abilityOwner = ownerLinkComponent.Value;
 
+                // Not ready until the cooldown timer finishes (AbilityCompleteCooldownSystem returns Active).
+                // The timer starts on every use, so an ability without CooldownBehaviour gets cooldown 0, not a single use.
                 _abilityAspect.Active.Del(entity);
+                _timerAspect.Restart.GetOrAddComponent(entity);
+
+                // In use until its timeline ends (CompleteAbilityOnTimelineEndSystem).
+                _abilityAspect.AbilityUsing.GetOrAddComponent(entity);
+                _abilityAspect.UsingEvent.GetOrAddComponent(entity);
             }
         }
     }

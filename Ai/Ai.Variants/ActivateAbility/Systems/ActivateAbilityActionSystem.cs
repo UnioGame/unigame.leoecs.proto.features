@@ -10,7 +10,7 @@
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
     using UniGame.LeoEcs.Shared.Extensions;
     /// <summary>
-    /// Show and Hides HealthBars based on UnderTheTargetComponent 
+    /// AI action: applies the planned ability to the planned target when the ability is ready (Active and cooldown passed).
     /// </summary>
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -24,7 +24,6 @@
     public sealed class ActivateAbilityActionSystem : IAiActionSystem
     {
         private AbilityAspect _abilityTools;
-        //private AbilityTargetTools _targetTools;
         private ProtoWorld _world;
         
         private ProtoPool<ActivateAbilityActionComponent> _activateAbilityPool;
@@ -39,17 +38,13 @@
             foreach (var entity in _filter)
             {
                 ref var activateAbilityComponent = ref _activateAbilityPool.Get(entity);
-                ref var target = ref activateAbilityComponent.Target;
-                var slot = activateAbilityComponent.AbilityCellId;
-
-                if(!activateAbilityComponent.Ability.Unpack(_world,out var abilityEntity))
+                if (!activateAbilityComponent.Ability.Unpack(_world, out var abilityEntity))
                     continue;
-                
-                var cooldownPassed = _abilityTools.IsAbilityCooldownPassed(abilityEntity);
-                //проверяем кулдаун абилки, если он не прошел - игнорируем
-                if (!cooldownPassed) continue;
-                
-                //_targetTools.ActivateAbilityForTarget(entity,target, slot);
+
+                if (!_abilityTools.Active.Has(abilityEntity) || !_abilityTools.IsAbilityCooldownPassed(abilityEntity))
+                    continue;
+
+                _abilityTools.ActivateAbility(entity, abilityEntity, activateAbilityComponent.Target);
             }
         }
     }
