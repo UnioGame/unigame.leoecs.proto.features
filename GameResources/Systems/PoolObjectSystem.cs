@@ -1,7 +1,6 @@
 ﻿namespace UniGame.Ecs.Proto.GameResources.Systems
 {
     using System;
-    using Aspects;
     using Components;
     using Game.Ecs.Core.Components;
     using LeoEcs.Bootstrap;
@@ -11,7 +10,6 @@
     using Runtime.ObjectPool.Extensions;
     using UniCore.Runtime.ProfilerTools;
     using UniGame.LeoEcs.Bootstrap.Runtime.Attributes;
-    using UniGame.LeoEcs.Shared.Extensions;
 
 #if ENABLE_IL2CPP
     using Unity.IL2CPP.CompilerServices;
@@ -43,9 +41,10 @@
                     GameLog.Log("GameObjectComponent value is null!");
                     continue;
                 }
-                
-                gameObjectComponent.Value.Despawn();
+
+                var gameObject = gameObjectComponent.Value;
                 _unityAspect.GameObject.Del(poolableEntity);
+                gameObject.Despawn();
             }
         }
     }
