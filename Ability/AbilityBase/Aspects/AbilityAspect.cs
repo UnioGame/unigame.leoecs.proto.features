@@ -78,6 +78,9 @@
         public ProtoPool<AbilityTargetsComponent> Targets;
         
         
+        //step "owner dies" (kamikaze abilities)
+        public ProtoPool<SelfDestructPlayableComponent> SelfDestruct;
+        
         //is ability in use
         public ProtoPool<AbilityUsingComponent> AbilityUsing;
         

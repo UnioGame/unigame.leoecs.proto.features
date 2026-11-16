@@ -19,6 +19,7 @@
 - `AbilityTargetingBehaviour` — радиус, отношение (враг/союзник) и категория целей. Это не шаг таймлайна, просто данные.
 - `ApplyEffectsBehaviour` — наложить эффекты на цели.
 - `CooldownBehaviour` — кулдаун и момент его запуска.
+- `SelfDestructBehaviour` — владелец способности умирает, к примеру дла абилки камикадзе. Срабатывает после эффектов того же момента.
 - `ProjectileBehaviour`, `AnimationBehaviour`, `VisualsBehaviour`.
 
 ## Жизненный цикл

@@ -159,6 +159,9 @@
                 await feature.OnApplyEffectsSystems(ecsSystems);
             }
 
+            //step "owner dies": after effects, so the damage of the same moment is already applied
+            ecsSystems.Add(new SelfDestructAbilityOwnerSystem());
+
             //remove ability activation request
             ecsSystems.DelHere<ActivateAbilityByIdRequest>();
             ecsSystems.DelHere<ActivateAbilityRequest>();
