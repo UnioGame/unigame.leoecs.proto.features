@@ -37,8 +37,6 @@
             foreach (var entity in _filter)
             {
                 _abilityAspect.AbilityUsing.Del(entity);
-                if(_abilityAspect.Evaluate.Has(entity))
-                    _abilityAspect.Evaluate.Del(entity);
                 
                 _abilityAspect.CompleteEvent.GetOrAddComponent(entity);
             }

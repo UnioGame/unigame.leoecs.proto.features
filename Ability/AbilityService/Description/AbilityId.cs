@@ -1,23 +1,8 @@
 ﻿namespace Game.Code.Configuration.Runtime.Ability.Description
 {
     using System;
-    using System.Collections.Generic;
-    using Services.AbilityLoadout.Data;
-    using UniGame.Core.Runtime;
-
-
-#if ODIN_INSPECTOR
-    using Sirenix.OdinInspector;
-#endif
-    
-#if UNITY_EDITOR
-    using UniModules.Editor;
-#endif
     using UnityEngine;
 
-#if ODIN_INSPECTOR
-    [ValueDropdown("@Game.Code.Configuration.Runtime.Ability.Description.AbilityId.GetAbilityIds()")]
-#endif
     [Serializable]
     public struct AbilityId
     {
@@ -57,72 +42,6 @@
                 return abilityId.Id == Id;
 
             return false;
-        }
-
-        public static AbilityRecord GetAbilityRecord(int abilityId)
-        {
-#if UNITY_EDITOR
-            foreach (var recordValue in GetAbilityRecords())
-            {
-                var record = recordValue.Value;
-                if(record.id == abilityId)
-                    return record;
-            }
-#endif
-            return default;
-        }
-        
-        public static IEnumerable<ValueDropdownItem<AbilityRecord>> GetAbilityRecords()
-        {
-#if UNITY_EDITOR
-            var abilityDatabase = AssetEditorTools.GetAsset<AbilityDataBase>();
-            foreach (var abilityRecord in abilityDatabase.abilities)
-            {
-                var asset = abilityRecord.ability.EditorValue;
-                
-                if(asset == null) continue;
-                var name = asset.data.visualDescription.name;
-                name = string.IsNullOrEmpty(name) ? asset.name : name;
-                
-                yield return new ValueDropdownItem<AbilityRecord>()
-                {
-                    Value = abilityRecord,
-                    Text = name
-                };
-            }
-#endif
-            yield break;
-        }
-        
-        public static IEnumerable<ValueDropdownItem<AbilityId>> GetAbilityIds()
-        {
-#if UNITY_EDITOR
-            var abilityDatabase = AssetEditorTools.GetAsset<AbilityDataBase>();
-            if (abilityDatabase == null)
-            {
-                yield return new ValueDropdownItem<AbilityId>()
-                {
-                    Value = AbilityId.None,
-                    Text = "None. Ability database is missing."
-                };
-                yield break;    
-            }
-            
-            foreach (var abilityRecord in abilityDatabase.abilities)
-            {
-                var asset = abilityRecord.ability.EditorValue;
-                if(asset == null) continue;
-                var name = asset.data.visualDescription.name;
-                name = string.IsNullOrEmpty(name) ? asset.name : name;
-                
-                yield return new ValueDropdownItem<AbilityId>()
-                {
-                    Value = (AbilityId)abilityRecord.id,
-                    Text = name
-                };
-            }
-#endif
-            yield break;
         }
     }
 }

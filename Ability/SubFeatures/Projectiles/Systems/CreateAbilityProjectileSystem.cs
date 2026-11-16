@@ -2,7 +2,6 @@
 {
     using System;
     using Ability.Aspects;
-    using AbilityInventory.Aspects;
     using Aspects;
     using Components;
     using Effects;
@@ -35,7 +34,6 @@
         private UnityAspect _unityAspect;
         private TimerAspect _timerAspect;
         private AbilityAspect _abilityAspect;
-        private AbilityInventoryAspect _abilityInventoryAspect;
         private OwnershipAspect _ownershipAspect;
         private EffectAspect _effectAspect;
         private TimelineAspect _timelineAspect;

@@ -10,10 +10,8 @@
     using Components;
     using Components.Requests;
     using Core.Components;
-    using Game.Code.Animations.EffectMilestones;
     using Game.Code.Configuration.Runtime.Ability;
     using Game.Code.Configuration.Runtime.Ability.Description;
-    using Game.Code.Services.AbilityLoadout.Data;
     using Game.Ecs.Core.Components;
     using Game.Ecs.Input.Components.Evetns;
     using Game.Ecs.Time.Service;
@@ -45,11 +43,6 @@
         //---Generated Begin---
         public ProtoPool<AbilityActiveTimeComponent> AbilityActiveTimeComponent;
         public ProtoPool<AbilityBlockedComponent> AbilityBlockedComponent;
-        public ProtoPool<AbilityCategoryComponent> AbilityCategoryComponent;
-        public ProtoPool<AbilityConfigurationComponent> AbilityConfigurationComponent;
-        public ProtoPool<AbilityEffectMilestonesComponent> AbilityEffectMilestonesComponent;
-        public ProtoPool<AbilityEquippedComponent> AbilityEquippedComponent;
-        public ProtoPool<AbilityEvaluationComponent> AbilityEvaluationComponent;
         public ProtoPool<AbilityIdComponent> AbilityIdComponent;
         public ProtoPool<AbilityInHandComponent> AbilityInHandComponent;
         public ProtoPool<AbilityInHandLinkComponent> AbilityInHandLinkComponent;
@@ -84,17 +77,13 @@
         public ProtoPool<CooldownStateComponent> CooldownState;
         public ProtoPool<RadiusComponent> Radius;
         public ProtoPool<DescriptionComponent> Description;
-        public ProtoPool<AbilityConfigurationComponent> Configuration;
-        public ProtoPool<AbilityEffectMilestonesComponent> EffectMilestones;
         public ProtoPool<AbilityInHandComponent> InHand;
         public ProtoPool<AbilityPauseComponent> Pause;
         public ProtoPool<EntityAvatarComponent> Avatar;
         public ProtoPool<AbilityMapComponent> AbilityMap;
-        public ProtoPool<AbilityEquippedComponent> AbilityEquipped;
         public ProtoPool<AbilityBlockedComponent> Blocked;
         public ProtoPool<AbilityTargetsComponent> Targets;
         
-        public ProtoPool<AbilityEvaluationComponent> Evaluate;
         
         //is ability in use
         public ProtoPool<AbilityUsingComponent> AbilityUsing;
@@ -107,12 +96,7 @@
         public ProtoPool<ActivateAbilitySelfRequest> ActivateAbilitySelfRequest;
         public ProtoPool<ApplyAbilityByIdSelfRequest> ApplyAbilityByIdSelfRequest;
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ApplyAbilityBySlotSelfRequest;
-        public ProtoPool<ApplyAbilityEffectsSelfRequest> ApplyAbilityEffectsSelfRequest;
         public ProtoPool<ApplyAbilitySelfRequest> ApplyAbilitySelfRequest;
-        public ProtoPool<CreateAbilityRequest> CreateAbilityRequest;
-        public ProtoPool<EquipAbilityIdSelfRequest> EquipAbilityIdSelfRequest;
-        public ProtoPool<EquipAbilityIdToChampionRequest> EquipAbilityIdToChampionRequest;
-        public ProtoPool<EquipAbilityNameSelfRequest> EquipAbilityNameSelfRequest;
         public ProtoPool<PauseAbilityRequest> PauseAbilityRequest;
         public ProtoPool<RemovePauseAbilityRequest> RemovePauseAbilityRequest;
         public ProtoPool<ResetAbilityCooldownSelfRequest> ResetAbilityCooldownSelfRequest;
@@ -122,7 +106,6 @@
         public ProtoPool<SetInHandAbilitySelfRequest> SetInHandAbilitySelfRequest;
 
         
-        public ProtoPool<ApplyAbilityEffectsSelfRequest> ApplyAbilityEffects;
         public ProtoPool<ActivateAbilityRequest> ActivateAbilityOnTarget;
         public ProtoPool<SetInHandAbilityBySlotSelfRequest> SetInHandAbilityBySlot;
         public ProtoPool<ActivateAbilityByIdRequest> ActivateAbilityById;
@@ -137,8 +120,6 @@
         public ProtoPool<ApplyAbilityBySlotSelfRequest> ActivateAbilityBySlot;
         
         //requests
-        public ProtoPool<EquipAbilityIdSelfRequest> EquipAbilityIdRequest;
-        public ProtoPool<EquipAbilityReferenceSelfRequest> EquipAbilityReferenceRequest;
         public ProtoPool<PauseAbilityRequest> PauseAbility;
         public ProtoPool<RemovePauseAbilityRequest> RemovePauseAbility;
         
@@ -197,28 +178,6 @@
             
             slotComponent.SlotType = buildData.Slot;
             abilityIdComponent.AbilityId = buildData.AbilityId;
-
-//             if (abilityConfiguration.useAnimation)
-//             {
-// #if UNITY_EDITOR
-//                 if (abilityLink == null || !abilityLink.RuntimeKeyIsValid())
-//                 {
-//                     Debug.LogError($"Missing ability animation link FOR {abilityConfiguration.name}");
-//                 }
-// #endif
-//                 ComposeAbilityAnimationAsync(_world, ownerEntity, packedAbility, abilityLink).Forget();
-//             }
-//             else
-//             {
-//                 ref var durationComponent = ref _duration.GetOrAddComponent(abilityEntity);
-//                 durationComponent.Value = abilityConfiguration.duration;
-//                 ref var milestonesComponent =
-//                     ref _world.GetOrAddComponent<AbilityEffectMilestonesComponent>(abilityEntity);
-//                 milestonesComponent.Milestones = new[]
-//                 {
-//                     new EffectMilestone { Time = 0f }
-//                 };
-//             }
 
             foreach (var abilityBehaviour in abilityConfiguration.abilityBehaviours)
                 abilityBehaviour.Compose(World, abilityEntity);
@@ -377,7 +336,7 @@
                 if (abilityEntity.Equals(targetAbility)) return abilityPair.Key;
             }
 
-            return AbilitySlotId.EmptyAbilitySlot;
+            return -1;
         }
 
 #if ENABLE_IL2CPP
@@ -421,60 +380,6 @@
             if (processingComponent.IsDefault) return default;
 
             return processingComponent.Ability;
-        }
-
-#if ENABLE_IL2CPP
-        [Il2CppSetOption(Option.NullChecks, false)]
-        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-#endif
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity EquipAbilityById(ref ProtoPackedEntity owner, ref AbilityId abilityId)
-        {
-            return EquipAbilityById(ref owner, abilityId, AbilitySlotId.EmptyAbilitySlot);
-        }
-
-#if ENABLE_IL2CPP
-        [Il2CppSetOption(Option.NullChecks, false)]
-        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-#endif
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity EquipAbilityById(ref ProtoPackedEntity owner, AbilityId abilityId,
-            AbilitySlotId slot, bool isDefault = false)
-        {
-            var activeAbility = GetActiveAbility(ref owner, ref abilityId);
-            if ((int)activeAbility > 0) return activeAbility;
-
-            var requestEntity = World.NewEntity();
-            ref var request = ref EquipAbilityIdRequest.Add(requestEntity);
-            request.AbilityId = abilityId;
-            request.AbilitySlot = slot;
-            request.Owner = owner;
-            request.IsDefault = isDefault;
-
-            return requestEntity;
-        }
-
-
-#if ENABLE_IL2CPP
-        [Il2CppSetOption(Option.NullChecks, false)]
-        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-#endif
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ProtoEntity EquipAbilityByReference(ref ProtoPackedEntity owner,
-            AbilityConfiguration configuration,
-            AbilitySlotId slot, bool isDefault = false)
-        {
-            var requestEntity = World.NewEntity();
-            ref var request = ref EquipAbilityReferenceRequest.Add(requestEntity);
-            request.AbilitySlot = slot;
-            request.Owner = owner;
-            request.IsDefault = isDefault;
-            request.Reference = configuration;
-
-            return requestEntity;
         }
 
 #if ENABLE_IL2CPP
@@ -550,41 +455,6 @@
             radiusComponent.Value = specification.Radius;
             relationship.Value = specification.RelationshipId;
             category.Value = specification.CategoryId;
-        }
-
-#if ENABLE_IL2CPP
-        [Il2CppSetOption(Option.NullChecks, false)]
-        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-        [Il2CppSetOption(Option.DivideByZeroChecks, false)]
-#endif
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void ComposeEffectMilestones(EffectMilestonesData milestonesInfo,
-            float duration,
-            ProtoEntity abilityEntity)
-        {
-            if (milestonesInfo == null) return;
-
-            ref var effectMilestones = ref World.GetOrAddComponent<AbilityEffectMilestonesComponent>(abilityEntity);
-
-            var effects = milestonesInfo.effectMilestones;
-            if (effects.Count == 0)
-            {
-                effectMilestones.Milestones = new[]
-                {
-                    new EffectMilestone { Time = duration }
-                };
-
-                return;
-            }
-
-            effectMilestones.Milestones = new EffectMilestone[effects.Count];
-
-            for (var i = 0; i < effectMilestones.Milestones.Length; i++)
-            {
-                var sourceMilestone = effects[i];
-                var cloneMilestone = sourceMilestone.Clone();
-                effectMilestones.Milestones[i] = cloneMilestone;
-            }
         }
 
 #if ENABLE_IL2CPP

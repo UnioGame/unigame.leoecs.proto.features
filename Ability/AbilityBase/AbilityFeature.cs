@@ -75,10 +75,8 @@
                 await feature.OnStartSystems(ecsSystems);
             }
 
-            ecsSystems.Add(new SetAbilityNotActiveWhenDeadSystem());
             //if non default slot ability in use, discard set in hand request
             ecsSystems.Add(new DiscardSetInHandWhileExecutingAbilitySystem());
-            ecsSystems.Add(new DiscardAbilityEffectMilestonesSystem());
 
             foreach (var feature in subFeatures)
             {
@@ -134,16 +132,12 @@
             {
                 await feature.OnActivateSystems(ecsSystems);
             }
-            
-            ecsSystems.Add(new EvaluateAbilitySystem());
 
             foreach (var feature in subFeatures)
             {
                 await feature.OnEvaluateAbilitySystem(ecsSystems);
             }
 
-            ecsSystems.DelHere<ApplyAbilityEffectsSelfRequest>();
-            ecsSystems.Add(new CreateApplyAbilityEffectsRequestSystem());
             ecsSystems.Add(new AbilityUnlockSystem());
             
             ecsSystems.Add(new ApplyPauseAbilityRequestSystem());
