@@ -74,12 +74,13 @@
                 foreach (var key in _poiFilter)
                 {
                     ref var poiComponent = ref _moveToTargetAspect.ToPoi.Get(key);
+                    var packedKey = _world.PackEntity(key);
 
                     if (poiComponent.Priority < 0)
                         continue;
 
                     var complete = false;
-                    if (poiGoals.TryGetValue(key, out var value))
+                    if (poiGoals.TryGetValue(packedKey, out var value))
                         complete = value.Complete;
 
                     if (complete) continue;
@@ -98,10 +99,10 @@
                     value.Complete = distance < sqrRange;
                     value.Position = targetPosition;
                     value.Priority = poiComponent.Priority;
-                    value.Target = _world.PackEntity(key);
+                    value.Target = packedKey;
 
                     targetGoal = value;
-                    poiGoals[key] = targetGoal;
+                    poiGoals[packedKey] = targetGoal;
                 }
 
                 if ((int)targetEntity < 0) continue;
